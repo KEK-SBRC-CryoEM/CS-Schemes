@@ -1,0 +1,56 @@
+### Do not change ###
+- Region: ap-northeast-1
+  InstanceSettings:
+  - Name: g5-vcpu192-gpu8
+    InstanceType: g5.48xlarge
+    NunberOfCores: 192
+    CostPerHours: 23.62246
+  - Name: g5-vcpu96-gpu4
+    InstanceType: g5.24xlarge
+    NunberOfCores: 96
+    CostPerHours: 11.81123
+  - Name: g5-vcpu48-gpu4
+    InstanceType: g5.12xlarge
+    NunberOfCores: 48
+    CostPerHours: 8.22609
+  - Name: g4dn-vcpu96-gpu8
+    InstanceType: g4dn.metal
+    NunberOfCores: 96
+    CostPerHours: 10.562
+  - Name: g4dn-vcpu48-gpu4
+    InstanceType: g4dn.12xlarge
+    NunberOfCores: 48
+    CostPerHours: 5.281
+  - Name: c6i-vcpu128-gpu0
+    InstanceType: c6i.32xlarge
+    NunberOfCores: 128
+    CostPerHours: 6.848
+- Region: us-east-1
+  InstanceSettings:
+  - Name: g5-vcpu192-gpu8
+    InstanceType: g5.48xlarge
+    NunberOfCores: 192
+    CostPerHours: 16.288
+  - Name: g5-vcpu96-gpu4
+    InstanceType: g5.24xlarge
+    NunberOfCores: 96
+    CostPerHours: 8.144
+  - Name: g5-vcpu48-gpu4
+    InstanceType: g5.12xlarge
+    NunberOfCores: 48
+    CostPerHours: 5.672
+  - Name: g4dn-vcpu96-gpu8
+    InstanceType: g4dn.metal
+    NunberOfCores: 96
+    CostPerHours: 7.824
+  - Name: g4dn-vcpu48-gpu4
+    InstanceType: g4dn.12xlarge
+    NunberOfCores: 48
+    CostPerHours: 3.912
+  - Name: c6i-vcpu128-gpu0
+    InstanceType: c6i.32xlarge
+    NunberOfCores: 128
+    CostPerHours: 5.440
+
+
+
