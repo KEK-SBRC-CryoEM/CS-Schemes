@@ -89,14 +89,15 @@ import argparse
 
 class CostCalculater():
     # Private class constants
-    #__RESULT_FILE_NAME = 'results.csv'
     __OUTPUT_HEADER_JOB=['JobType/JobID']
     __OUTPUT_HEADER_PARALLEL_SETTINGS = ['Job Name','GPUs','MPI','Thread','MPIs/Node','Nodes']
-    __OUTPUT_HEADER_PROCESS_TIME = ['Elapse hh:mm:ss','Elapse_hours'] 
+    __OUTPUT_HEADER_PROCESS_TIME_STAMP = ['Process time(hh:mm:ss)','Process time(hours)'] 
+    __OUTPUT_HEADER_PROCESS_TIME_COMMAND = ['Running time(hours)', 'Time diff(minutes)'] 
     __OUTPUT_HEADER_INSTANCE= ['EC2 Instance Name','EC2 Instance Type','Cores/node','Cost/hours(USD)','Cost(USD)']
     __PIPELINE_STAR_FILE_NAME = 'default_pipeline.star'
     __NOTE_TXT_FILE_NAME = 'note.txt'
     __EXIT_SUCCESS_FILE_NAME = 'RELION_JOB_EXIT_SUCCESS'
+    __RUNERR_FILE_NAME = 'run.err'
     __JOB_STAR_FILE_NAME = 'job.star'
     __JOB_STAR_KEY_LIST = ['queuename', 'gpu_ids', 'nr_mpi', 'nr_threads', 'min_dedicated']
     __INSTANCE_INFO_YML_NAME = 'Config_instance_info.yml'
@@ -112,7 +113,7 @@ class CostCalculater():
         self.__output_header =[]
         self.__total_time_and_cost_list = []
 
-    # Get parallel setting data from job.star saved when relion execution.
+
     # Save all contents of 'data_joboptions_values' in job.star file as dict data  -> self.__job_star_options_dict
     def __construct_job_star_dict(self, file_path):
         self.__job_star_options_dict = {}
@@ -129,32 +130,57 @@ class CostCalculater():
         timestamp = datetime.datetime.fromtimestamp(sec)
         return timestamp
     
-    # Calculatting processing time per job from difference between timestamps of 2 files.
+    # Calculate processing time from difference between timestamps of 2 files.
     def __calc_timestamp_diff(self, first_created_file_path, last_created_file_path):
         start_date = self.__get_timestamp(first_created_file_path)
         end_date = self.__get_timestamp(last_created_file_path)
         timestamp_diff = end_date - start_date
-        #self.__calculate_time_sec = self.__timestamp_diff.total_seconds()
         timestamp_diff_hour = timestamp_diff.total_seconds()/3600
         return timestamp_diff, timestamp_diff_hour
 
-    # Get Relion processing time (hh:mm:ss and hours)
+    # Get Relion processing time (type of hh:mm:ss and hours)
     def __get_process_time(self, relion_dir_path, job_id_dir_path):
         self.__process_time_list = []
         # Calculate processing time per job from difference between timestamps of 2 files.
+        # first created file: note.txt
+        # last created file: RELION_JOB_EXIT_SUCCESS
         first_created_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__NOTE_TXT_FILE_NAME)
         last_created_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__EXIT_SUCCESS_FILE_NAME)
         if not os.path.exists(first_created_file_path) or not os.path.exists(last_created_file_path):
             print('[CC_MESSAGE] WARNING: Relion output file "{}" or "{}" dose not exist!'.format(first_created_file_path, last_created_file_path))
-            [self.__process_time_hhmm, self.__process_time_hour]=["N/A", 0]
-            self.__process_time_list.extend([self.__process_time_hhmm, self.__process_time_hour])
-            self.__process_time_hours_list.append(0)
+            self.__process_time_hhmm = 'n/a' 
+            self.__process_time_hour = 0
         else:
             [self.__process_time_hhmm, self.__process_time_hour] = self.__calc_timestamp_diff(first_created_file_path, last_created_file_path)
-            self.__process_time_list.extend([self.__process_time_hhmm, round(self.__process_time_hour,3)])
-            self.__process_time_hours_list.append(self.__process_time_hour)
+        self.__process_time_list.extend([self.__process_time_hhmm, round(self.__process_time_hour,3)])
+        self.__process_time_hours_list.append(self.__process_time_hour)
     
-    # Get job id directories saved in default_pipeline.star under RELION project dir
+    # Get process time from run.err
+    # Availability conditions
+    #  - run.err exists
+    #  - Job excuted with time command  (slurm is used -> do_queueu = Yes)
+    #  - except external_cryolo  (becase external_cryolo job doesn't leave time in run.err file)
+    def __get_process_time_from_runerr(self, relion_dir_path, job_id_dir_path):
+        self.__process_time_runerr_hours = None
+        runerr_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__RUNERR_FILE_NAME)
+        if set(['do_queue','queuename']).issubset(self.__job_star_options_dict.keys()) and self.__job_star_options_dict['do_queue'] == 'Yes' and not 'cryolo' in self.__job_star_options_dict['queuename']:
+            if not os.path.exists(runerr_file_path):
+                print('[CC_MESSAGE] WARNING: Relion output file "{}" dose not exist!'.format(runerr_file_path))
+            else:
+                assert os.path.exists(runerr_file_path), '[PS_ASSERT] The file "{}" must exist at this point of code!'.format(runerr_file_path)
+                with open(runerr_file_path, 'r') as runerr_file:
+                    runerr_line_list = [runerr_line for runerr_line in runerr_file.readlines()]
+                assert len(runerr_line_list) > 0, '[PS_ASSERT] The file "{}" contains no lines! Something is seriously wrong with this star file!'.format(runerr_file_path)
+                # change 'xxxmxxxs' format to hours 
+                for runerr_line in runerr_line_list:
+                    if 'real' in runerr_line:
+                        process_time_runerr = runerr_line.split()[1]
+                        (min, sec) = re.findall(r"[0-9.]+", process_time_runerr)
+                        self.__process_time_runerr_hours = round((int(min)*60 + float(sec))/int(3600),3)
+                        break
+    
+    # Get job id directories recorded in default_pipeline.star under RELION project dir.
+    # Create job id directories list (self.__job_id_dir_path_list).
     def __get_jobid_dir_path(self,relion_dir_path):
         pipline_star_file_path = os.path.join(relion_dir_path, type(self).__PIPELINE_STAR_FILE_NAME)
         assert os.path.exists(pipline_star_file_path), '[CC_ASSERT] The default_pipeline.star file "{}" must exist!'.format(pipline_star_file_path)
@@ -162,33 +188,45 @@ class CostCalculater():
         for i in range(len(pipline_dict['pipeline_processes'])):
             self.__job_id_dir_path_list.append(pipline_dict['pipeline_processes']['rlnPipeLineProcessName'][i])
 
+    # Get parallel settings from job.star file saved when relion execution.
+    # - number of GPUs : Count the numbers set in 'gpu_ids' or 'param3_value'(for cryolo).
+    # - Job Name, MPI, Thread, MPIs/Node : Get the value set in 'queuename', 'gpu_ids', 'nr_mpi', 'nr_threads', 'min_dedicated'
+    # - number of Nodes : Calculates from 'nr_mpi' and 'min_dedicated'.
     def __get_parallel_settings(self):
         self.__parallel_settings_list = []
         for job_star_key in type(self).__JOB_STAR_KEY_LIST:
             if job_star_key in self.__job_star_options_dict.keys():
-                # Counts nunber of gpus, only if gpus are used.
+                # Counts number of gpus, only if gpus are used.
                 if job_star_key == 'gpu_ids':
                     if 'use_gpu' in self.__job_star_options_dict.keys() and self.__job_star_options_dict['use_gpu'] == 'Yes':  
-                        nr_gpus = [len(re.sub(r'[^0-9]', '', self.__job_star_options_dict[job_star_key]))][0]
+                        nr_gpus = len(re.sub(r'[^0-9]', '', self.__job_star_options_dict[job_star_key]))
                     else:
-                        nr_gpus = ""
+                        nr_gpus = None
                     self.__parallel_settings_list.append(nr_gpus)
+                elif job_star_key == 'min_dedicated':
+                    if 'do_queue' in self.__job_star_options_dict.keys() and self.__job_star_options_dict['do_queue'] == 'Yes':
+                        min_dedicated = self.__job_star_options_dict[job_star_key]
+                    else:
+                        min_dedicated = None
+                    self.__parallel_settings_list.append(min_dedicated)
                 else:
                     self.__parallel_settings_list.append(self.__job_star_options_dict[job_star_key])
             elif job_star_key == 'gpu_ids' and 'cryolo' in self.__job_star_options_dict['queuename']:
-                nr_gpus = [len(re.sub(r'[^0-9]', '', self.__job_star_options_dict['param3_value']))][0]
+                nr_gpus = len(re.sub(r'[^0-9]', '', self.__job_star_options_dict['param3_value']))
                 self.__parallel_settings_list.append(nr_gpus)
             else:
-                self.__parallel_settings_list.append("")   # If the key dose not exist, add empty to list.
-
+                self.__parallel_settings_list.append(None)   # If the key dose not exist, add empty to list.
+        # Calculates number of nodes
         if set(['do_queue','nr_mpi', 'min_dedicated']).issubset(self.__job_star_options_dict.keys()) and self.__job_star_options_dict['do_queue'] == 'Yes':  
             self.__nr_nodes = (int(self.__job_star_options_dict['nr_mpi']) + int(self.__job_star_options_dict['min_dedicated']) - 1) // int(self.__job_star_options_dict['min_dedicated'])
         elif 'cryolo' in self.__job_star_options_dict['queuename']:
             self.__nr_nodes = self.__job_star_options_dict['param3_value'].count('0')  # Number of '0' is considered as the number of nodes in the case of 'cyrolo.
         else:
-            self.__nr_nodes = 0
+            self.__nr_nodes = None
         self.__parallel_settings_list.append(self.__nr_nodes)
 
+    # Get instance information from yaml file where instance name, price, etc are set.
+    # Create instance information list (self.__instance_info_list)
     def __get_instance_info(self, instance_info_yml_path, aws_region):
         assert os.path.exists(instance_info_yml_path), '[CC_ASSERT] The yaml file set instance price "{}" must exist!'.format(instance_info_yml_path)
         with open(instance_info_yml_path, 'r') as yaml_file:
@@ -199,18 +237,18 @@ class CostCalculater():
                 if set(['qsub_extra1','do_queue']).issubset(self.__job_star_options_dict.keys()) and self.__job_star_options_dict['do_queue'] == 'Yes':
                     for instance_info_setting_dict in instance_info_dict['InstanceSettings']:
                         if instance_info_setting_dict['Name'] == self.__job_star_options_dict['qsub_extra1']:  
-                            self.__cost_per_hours = instance_info_setting_dict['CostPerHours']
                             self.__instance_info_list = list(instance_info_setting_dict.values())
                             break
                     instance_info_setting_dict_name = [name.get('Name') for name in instance_info_dict['InstanceSettings']]
                     if self.__job_star_options_dict['qsub_extra1'] not in instance_info_setting_dict_name:
                         print('Cost of instance "{}" is not set in "{}" '.format(self.__job_star_options_dict['qsub_extra1'],type(self).__INSTANCE_INFO_YML_NAME))
-                        self.__cost_per_hours = 0
-                        self.__instance_info_list = [self.__job_star_options_dict['qsub_extra1']]+[""]*(len(instance_info_setting_dict.values()) - 2) + [self.__cost_per_hours]
+                        self.__instance_info_list = [self.__job_star_options_dict['qsub_extra1']]+[None]*(len(instance_info_setting_dict.values()) - 1)
                 else:
-                    self.__cost_per_hours = 0
-                    self.__instance_info_list = [""]*(len(instance_info_dict['InstanceSettings'][0].values()) - 1) + [self.__cost_per_hours]
+                    self.__instance_info_list = [None]*(len(instance_info_dict['InstanceSettings'][0].values()))
 
+    # Generate parallel setting list, process time list, instance info list for each job.
+    # Combine multiple lists into one list(self.__results_list) for each job.
+    # Combine lists of all jobs into one list. 
     def __construct_results_list(self, relion_dir_path = './', instance_yml_dir_path=os.path.dirname(__file__), aws_region='ap-northeast-1'):
         self.__get_jobid_dir_path(relion_dir_path)
         for job_id_dir_path in self.__job_id_dir_path_list:
@@ -218,7 +256,6 @@ class CostCalculater():
             self.__results_list = []
             job_star_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__JOB_STAR_FILE_NAME)
             assert os.path.exists(job_star_file_path), '[CC_ASSERT] The job.star file "{}" must exist!'.format(job_star_file_path)
-    
             self.__construct_job_star_dict(job_star_file_path)
             self.__get_parallel_settings()
             self.__get_process_time(relion_dir_path, job_id_dir_path)
@@ -227,26 +264,37 @@ class CostCalculater():
             self.__results_list.extend(self.__process_time_list)
             self.__output_header.extend(type(self).__OUTPUT_HEADER_JOB)
             self.__output_header.extend(type(self).__OUTPUT_HEADER_PARALLEL_SETTINGS)
-            self.__output_header.extend(type(self).__OUTPUT_HEADER_PROCESS_TIME)
-            # Create instance price dict per region 
-            # If the instance price file dose not exist, not calculate cost per job and total cost.
+            self.__output_header.extend(type(self).__OUTPUT_HEADER_PROCESS_TIME_STAMP)
+            # If the instance price file exists, add instance information list and calculate cost per job and total cost.
             instance_info_yml_path = os.path.join(instance_yml_dir_path, type(self).__INSTANCE_INFO_YML_NAME)
             if os.path.exists(instance_info_yml_path):
+                self.__get_process_time_from_runerr(relion_dir_path, job_id_dir_path)
+                if self.__process_time_hour != None and self.__process_time_runerr_hours != None:
+                    time_diff = round((float(self.__process_time_hour) - float(self.__process_time_runerr_hours))*60,1)
+                else:
+                    time_diff = None
                 self.__get_instance_info(instance_info_yml_path, aws_region)
-                cost_per_job = self.__cost_per_hours * self.__nr_nodes * self.__process_time_hour
+                cost_per_hours = self.__instance_info_list[-1]
+                if cost_per_hours != None and self.__nr_nodes != None and self.__process_time_hour != None:
+                    cost_per_job = cost_per_hours * self.__nr_nodes * self.__process_time_hour
+                else:
+                    cost_per_job = 0
+                self.__results_list.append(self.__process_time_runerr_hours)
+                self.__results_list.append(time_diff)
                 self.__results_list.extend(self.__instance_info_list)
-                self.__results_list.append(round(cost_per_job, 3))
-                self.__cost_per_job_list.append(cost_per_job)
+                self.__results_list.append(round(cost_per_job,3))
+                self.__cost_per_job_list.append(round(cost_per_job,3))
+                self.__output_header.extend(type(self).__OUTPUT_HEADER_PROCESS_TIME_COMMAND)
                 self.__output_header.extend(type(self).__OUTPUT_HEADER_INSTANCE)
             self.__cc_result_processtime_and_cost_list_list.append(self.__results_list)
         
-        # Calculate total cost for all job 
-        self.__total_time_and_cost_list = [""]*(len(self.__output_header)-len(type(self).__OUTPUT_HEADER_INSTANCE)-2)
+        # Calculate total processing time and cost for all job 
+        self.__total_time_and_cost_list = [None]*(len(self.__output_header)-len(type(self).__OUTPUT_HEADER_PROCESS_TIME_COMMAND)-len(type(self).__OUTPUT_HEADER_INSTANCE)-2)
         self.__total_time_and_cost_list.extend(['Total Time', round(sum(self.__process_time_hours_list),3)])
-        self.__total_time_and_cost_list.extend([""]*(len(type(self).__OUTPUT_HEADER_INSTANCE)-2))
+        self.__total_time_and_cost_list.extend([None]*(len(type(self).__OUTPUT_HEADER_PROCESS_TIME_COMMAND)+len(type(self).__OUTPUT_HEADER_INSTANCE)-2))
         self.__total_time_and_cost_list.extend(['Total Cost', round(sum(self.__cost_per_job_list),3)])
 
-    # Save the calculation results of processing time and cost to a csv file.
+    # Save the parallel settings, processing time, instance information and cost to a csv file.
     def __save_cc_result_csv(self, relion_dir_path, output_dir_path):
         relion_project_name = os.path.basename(os.path.abspath(relion_dir_path))
         cc_result_file_name = type(self).__CC_FILE_PREFIX + relion_project_name + type(self).__CC_RESULT_FILE_EXT
@@ -261,8 +309,9 @@ class CostCalculater():
 
     def edit(self, instance_yml_dir_path = os.path.dirname(__file__), relion_dir_path = './', output_dir_path = './', aws_region='ap-northeast-1'):
         # [*] instance_yml_dir_path: a path of directory containing yaml file with instance price.
-        # [*] relion_dir_path: a path of RELION project directory 
-        # [*] output_dir_path: a path of output directory.
+        # [*] relion_dir_path      : a path of RELION project directory 
+        # [*] output_dir_path      : a path of output directory to save CSV file.
+        # [*] aws_region           : AWS region in use
         
         # Check preconditions!
         assert os.path.exists(instance_yml_dir_path), '[CC_ASSERT] The configurations directory "{}" must exist!'.format(instance_yml_dir_path)
