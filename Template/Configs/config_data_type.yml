@@ -1,0 +1,24 @@
+### Do not Change ### 
+- SchemeName: 0_CS_prep
+  ConfigYml: config_measurement_condition.yml
+  DataType: Titan
+- SchemeName: 11_CS_Create_Stack
+  ConfigYml: config_protein_data.yml
+  DataType: CreateStack
+- SchemeName: 12_CS_AbInitReconst3D
+  ConfigYml: config_protein_data.yml
+  DataType: CreateStack
+- SchemeName: 13_CS_Clean_Stack_3D
+  ConfigYml: config_protein_data.yml
+  DataType: CreateStack
+- SchemeName: 2_CS_Init_Refine3D
+  ConfigYml: config_protein_data.yml
+  DataType: Refine
+- SchemeName: 3_CS_Refine_Cycle
+  ConfigYml: config_protein_data.yml
+  DataType: Refine
+- SchemeName: 4_CS_Res_Fish
+  ConfigYml: config_protein_data.yml
+  DataType: Refine
+
+
