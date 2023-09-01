@@ -1,0 +1,14 @@
+### Do not Change ####
+SubmitToQueue: do_queue 
+SubmitCommand: qsub 
+SubmissionScript: qsubscript 
+ScratchDirectory: scratch_dir 
+UseGpu: use_gpu 
+Partition: qsub_extra1 
+AdditionalArguments: other_args 
+PrereadParticles: do_preread_images 
+WhichGpusToUse: gpu_ids
+Param3Value: param3_value 
+NumberOfMpi: nr_mpi 
+NumberOfThreads: nr_threads 
+MinimumDedicatedCores: min_dedicated
