@@ -419,29 +419,13 @@ class ParallelSettingsEditor:
 
     # <Private Instance Method> Replace values of paralle settings of all job star (job.star) in the specified template Schemes dirctory
     # and save the results to the output Schemes directory.
-    def __replace_schemes_parallel_settings(self, template_schemes_dir_path, output_schemes_subdir_path):
-        # Check preconditions!
-        # NOTE: 2023/05/01 Toshio Moriya
-        # Actually these should be error checks instead of assertions!
-        assert os.path.exists(template_schemes_dir_path), '[PS_ASSERT] The template Schemes directory "{}" must NOT exist!'.format(template_schemes_dir_path)
-        assert template_schemes_dir_path, '[PS_ASSERT] The template Schemes directory "{}" must NOT exist!'.format(template_schemes_dir_path)
-        # NOTE: 2023/05/03 Toshio Moriya
-        # Removed the following requirement to allow the users to name the template_schemes_dir as they like
-        # assert os.path.basename(os.path.normpath(template_schemes_dir_path)) == type(self).__SCHEMES_DIR_NAME, '[PS_ASSERT] The specified template Schemes directory "{}" is invalid! It must end with "{}"!'.format(template_schemes_dir_path, type(self).__SCHEMES_DIR_NAME)
-        
+    def __replace_schemes_parallel_settings(self, output_schemes_subdir_path):
         # Obtain directory path of this script
         script_dir_path = os.path.dirname(__file__)
         
         # Create JobTypeToAlgoTypeConvertor (Singleton Class)
         job_type_to_algo_type_convertor = JobTypeToAlgoTypeConvertor.get_singleton()
-        
-        # Make a back up of schemes
-        self.__make_output_subdir_backup(output_schemes_subdir_path)
-        assert not os.path.exists(output_schemes_subdir_path), '[PS_ASSERT] The output Schemes subdirectory "{}" must NOT exist at this point of code!'.format(output_schemes_subdir_path)
-        
-        # Create output Schemes directory by copying template Schemes directory 
-        shutil.copytree(template_schemes_dir_path, output_schemes_subdir_path)
-        
+                
         # File pattern of job star file in tempate RELION Schemes  
         output_job_star_file_path_pattern = os.path.join(output_schemes_subdir_path, type(self).__JOB_STAR_FILE_RPATH_PATTERN)
         
@@ -500,7 +484,27 @@ class ParallelSettingsEditor:
     # <Public Instance Method> Edit paralle settings of all job star (job.star) in the specified template Schemes dirctory 
     # by replacing the values with specified in config yaml files.
     # and save the results to the output Schemes directory.
-    def edit(self, configs_dir_path = './Configs', template_schemes_dir_path = './Schemes', output_dir_path = '../'):
+
+    def make_output_schemes(self, template_schemes_dir_path, output_dir_path):
+        # Check preconditions!
+        # NOTE: 2023/05/01 Toshio Moriya
+        # Actually these should be error checks instead of assertions!
+        assert os.path.exists(template_schemes_dir_path), '[PS_ASSERT] The template Schemes directory "{}" must exist!'.format(template_schemes_dir_path)
+        assert template_schemes_dir_path, '[PS_ASSERT] The template Schemes directory "{}" must NOT exist!'.format(template_schemes_dir_path)
+        # NOTE: 2023/05/03 Toshio Moriya
+        # Removed the following requirement to allow the users to name the template_schemes_dir as they like
+        # assert os.path.basename(os.path.normpath(template_schemes_dir_path)) == type(self).__SCHEMES_DIR_NAME, '[PS_ASSERT] The specified template Schemes directory "{}" is invalid! It must end with "{}"!'.format(template_schemes_dir_path, type(self).__SCHEMES_DIR_NAME)
+
+        output_schemes_subdir_path = os.path.join(output_dir_path, type(self).__SCHEMES_DIR_NAME)
+        # Make a back up of schemes
+        self.__make_output_subdir_backup(output_schemes_subdir_path)
+        assert not os.path.exists(output_schemes_subdir_path), '[PS_ASSERT] The output Schemes subdirectory "{}" must NOT exist at this point of code!'.format(output_schemes_subdir_path)
+        
+        # Create output Schemes directory by copying template Schemes directory 
+        shutil.copytree(template_schemes_dir_path, output_schemes_subdir_path)
+        return output_schemes_subdir_path
+
+    def edit(self, configs_dir_path, output_dir_path, output_schemes_subdir_path):
         # [*] configs_dir_path: a path of directory containing all configuration yaml files
         # [*] template_schemes_dir_path: a path of tempate RELION Schemes directory 
         # [*] output_dir_path: a path of output directory.
@@ -512,7 +516,7 @@ class ParallelSettingsEditor:
         # NOTE: 2023/05/01 Toshio Moriya
         # Actually these should be error checks instead of assertion!
         assert os.path.exists(configs_dir_path), '[PS_ASSERT] The configurations directory "{}" must exist!'.format(configs_dir_path)
-        assert os.path.exists(template_schemes_dir_path), '[PS_ASSERT] The template Schemes directory "{}" must exist!'.format(template_schemes_dir_path)
+        #assert os.path.exists(template_schemes_dir_path), '[PS_ASSERT] The template Schemes directory "{}" must exist!'.format(template_schemes_dir_path)
         # NOTE: 2023/05/03 Toshio Moriya
         # Removed the following requirement to allow the users to name the template_schemes_dir as they like
         # assert os.path.basename(os.path.normpath(template_schemes_dir_path)) == type(self).__SCHEMES_DIR_NAME, '[PS_ASSERT] The specified template Schemes directory "{}" is invalid! It must end with "{}"!'.format(template_schemes_dir_path, type(self).__SCHEMES_DIR_NAME)
@@ -524,11 +528,9 @@ class ParallelSettingsEditor:
         
         #  Set instance variables
         parallel_settings_subdir_path = os.path.join(output_dir_path, type(self).__PS_DIR_NAME)
-        output_schemes_subdir_path = os.path.join(output_dir_path, type(self).__SCHEMES_DIR_NAME)
-
         self.__create_merged_algo_type_dict_list(configs_dir_path)
         self.__save_merged_algo_type_dict_list(parallel_settings_subdir_path)
-        self.__replace_schemes_parallel_settings(template_schemes_dir_path, output_schemes_subdir_path)
+        self.__replace_schemes_parallel_settings(output_schemes_subdir_path)
 
 if __name__ == "__main__":
     # Parse command argument
@@ -552,11 +554,10 @@ if __name__ == "__main__":
     print('[PS_MESSAGE]   Input configurations directory path   := {}'.format(option_configs_dir_path))
     print('[PS_MESSAGE]   Input tempate Schemes directory path := {}'.format(option_template_schemes_dir_path))
     print('[PS_MESSAGE]   Output root directory path           := {}'.format(option_output_dir_path))
-
     print('[PS_MESSAGE] ')
     print('[PS_MESSAGE] Editing parallel settings of all job.star files in the specified shcemes...')
     ps_editor = ParallelSettingsEditor()
-    ps_editor.edit(option_configs_dir_path, option_template_schemes_dir_path, option_output_dir_path)
-    
+    output_schemes_subdir_path = ps_editor.make_output_schemes(option_template_schemes_dir_path, option_output_dir_path)
+    ps_editor.edit(option_configs_dir_path, option_output_dir_path, output_schemes_subdir_path)
     print('[PS_MESSAGE] ')
     print('[PS_MESSAGE] DONE!')

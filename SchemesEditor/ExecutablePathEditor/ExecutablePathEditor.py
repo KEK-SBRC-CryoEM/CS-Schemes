@@ -156,6 +156,22 @@ class ExecutablePathEditor():
             os.rename(output_subdir_path, backup_output_subdir_path)
         assert not os.path.exists(output_subdir_path), '[EE_ASSERT] The output subdirectory "{}" must NOT exist at this point of code!'.format(output_subdir_path)
 
+    def make_output_schemes(self, template_schemes_dir_path, output_dir_path):
+        # Check preconditions!
+        # Check if template_schemes_dir_path exists.
+        assert template_schemes_dir_path, '[PDE_ASSERT] The template Schemes directory "{}" must exist!'.format(template_schemes_dir_path)
+        if not os.path.exists(template_schemes_dir_path):
+            print('[PDE_MESSAGE] Error! The template Schemes directory "{}" does NOT exist! Please set the correct PATH using "--s" option.'.format(template_schemes_dir_path))
+            return
+        
+        output_schemes_subdir_path = os.path.join(output_dir_path, type(self).__SCHEMES_DIR_NAME)
+        # Make a back up of schemes
+        self.__make_output_subdir_backup(output_schemes_subdir_path)
+        assert not os.path.exists(output_schemes_subdir_path), '[EE_ASSERT] The output Schemes subdirectory "{}" must NOT exist at this point of code!'.format(output_schemes_subdir_path)
+        # Create output Schemes directory by copying template Schemes directory 
+        shutil.copytree(template_schemes_dir_path, output_schemes_subdir_path)
+        return output_schemes_subdir_path
+
     def __replace_schemes_executable_path(self, template_schemes_dir_path, output_schemes_subdir_path):
         # Check preconditions!
         # Check if template_schemes_dir_path exists.
@@ -166,12 +182,6 @@ class ExecutablePathEditor():
 
         # Obtain directory path of this script
         script_dir_path = os.path.dirname(__file__)
-        
-        # Make a back up of schemes
-        self.__make_output_subdir_backup(output_schemes_subdir_path)
-        assert not os.path.exists(output_schemes_subdir_path), '[EE_ASSERT] The output Schemes subdirectory "{}" must NOT exist at this point of code!'.format(output_schemes_subdir_path)
-        # Create output Schemes directory by copying template Schemes directory 
-        shutil.copytree(template_schemes_dir_path, output_schemes_subdir_path)
         
         # File pattern of job star file in template RELION Schemes  
         output_job_star_file_path_pattern = os.path.join(output_schemes_subdir_path, type(self).__JOB_STAR_FILE_PATH_PATTERN)
@@ -236,7 +246,7 @@ class ExecutablePathEditor():
                         # Save the result of replacements to the current job star file
                         output_job_star_file.write(output_job_star_file_contents)
 
-    def edit(self, configs_dir_path, template_schemes_dir_path , output_dir_path, computing_environment):
+    def edit(self, configs_dir_path, template_schemes_dir_path , output_dir_path, computing_environment, output_schemes_subdir_path):
         # [*] configs_dir_path          : Path of input configurations directory containing all configuration yaml files.
         # [*] template_schemes_dir_path : Path of input template RELION Schemes directory containing all Schemes related files.
         # [*] output_dir_path           : Path of output root directroy where all outputs will be saved.
@@ -247,8 +257,6 @@ class ExecutablePathEditor():
         assert os.path.exists(output_dir_path), '[EE_ASSERT] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
 
         executable_settings_subdir_path = os.path.join(output_dir_path, type(self).EE_DIR_NAME)
-        output_schemes_subdir_path = os.path.join(output_dir_path, type(self).__SCHEMES_DIR_NAME)
-
         self.__construct_executable_dict(configs_dir_path, computing_environment)
         self.__save__executable_dict(executable_settings_subdir_path)
         self.__replace_schemes_executable_path(template_schemes_dir_path, output_schemes_subdir_path)
@@ -279,7 +287,8 @@ if __name__ == "__main__":
     print('[EE_MESSAGE] Editing executable file PATH of the job.star files in the specified shcemes...')
     print('[EE_MESSAGE] ')
     exeeditor = ExecutablePathEditor()
-    exeeditor.edit(option_configs_dir_path, option_template_schemes_dir_path, option_output_dir_path, option_computing_environment)
+    output_schemes_subdir_path = exeeditor.make_output_schemes(option_template_schemes_dir_path, option_output_dir_path)
+    exeeditor.edit(option_configs_dir_path, option_template_schemes_dir_path, option_output_dir_path, option_computing_environment,output_schemes_subdir_path)
     print('[EE_MESSAGE] ')
     print('[EE_MESSAGE] ')
     print('[EE_MESSAGE] DONE!')
