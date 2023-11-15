@@ -351,7 +351,7 @@ if __name__ == "__main__":
     print('[CC_MESSAGE] ')
     print('[CC_MESSAGE] ')
     cost_calculater = CostCalculater()
-    cost_calculater.edit(option_instance_yml_dir_path, option_relion_dir_path)
+    cost_calculater.edit(option_instance_yml_dir_path, option_relion_dir_path, option_output_dir_path, option_aws_region)
     print('[CC_MESSAGE] ')
     print('[CC_MESSAGE] ')
     print('[CC_MESSAGE] DONE!')
