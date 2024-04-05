@@ -1,0 +1,40 @@
+- DataType: Titan
+  Settings: 
+    CS_Cs: 2.7
+    CS_angpix_mic: 0.66
+    CS_ctf_max_res: 4
+    CS_ctf_max_def: 30000
+    CS_ctf_min_def: 5000
+    CS_dose_per_frame: 1
+    CS_eer_grouping: 21
+    CS_first_frame_sum: 1
+    CS_kV: 300
+    CS_motioncorr_max_motion: 80
+    CS_fn_in_raw: Micrographs/*.eer
+- DataType: Taros
+  Settings: 
+    CS_Cs: 2.7
+    CS_angpix_mic: 0.88
+    CS_ctf_max_res: 4
+    CS_ctf_max_def: 30000
+    CS_ctf_min_def: 5000
+    CS_dose_per_frame: 1
+    CS_eer_grouping: 21
+    CS_first_frame_sum: 1
+    CS_kV: 200
+    CS_motioncorr_max_motion: 80
+    CS_fn_in_raw: Micrographs/*.eer
+- DataType: Other
+  Settings: 
+    CS_Cs: 2.7
+    CS_angpix_mic: 0.83
+    CS_ctf_max_res: 4
+    CS_ctf_max_def: 20000
+    CS_ctf_min_def: 3000
+    CS_dose_per_frame: 0.87
+    CS_eer_grouping: 1
+    CS_first_frame_sum: 1
+    CS_kV: 300
+    CS_motioncorr_max_motion: 80
+    CS_fn_in_raw: Micrographs/*.tif
+
