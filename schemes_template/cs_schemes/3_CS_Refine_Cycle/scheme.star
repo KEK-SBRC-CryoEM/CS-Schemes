@@ -15,7 +15,7 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3  
-CS_refine3d_pmd_0o95       260        260
+CS_refine3d_pmd_0o95       253        253
 CS_angpix                    1.0375     1.0375
 maxtime_hr                  96         96
 wait_sec                   180        180
@@ -46,7 +46,7 @@ CS_refine3d_refine_map     Schemes/2_CS_Init_Refine3D/1500_Refine3D_local/run_cl
 CS_postprocess_map         Schemes/2_CS_Init_Refine3D/1600_PostProcess_local/postprocess.star   Schemes/2_CS_Init_Refine3D/1600_PostProcess_local/postprocess.star
 CS_ctfrefine_refine_data   Schemes/2_CS_Init_Refine3D/1500_Refine3D_local/run_data.star         Schemes/2_CS_Init_Refine3D/1500_Refine3D_local/run_data.star
 CS_imported_mask3d         Schemes/2_CS_Init_Refine3D/1202_Import_mask3d/$$CS_mask3d_name       Schemes/2_CS_Init_Refine3D/1202_Import_mask3d/$$CS_mask3d_name
-CS_mask3d_name             mask3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288_wo_det.mrc           　　　　　　mask3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288_wo_det.mrc
+CS_mask3d_name             mask3d_emd_22963_centerd_apix1o0375_d256.mrc          　　　　　　     mask3d_emd_22963_centerd_apix1o0375_d256.mrc
 CS_motioncorr_mics         Schemes/0_CS_prep/motioncorr/corrected_micrographs.star              Schemes/0_CS_prep/motioncorr/corrected_micrographs.star 
 CS_sym_name_refine3d_apo   C1                               C1 
 

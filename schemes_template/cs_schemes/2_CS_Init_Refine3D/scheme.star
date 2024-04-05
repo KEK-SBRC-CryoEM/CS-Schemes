@@ -15,16 +15,16 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-CS_duplicate_threshold       21           21
-CS_mics_box                 360          360
-CS_mics_box_0o95            342          342
-CS_parts_box                288          288
-CS_parts_x_coods_max       5580         5580
-CS_parts_x_coods_min        180          180
-CS_parts_y_coods_max       3912         3912
-CS_parts_y_coods_min        180          180
-CS_refine3d_pmd_optimal     166          166
-CS_refine3d_pmd_0o95        260          260
+CS_duplicate_threshold       32           32
+CS_mics_box                 320          320
+CS_mics_box_0o95            304          304
+CS_parts_box                256          256
+CS_parts_x_coods_max       5600         5600
+CS_parts_x_coods_min        160          160
+CS_parts_y_coods_max       3932         3932
+CS_parts_y_coods_min        160          160
+CS_refine3d_pmd_optimal     188          188
+CS_refine3d_pmd_0o95        253          253
 CS_angpix                     1.0375       1.0375
 maxtime_hr                   96           96
 wait_sec                    180          180
@@ -53,14 +53,14 @@ _rlnSchemeStringVariableResetValue #3
 prev_proc_exited        Schemes/13_CS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS                              Schemes/13_CS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS
 CS_extract_refine_data  Schemes/13_CS_Clean_Stack_3D/0900_Refine3D/run_data.star                          Schemes/13_CS_Clean_Stack_3D/0900_Refine3D/run_data.star
 CS_selected_mics        Schemes/11_CS_Create_Stack/0102_Select_split_stack_mics/micrographs_split1.star   Schemes/11_CS_Create_Stack/0102_Select_split_stack_mics/micrographs_split1.star
-CS_ref3d_path           /fsx/Inputs_Map/ref3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288.mrc         /fsx/Inputs_Map/ref3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288.mrc 
-CS_mask3d_path          /fsx/Inputs_Map/mask3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288_wo_det.mrc  /fsx/Inputs_Map/mask3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288_wo_det.mrc
-CS_ref3d_name           ref3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288.mrc                   ref3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288.mrc
-CS_mask3d_name          mask3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288_wo_det.mrc           mask3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288_wo_det.mrc
-imported_ref3d          Schemes/2_CS_Init_Refine3D/1201_Import_ref3d/$$CS_ref3d_name         Schemes/2_CS_Init_Refine3D/1201_Import_ref3d/$$CS_ref3d_name
-imported_mask3d         Schemes/2_CS_Init_Refine3D/1202_Import_mask3d/$$CS_mask3d_name       Schemes/2_CS_Init_Refine3D/1202_Import_mask3d/$$CS_mask3d_name
+CS_ref3d_path           /fsx/Inputs_Map/ref3d_emd_22963_centerd_apix1o0375_d256.mrc                       /fsx/Inputs_Map/ref3d_emd_22963_centerd_apix1o0375_d256.mrc
+CS_mask3d_path          /fsx/Inputs_Map/mask3d_emd_22963_centerd_apix1o0375_d256.mrc                      /fsx/Inputs_Map/mask3d_emd_22963_centerd_apix1o0375_d256.mrc
+CS_ref3d_name           ref3d_emd_22963_centerd_apix1o0375_d256.mrc                                       ref3d_emd_22963_centerd_apix1o0375_d256.mrc
+CS_mask3d_name          mask3d_emd_22963_centerd_apix1o0375_d256.mrc                                      mask3d_emd_22963_centerd_apix1o0375_d256.mrc
+imported_ref3d          Schemes/2_CS_Init_Refine3D/1201_Import_ref3d/$$CS_ref3d_name                      Schemes/2_CS_Init_Refine3D/1201_Import_ref3d/$$CS_ref3d_name
+imported_mask3d         Schemes/2_CS_Init_Refine3D/1202_Import_mask3d/$$CS_mask3d_name                    Schemes/2_CS_Init_Refine3D/1202_Import_mask3d/$$CS_mask3d_name
 CS_sym_name_refine3d_apo     C1                             C1
-python_exe              /efs/em/pyenv/versions/anaconda3-5.3.1/envs/topaz/bin/python         /efs/em/pyenv/versions/anaconda3-5.3.1/envs/topaz/bin/python 
+python_exe              /efs/em/pyenv/versions/anaconda3-5.3.1/envs/topaz/bin/python                      /efs/em/pyenv/versions/anaconda3-5.3.1/envs/topaz/bin/python 
 
 
 # version 30001

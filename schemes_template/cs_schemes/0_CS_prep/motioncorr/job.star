@@ -27,8 +27,8 @@ do_save_noDW            Yes
 do_save_ps              Yes  
 group_for_ps            4 
 bfactor                 200
-patch_x                 5 
-patch_y                 5 
+patch_x                 $$CS_patch_x 
+patch_y                 $$CS_patch_y 
 group_frames            1    
 bin_factor              1 
 fn_gain_ref             GLP-1_gain.mrc

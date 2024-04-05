@@ -20,11 +20,13 @@ CS_angpix_mic                   0.83           0.83
 CS_ctf_max_def              20000          20000 
 CS_ctf_max_res                  4              4 
 CS_ctf_min_def               3000           3000 
-CS_dose_per_frame               0.87           0.87 
+CS_dose_per_frame               0.74           0.74 
 CS_eer_grouping                 1              1 
 CS_first_frame_sum              1              1 
 CS_kV                         300            300 
 CS_motioncorr_max_motion       80             80 
+CS_patch_x                      4              4
+CS_patch_y                      3              3
 current_nr_import_movies        0              0
 do_at_most                   9999           9999
 maxtime_hr                     96             96 

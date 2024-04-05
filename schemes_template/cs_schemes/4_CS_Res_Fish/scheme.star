@@ -17,12 +17,12 @@ _rlnSchemeFloatVariableValue #2
 _rlnSchemeFloatVariableResetValue #3 
 maxtime_hr                        96          96
 wait_sec                         180         180
-CS_class3d_pmd                   166         166
-CS_refine3d_pmd_optimal          166         166
-CS_refine3d_pmd_0o95             260         260
+CS_class3d_pmd                   253         253
+CS_refine3d_pmd_optimal          188         188
+CS_refine3d_pmd_0o95             253         253
 CS_nr_3d_classes                   2           2
 CS_angpix                          1.0375      1.0375
-CS_b_factor                      -67         -67
+CS_b_factor                     -146        -146
 
 
 # version 30001
@@ -48,7 +48,7 @@ prev_proc_exited        Schemes/3_CS_Refine_Cycle/RELION_JOB_EXIT_SUCCESS       
 CS_class3d_refine_data  Schemes/3_CS_Refine_Cycle/1807_Refine3D_polish_3rd/run_data.star        Schemes/3_CS_Refine_Cycle/1807_Refine3D_polish_3rd/run_data.star 
 CS_class3d_refine_map   Schemes/3_CS_Refine_Cycle/1807_Refine3D_polish_3rd/run_class001.mrc     Schemes/3_CS_Refine_Cycle/1807_Refine3D_polish_3rd/run_class001.mrc
 CS_imported_mask3d      Schemes/2_CS_Init_Refine3D/1202_Import_mask3d/$$CS_mask3d_name          Schemes/2_CS_Init_Refine3D/1202_Import_mask3d/$$CS_mask3d_name
-CS_mask3d_name          mask3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288_wo_det.mrc     mask3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288_wo_det.mrc
+CS_mask3d_name          mask3d_emd_22963_centerd_apix1o0375_d256.mrc                            mask3d_emd_22963_centerd_apix1o0375_d256.mrc
 CS_sym_name_refine3d_apo      C1                     C1
 resmap_exe                    ""                     ""
 select_class3d_exe  "/efs/em/pyenv/versions/anaconda3-5.3.1/envs/cryolo-1.8.0/bin/python /fsx/GoToFly/SelectClass3D/gtf_relion4_run_select_class3d.py"        "/efs/em/pyenv/versions/anaconda3-5.3.1/envs/cryolo-1.8.0/bin/python /fsx/GoToFly/SelectClass3D/gtf_relion4_run_select_class3d.py"

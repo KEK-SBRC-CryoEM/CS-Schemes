@@ -17,15 +17,15 @@ _rlnSchemeFloatVariableValue #2
 _rlnSchemeFloatVariableResetValue #3 
 CS_cryolo_threshold        0.1             0.1 
 CS_ctf_maxres              6.0             6.0 
-CS_mics_box              336             336
-CS_mics_box_0o95         320             320 
-CS_min_nr_parts       400000          400000
+CS_mics_box              252             252
+CS_mics_box_0o95         240             240 
+CS_min_nr_parts       200000          800000
 CS_min_nr_mics          2000            2000 
-CS_parts_box             112             112 
-CS_parts_x_coods_max    5592            5592 
-CS_parts_x_coods_min     168             168 
-CS_parts_y_coods_max    3924            3924 
-CS_parts_y_coods_min     168             168 
+CS_parts_box              84              84 
+CS_parts_x_coods_max    5634            5634 
+CS_parts_x_coods_min     126             126 
+CS_parts_y_coods_max    3966            3966 
+CS_parts_y_coods_min     126             126 
 current_nr_mics            0               0
 current_nr_parts           0               0 
 maxtime_hr                96              96

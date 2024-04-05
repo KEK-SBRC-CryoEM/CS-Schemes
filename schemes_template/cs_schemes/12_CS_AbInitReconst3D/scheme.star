@@ -15,8 +15,8 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-CS_class2d_pmd             169        169
-CS_abinit3D_pmd            169        169 
+CS_class2d_pmd             153        153
+CS_abinit3D_pmd            153        153 
 CS_nr_2d_classes           200        200 
 CS_rank_threshold_class2d    0.06       0.06
 CS_rank_threshold_abinit3D   0.26       0.26

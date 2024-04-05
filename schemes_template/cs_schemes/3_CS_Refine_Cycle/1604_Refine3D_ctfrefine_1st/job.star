@@ -27,6 +27,7 @@ ctf_intact_first_peak               No
 particle_diameter                   $$CS_refine3d_pmd_0o95
 do_zero_mask                        Yes     
 do_solvent_fsc                      Yes 
+do_blush                            Yes 
 sampling                            "1.8 degrees" 
 offset_range                        5 
 offset_step                         1 

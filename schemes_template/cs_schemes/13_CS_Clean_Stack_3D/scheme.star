@@ -15,9 +15,9 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-CS_class3d_pmd           169             169
-CS_nr_3d_classes           3               3  
-CS_refine3d_pmd          169             169
+CS_class3d_pmd           153             153
+CS_nr_3d_classes           4               4
+CS_refine3d_pmd          199             199
 CS_angpix                  2.49            2.49
 CS_low_pass                7.47            7.47
 maxtime_hr                96              96
@@ -49,10 +49,10 @@ prev_proc_exited        Schemes/12_CS_AbInitReconst3D/RELION_JOB_EXIT_SUCCESS   
 imported_ref3d          Schemes/13_CS_Clean_Stack_3D/0601_Import_ref3d/$$CS_ref3d_name                   Schemes/13_CS_Clean_Stack_3D/0601_Import_ref3d/$$CS_ref3d_name
 imported_mask3d         Schemes/13_CS_Clean_Stack_3D/0602_Import_mask3d/$$CS_mask3d_name                 Schemes/13_CS_Clean_Stack_3D/0602_Import_mask3d/$$CS_mask3d_name
 CS_selected_parts       Schemes/11_CS_Create_Stack/0303_Select_split_stack_parts/particles_split1.star   Schemes/11_CS_Create_Stack/0303_Select_split_stack_parts/particles_split1.star
-CS_ref3d_path           /fsx/Inputs_Map/ref3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc /fsx/Inputs_Map/ref3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc
-CS_mask3d_path          /fsx/Inputs_Map/mask3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc /fsx/Inputs_Map/mask3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc
-CS_ref3d_name           ref3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc    ref3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc
-CS_mask3d_name          mask3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc   mask3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc
+CS_ref3d_path           /fsx/Inputs_Map/ref3d_emd_22963_centerd_apix2o49_d84.mrc                         /fsx/Inputs_Map/ref3d_emd_22963_centerd_apix2o49_d84.mrc
+CS_mask3d_path          /fsx/Inputs_Map/mask3d_emd_22963_centerd_apix2o49_d84.mrc                        /fsx/Inputs_Map/mask3d_emd_22963_centerd_apix2o49_d84.mrc
+CS_ref3d_name           ref3d_emd_22963_centerd_apix2o49_d84.mrc                                         ref3d_emd_22963_centerd_apix2o49_d84.mrc
+CS_mask3d_name          mask3d_emd_22963_centerd_apix2o49_d84.mrc                                        mask3d_emd_22963_centerd_apix2o49_d84.mrc
 mask3d_cls3d               ""                                             ""
 mask3d_ref3d               ""                                             ""
 CS_sym_name_class3d        C1                                             C1

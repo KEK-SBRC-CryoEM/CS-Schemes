@@ -31,6 +31,7 @@ do_fast_subsets                    Yes
 particle_diameter                  $$CS_class3d_pmd
 do_zero_mask                       Yes
 highres_limit                      -1
+do_blush                           Yes 
 dont_skip_align                    No
 sampling                           "7.5 degrees" 
 offset_range                       5 
