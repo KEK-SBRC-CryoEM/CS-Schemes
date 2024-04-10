@@ -1,0 +1,28 @@
+### Do not change ###
+- AlgoType: algo_type_ctffind_ctff4
+  Settings:
+    CTFFIND4Executable: /efs/em/ctffind-4.1.14-linux64/bin/ctffind
+- AlgoType: algo_type_ctffind_gctf
+  Settings:
+    GctfExecutable: /efs/em/Gctf_v1.06/bin/Gctf-v1.06_sm_20_cu7.5_x86_64
+- AlgoType: algo_type_motioncorr_mocor2
+  Settings:
+    MOTIONCOR2Executable: EP_NOT_APPLICABLE
+- AlgoType: algo_type_localres_resmap
+  Settings:
+    ResMapExecutable: EP_NOT_APPLICABLE
+- AlgoType: algo_type_select_class2d
+  Settings:
+    PythonExecutable: /efs/em/pyenv/versions/anaconda3-5.3.1/envs/topaz/bin/python
+- AlgoType: algo_type_external_select3d
+  Settings:
+    SelectClass3DExecutable: '"/efs/em/pyenv/versions/anaconda3-5.3.1/envs/cryolo-1.8.0/bin/python /fsx/GoToFly/SelectClass3D/gtf_relion4_run_select_class3d.py"'
+- AlgoType: algo_type_external_cryolo
+  Settings:
+    CrYOLOExecutable: /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh 
+    CrYOLORepo: /efs/em/crYOLO
+
+
+
+
+

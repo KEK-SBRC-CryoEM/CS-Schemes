@@ -1,0 +1,15 @@
+- SubmissionLevel: GPU
+  Settings: 
+    SubmitToQueue: 'Yes'
+    SubmitCommand: 'sbatch'
+    SubmissionScript: '/efs/em/aws_slurm_relion.sh'
+- SubmissionLevel: CPU
+  Settings:
+    SubmitToQueue: 'Yes'
+    SubmitCommand: 'sbatch'
+    SubmissionScript: '/efs/em/aws_slurm_relion.sh'
+- SubmissionLevel: NOQUEUE
+  Settings:
+    SubmitToQueue: 'No'
+    SubmitCommand: '""'
+    SubmissionScript: '""'
