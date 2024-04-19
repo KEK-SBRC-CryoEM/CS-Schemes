@@ -327,8 +327,7 @@ class JobStarEditor:
     __CONFIG_LEVEL_YAML_INFO_LIST.append(['config_level_algo' + __YAML_FILE_EXT,       'AlgoLevel'       ])
     
     # __CONFIG_ALGO_TYPE_YAML_FILE_NAME = 'config_type_algo' + __YAML_FILE_EXT
-    
-    __CONFIG_TO_JOB_STAR_KEY_MAPPING_YAML_FILE_NAME = 'config_to_job_star_key_mapping_sys' + __YAML_FILE_EXT
+    # __CONFIG_TO_JOB_STAR_KEY_MAPPING_YAML_FILE_NAME = 'config_to_job_star_key_mapping_sys' + __YAML_FILE_EXT
     
     __ALGO_TYPE_KEY = 'AlgoType'
     __ALGO_TYPE_NAME_PREFIX = JobTypeToAlgoTypeConvertor.ALGO_TYPE_NAME_PREFIX
@@ -339,7 +338,7 @@ class JobStarEditor:
     __JS_LEVEL_FILE_KEY     = 'LevelFile'
     __PS_FILE_PREFIX  = 'js_'    # Abbreviations of "jobstar settings"
     
-    __MERGED_ALGO_TYPE_PARLLEL_SETTINGS_LIST_YAML_FILE_NAME = __PS_FILE_PREFIX + __ALGO_TYPE_NAME_PREFIX + 'all_list' + __YAML_FILE_EXT
+    __JOBSTAR_SETTINGS_LIST_YAML_FILE_NAME = __PS_FILE_PREFIX + __ALGO_TYPE_NAME_PREFIX + 'all_list' + __YAML_FILE_EXT
     
     __SCHEMES_DIR_NAME             = 'Schemes'  # Name of RELION Schemes Directory
     __JOB_STAR_FILE_RPATH_PATTERN  = '**/**/job.star'  # Relative to Relion Project Directory
@@ -354,7 +353,7 @@ class JobStarEditor:
     def __init__(self):
         # Private instance variables
         # Holds a list of all algorithm type dictionaries 
-        self.__merged_algo_type_dict_list= []
+        self.__jobstar_config_dict_list= []
     # <Private Helper Instance Method> Load yaml file and keep the contents as a dictionary 
     def __load_yaml_file(self, yaml_file_path):
         with open(yaml_file_path, 'r') as yaml_file:
@@ -378,7 +377,7 @@ class JobStarEditor:
     # <Private Instance Method> Create a dictionary for each algorithm from the parallel settings defined in the config files. 
     # Then, combine individual algorithm dictionaries as a single list of all algorithm dictionaries
     # and keep the list as an instance variable
-    def __create_merged_algo_type_dict_list(self, configs_file_path):
+    def __create_jobstar_config_dict_list(self, configs_file_path):
         # configs_dir_path: a path of directory containing all configuration yaml files
         # configs_file_path : a path of configuration yaml files
         # Check preconditions!
@@ -387,10 +386,10 @@ class JobStarEditor:
         assert os.path.exists(configs_file_path), '[PS_ASSERT] The configurations file "{}" must exist!'.format(configs_file_path)
         
         # Reinitialize the list of all algorithm dictionaries
-        if len(self.__merged_algo_type_dict_list) > 0:
+        if len(self.__jobstar_config_dict_list) > 0:
             print('[PS_MESSAGE] Reinitializing the list of all algorithm dictionaries...')
-            self.__merged_algo_type_dict_list = []
-        assert len(self.__merged_algo_type_dict_list) == 0, '[PS_ASSERT] self.__merged_algo_type_dict_list should be empty instead of containing "{}" dictionaries at this point code! Something is seriously wrong with this coding!'.format(len(self.__merged_algo_type_dict_list))
+            self.__jobstar_config_dict_list = []
+        assert len(self.__jobstar_config_dict_list) == 0, '[PS_ASSERT] self.__jobstar_config_dict_list should be empty instead of containing "{}" dictionaries at this point code! Something is seriously wrong with this coding!'.format(len(self.__jobstar_config_dict_list))
         
         # Structure of algo_type_dict_dict
         #   algo_type_dict_dict := {AlgoType:*, algo_type_dict}
@@ -398,15 +397,15 @@ class JobStarEditor:
         #   config_algo_type_yaml_file_path = os.path.join(configs_dir_path, type(self).__CONFIG_ALGO_TYPE_YAML_FILE_NAME)
         config_algo_type_yaml_file_path = configs_file_path
         algo_type_dict_dict = self.__load_yaml_file(config_algo_type_yaml_file_path)
-        algo_key_test =[type(self).__JS_LEVEL_COMB_KEY, type(self).__JS_LEVEL_FILE_KEY]
+        algo_type_key =[type(self).__JS_LEVEL_COMB_KEY, type(self).__JS_LEVEL_FILE_KEY]
         if type(algo_type_dict_dict) == list:
-            self.__merged_algo_type_dict_list = algo_type_dict_dict
+            self.__jobstar_config_dict_list = algo_type_dict_dict
         else:    
-            if set(algo_key_test) == set(algo_type_dict_dict.keys()): 
+            if set(algo_type_key) == set(algo_type_dict_dict.keys()): 
                 algo_type_dict_list = algo_type_dict_dict[type(self).__JS_LEVEL_COMB_KEY]
                 for algo_type_dict in algo_type_dict_list:
                     all_level_algo_type_dict = {}
-                    all_level_parallel_settings_dict = {}
+                    all_level_config_settings_dict = {}
                     for config_level_yaml_info_key in algo_type_dict_dict[type(self).__JS_LEVEL_FILE_KEY].keys():
                         config_level_yaml_file_path = algo_type_dict_dict[type(self).__JS_LEVEL_FILE_KEY][config_level_yaml_info_key]
                         config_level_key       = config_level_yaml_info_key
@@ -423,44 +422,44 @@ class JobStarEditor:
                         for config_level_dict in config_level_dict_dict:
                             if config_level_dict[config_level_key] == config_level_value:
                                 all_level_algo_type_dict.update(config_level_dict)
-                                all_level_parallel_settings_dict.update(config_level_dict[type(self).__PS_KEY])
+                                all_level_config_settings_dict.update(config_level_dict[type(self).__PS_KEY])
             
-                    merged_algo_type_dict = {**algo_type_dict, **all_level_algo_type_dict, type(self).__PS_KEY:{**all_level_parallel_settings_dict}}
-                    self.__merged_algo_type_dict_list.append(merged_algo_type_dict)
+                    jobstar_config_dict = {**algo_type_dict, **all_level_algo_type_dict, type(self).__PS_KEY:{**all_level_config_settings_dict}}
+                    self.__jobstar_config_dict_list.append(jobstar_config_dict)
 
             else:
                 print('[PS_ERROR] Config yaml file structure is wrong...')
 
     # <Private Instance Method> Save the parameter settings as yml files
-    def __save_merged_algo_type_dict_list(self, parallel_settings_subdir_path):
-        if len(self.__merged_algo_type_dict_list) > 0:
-            self.__make_output_subdir_backup(parallel_settings_subdir_path)
-            assert not os.path.exists(parallel_settings_subdir_path), '[PS_ASSERT] The output paralle settings subdirectory "{}" must NOT exist at this point of code!'.format(parallel_settings_subdir_path)
-            os.mkdir(parallel_settings_subdir_path)
+    def __save_jobstar_config_dict_list(self, jobstar_settings_subdir_path):
+        if len(self.__jobstar_config_dict_list) > 0:
+            self.__make_output_subdir_backup(jobstar_settings_subdir_path)
+            assert not os.path.exists(jobstar_settings_subdir_path), '[PS_ASSERT] The output paralle settings subdirectory "{}" must NOT exist at this point of code!'.format(jobstar_settings_subdir_path)
+            os.mkdir(jobstar_settings_subdir_path)
              
-            for merged_algo_type_dict in self.__merged_algo_type_dict_list: 
-                merged_algo_type_setting_yaml_file_name = type(self).__PS_FILE_PREFIX + merged_algo_type_dict[type(self).__ALGO_TYPE_KEY] + type(self).__YAML_FILE_EXT
-                merged_algo_type_setting_yaml_file_path = os.path.join(parallel_settings_subdir_path, merged_algo_type_setting_yaml_file_name)
-                self.__save_yaml_file(merged_algo_type_setting_yaml_file_path, merged_algo_type_dict)
-            merged_algo_type_setting_list_yaml_file_path = os.path.join(parallel_settings_subdir_path, type(self).__MERGED_ALGO_TYPE_PARLLEL_SETTINGS_LIST_YAML_FILE_NAME)
-#            merged_algo_type_setting_list_yaml_file_path = os.path.join(parallel_settings_subdir_path, merged_algo_type_setting_list_yaml_file_name) 
-            self.__save_yaml_file(merged_algo_type_setting_list_yaml_file_path, self.__merged_algo_type_dict_list)
+            for jobstar_config_dict in self.__jobstar_config_dict_list: 
+                jobstar_setting_yaml_file_name = type(self).__PS_FILE_PREFIX + jobstar_config_dict[type(self).__ALGO_TYPE_KEY] + type(self).__YAML_FILE_EXT
+                jobstar_setting_yaml_file_path = os.path.join(jobstar_settings_subdir_path, jobstar_setting_yaml_file_name)
+                self.__save_yaml_file(jobstar_setting_yaml_file_path, jobstar_config_dict)
+            jobstar_setting_list_yaml_file_path = os.path.join(jobstar_settings_subdir_path, type(self).__JOBSTAR_SETTINGS_LIST_YAML_FILE_NAME)
+#            jobstar__setting_list_yaml_file_path = os.path.join(jobstar_settings_subdir_path, jobstar__setting_list_yaml_file_name) 
+            self.__save_yaml_file(jobstar_setting_list_yaml_file_path, self.__jobstar_config_dict_list)
         else:
-            assert len(self.__merged_algo_type_dict_list) == 0, '[PS_ASSERT] self.__merged_algo_type_dict_list should be empty at this point of code!'
-            print('[PS_MESSAGE] self.__merged_algo_type_dict_list is empty. Please call __create_merged_algo_type_dict_list() before calling __save_merged_algo_type_dict_list')
+            assert len(self.__jobstar_config_dict_list) == 0, '[PS_ASSERT] self.__jobstar_config_dict_list should be empty at this point of code!'
+            print('[PS_MESSAGE] self.__jobstar_config_dict_list is empty. Please call __create_jobstar_config_dict_list() before calling __save_jobstar_config_dict_list')
 
     # <Private Instance Method> Replace values of paralle settings of all job star (job.star) in the specified template Schemes dirctory
     # and save the results to the output Schemes directory.
-    def __replace_schemes_parallel_settings(self, output_schemes_subdir_path, job_star_key_mapping_file_path):
+    def __replace_schemes_jobstar_settings(self, output_schemes_subdir_path, job_star_key_mapping_file_path):
         # Obtain directory path of this script
-#        script_dir_path = os.path.dirname(__file__)
+        # script_dir_path = os.path.dirname(__file__)
         # Create JobTypeToAlgoTypeConvertor (Singleton Class)
         job_type_to_algo_type_convertor = JobTypeToAlgoTypeConvertor.get_singleton()
         # File pattern of job star file in tempate RELION Schemes  
         output_job_star_file_path_pattern = os.path.join(output_schemes_subdir_path, type(self).__JOB_STAR_FILE_RPATH_PATTERN)
         # Replace values of paralle settings of all job star (job.star) in the specified template Schemes dirctory
         # Create key mapping dictionry to link keys in config yaml file to the keys in job.star file
-#        config_to_job_star_key_mapping_yaml_file_path = os.path.join(script_dir_path, type(self).__CONFIG_TO_JOB_STAR_KEY_MAPPING_YAML_FILE_NAME)
+        # config_to_job_star_key_mapping_yaml_file_path = os.path.join(script_dir_path, type(self).__CONFIG_TO_JOB_STAR_KEY_MAPPING_YAML_FILE_NAME)
         config_to_job_star_key_mapping_dict = self.__load_yaml_file(job_star_key_mapping_file_path)
 
         # Create Relion Command list to replace the values of job.star  
@@ -469,7 +468,7 @@ class JobStarEditor:
             assert os.path.exists(output_job_star_file_path), '[PS_ASSERT] The file "{}" must exist at this point of code!'.format(output_job_star_file_path)
             algo_type, job_star_file_path = job_type_to_algo_type_convertor.convert(output_job_star_file_path)
 
-#            merged_algo_type_dict = [merged_algo_type_dict for merged_algo_type_dict in self.__merged_algo_type_dict_list if merged_algo_type_dict[type(self).__ALGO_TYPE_KEY] == algo_type][0]
+#            jobstar_config_dict = [jobstar_config_dict for jobstar_config_dict in self.__jobstar_config_dict_list if jobstar_config_dict[type(self).__ALGO_TYPE_KEY] == algo_type]
 
             # Create list of job.star keys due to replace only the values corresponding to the keys present in job.star
             job_star_dict = starfile.read(job_star_file_path)
@@ -478,14 +477,14 @@ class JobStarEditor:
                 job_star_key = job_star_dict['joboptions_values']['rlnJobOptionVariable'][i]
                 job_star_key_list.append(job_star_key)
             
-            # Create list of relion_pipeliner command to replace the values in job.star with the value in self.__merged_algo_type_dict_list.
-            for merged_algo_type_dict in self.__merged_algo_type_dict_list:
-                if merged_algo_type_dict[type(self).__ALGO_TYPE_KEY] == algo_type:
-                    for settings_key in merged_algo_type_dict[type(self).__PS_KEY].keys():
+            # Create list of relion_pipeliner command to replace the values in job.star with the value in self.__jobstar_config_dict_list.
+            for jobstar_config_dict in self.__jobstar_config_dict_list:
+                if jobstar_config_dict[type(self).__ALGO_TYPE_KEY] == algo_type:
+                    for settings_key in jobstar_config_dict[type(self).__PS_KEY].keys():
                         edit_option = config_to_job_star_key_mapping_dict[settings_key]
-                        edit_value = merged_algo_type_dict[type(self).__PS_KEY][settings_key]
+                        edit_value = jobstar_config_dict[type(self).__PS_KEY][settings_key]
                         if edit_option in job_star_key_list and 'NOT_APPLICABLE' not in edit_value:
-                            relion_command = 'relion_pipeliner --editJob ' + job_star_file_path + ' --editOption ' + edit_option+ ' --editValue ' + edit_value
+                            relion_command = 'relion_pipeliner --editJob ' + str(job_star_file_path) + ' --editOption ' + str(edit_option) + ' --editValue ' + str(edit_value)
                             relion_command_list.append(relion_command)
         # Replace the values in job.star by running Relion command
         if len(relion_command_list) > 0:
@@ -544,19 +543,19 @@ class JobStarEditor:
         assert os.path.exists(output_dir_path), '[PS_ASSERT] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
         
         #  Set instance variables
-        parallel_settings_subdir_path = os.path.join(output_dir_path, type(self).__PS_DIR_NAME)
-        self.__create_merged_algo_type_dict_list(configs_file_path)
-        self.__save_merged_algo_type_dict_list(parallel_settings_subdir_path)
-        self.__replace_schemes_parallel_settings(output_schemes_subdir_path, job_star_key_mapping_file_path)
+        jobstar_settings_subdir_path = os.path.join(output_dir_path, type(self).__PS_DIR_NAME)
+        self.__create_jobstar_config_dict_list(configs_file_path)
+        self.__save_jobstar_config_dict_list(jobstar_settings_subdir_path)
+        self.__replace_schemes_jobstar_settings(output_schemes_subdir_path, job_star_key_mapping_file_path)
 
 
 if __name__ == "__main__":
     # Parse command argument
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--configs_file",   type=str,    default='../../configs/gotocloud/config_type_algo.yml',    help = 'Path of input configuration yaml file.  (Default "./configs/gotocloud/config_type_algo.yml")')
-    parser.add_argument("-k", "--key_map_file",   type=str,    default='./config_to_job_star_key_mapping_ps.yml',    help = 'Path of input configuration yaml file.  (Default "./config_to_job_star_key_mapping_ps.yml")')
-    parser.add_argument("-s", "--schemes_dir",    type=str,    default='../../schemes_template/cs_schemes',    help = 'Path of input template RELION Schemes directory containing all Schemes related files.  (Default "../../schemes_template/cs-schemes")')
-    parser.add_argument("-o", "--output_dir",     type=str,    default='../',          help = 'Path of output root directroy where all outputs will be saved.  (default "../")')
+    parser.add_argument("-c", "--configs_file",   type=str,    required=True,    help = 'Path of input configuration yaml file. This option is always required.')
+    parser.add_argument("-k", "--key_map_file",   type=str,    required=True,    help = 'Path of job.star key mapping yaml file. This option is always required.')
+    parser.add_argument("-s", "--schemes_dir",    type=str,    default='../../../schemes_template/cs_schemes',    help = 'Path of input template RELION Schemes directory containing all Schemes related files.  (Default "../../schemes_template/cs-schemes")')
+    parser.add_argument("-o", "--output_dir",     type=str,    default='./',          help = 'Path of output root directroy where all outputs will be saved.  (default "../")')
 
     args = parser.parse_args()
     ### args, unknown = parser.parse_known_args()
@@ -576,9 +575,9 @@ if __name__ == "__main__":
     print('[PS_MESSAGE]   Input tempate Schemes directory path := {}'.format(option_template_schemes_dir_path))
     print('[PS_MESSAGE]   Output root directory path           := {}'.format(option_output_dir_path))
     print('[PS_MESSAGE] ')
-    print('[PS_MESSAGE] Editing parallel settings of all job.star files in the specified shcemes...')
-    ps_editor = JobStarEditor()
-    output_schemes_subdir_path = ps_editor.make_output_schemes(option_template_schemes_dir_path, option_output_dir_path)
-    ps_editor.edit(option_configs_file_path, option_job_star_key_mapping_file_path, option_output_dir_path, output_schemes_subdir_path)
+    print('[PS_MESSAGE] Editing job.star settings of all job.star files in the specified shcemes...')
+    js_editor = JobStarEditor()
+    output_schemes_subdir_path = js_editor.make_output_schemes(option_template_schemes_dir_path, option_output_dir_path)
+    js_editor.edit(option_configs_file_path, option_job_star_key_mapping_file_path, option_output_dir_path, output_schemes_subdir_path)
     print('[PS_MESSAGE] ')
     print('[PS_MESSAGE] DONE!')
