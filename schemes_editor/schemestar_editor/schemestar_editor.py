@@ -108,7 +108,7 @@ class SchemeStarEditor():
         # Check if template_schemes_dir_path exists.
         assert configs_file_path, '[SS_ASSERT] The configs file "{}" must exist!'.format(configs_file_path)
         if not os.path.exists(configs_file_path):
-            print('[SS_MESSAGE] Error! The template Schemes directory "{}" does NOT exist! Please set the correct PATH using "--c" option.'.format(configs_file_path))
+            print('[SS_MESSAGE] Error! The configs file "{}" does NOT exist! Please set the correct PATH using "--c" option.'.format(configs_file_path))
             return
         # Load yaml file and keep the contents as a list of a dictionary data
         yaml_dict_list = self.__load_yaml_file(configs_file_path)
@@ -213,11 +213,12 @@ class SchemeStarEditor():
         if len(relion_schemer_command_list) > 0:
             print('[JS_MESSAGE] Replace the values in the job.star file with the following relion command')
             output_schemes_parent_dir_path = os.path.abspath(os.path.join(output_schemes_subdir_path, os.pardir))
-            print(output_schemes_parent_dir_path)
+            current_dir_path = os.getcwd()
             for relion_schemer_command in relion_schemer_command_list:
                 print(relion_schemer_command)
                 os.chdir(output_schemes_parent_dir_path)
                 os.system(relion_schemer_command)
+            os.chdir(current_dir_path)
         else:
             assert len(relion_schemer_command_list) == 0, '[JS_ASSERT] relion_command_list should not be empty at this point of code!'
  
@@ -243,8 +244,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--configs_file",    type=str,   required=True,    help = 'Path of input configurations directory containing all configuration yaml files. This option is always required.')
 #    parser.add_argument("-c", "--configs_file",    type=str,   default='./configs/config_sample_settings.yml',    help = 'Path of input configurations directory containing all configuration yaml files.  (Default "./Configs")')
-    parser.add_argument("-s", "--schemes_dir",    type=str,   default='./Schemes',    help = 'Path of input template RELION Schemes directory containing all Schemes related files.  (Default "./Schemes")')
-    parser.add_argument("-o", "--output_dir",     type=str,   default='../',          help = 'Path of output root directroy where all outputs will be saved.  (default "../")')
+    parser.add_argument("-s", "--schemes_dir",    type=str,   default='../../schemes_template/cs_schemes',    help = 'Path of input template RELION Schemes directory containing all Schemes related files.  (Default "./Schemes")')
+    parser.add_argument("-o", "--output_dir",     type=str,   default='./',          help = 'Path of output root directroy where all outputs will be saved.  (default "../")')
     args = parser.parse_args()
     
     # Rename options for readability
