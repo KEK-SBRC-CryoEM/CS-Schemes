@@ -5,12 +5,14 @@
 # Copyright (c) 2023 KEK IMMS SBRC
 # 
 # Description:
-# Simplify the setting of measurements condition and sample data. 
-# Them in the scheme.star files are replaced by values in yaml config files.
-# User set up mesurements condition in config_measurements_condition.yaml and sample data in config_sample_data.yml. 
+# To simplify changing settings in the scheme.star files.
+# The Parameters in the scheme.star files are replaced by values in yaml config files.
+# User set  sample data information in config_sample_settings.yml.
+# User must specify the path to config_sample_settings.yml when executing this script.
 #
 # Usage
-# $ python3 SchemeStarEditor.py
+#
+# $ python3 schemestar_editor.py -c /<path_to>/config_sample_settings.yml
 #
 #
 #################################################################################################
@@ -19,24 +21,24 @@
 # Directory structure
 # 
 # - Script Directory 
-#   |-- SchemeStarEditor.py
-#   |-- config_to_job_star_key_mapping.yml
-#   |
-#   |-- Configs  # A sample of configurations directory (Use this as a template to create user-defined configurations)
-#   | |-- config_em_settings.yml
-#   | |-- config_sample_settings_xx.yml
-#   |
-#   |-- Schemes             <<<< a sample of template schemes directory (Use this as a template to create user-defined schemes)
-#     |-- **                <<<< a single scheme directoy
-#       |-- scheme.star     <<<< a scheme star file per the single scheme   
-#       |-- **              <<<< a job directory of the single scheme
-#         |- job.star       <<<< a job star file of the single scheme
+#    |-- schemestar_editor
+#      |-- schemestar_editor.py
+#  
+# - Configs Directory   # A sample of configurations directory (Use this as a template to create user-defined configurations)
+#    |-- config_em_settings.yml
+#    |-- config_sample_settings_xx.yml
+
+# -  Schemes template Directory 
+#    |-- Schemes             <<<< a sample of template schemes directory (Use this as a template to create user-defined schemes)
+#      |-- **                <<<< a single scheme directoy
+#        |-- scheme.star     <<<< a scheme star file per the single scheme   
+#        |-- **              <<<< a job directory of the single scheme
+#          |- job.star       <<<< a job star file of the single scheme
 # 
 # - <INPUT> User-Defined Configurations Directory 
-#   |-- Configs  # A sample of configurations directory (Use this as a template to create user-defined configurations)
-#     |-- config_em_settings.yml
+#   |-- configs/common  # A sample of configurations directory (Use this as a template to create user-defined configurations)
+#     |-- config_em_settings_xx.yml
 #     |-- config_sample_settings.yml
-#     |-- config_data_type.yml
 #
 # - <INPUT> User-Defined Template Schemes Directory
 #   |-- Schemes             <<<< a sample of template schemes directory (Use this as a template to create user-defined schemes)
@@ -51,13 +53,12 @@
 #       |-- scheme.star     <<<< a scheme star file per the single scheme   <<< change parameters in this file by this script!
 #       |-- **              <<<< a job directory of the single scheme
 #         |- job.star       <<<< a job star file of the single scheme
-#   |-- ProteinDataSettings    <<<< An output directory to be created. It will contain the executable file PATH setting file.
-#     |-- pde_scheme_star_<scheme name>'.yml          <<<< Output file of the protein data setting for scheme star per single scheme.
+#   |-- schemestar_ettings    <<<< An output directory to be created. It will contain the executable file PATH setting file.
+#     |-- ss_scheme_star_<scheme name>'.yml          <<<< Output file of the protein data setting for scheme star per single scheme.
 # 
 # ========================================================================================
 
 import yaml
-import glob
 import os
 import shutil
 import datetime
@@ -68,7 +69,6 @@ class SchemeStarEditor():
     # Private class constants
     __SS_DIR_NAME                        = 'schemestar_settings'
     __YAML_FILE_EXT                       = '.yml'
-#    __PDE_CONFIG_DATA_TYPE_YAML_FILE_NAME = 'config_data_type' + __YAML_FILE_EXT
     __SS_SETTING_FILE_PREFIX              = 'ss_scheme_star_'
     __SCHEME_STAR_KEY_PREFIX              = 'CS_'
 
@@ -112,8 +112,6 @@ class SchemeStarEditor():
             return
         # Load yaml file and keep the contents as a list of a dictionary data
         yaml_dict_list = self.__load_yaml_file(configs_file_path)
-
-
         setting_dict_list = []
         setting_dict = {}
         for yaml_dict in yaml_dict_list:
@@ -123,13 +121,13 @@ class SchemeStarEditor():
                     setting_dict[type(self).__SS_SCHEME_NAME_KEY] = scheme
                     setting_dict[type(self).__SS_SETTING_KEY] = yaml_dict[type(self).__SS_SETTING_KEY]
                     setting_dict_list.append(setting_dict.copy())
-        
             else:
                 print('[SS_MESSAGE] "{}" has not been set!'.format(type(self).__SS_SCHEME_NAME_KEY))
                 setting_dict[type(self).__SS_SCHEME_NAME_KEY] = 'All'
                 setting_dict[type(self).__SS_SETTING_KEY] = yaml_dict[type(self).__SS_SETTING_KEY]
                 setting_dict_list.append(setting_dict.copy())
-
+        # Make sure the key to be repalaced exists in the target scheme.star file.
+        # Create list to replace the values in scheme.star.
         scheme_name_list = os.listdir(output_schemes_subdir_path)
         for scheme_name in scheme_name_list:
             schemestar_dict = {}
@@ -223,9 +221,9 @@ class SchemeStarEditor():
             assert len(relion_schemer_command_list) == 0, '[JS_ASSERT] relion_command_list should not be empty at this point of code!'
  
     def edit(self, schemes_subdir_path, configs_file_path, output_dir_path):
-        # [*] configs_dir_path          : Path of input configurations directory containing all configuration yaml files.
-        # [*] template_schemes_dir_path : Path of input template RELION Schemes directory containing all Schemes related files.
-        # [*] output_dir_path           : Path of output root directroy where all outputs will be saved.
+        # [*] configs_file_path          : Path of input configuration yaml file.
+        # [*] schemes_subdir_path        : Path of input template RELION Schemes directory containing all Schemes related files.
+        # [*] output_dir_path            : Path of output root directroy where all outputs will be saved.
         if not os.path.exists(schemes_subdir_path):
             print('[EE_MESSAGE] The specified output directory "{}" does not exist yet! Creating the directory'.format(output_dir_path))
             os.mkdir(schemes_subdir_path)
@@ -242,8 +240,7 @@ class SchemeStarEditor():
 if __name__ == "__main__":
     # Parse command argument
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--configs_file",    type=str,   required=True,    help = 'Path of input configurations directory containing all configuration yaml files. This option is always required.')
-#    parser.add_argument("-c", "--configs_file",    type=str,   default='./configs/config_sample_settings.yml',    help = 'Path of input configurations directory containing all configuration yaml files.  (Default "./Configs")')
+    parser.add_argument("-c", "--configs_file",    type=str,   required=True,    help = 'Path of input configuration yaml file. This option is always required.')
     parser.add_argument("-s", "--schemes_dir",    type=str,   default='../../schemes_template/cs_schemes',    help = 'Path of input template RELION Schemes directory containing all Schemes related files.  (Default "./Schemes")')
     parser.add_argument("-o", "--output_dir",     type=str,   default='./',          help = 'Path of output root directroy where all outputs will be saved.  (default "../")')
     args = parser.parse_args()
@@ -263,9 +260,6 @@ if __name__ == "__main__":
     print('[PDE_MESSAGE] ')
     ss_editor = SchemeStarEditor()
     # Backup existing Schemes in output directory and copy template Schemes to output directory.
-#    output_schemes_subdir_path = pdeditor.make_output_schemes(option_template_schemes_dir_path, option_output_dir_path)
-#    pdeditor.edit(option_configs_file_path, option_output_dir_path, output_schemes_subdir_path)
-#    output_schemes_subdir_path = '/Users/misatoyamamoto/Documents/dev-CS-Schemes/dev-SchemesEditor/SchemesEditor/Schemes'
     output_schemes_subdir_path = ss_editor.make_output_schemes(option_template_schemes_dir_path, option_output_dir_path)
     ss_editor.edit(output_schemes_subdir_path, option_configs_file_path, option_output_dir_path)
     print('[PDE_MESSAGE] ')

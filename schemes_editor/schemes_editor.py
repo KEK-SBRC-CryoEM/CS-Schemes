@@ -10,6 +10,61 @@
 # User set up the values of parallel computing parameters in yaml files. 
 # 
 ##########################################################################################
+# ========================================================================================
+# Directory structure
+# 
+# - Script Directory 
+#   |-- jobstar_editor
+#     |-- jobstar_editor.py
+#     |-- config_to_job_star_key_mapping_ps.yml
+#     |-- config_to_job_star_key_mapping_sys.yml
+#   |-- schemestar_editor
+#     |-- schemestar_editor.py
+#  
+# - Configs Directory   # A sample of configurations directory (Use this as a template to create user-defined configurations)
+#    |-- config_em_settings.yml
+#    |-- config_sample_settings_xx.yml
+#    |-- config_type_algo_xx.yml
+#    |-- config_type_algo_xx.yml
+#    |-- config_level_submission.yml
+#    |-- config_level_device.yml
+#    |-- config_level_algo.yml
+#    |-- config_system_settings_xx.yml
+#
+# -  Schemes template Directory 
+#    |-- Schemes             <<<< a sample of template schemes directory (Use this as a template to create user-defined schemes)
+#      |-- **                <<<< a single scheme directoy
+#        |-- scheme.star     <<<< a scheme star file per the single scheme   
+#        |-- **              <<<< a job directory of the single scheme
+#          |- job.star       <<<< a job star file of the single scheme
+# 
+# - <INPUT> User-Defined Configurations Directory 
+#   |-- configs              # A sample of configurations directory (Use this as a template to create user-defined configurations)
+#     |-- config_em_settings_xx.yml
+#     |-- config_sample_settings.yml
+#     |-- config_type_algo_xx.yml
+#     |-- config_type_algo_xx.yml
+#     |-- config_system_settings_xx.yml
+#
+# - <INPUT> User-Defined Template Schemes Directory
+#   |-- Schemes             <<<< a sample of template schemes directory (Use this as a template to create user-defined schemes)
+#     |-- **                <<<< a single scheme directoy
+#       |-- scheme.star     <<<< a scheme star file per the single scheme   
+#       |-- **              <<<< a job directory of the single scheme
+#         |- job.star       <<<< a job star file of the single scheme
+#
+# - <OUTPUT> Output Directory (Can be RELION project folder)
+#   |-- Schemes             <<<< An output directory to be created. It will contain all schemes to be used for RELION Schemes execution
+#     |-- **                <<<< a single scheme directoy
+#       |-- scheme.star     <<<< a scheme star file per the single scheme   <<< change parameters in this file by this script!
+#       |-- **              <<<< a job directory of the single scheme
+#         |- job.star       <<<< a job star file of the single scheme
+#   |-- schemestar_ettings    <<<< An output directory to be created. It will contain the executable file PATH setting file.
+#     |-- ss_scheme_star_<scheme name>'.yml          <<<< Output file of the protein data setting for scheme star per single scheme.
+#   |-- jobstar_settings    <<<< An output directory to be created. It will contain the paralle setting files of all algorithm types.
+#     |-- js_algo_type_*    <<<< Output a parallel setting file of a single algorithm type
+# ========================================================================================
+
 
 import yaml
 import os
@@ -86,17 +141,8 @@ class SchemesEditor():
             print('[PS_MESSAGE] The specified output directory "{}" does not exist yet! Creating the directory'.format(output_dir_path))
             os.mkdir(output_dir_path)
         assert os.path.exists(output_dir_path), '[PS_ASSERT] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
-
-#        ep_editor = ExecutablePathEditor.ExecutablePathEditor()
-#        ep_editor.edit(configs_dir_path, template_schemes_dir_path , output_dir_path, computing_environment, output_schemes_subdir_path)
-#        yaml_file_path = './configs/gotocloud/config_default.yml'
-#        self.default_file_dict = self.__load_yaml_file(yaml_file_path)
-#        sample_setting = self.default_file_dict['DefaultFile'][type(self).__SE_SAMPLE_SETTING_KEY]
-#        print(self.default_file_dict['DefaultFile'][type(self).__SE_SAMPLE_SETTING_KEY])
-
         js_editor = jobstar_editor.JobStarEditor()
         output_schemes_subdir_path = self.__make_output_schemes(template_schemes_dir_path, output_dir_path)
-#        settings_subdir_path = os.path.join(output_dir_path, type(self).__SS_DIR_NAME)
         js_editor.edit(parallel_setting_file_path, type(self).__JOB_STAR_KEY_MAPPING_PS_YAML_FILE_PATH, output_dir_path, output_schemes_subdir_path)
         js_editor.edit(system_setting_file_path, type(self).__JOB_STAR_KEY_MAPPING_SYS_YAML_FILE_PATH, output_dir_path, output_schemes_subdir_path)
         ss_editor = schemestar_editor.SchemeStarEditor()
@@ -118,10 +164,7 @@ if __name__ == "__main__":
     option_output_dir_path              = args.output_dir
 
     se_editor = SchemesEditor()
-
-#    yaml_file_path = './configs/gotocloud/config_default.yml'
     parallel_setting_default, system_setting_default, em_setting_default, sample_setting_default = se_editor.create_default_file(option_default_file_path)
-#    parser = argparse.ArgumentParser()
     parser.add_argument("-par", "--parallel_default", type=str, default= parallel_setting_default, help = 'Path of input parallel settig yaml file.  (Default "{}")'.format(parallel_setting_default))
     parser.add_argument("-sys", "--system_default",   type=str, default= system_setting_default,   help = 'Path of input system settig yaml file.  (Default "{}")'.format(system_setting_default))
     parser.add_argument("-em",  "--em_default",       type=str, default= em_setting_default,       help = 'Path of input em settig yaml file.  (Default "{}")'.format(em_setting_default))
@@ -129,7 +172,6 @@ if __name__ == "__main__":
 
     # Rename arguments for readability
     # No arguments with this program
-    
     # Rename options for readability
     args = parser.parse_args()
     option_parallel_setting_file_path  = args.parallel_default

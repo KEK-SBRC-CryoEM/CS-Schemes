@@ -270,28 +270,26 @@ class JobTypeToAlgoTypeConvertor:
 # Directory structure
 # 
 # - Script Directory 
-#   |-- jobstar_editor.py
-#   |-- config_to_job_star_key_mapping_ps.yml
-#   |-- config_to_job_star_key_mapping_sys.yml
-#   |
-#   |-- Configs  # A sample of configurations directory (Use this as a template to create user-defined configurations)
-#   | |-- config_type_algo_xx.yml
-#   | |-- config_type_algo_xx.yml
-#   | |-- config_level_submission.yml
-#   | |-- config_level_device.yml
-#   | |-- config_level_algo.yml
-#   | |-- config_system_settings_xx.yml
-#   |
-#   |-- Schemes             <<<< a sample of template schemes directory (Use this as a template to create user-defined schemes)
+#   |-- jobstar_editor
+#     |-- jobstar_editor.py
+#     |-- config_to_job_star_key_mapping_ps.yml
+#     |-- config_to_job_star_key_mapping_sys.yml
+# 
+# - Configs Directory # A sample of configurations directory (Use this as a template to create user-defined configurations)
+#     |-- config_type_algo_xx.yml
+#     |-- config_type_algo_xx.yml
+#     |-- config_level_submission.yml
+#     |-- config_level_device.yml
+#     |-- config_level_algo.yml
+#     |-- config_system_settings_xx.yml
+#  
+# - Schemes template Directory              <<<< a sample of template schemes directory (Use this as a template to create user-defined schemes)
 #     |-- **                <<<< a single scheme directoy
 #       |-- **              <<<< a job directory of the single scheme
 #         |- job.star       <<<< a job star file of the single scheme
 # 
-# - <INPUT> User-Defined Configurations Directory 
+# - <INPUT> User-Defined Configurations file 
 #   |-- config_type_algo_xx.yml
-#   |-- config_level_submission.yml
-#   |-- config_level_device.yml
-#   |-- config_level_algo.yml
 #   |-- config_system_settings.yml
 # 
 # - <INPUT> User-Defined Template Schemes Directory
@@ -305,8 +303,8 @@ class JobTypeToAlgoTypeConvertor:
 #   | |-- **                <<<< a single scheme directoy
 #   |   |-- **              <<<< scheme job directory
 #   |     |- job.star       <<<< a job star file of a single scheme job
-#   |-- ParallelSettings    <<<< An output directory to be created. It will contain the paralle setting files of all algorithm types.
-#     |-- ps_algo_type_*    <<<< Output a parallel setting file of a single algorithm type
+#   |-- jobstar_settings    <<<< An output directory to be created. It will contain the paralle setting files of all algorithm types.
+#     |-- js_algo_type_*    <<<< Output a parallel setting file of a single algorithm type
 # 
 # ========================================================================================
 class JobStarEditor:
@@ -410,23 +408,18 @@ class JobStarEditor:
                         config_level_yaml_file_path = algo_type_dict_dict[type(self).__JS_LEVEL_FILE_KEY][config_level_yaml_info_key]
                         config_level_key       = config_level_yaml_info_key
                         config_level_value     = algo_type_dict[config_level_key]
-                
-                # Structure of config_level_dict_dict
-                #   config_level_dict_dict := {*Level:*, config_level_dict}
-                #   config_level_dict      := {Settings: {CONFIG_LEVEL_PARAM_A:*, CONFIG_LEVEL_PARAM_B:*, CONFIG_LEVEL_PARAM_C:*, ...}}
-                #   config_level_yaml_file_path = os.path.join(configs_dir_path, config_level_yaml_name)
+                        # Structure of config_level_dict_dict
+                        #   config_level_dict_dict := {*Level:*, config_level_dict}
+                        #   config_level_dict      := {Settings: {CONFIG_LEVEL_PARAM_A:*, CONFIG_LEVEL_PARAM_B:*, CONFIG_LEVEL_PARAM_C:*, ...}}
+                        #   config_level_yaml_file_path = os.path.join(configs_dir_path, config_level_yaml_name)
                         config_level_dict_dict = self.__load_yaml_file(config_level_yaml_file_path)
-
-                
-                # Extract configuraltion of each level and merge them
+                        # Extract configuraltion of each level and merge them
                         for config_level_dict in config_level_dict_dict:
                             if config_level_dict[config_level_key] == config_level_value:
                                 all_level_algo_type_dict.update(config_level_dict)
                                 all_level_config_settings_dict.update(config_level_dict[type(self).__PS_KEY])
-            
                     jobstar_config_dict = {**algo_type_dict, **all_level_algo_type_dict, type(self).__PS_KEY:{**all_level_config_settings_dict}}
                     self.__jobstar_config_dict_list.append(jobstar_config_dict)
-
             else:
                 print('[PS_ERROR] Config yaml file structure is wrong...')
 
@@ -436,13 +429,11 @@ class JobStarEditor:
             self.__make_output_subdir_backup(jobstar_settings_subdir_path)
             assert not os.path.exists(jobstar_settings_subdir_path), '[PS_ASSERT] The output paralle settings subdirectory "{}" must NOT exist at this point of code!'.format(jobstar_settings_subdir_path)
             os.mkdir(jobstar_settings_subdir_path)
-             
             for jobstar_config_dict in self.__jobstar_config_dict_list: 
                 jobstar_setting_yaml_file_name = type(self).__PS_FILE_PREFIX + jobstar_config_dict[type(self).__ALGO_TYPE_KEY] + type(self).__YAML_FILE_EXT
                 jobstar_setting_yaml_file_path = os.path.join(jobstar_settings_subdir_path, jobstar_setting_yaml_file_name)
                 self.__save_yaml_file(jobstar_setting_yaml_file_path, jobstar_config_dict)
             jobstar_setting_list_yaml_file_path = os.path.join(jobstar_settings_subdir_path, type(self).__JOBSTAR_SETTINGS_LIST_YAML_FILE_NAME)
-#            jobstar__setting_list_yaml_file_path = os.path.join(jobstar_settings_subdir_path, jobstar__setting_list_yaml_file_name) 
             self.__save_yaml_file(jobstar_setting_list_yaml_file_path, self.__jobstar_config_dict_list)
         else:
             assert len(self.__jobstar_config_dict_list) == 0, '[PS_ASSERT] self.__jobstar_config_dict_list should be empty at this point of code!'
@@ -559,10 +550,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     ### args, unknown = parser.parse_known_args()
-
     # Rename arguments for readability
     # No arguments with this program
-    
     # Rename options for readability
     option_configs_file_path              = args.configs_file
     option_job_star_key_mapping_file_path = args.key_map_file
