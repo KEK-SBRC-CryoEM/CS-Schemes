@@ -1,0 +1,7 @@
+### Do not Change ### 
+DefaultFile: 
+  ParallelSettings: ../../configs/gotocloud/config_type_algo.yml
+  SystemSettings: ../../configs/gotocloud/config_system_settings.yml
+  EmSettings: ../../configs/common/config_em_settings_kek_krios.yml
+  SampleSettings: ../../configs/common/config_sample_settings.yml
+
