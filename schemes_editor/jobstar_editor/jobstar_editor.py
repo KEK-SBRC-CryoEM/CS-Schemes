@@ -17,6 +17,7 @@ import os
 import shutil
 import datetime
 import argparse
+import subprocess
 import starfile
 
 # ========================================================================================
@@ -62,8 +63,8 @@ class JobTypeToAlgoTypeHandler:
         for job_star_line in job_star_line_list:
             if self.__job_star_param_key in job_star_line:
                 job_star_line_token_list = job_star_line.split()
-                assert len(job_star_line_token_list) == type(self).N_IDX_JST, '[PS_ASSERT] Something is seriously wrong with this star file! The token counts of "_rlnJobTypeLabel" line should be always "{}" instead of "{}"!'.format(type(self).N_IDX_JST, len(job_star_line_token_list))
-                assert job_star_line_token_list[type(self).IDX_JST_KEY] == self.__job_star_param_key, '[PS_ASSERT] This should never be False!'
+                assert len(job_star_line_token_list) == type(self).N_IDX_JST, '[JSE_ASSERT] Something is seriously wrong with this star file! The token counts of "_rlnJobTypeLabel" line should be always "{}" instead of "{}"!'.format(type(self).N_IDX_JST, len(job_star_line_token_list))
+                assert job_star_line_token_list[type(self).IDX_JST_KEY] == self.__job_star_param_key, '[JSE_ASSERT] This should never be False!'
                 if self.__job_star_param_value in job_star_line_token_list[type(self).IDX_JST_VALUE]:
                     algo_type = self.__algo_type_converted
                 else:
@@ -71,7 +72,7 @@ class JobTypeToAlgoTypeHandler:
                 # Successfully found job type! 
                 # let's get out of for loop immediately!
                 break
-        assert algo_type is not None, '[PS_ASSERT] Something is seriously wrong with either this star file or coding! (algo_type = "{}")'.format(algo_type)
+        assert algo_type is not None, '[JSE_ASSERT] Something is seriously wrong with either this star file or coding! (algo_type = "{}")'.format(algo_type)
         
         return algo_type
 
@@ -120,7 +121,7 @@ class JobTypeToAlgoTypeConvertor:
     #   Do not use __init__ to enable instance acquisition from get_singleton().
     #   __new__ is called before __init__ at initialization.
     def __new__(cls):
-        raise NotImplementedError('[PS_ERROR] This is a singleton class! Not allowed to create instance by constructor!')
+        raise NotImplementedError('[JSE_ERROR] This is a singleton class! Not allowed to create instance by constructor!')
 
     # <Private Class Method> Internal constructor of instance
     @classmethod
@@ -211,7 +212,7 @@ class JobTypeToAlgoTypeConvertor:
 
     # <Public Instancd Method> Convert Job Type defined in a job star file to Algorithm Type for Parallel Settings Editor of RELION Schemes
     def convert(self, job_star_file_path):
-        assert os.path.exists(job_star_file_path), '[PS_ASSERT] The file "{}" must exist at this point of code!'.format(job_star_file_path)
+        assert os.path.exists(job_star_file_path), '[JSE_ASSERT] The file "{}" must exist at this point of code!'.format(job_star_file_path)
         with open(job_star_file_path, 'r') as job_star_file:
             # Read all lines from this job star file while removing all leading and trailing whitespaces from each line
             # NOTE: 2023/05/02 Toshio Moriya
@@ -219,19 +220,19 @@ class JobTypeToAlgoTypeConvertor:
             # If job_star_line is stripped here, white space will be increased at the end of lines to be replaced
             # job_star_line_list = [job_star_line.strip() for job_star_line in job_star_file.readlines()]
             job_star_line_list = [job_star_line for job_star_line in job_star_file.readlines()]
-        assert len(job_star_line_list) > 0, '[PS_ASSERT] The star file "{}" contains no lines! Something is seriously wrong with this star file!'.format(job_star_file_path)
+        assert len(job_star_line_list) > 0, '[JSE_ASSERT] The star file "{}" contains no lines! Something is seriously wrong with this star file!'.format(job_star_file_path)
         
         # Extract job type of this job star file
         job_type = None
         for job_star_line in job_star_line_list:
             if '_rlnJobTypeLabel' in job_star_line:
                 job_star_line_token_list = job_star_line.split()
-                assert len(job_star_line_token_list) == type(self).__N_IDX_JST, '[PS_ASSERT] Something is seriously wrong with this star file! The token counts of "_rlnJobTypeLabel" line should be always "{}" in stead of "{}"!'.format(type(self).__N_IDX_JST, len(job_star_line_token_list))
+                assert len(job_star_line_token_list) == type(self).__N_IDX_JST, '[JSE_ASSERT] Something is seriously wrong with this star file! The token counts of "_rlnJobTypeLabel" line should be always "{}" in stead of "{}"!'.format(type(self).__N_IDX_JST, len(job_star_line_token_list))
                 job_type = job_star_line_token_list[type(self).__IDX_JST_VALUE]
                 # Successfully found job type! 
                 # let's get out of for loop immediately!
                 break
-        assert job_type is not None, '[PS_ASSERT] Something is seriously wrong with either this star file or coding! (job_type = "{}")'.format(job_type)
+        assert job_type is not None, '[JSE_ASSERT] Something is seriously wrong with either this star file or coding! (job_type = "{}")'.format(job_type)
         
         # Define and initialize return value
         algo_type = None
@@ -239,9 +240,9 @@ class JobTypeToAlgoTypeConvertor:
         # Check if this job type is NOT in the list of JobTypeToAlgoTypeHandler
         # meaning this job type does not need to be sperated into multiple algorithm types
         if job_type not in type(self).__job_type_to_algo_type_handler_list_dict:
-            print('[PS_MESSAGE] Found a job type "{}" that should not be converted'.format(job_type))
+            print('[JSE_MESSAGE] Found a job type "{}" that should not be converted'.format(job_type))
             # convert job-type-to-algorithm-type
-            assert 'relion.' in job_type, '[PS_ASSERT] Invalid assumption where all RELION job types are in the form of "relion.*" instead of "{}"!'.format(job_type)
+            assert 'relion.' in job_type, '[JSE_ASSERT] Invalid assumption where all RELION job types are in the form of "relion.*" instead of "{}"!'.format(job_type)
             # Possoble format of RELION job type keys
             # relion.job_type (e.g. relion.class3d)
             # relion.job_type.sub_job_type  (e.g. relion.select.onvalue)
@@ -250,7 +251,7 @@ class JobTypeToAlgoTypeConvertor:
             job_type_to_algo_type_handler_list = type(self).__job_type_to_algo_type_handler_list_dict[job_type]
             # Check if this job type and the associated algorithm type should be ignored since it does not support parallel computing 
             if len(job_type_to_algo_type_handler_list) > 0:
-                print('[PS_MESSAGE] Found a job type "{}" that should be converted'.format(job_type))
+                print('[JSE_MESSAGE] Found a job type "{}" that should be converted'.format(job_type))
                 for job_type_to_algo_type_handler in job_type_to_algo_type_handler_list:
                     algo_type = job_type_to_algo_type_handler.handle(job_type, job_star_line_list)
                     if algo_type != type(self).ALGO_TYPE_UNCONVERTED:
@@ -258,11 +259,11 @@ class JobTypeToAlgoTypeConvertor:
                         # let's get out of for loop immediately!
                         break
             else: 
-                assert len(job_type_to_algo_type_handler_list) == 0, '[PS_ASSERT] Something is seriously wrong with coding!'
-#                print('[PS_MESSAGE] Found a job type "{}" that should be ignored'.format(job_type))
+                assert len(job_type_to_algo_type_handler_list) == 0, '[JSE_ASSERT] Something is seriously wrong with coding!'
+#                print('[JSE_MESSAGE] Found a job type "{}" that should be ignored'.format(job_type))
 #                algo_type = type(self).ALGO_TYPE_IGNORED
-        assert algo_type is not None, '[PS_ASSERT] Something is seriously wrong with this coding! (algo_type = "{}")'.format(algo_type)
-        assert algo_type != type(self).ALGO_TYPE_UNCONVERTED, '[PS_ASSERT] Something is seriously wrong with this coding! (algo_type = "{}")'.format(algo_type)
+        assert algo_type is not None, '[JSE_ASSERT] Something is seriously wrong with this coding! (algo_type = "{}")'.format(algo_type)
+        assert algo_type != type(self).ALGO_TYPE_UNCONVERTED, '[JSE_ASSERT] Something is seriously wrong with this coding! (algo_type = "{}")'.format(algo_type)
         
         return algo_type, job_star_file_path
 
@@ -330,17 +331,19 @@ class JobStarEditor:
     __ALGO_TYPE_KEY = 'AlgoType'
     __ALGO_TYPE_NAME_PREFIX = JobTypeToAlgoTypeConvertor.ALGO_TYPE_NAME_PREFIX
     
-    __PS_KEY          = 'Settings'
-    __PS_DIR_NAME     = 'jobstar_settings'
+    __JS_KEY          = 'Settings'
+    __JS_DIR_NAME     = 'jobstar_settings'
     __JS_LEVEL_COMB_KEY     = 'CombinationSettings'
     __JS_LEVEL_FILE_KEY     = 'LevelFile'
-    __PS_FILE_PREFIX  = 'js_'    # Abbreviations of "jobstar settings"
+    __JS_FILE_PREFIX  = 'js_'    # Abbreviations of "jobstar settings"
     
-    __JOBSTAR_SETTINGS_LIST_YAML_FILE_NAME = __PS_FILE_PREFIX + __ALGO_TYPE_NAME_PREFIX + 'all_list' + __YAML_FILE_EXT
+    __JOBSTAR_SETTINGS_LIST_YAML_FILE_NAME = __JS_FILE_PREFIX + __ALGO_TYPE_NAME_PREFIX + 'all_list' + __YAML_FILE_EXT
     
     __SCHEMES_DIR_NAME             = 'Schemes'  # Name of RELION Schemes Directory
     __JOB_STAR_FILE_RPATH_PATTERN  = '**/**/job.star'  # Relative to Relion Project Directory
-    
+    __ERROR_FILE_NAME              = 'error_output.txt'
+    __JOBSTAR_EDITOR_ERROR_FILE_NAME  =  __JS_FILE_PREFIX + __ERROR_FILE_NAME
+
     # Define indices for tokens of each Job Star Parameter Entry line (JSPEL is abbribiation of "Job Star Parameter Entry Line")
     __I_ENUM = -1
     __I_ENUM += 1; __IDX_JSPEL_KEY   = __I_ENUM
@@ -366,11 +369,11 @@ class JobStarEditor:
     # <Private Helper Instance Method> Backup an output subdirectory
     def __make_output_subdir_backup(self, output_subdir_path):
         if os.path.exists(output_subdir_path): 
-            print('[PS_MESSAGE]', 'The output subdirectory "{}" already exists! Making a backup of the existing subdirectory...'.format(output_subdir_path))
+            print('[JSE_MESSAGE]', 'The output subdirectory "{}" already exists! Making a backup of the existing subdirectory...'.format(output_subdir_path))
             dt_now = datetime.datetime.now()
             backup_output_subdir_path = output_subdir_path + '_backup' + '_' + f'{dt_now.year:04}'+ f'{dt_now.month:02}' + f'{dt_now.day:02}' + f'{dt_now.hour:02}' + f'{dt_now.minute:02}' + f'{dt_now.second:02}'
             os.rename(output_subdir_path, backup_output_subdir_path)
-        assert not os.path.exists(output_subdir_path), '[PS_ASSERT] The output subdirectory "{}" must NOT exist at this point of code!'.format(output_subdir_path)
+        assert not os.path.exists(output_subdir_path), '[JSE_ASSERT] The output subdirectory "{}" must NOT exist at this point of code!'.format(output_subdir_path)
 
     # <Private Instance Method> Create a dictionary for each algorithm from the parallel settings defined in the config files. 
     # Then, combine individual algorithm dictionaries as a single list of all algorithm dictionaries
@@ -381,13 +384,13 @@ class JobStarEditor:
         # Check preconditions!
         # NOTE: 2023/05/01 Toshio Moriya
         # Actually this should be error check instead of assertion!
-        assert os.path.exists(configs_file_path), '[PS_ASSERT] The configurations file "{}" must exist!'.format(configs_file_path)
+        assert os.path.exists(configs_file_path), '[JSE_ASSERT] The configurations file "{}" must exist!'.format(configs_file_path)
         
         # Reinitialize the list of all algorithm dictionaries
         if len(self.__jobstar_config_dict_list) > 0:
-            print('[PS_MESSAGE] Reinitializing the list of all algorithm dictionaries...')
+            print('[JSE_MESSAGE] Reinitializing the list of all algorithm dictionaries...')
             self.__jobstar_config_dict_list = []
-        assert len(self.__jobstar_config_dict_list) == 0, '[PS_ASSERT] self.__jobstar_config_dict_list should be empty instead of containing "{}" dictionaries at this point code! Something is seriously wrong with this coding!'.format(len(self.__jobstar_config_dict_list))
+        assert len(self.__jobstar_config_dict_list) == 0, '[JSE_ASSERT] self.__jobstar_config_dict_list should be empty instead of containing "{}" dictionaries at this point code! Something is seriously wrong with this coding!'.format(len(self.__jobstar_config_dict_list))
         
         # Structure of algo_type_dict_dict
         #   algo_type_dict_dict := {AlgoType:*, algo_type_dict}
@@ -417,31 +420,49 @@ class JobStarEditor:
                         for config_level_dict in config_level_dict_dict:
                             if config_level_dict[config_level_key] == config_level_value:
                                 all_level_algo_type_dict.update(config_level_dict)
-                                all_level_config_settings_dict.update(config_level_dict[type(self).__PS_KEY])
-                    jobstar_config_dict = {**algo_type_dict, **all_level_algo_type_dict, type(self).__PS_KEY:{**all_level_config_settings_dict}}
+                                all_level_config_settings_dict.update(config_level_dict[type(self).__JS_KEY])
+                    jobstar_config_dict = {**algo_type_dict, **all_level_algo_type_dict, type(self).__JS_KEY:{**all_level_config_settings_dict}}
                     self.__jobstar_config_dict_list.append(jobstar_config_dict)
             else:
-                print('[PS_ERROR] Config yaml file structure is wrong...')
+                print('[JSE_ERROR] Config yaml file structure is wrong...')
 
     # <Private Instance Method> Save the parameter settings as yml files
     def __save_jobstar_config_dict_list(self, jobstar_settings_subdir_path):
         if len(self.__jobstar_config_dict_list) > 0:
             self.__make_output_subdir_backup(jobstar_settings_subdir_path)
-            assert not os.path.exists(jobstar_settings_subdir_path), '[PS_ASSERT] The output paralle settings subdirectory "{}" must NOT exist at this point of code!'.format(jobstar_settings_subdir_path)
+            assert not os.path.exists(jobstar_settings_subdir_path), '[JSE_ASSERT] The output paralle settings subdirectory "{}" must NOT exist at this point of code!'.format(jobstar_settings_subdir_path)
             os.mkdir(jobstar_settings_subdir_path)
             for jobstar_config_dict in self.__jobstar_config_dict_list: 
-                jobstar_setting_yaml_file_name = type(self).__PS_FILE_PREFIX + jobstar_config_dict[type(self).__ALGO_TYPE_KEY] + type(self).__YAML_FILE_EXT
+                jobstar_setting_yaml_file_name = type(self).__JS_FILE_PREFIX + jobstar_config_dict[type(self).__ALGO_TYPE_KEY] + type(self).__YAML_FILE_EXT
                 jobstar_setting_yaml_file_path = os.path.join(jobstar_settings_subdir_path, jobstar_setting_yaml_file_name)
                 self.__save_yaml_file(jobstar_setting_yaml_file_path, jobstar_config_dict)
             jobstar_setting_list_yaml_file_path = os.path.join(jobstar_settings_subdir_path, type(self).__JOBSTAR_SETTINGS_LIST_YAML_FILE_NAME)
             self.__save_yaml_file(jobstar_setting_list_yaml_file_path, self.__jobstar_config_dict_list)
         else:
-            assert len(self.__jobstar_config_dict_list) == 0, '[PS_ASSERT] self.__jobstar_config_dict_list should be empty at this point of code!'
-            print('[PS_MESSAGE] self.__jobstar_config_dict_list is empty. Please call __create_jobstar_config_dict_list() before calling __save_jobstar_config_dict_list')
+            assert len(self.__jobstar_config_dict_list) == 0, '[JSE_ASSERT] self.__jobstar_config_dict_list should be empty at this point of code!'
+            print('[JSE_MESSAGE] self.__jobstar_config_dict_list is empty. Please call __create_jobstar_config_dict_list() before calling __save_jobstar_config_dict_list')
+
+    def __execute_command(self, command, output_file):
+        try:
+            # Execute the command and capture the output
+            result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            # If the command was successful, return the output
+            if result.returncode == 0:
+                return result.stdout
+            # If there was an error, write the error message to the file
+            else:
+                with open(output_file, 'a') as file:
+                    file.write(f"Error: {result.stderr}\n")
+                return f"Error: {result.stderr}"
+        except subprocess.CalledProcessError as e:
+            # If there was an error, write the error message to the file
+            with open(output_file, 'a') as file:
+                file.write(f"Error: {e}\n")
+            return f"Error: {e}"
 
     # <Private Instance Method> Replace values of paralle settings of all job star (job.star) in the specified template Schemes dirctory
     # and save the results to the output Schemes directory.
-    def __replace_schemes_jobstar_settings(self, output_schemes_subdir_path, job_star_key_mapping_file_path):
+    def __replace_schemes_jobstar_settings(self, output_dir_path, output_schemes_subdir_path, job_star_key_mapping_file_path):
         # Obtain directory path of this script
         # script_dir_path = os.path.dirname(__file__)
         # Create JobTypeToAlgoTypeConvertor (Singleton Class)
@@ -456,36 +477,26 @@ class JobStarEditor:
         # Create Relion Command list to replace the values of job.star  
         relion_command_list = []
         for output_job_star_file_path in glob.glob(output_job_star_file_path_pattern):
-            assert os.path.exists(output_job_star_file_path), '[PS_ASSERT] The file "{}" must exist at this point of code!'.format(output_job_star_file_path)
+            assert os.path.exists(output_job_star_file_path), '[JSE_ASSERT] The file "{}" must exist at this point of code!'.format(output_job_star_file_path)
             algo_type, job_star_file_path = job_type_to_algo_type_convertor.convert(output_job_star_file_path)
 
-#            jobstar_config_dict = [jobstar_config_dict for jobstar_config_dict in self.__jobstar_config_dict_list if jobstar_config_dict[type(self).__ALGO_TYPE_KEY] == algo_type]
-
-            # Create list of job.star keys due to replace only the values corresponding to the keys present in job.star
-            job_star_dict = starfile.read(job_star_file_path)
-            job_star_key_list = []
-            for i in range(len(job_star_dict ['joboptions_values'])):
-                job_star_key = job_star_dict['joboptions_values']['rlnJobOptionVariable'][i]
-                job_star_key_list.append(job_star_key)
-            
+#            jobstar_config_dict = [jobstar_config_dict for jobstar_config_dict in self.__jobstar_config_dict_list if jobstar_config_dict[type(self).__ALGO_TYPE_KEY] == algo_type][0]
             # Create list of relion_pipeliner command to replace the values in job.star with the value in self.__jobstar_config_dict_list.
             for jobstar_config_dict in self.__jobstar_config_dict_list:
                 if jobstar_config_dict[type(self).__ALGO_TYPE_KEY] == algo_type:
-                    for settings_key in jobstar_config_dict[type(self).__PS_KEY].keys():
+                    for settings_key in jobstar_config_dict[type(self).__JS_KEY].keys():
                         edit_option = config_to_job_star_key_mapping_dict[settings_key]
-                        edit_value = jobstar_config_dict[type(self).__PS_KEY][settings_key]
-                        if edit_option in job_star_key_list and 'NOT_APPLICABLE' not in edit_value:
-                            relion_command = 'relion_pipeliner --editJob ' + str(job_star_file_path) + ' --editOption ' + str(edit_option) + ' --editValue ' + str(edit_value)
-                            relion_command_list.append(relion_command)
+                        edit_value = jobstar_config_dict[type(self).__JS_KEY][settings_key]
+#                        if 'NOT_APPLICABLE' not in edit_value:
+                        relion_command = 'relion_pipeliner --editJob ' + str(job_star_file_path) + ' --editOption ' + str(edit_option) + ' --editValue ' + str(edit_value)
+                        relion_command_list.append(relion_command)
         # Replace the values in job.star by running Relion command
-        if len(relion_command_list) > 0:
-            print('[JS_MESSAGE] Replace the values in the job.star file with the following relion command')
-            for relion_command in relion_command_list:
-                print(relion_command)
-                os.system(relion_command)
-        else:
-            assert len(relion_command_list) == 0, '[JS_ASSERT] relion_command_list should not be empty at this point of code!'
-
+        assert len(relion_command_list) > 0, '[JS_ASSERT] relion_command_list should not be empty at this point of code!'
+        print('[JS_MESSAGE] Replace the values in the job.star file with the following relion command')
+        output_file = os.path.join(output_dir_path, type(self).__JOBSTAR_EDITOR_ERROR_FILE_NAME)
+        for relion_command in relion_command_list:
+            print('[JSE_MESSAGE] {}'.format(relion_command))
+            self.__execute_command(relion_command, output_file)
 
     # <Public Instance Method> Edit paralle settings of all job star (job.star) in the specified template Schemes dirctory 
     # by replacing the values with specified in config yaml files.
@@ -495,16 +506,16 @@ class JobStarEditor:
         # Check preconditions!
         # NOTE: 2023/05/01 Toshio Moriya
         # Actually these should be error checks instead of assertions!
-        assert os.path.exists(template_schemes_dir_path), '[PS_ASSERT] The template Schemes directory "{}" must exist!'.format(template_schemes_dir_path)
-        assert template_schemes_dir_path, '[PS_ASSERT] The template Schemes directory "{}" must NOT exist!'.format(template_schemes_dir_path)
+        assert os.path.exists(template_schemes_dir_path), '[JSE_ASSERT] The template Schemes directory "{}" must exist!'.format(template_schemes_dir_path)
+        assert template_schemes_dir_path, '[JSE_ASSERT] The template Schemes directory "{}" must NOT exist!'.format(template_schemes_dir_path)
         # NOTE: 2023/05/03 Toshio Moriya
         # Removed the following requirement to allow the users to name the template_schemes_dir as they like
-        # assert os.path.basename(os.path.normpath(template_schemes_dir_path)) == type(self).__SCHEMES_DIR_NAME, '[PS_ASSERT] The specified template Schemes directory "{}" is invalid! It must end with "{}"!'.format(template_schemes_dir_path, type(self).__SCHEMES_DIR_NAME)
+        # assert os.path.basename(os.path.normpath(template_schemes_dir_path)) == type(self).__SCHEMES_DIR_NAME, '[JSE_ASSERT] The specified template Schemes directory "{}" is invalid! It must end with "{}"!'.format(template_schemes_dir_path, type(self).__SCHEMES_DIR_NAME)
 
         output_schemes_subdir_path = os.path.join(output_dir_path, type(self).__SCHEMES_DIR_NAME)
         # Make a back up of schemes
         self.__make_output_subdir_backup(output_schemes_subdir_path)
-        assert not os.path.exists(output_schemes_subdir_path), '[PS_ASSERT] The output Schemes subdirectory "{}" must NOT exist at this point of code!'.format(output_schemes_subdir_path)
+        assert not os.path.exists(output_schemes_subdir_path), '[JSE_ASSERT] The output Schemes subdirectory "{}" must NOT exist at this point of code!'.format(output_schemes_subdir_path)
         
         # Create output Schemes directory by copying template Schemes directory 
         shutil.copytree(template_schemes_dir_path, output_schemes_subdir_path)
@@ -521,23 +532,23 @@ class JobStarEditor:
         # Check preconditions!
         # NOTE: 2023/05/01 Toshio Moriya
         # Actually these should be error checks instead of assertion!
-        assert os.path.exists(configs_file_path), '[PS_ASSERT] The configurations file "{}" must exist!'.format(configs_file_path)
-        assert os.path.exists(job_star_key_mapping_file_path), '[PS_ASSERT] The configurations file "{}" must exist!'.format(job_star_key_mapping_file_path)
-        #assert os.path.exists(template_schemes_dir_path), '[PS_ASSERT] The template Schemes directory "{}" must exist!'.format(template_schemes_dir_path)
+        assert os.path.exists(configs_file_path), '[JSE_ASSERT] The configurations file "{}" must exist!'.format(configs_file_path)
+        assert os.path.exists(job_star_key_mapping_file_path), '[JSE_ASSERT] The configurations file "{}" must exist!'.format(job_star_key_mapping_file_path)
+        #assert os.path.exists(template_schemes_dir_path), '[JSE_ASSERT] The template Schemes directory "{}" must exist!'.format(template_schemes_dir_path)
         # NOTE: 2023/05/03 Toshio Moriya
         # Removed the following requirement to allow the users to name the template_schemes_dir as they like
-        # assert os.path.basename(os.path.normpath(template_schemes_dir_path)) == type(self).__SCHEMES_DIR_NAME, '[PS_ASSERT] The specified template Schemes directory "{}" is invalid! It must end with "{}"!'.format(template_schemes_dir_path, type(self).__SCHEMES_DIR_NAME)
+        # assert os.path.basename(os.path.normpath(template_schemes_dir_path)) == type(self).__SCHEMES_DIR_NAME, '[JSE_ASSERT] The specified template Schemes directory "{}" is invalid! It must end with "{}"!'.format(template_schemes_dir_path, type(self).__SCHEMES_DIR_NAME)
         
         if not os.path.exists(output_dir_path):
-            print('[PS_MESSAGE] The specified output directory "{}" does not exist yet! Creating the directory'.format(output_dir_path))
+            print('[JSE_MESSAGE] The specified output directory "{}" does not exist yet! Creating the directory'.format(output_dir_path))
             os.mkdir(output_dir_path)
-        assert os.path.exists(output_dir_path), '[PS_ASSERT] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
+        assert os.path.exists(output_dir_path), '[JSE_ASSERT] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
         
         #  Set instance variables
-        jobstar_settings_subdir_path = os.path.join(output_dir_path, type(self).__PS_DIR_NAME)
+        jobstar_settings_subdir_path = os.path.join(output_dir_path, type(self).__JS_DIR_NAME)
         self.__create_jobstar_config_dict_list(configs_file_path)
         self.__save_jobstar_config_dict_list(jobstar_settings_subdir_path)
-        self.__replace_schemes_jobstar_settings(output_schemes_subdir_path, job_star_key_mapping_file_path)
+        self.__replace_schemes_jobstar_settings(output_dir_path, output_schemes_subdir_path, job_star_key_mapping_file_path)
 
 
 if __name__ == "__main__":
@@ -545,8 +556,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--configs_file",   type=str,    required=True,    help = 'Path of input configuration yaml file. This option is always required.')
     parser.add_argument("-k", "--key_map_file",   type=str,    required=True,    help = 'Path of job.star key mapping yaml file. This option is always required.')
-    parser.add_argument("-s", "--schemes_dir",    type=str,    default='../../../schemes_template/cs_schemes',    help = 'Path of input template RELION Schemes directory containing all Schemes related files.  (Default "../../schemes_template/cs-schemes")')
-    parser.add_argument("-o", "--output_dir",     type=str,    default='./',          help = 'Path of output root directroy where all outputs will be saved.  (default "../")')
+    parser.add_argument("-s", "--schemes_dir",    type=str,    required=True,    help = 'Path of input template RELION Schemes directory containing all Schemes related files.  (Default "../../schemes_template/cs-schemes")')
+    parser.add_argument("-o", "--output_dir",     type=str,    default='./',     help = 'Path of output root directroy where all outputs will be saved.  (default "../")')
 
     args = parser.parse_args()
     ### args, unknown = parser.parse_known_args()
@@ -558,15 +569,15 @@ if __name__ == "__main__":
     option_template_schemes_dir_path      = args.schemes_dir
     option_output_dir_path                = args.output_dir
     
-    print('[PS_MESSAGE] Specified values of all options')
-    print('[PS_MESSAGE]   Input configurations file path   := {}'.format(option_configs_file_path))
-    print('[PS_MESSAGE]   Input key mapping file path      := {}'.format(option_job_star_key_mapping_file_path))
-    print('[PS_MESSAGE]   Input tempate Schemes directory path := {}'.format(option_template_schemes_dir_path))
-    print('[PS_MESSAGE]   Output root directory path           := {}'.format(option_output_dir_path))
-    print('[PS_MESSAGE] ')
-    print('[PS_MESSAGE] Editing job.star settings of all job.star files in the specified shcemes...')
+    print('[JSE_MESSAGE] Specified values of all options')
+    print('[JSE_MESSAGE]   Input configurations file path   := {}'.format(option_configs_file_path))
+    print('[JSE_MESSAGE]   Input key mapping file path      := {}'.format(option_job_star_key_mapping_file_path))
+    print('[JSE_MESSAGE]   Input tempate Schemes directory path := {}'.format(option_template_schemes_dir_path))
+    print('[JSE_MESSAGE]   Output root directory path           := {}'.format(option_output_dir_path))
+    print('[JSE_MESSAGE] ')
+    print('[JSE_MESSAGE] Editing job.star settings of all job.star files in the specified shcemes...')
     js_editor = JobStarEditor()
     output_schemes_subdir_path = js_editor.make_output_schemes(option_template_schemes_dir_path, option_output_dir_path)
     js_editor.edit(option_configs_file_path, option_job_star_key_mapping_file_path, option_output_dir_path, output_schemes_subdir_path)
-    print('[PS_MESSAGE] ')
-    print('[PS_MESSAGE] DONE!')
+    print('[JSE_MESSAGE] ')
+    print('[JSE_MESSAGE] DONE!')
