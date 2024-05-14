@@ -240,7 +240,7 @@ class JobTypeToAlgoTypeConvertor:
         # Check if this job type is NOT in the list of JobTypeToAlgoTypeHandler
         # meaning this job type does not need to be sperated into multiple algorithm types
         if job_type not in type(self).__job_type_to_algo_type_handler_list_dict:
-            print('[JSE_MESSAGE] Found a job type "{}" that should not be converted'.format(job_type))
+#            print('[JSE_MESSAGE] Found a job type "{}" that should not be converted'.format(job_type))
             # convert job-type-to-algorithm-type
             assert 'relion.' in job_type, '[JSE_ASSERT] Invalid assumption where all RELION job types are in the form of "relion.*" instead of "{}"!'.format(job_type)
             # Possoble format of RELION job type keys
@@ -251,7 +251,7 @@ class JobTypeToAlgoTypeConvertor:
             job_type_to_algo_type_handler_list = type(self).__job_type_to_algo_type_handler_list_dict[job_type]
             # Check if this job type and the associated algorithm type should be ignored since it does not support parallel computing 
             if len(job_type_to_algo_type_handler_list) > 0:
-                print('[JSE_MESSAGE] Found a job type "{}" that should be converted'.format(job_type))
+#                print('[JSE_MESSAGE] Found a job type "{}" that should be converted'.format(job_type))
                 for job_type_to_algo_type_handler in job_type_to_algo_type_handler_list:
                     algo_type = job_type_to_algo_type_handler.handle(job_type, job_star_line_list)
                     if algo_type != type(self).ALGO_TYPE_UNCONVERTED:
@@ -388,7 +388,7 @@ class JobStarEditor:
         
         # Reinitialize the list of all algorithm dictionaries
         if len(self.__jobstar_config_dict_list) > 0:
-            print('[JSE_MESSAGE] Reinitializing the list of all algorithm dictionaries...')
+#            print('[JSE_MESSAGE] Reinitializing the list of all algorithm dictionaries...')
             self.__jobstar_config_dict_list = []
         assert len(self.__jobstar_config_dict_list) == 0, '[JSE_ASSERT] self.__jobstar_config_dict_list should be empty instead of containing "{}" dictionaries at this point code! Something is seriously wrong with this coding!'.format(len(self.__jobstar_config_dict_list))
         
@@ -441,7 +441,8 @@ class JobStarEditor:
         else:
             assert len(self.__jobstar_config_dict_list) == 0, '[JSE_ASSERT] self.__jobstar_config_dict_list should be empty at this point of code!'
             print('[JSE_MESSAGE] self.__jobstar_config_dict_list is empty. Please call __create_jobstar_config_dict_list() before calling __save_jobstar_config_dict_list')
-
+    
+    # If some error occours during command execution, the error file is created and error messerges are written. 
     def __execute_command(self, command, output_file):
         try:
             # Execute the command and capture the output
@@ -491,11 +492,11 @@ class JobStarEditor:
                         relion_command = 'relion_pipeliner --editJob ' + str(job_star_file_path) + ' --editOption ' + str(edit_option) + ' --editValue ' + str(edit_value)
                         relion_command_list.append(relion_command)
         # Replace the values in job.star by running Relion command
-        assert len(relion_command_list) > 0, '[JS_ASSERT] relion_command_list should not be empty at this point of code!'
-        print('[JS_MESSAGE] Replace the values in the job.star file with the following relion command')
+        assert len(relion_command_list) > 0, '[JSE_ASSERT] relion_command_list should not be empty at this point of code!'
+#         print('[JSE_MESSAGE] Replace the values in the job.star file with the following relion command')
         output_file = os.path.join(output_dir_path, type(self).__JOBSTAR_EDITOR_ERROR_FILE_NAME)
         for relion_command in relion_command_list:
-            print('[JSE_MESSAGE] {}'.format(relion_command))
+#            print('[JSE_MESSAGE] {}'.format(relion_command))
             self.__execute_command(relion_command, output_file)
 
     # <Public Instance Method> Edit paralle settings of all job star (job.star) in the specified template Schemes dirctory 
@@ -521,7 +522,7 @@ class JobStarEditor:
         shutil.copytree(template_schemes_dir_path, output_schemes_subdir_path)
         return output_schemes_subdir_path
 
-    def edit(self, configs_file_path, job_star_key_mapping_file_path, output_dir_path, output_schemes_subdir_path):
+    def edit(self, configs_file_path, job_star_key_mapping_file_path, output_dir_path, output_schemes_subdir_path, settings_subdir_name = __JS_DIR_NAME):
         # [*] configs_dir_path: a path of directory containing all configuration yaml files
         # [*] template_schemes_dir_path: a path of tempate RELION Schemes directory 
         # [*] output_dir_path: a path of output directory.
@@ -545,7 +546,7 @@ class JobStarEditor:
         assert os.path.exists(output_dir_path), '[JSE_ASSERT] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
         
         #  Set instance variables
-        jobstar_settings_subdir_path = os.path.join(output_dir_path, type(self).__JS_DIR_NAME)
+        jobstar_settings_subdir_path = os.path.join(output_dir_path, settings_subdir_name)
         self.__create_jobstar_config_dict_list(configs_file_path)
         self.__save_jobstar_config_dict_list(jobstar_settings_subdir_path)
         self.__replace_schemes_jobstar_settings(output_dir_path, output_schemes_subdir_path, job_star_key_mapping_file_path)
@@ -556,8 +557,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--configs_file",   type=str,    required=True,    help = 'Path of input configuration yaml file. This option is always required.')
     parser.add_argument("-k", "--key_map_file",   type=str,    required=True,    help = 'Path of job.star key mapping yaml file. This option is always required.')
-    parser.add_argument("-s", "--schemes_dir",    type=str,    required=True,    help = 'Path of input template RELION Schemes directory containing all Schemes related files.  (Default "../../schemes_template/cs-schemes")')
-    parser.add_argument("-o", "--output_dir",     type=str,    default='./',     help = 'Path of output root directroy where all outputs will be saved.  (default "../")')
+    parser.add_argument("-s", "--schemes_dir",    type=str,    required=True,    help = 'Path of input template RELION Schemes directory containing all Schemes related files. This option is always required.')
+    parser.add_argument("-o", "--output_dir",     type=str,    default='./',     help = 'Path of output root directroy where all outputs will be saved. (default is set to current directory "./")')
 
     args = parser.parse_args()
     ### args, unknown = parser.parse_known_args()

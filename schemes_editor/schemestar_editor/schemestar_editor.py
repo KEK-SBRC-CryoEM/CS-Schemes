@@ -213,18 +213,17 @@ class SchemeStarEditor():
         # Replace the values in scheme.star by running Relion schemer command.
         # relion_schemer command must be run at parent directory of Schemes in which the values are replaced. 
         assert len(relion_schemer_command_list) > 0, '[SSE_ASSERT] relion_command_list should not be empty at this point of code!'
-        print('[SSE_MESSAGE] Replace the values in the scheme.star file with the following relion command')
+#        print('[SSE_MESSAGE] Replace the values in the scheme.star file with the following relion command')
         output_schemes_parent_dir_path = os.path.abspath(os.path.join(output_schemes_subdir_path, os.pardir))
         current_dir_path = os.getcwd()
         output_file = os.path.join(output_dir_path, type(self).__SCHEMESTAR_EDITOR_ERROR_FILE_NAME)
         for relion_schemer_command in relion_schemer_command_list:
-            print('[SSE_MESSAGE] {}'.format(relion_schemer_command))
+#            print('[SSE_MESSAGE] {}'.format(relion_schemer_command))
             os.chdir(output_schemes_parent_dir_path)
             self.__execute_command(relion_schemer_command, output_file)
-#            os.system(relion_schemer_command)
         os.chdir(current_dir_path)
  
-    def edit(self, schemes_subdir_path, configs_file_path, output_dir_path):
+    def edit(self, configs_file_path, output_dir_path, schemes_subdir_path, settings_subdir_name = __SS_DIR_NAME):
         # [*] configs_file_path          : Path of input configuration yaml file.
         # [*] schemes_subdir_path        : Path of input template RELION Schemes directory containing all Schemes related files.
         # [*] output_dir_path            : Path of output root directroy where all outputs will be saved.
@@ -232,7 +231,7 @@ class SchemeStarEditor():
             print('[EE_MESSAGE] The specified output directory "{}" does not exist yet! Creating the directory'.format(output_dir_path))
             os.mkdir(schemes_subdir_path)
         assert os.path.exists(schemes_subdir_path), '[EE_ASSERT] The output Schemes directory "{}" must exist at this point of code!'.format(schemes_subdir_path)
-        settings_subdir_path = os.path.join(output_dir_path, type(self).__SS_DIR_NAME)
+        settings_subdir_path = os.path.join(output_dir_path, settings_subdir_name)
         # Create dictonary to replace tha value of scheme.star.
         self.__create_schemestar_dict(configs_file_path, schemes_subdir_path)
         # Save measurement condition and protein data settings per single Scheme.
@@ -245,8 +244,8 @@ if __name__ == "__main__":
     # Parse command argument
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--configs_file",   type=str,  required=True,  help = 'Path of input configuration yaml file. This option is always required.')
-    parser.add_argument("-s", "--schemes_dir",    type=str,  required=True,  help = 'Path of input template RELION Schemes directory containing all Schemes related files.  (Default "./Schemes")')
-    parser.add_argument("-o", "--output_dir",     type=str,  default='./',   help = 'Path of output root directroy where all outputs will be saved.  (default "../")')
+    parser.add_argument("-s", "--schemes_dir",    type=str,  required=True,  help = 'Path of input template RELION Schemes directory containing all Schemes related files. This option is always required.')
+    parser.add_argument("-o", "--output_dir",     type=str,  default='./',   help = 'Path of output root directroy where all outputs will be saved. (default is set to current directory "./")')
     args = parser.parse_args()
     
     # Rename options for readability
@@ -265,7 +264,7 @@ if __name__ == "__main__":
     ss_editor = SchemeStarEditor()
     # Backup existing Schemes in output directory and copy template Schemes to output directory.
     output_schemes_subdir_path = ss_editor.make_output_schemes(option_template_schemes_dir_path, option_output_dir_path)
-    ss_editor.edit(output_schemes_subdir_path, option_configs_file_path, option_output_dir_path)
+    ss_editor.edit(option_configs_file_path, option_output_dir_path, output_schemes_subdir_path)
     print('[SSE_MESSAGE] ')
     print('[SSE_MESSAGE] ')
     print('[SSE_MESSAGE] DONE!')
