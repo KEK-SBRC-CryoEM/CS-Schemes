@@ -74,6 +74,7 @@ import argparse
 from jobstar_editor import jobstar_editor
 from schemestar_editor import schemestar_editor
 
+
 class SchemesEditor():
     # Constructors
     __SE_DEFAULT_FILE_KEY         = 'DefaultFile'
@@ -82,7 +83,6 @@ class SchemesEditor():
     __SE_EM_SETTING_KEY           = 'EmSettings'
     __SE_SAMPLE_SETTING_KEY       = 'SampleSettings'
     __SCHEMES_DIR_NAME            = 'Schemes'
-    __DEFAULT_SETTING_FILE_NAME   = 'config_default.yml'
     __JOB_STAR_KEY_MAPPING_PS_YAML_FILE_NAME = 'config_to_job_star_key_mapping_ps.yml'
     __JOB_STAR_KEY_MAPPING_SYS_YAML_FILE_NAME = 'config_to_job_star_key_mapping_sys.yml'
     __JOBSTAR_EDITOR_DIR          = 'jobstar_editor'
@@ -90,6 +90,7 @@ class SchemesEditor():
     __SYSTEM_SETTINGS_DIR_NAME    = 'system_settings'
     __SAMPLE_SETTINGS_DIR_NAME    = 'sample_settings'
     __EM_SETTINGS_DIR_NAME        = 'em_settings'
+    __DEFAULT_FILE_PATH_ENV_VAR   = 'SE_DEFAULT_FILE_PATH'
 
 
     def __init__(self):
@@ -123,10 +124,19 @@ class SchemesEditor():
         # Create output Schemes directory by copying template Schemes directory 
         shutil.copytree(template_schemes_dir_path, output_schemes_subdir_path)
         return output_schemes_subdir_path
+    
+    def create_default_file(self): 
+        default_file_path = os.environ[type(self).__DEFAULT_FILE_PATH_ENV_VAR]
+        self.default_file_dict = self.__load_yaml_file(default_file_path)
+        parallel_setting_default = self.default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_PARALLEL_SETTING_KEY]
+        system_setting_default = self.default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SYSTEM_SETTING_KEY]
+        sample_setting_default = self.default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SAMPLE_SETTING_KEY]
+        em_settingdefault = self.default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_EM_SETTING_KEY]
+        return parallel_setting_default, system_setting_default, sample_setting_default, em_settingdefault
 
-    def edit(self, configs_dir_path, template_schemes_dir_path, output_dir_path):
+    def edit(self, template_schemes_dir_path, output_dir_path, parallel_setting_default, system_setting_default, sample_setting_default, em_setting_default):
 
-        # [*] configs_dir_path: a path of directory containing all configuration yaml files
+        # [*] default_setting_file_path: a path of default setting file set in environment variables
         # [*] template_schemes_dir_path: a path of tempate RELION Schemes directory 
         # [*] output_dir_path: a path of output directory.
         #     Under this directory the following subdirecties will be created 
@@ -139,12 +149,11 @@ class SchemesEditor():
         assert os.path.exists(output_dir_path), '[SE_ASSERT] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
         
         # Generate default file paths from yaml file settings
-        default_file_path = os.path.join(configs_dir_path, type(self).__DEFAULT_SETTING_FILE_NAME)
-        default_file_dict = self.__load_yaml_file(default_file_path)
-        parallel_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_PARALLEL_SETTING_KEY]
-        system_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SYSTEM_SETTING_KEY]
-        sample_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SAMPLE_SETTING_KEY]
-        em_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_EM_SETTING_KEY]
+
+#        parallel_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_PARALLEL_SETTING_KEY]
+#        system_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SYSTEM_SETTING_KEY]
+#        sample_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SAMPLE_SETTING_KEY]
+#        em_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_EM_SETTING_KEY]
 
         script_dir = os.path.dirname(__file__)
         job_star_key_mapping_ps_yaml_file_path = os.path.join(script_dir, type(self).__JOBSTAR_EDITOR_DIR, type(self).__JOB_STAR_KEY_MAPPING_PS_YAML_FILE_NAME)
@@ -153,36 +162,43 @@ class SchemesEditor():
         # Execute Schemes editing
         output_schemes_subdir_path = self.__make_output_schemes(template_schemes_dir_path, output_dir_path)
         js_editor = jobstar_editor.JobStarEditor()
-        js_editor.edit(parallel_setting_default_file_path, job_star_key_mapping_ps_yaml_file_path, output_dir_path, output_schemes_subdir_path, type(self).__PARALLEL_SETTINGS_DIR_NAME)
-        js_editor.edit(system_setting_default_file_path, job_star_key_mapping_sys_yaml_file_path, output_dir_path, output_schemes_subdir_path, type(self).__SYSTEM_SETTINGS_DIR_NAME)
+        js_editor.edit(parallel_setting_default, job_star_key_mapping_ps_yaml_file_path, output_dir_path, output_schemes_subdir_path, type(self).__PARALLEL_SETTINGS_DIR_NAME)
+        js_editor.edit(system_setting_default, job_star_key_mapping_sys_yaml_file_path, output_dir_path, output_schemes_subdir_path, type(self).__SYSTEM_SETTINGS_DIR_NAME)
         ss_editor = schemestar_editor.SchemeStarEditor()
-        ss_editor.edit(sample_setting_default_file_path, output_dir_path, output_schemes_subdir_path, type(self).__SAMPLE_SETTINGS_DIR_NAME)
-        ss_editor.edit(em_setting_default_file_path, output_dir_path, output_schemes_subdir_path, type(self).__EM_SETTINGS_DIR_NAME)
+        ss_editor.edit(sample_setting_default, output_dir_path, output_schemes_subdir_path, type(self).__SAMPLE_SETTINGS_DIR_NAME)
+        ss_editor.edit(em_setting_default, output_dir_path, output_schemes_subdir_path, type(self).__EM_SETTINGS_DIR_NAME)
 
 
 if __name__ == "__main__":
+    # Set default file path 
+    se_editor = SchemesEditor()
+    parallel_setting_default, system_setting_default, sample_setting_default, em_setting_default = se_editor.create_default_file()
     # Parse command argument
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--configs_dir",   type=str,  required=True, help = 'Path of input configuration directory. This option is always required.')
-    parser.add_argument("-s", "--schemes_dir",   type=str,  required=True, help = 'Path of input template RELION Schemes directory containing all Schemes related files. This option is always required.')
-    parser.add_argument("-o", "--output_dir",    type=str,  default='./',  help = 'Path of output root directroy where all outputs will be saved. (default is set to current directory "./")')
+    parser.add_argument("-par", "--parallel_default", type=str, default= parallel_setting_default, help = 'Path of input parallel settig yaml file.  (Default "{}")'.format(parallel_setting_default))
+    parser.add_argument("-sys", "--system_default",   type=str, default= system_setting_default,   help = 'Path of input system settig yaml file.  (Default "{}")'.format(system_setting_default))
+    parser.add_argument("-sam", "--sample_default",   type=str, default= sample_setting_default,   help = 'Path of input sample settig yaml file.  (Default "{}")'.format(sample_setting_default))
+    parser.add_argument("-em",  "--em_default",       type=str, default= em_setting_default,       help = 'Path of input em settig yaml file.  (Default "{}")'.format(em_setting_default))
+    parser.add_argument("-s",   "--schemes_dir",      type=str,  required=True, help = 'Path of input template RELION Schemes directory containing all Schemes related files. This option is always required.')
+    parser.add_argument("-o",   "--output_dir",       type=str,  default='./',  help = 'Path of output root directroy where all outputs will be saved. (default is set to current directory "./")')
 
     # Rename arguments for readability
     # No arguments with this program
     # Rename options for readability
     args = parser.parse_args()
-    option_configs_dir_path             = args.configs_dir
-    option_template_schemes_dir_path    = args.schemes_dir
-    option_output_dir_path              = args.output_dir
+    option_parallel_setting_default   = args.parallel_default
+    option_system_setting_default     = args.system_default
+    option_sample_setting_default     = args.sample_default
+    option_em_setting_default         = args.em_default
+    option_template_schemes_dir_path  = args.schemes_dir
+    option_output_dir_path            = args.output_dir
   
     print('[SE_MESSAGE] Specified values of all options')
-    print('[SE_MESSAGE]   Input configurations directory path  := {}'.format(option_configs_dir_path))
     print('[SE_MESSAGE]   Input tempate Schemes directory path := {}'.format(option_template_schemes_dir_path))
     print('[SE_MESSAGE]   Output root directory path           := {}'.format(option_output_dir_path))
     print('[SE_MESSAGE] ')
     print('[SE_MESSAGE] ')
     print('[SE_MESSAGE] Editing settings in the specified schemes...')
-    se_editor = SchemesEditor()
-    se_editor.edit(option_configs_dir_path, option_template_schemes_dir_path, option_output_dir_path)
+    se_editor.edit(option_template_schemes_dir_path, option_output_dir_path, option_parallel_setting_default, option_system_setting_default, option_sample_setting_default, option_em_setting_default)
     print('[SE_MESSAGE] ')
     print('[SE_MESSAGE] DONE!')
