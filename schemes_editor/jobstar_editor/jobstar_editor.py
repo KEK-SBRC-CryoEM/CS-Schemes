@@ -18,7 +18,6 @@ import shutil
 import datetime
 import argparse
 import subprocess
-import starfile
 
 # ========================================================================================
 # Abbreviations:
@@ -94,6 +93,7 @@ class JobTypeToAlgoTypeConvertor:
     __IDX_JST_KEY    = JobTypeToAlgoTypeHandler.IDX_JST_KEY
     __IDX_JST_VALUE  = JobTypeToAlgoTypeHandler.IDX_JST_VALUE
     __N_IDX_JST      = JobTypeToAlgoTypeHandler.N_IDX_JST
+    __JOBTYPE_TO_ALGOTYPE_ITEM_YAML_FILE_NAME = 'config_jobtype_to_algotype_item.yml'
     
     # Public class variables
     
@@ -140,6 +140,11 @@ class JobTypeToAlgoTypeConvertor:
         
         return cls.__unique_instance
 
+    def __load_yaml_file(self, yaml_file_path):
+        with open(yaml_file_path, 'r') as yaml_file:
+            yaml_dict = yaml.safe_load(yaml_file)
+        return yaml_dict
+
     # <Private Instancd Method> Constructs a list of JobTypeToAlgoTypeHandler for each job type
     # and register to the dictionary where
     #   KEY   : job type
@@ -147,68 +152,17 @@ class JobTypeToAlgoTypeConvertor:
     # If the assicated list of JobTypeToAlgoTypeHandler is empty, it does not do anything (meaning ignores the job type)!
     def __construct_job_type_to_algo_type_handler_list_dict(self):
         type(self).__job_type_to_algo_type_handler_list_dict = {}
-        
+        # create jobtype_to_algotype_dict from yaml file
+        script_dir = os.path.dirname(__file__)
+        jobtype_to_algotype_dict_list_item_yaml_file_path = os.path.join(script_dir, type(self).__JOBTYPE_TO_ALGOTYPE_ITEM_YAML_FILE_NAME)
+        jobtype_to_algotype_dict_list = self.__load_yaml_file(jobtype_to_algotype_dict_list_item_yaml_file_path)
         # Define list of job type which should be sperated into mulitple algorithm types based on key parameter settings.
-        job_type = 'relion.class3d'
-        job_type_to_algo_type_handler_list = []    # Initialize with empty list
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('dont_skip_align', 'Yes', type(self).ALGO_TYPE_NAME_PREFIX + 'class3d_default', type(self).ALGO_TYPE_UNCONVERTED))
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('dont_skip_align', 'No', type(self).ALGO_TYPE_NAME_PREFIX + 'class3d_noalign', type(self).ALGO_TYPE_UNCONVERTED))
-        type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
-        
-        job_type = 'relion.class2d'
-        job_type_to_algo_type_handler_list = []    # Initialize with empty list
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('do_em', 'Yes', type(self).ALGO_TYPE_NAME_PREFIX + 'class2d_em', type(self).ALGO_TYPE_UNCONVERTED))
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('do_grad', 'Yes', type(self).ALGO_TYPE_NAME_PREFIX + 'class2d_vdam', type(self).ALGO_TYPE_UNCONVERTED))
-        type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
-
-        job_type = 'relion.motioncorr'
-        job_type_to_algo_type_handler_list = []    # Initialize with empty list
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('do_own_motioncor', 'Yes', type(self).ALGO_TYPE_NAME_PREFIX + 'motioncorr_own', type(self).ALGO_TYPE_UNCONVERTED))
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('do_own_motioncor', 'No', type(self).ALGO_TYPE_NAME_PREFIX + 'motioncorr_mocor2', type(self).ALGO_TYPE_UNCONVERTED))
-        type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
-        
-        job_type = 'relion.ctffind'
-        job_type_to_algo_type_handler_list = []    # Initialize with empty list
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('use_gctf', 'Yes', type(self).ALGO_TYPE_NAME_PREFIX + 'ctffind_gctf', type(self).ALGO_TYPE_UNCONVERTED))
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('use_ctffind4', 'Yes', type(self).ALGO_TYPE_NAME_PREFIX + 'ctffind_ctff4', type(self).ALGO_TYPE_UNCONVERTED))
-        type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
-        
-        job_type = 'relion.external'
-        job_type_to_algo_type_handler_list = []    # Initialize with empty list
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('queuename', 'cryolo', type(self).ALGO_TYPE_NAME_PREFIX + 'external_cryolo', type(self).ALGO_TYPE_UNCONVERTED))
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('queuename', 'select3d', type(self).ALGO_TYPE_NAME_PREFIX + 'external_select3d', type(self).ALGO_TYPE_UNCONVERTED))
-        type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
-
-        job_type = 'relion.select.onvalue'
-        job_type_to_algo_type_handler_list = []    # Initialize with empty list
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('do_class_ranker', 'Yes', type(self).ALGO_TYPE_NAME_PREFIX + 'select_class2d', type(self).ALGO_TYPE_UNCONVERTED))
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('do_class_ranker', 'No', type(self).ALGO_TYPE_NAME_PREFIX + 'select', type(self).ALGO_TYPE_UNCONVERTED))
-        type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
-
-        job_type = 'relion.select.split'
-        job_type_to_algo_type_handler_list = []    # Initialize with empty list
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('do_split', 'Yes', type(self).ALGO_TYPE_NAME_PREFIX + 'select_split', type(self).ALGO_TYPE_UNCONVERTED))
-        job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler('do_split', 'No', type(self).ALGO_TYPE_NAME_PREFIX + 'select', type(self).ALGO_TYPE_UNCONVERTED))
-        type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
-
-        # Define list of job type which should be ignored.
-        # Register an empty list of JobTypeToAlgoTypeHandler 
-        # to indicate that this job type should be ignored
-#        job_type = 'relion.import'
-#        job_type_to_algo_type_handler_list = []    # Initialize with empty list
-#        type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
-        
-#        job_type = 'relion.select.onvalue'
-#        job_type_to_algo_type_handler_list = []    # Initialize with empty list
-#        type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
-
-#        job_type = 'relion.select.split'
-#        job_type_to_algo_type_handler_list = []    # Initialize with empty list
-#        type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
-
-#        job_type = 'relion.joinstar.particles'
-#        job_type_to_algo_type_handler_list = []    # Initialize with empty list
-#        type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
+        for jobtype_to_algotype_dict in jobtype_to_algotype_dict_list:
+            job_type = jobtype_to_algotype_dict['JobType']
+            job_type_to_algo_type_handler_list = []    # Initialize with empty list
+            for joboption_dict in jobtype_to_algotype_dict['JobOption']:
+                job_type_to_algo_type_handler_list.append(JobTypeToAlgoTypeHandler(joboption_dict['Key'], joboption_dict['Value'], type(self).ALGO_TYPE_NAME_PREFIX + joboption_dict['AlgoTypeName'], type(self).ALGO_TYPE_UNCONVERTED))
+            type(self).__job_type_to_algo_type_handler_list_dict[job_type] = job_type_to_algo_type_handler_list
 
     # <Public Instancd Method> Convert Job Type defined in a job star file to Algorithm Type for Parallel Settings Editor of RELION Schemes
     def convert(self, job_star_file_path):
@@ -476,7 +430,7 @@ class JobStarEditor:
         config_to_job_star_key_mapping_dict = self.__load_yaml_file(job_star_key_mapping_file_path)
 
         # Create Relion Command list to replace the values of job.star  
-        relion_command_list = []
+        error_output_file = os.path.join(output_dir_path, type(self).__JOBSTAR_EDITOR_ERROR_FILE_NAME)
         for output_job_star_file_path in glob.glob(output_job_star_file_path_pattern):
             assert os.path.exists(output_job_star_file_path), '[JSE_ASSERT] The file "{}" must exist at this point of code!'.format(output_job_star_file_path)
             algo_type, job_star_file_path = job_type_to_algo_type_convertor.convert(output_job_star_file_path)
@@ -490,14 +444,10 @@ class JobStarEditor:
                         edit_value = jobstar_config_dict[type(self).__JS_KEY][settings_key]
 #                        if 'NOT_APPLICABLE' not in edit_value:
                         relion_command = 'relion_pipeliner --editJob ' + str(job_star_file_path) + ' --editOption ' + str(edit_option) + ' --editValue ' + str(edit_value)
-                        relion_command_list.append(relion_command)
-        # Replace the values in job.star by running Relion command
-        assert len(relion_command_list) > 0, '[JSE_ASSERT] relion_command_list should not be empty at this point of code!'
-#         print('[JSE_MESSAGE] Replace the values in the job.star file with the following relion command')
-        output_file = os.path.join(output_dir_path, type(self).__JOBSTAR_EDITOR_ERROR_FILE_NAME)
-        for relion_command in relion_command_list:
-#            print('[JSE_MESSAGE] {}'.format(relion_command))
-            self.__execute_command(relion_command, output_file)
+#                        print('[JSE_MESSAGE] Replace the values in the job.star file with the following relion command')
+#                        print('[JSE_MESSAGE] {}'.format(relion_command))
+                        # Replace the values in job.star by running Relion command
+                        self.__execute_command(relion_command, error_output_file)
 
     # <Public Instance Method> Edit paralle settings of all job star (job.star) in the specified template Schemes dirctory 
     # by replacing the values with specified in config yaml files.
