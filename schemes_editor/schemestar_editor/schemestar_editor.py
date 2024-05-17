@@ -201,27 +201,23 @@ class SchemeStarEditor():
     
     # Replace values of scheme.star files with the values set in config files.
     def __replace_schemes_star_param(self, output_dir_path, output_schemes_subdir_path):
-        relion_schemer_command_list = []
+        output_schemes_parent_dir_path = os.path.abspath(os.path.join(output_schemes_subdir_path, os.pardir))
+        current_dir_path = os.getcwd()
+        output_file = os.path.join(output_dir_path, type(self).__SCHEMESTAR_EDITOR_ERROR_FILE_NAME)
         for schemestar_dict in self.__schemestar_dict_list:
             scheme_name = schemestar_dict[type(self).__SS_SCHEME_NAME_KEY]
             for settings_key in schemestar_dict[type(self).__SS_SETTING_KEY].keys():
                 scheme_setting_fin_key = settings_key
                 edit_value = schemestar_dict[type(self).__SS_SETTING_KEY][settings_key]
+                # Replace the values in scheme.star by running Relion schemer command.
+                # relion_schemer command must be run at parent directory of Schemes in which the values are replaced. 
                 relion_schemer_command = 'relion_schemer --scheme ' + str(scheme_name) + ' --set_var ' + str(scheme_setting_fin_key) + ' --value ' + str(edit_value) + ' --original_value ' + str(edit_value)
-                relion_schemer_command_list.append(relion_schemer_command)
-        
-        # Replace the values in scheme.star by running Relion schemer command.
-        # relion_schemer command must be run at parent directory of Schemes in which the values are replaced. 
-        assert len(relion_schemer_command_list) > 0, '[SSE_ASSERT] relion_command_list should not be empty at this point of code!'
-#        print('[SSE_MESSAGE] Replace the values in the scheme.star file with the following relion command')
-        output_schemes_parent_dir_path = os.path.abspath(os.path.join(output_schemes_subdir_path, os.pardir))
-        current_dir_path = os.getcwd()
-        output_file = os.path.join(output_dir_path, type(self).__SCHEMESTAR_EDITOR_ERROR_FILE_NAME)
-        for relion_schemer_command in relion_schemer_command_list:
-#            print('[SSE_MESSAGE] {}'.format(relion_schemer_command))
-            os.chdir(output_schemes_parent_dir_path)
-            self.__execute_command(relion_schemer_command, output_file)
+#                print('[SSE_MESSAGE] Replace the values in the scheme.star file with the following relion command')
+#                print('[SSE_MESSAGE] {}'.format(relion_schemer_command))
+                os.chdir(output_schemes_parent_dir_path)
+                self.__execute_command(relion_schemer_command, output_file)
         os.chdir(current_dir_path)
+
  
     def edit(self, configs_file_path, output_dir_path, schemes_subdir_path, settings_subdir_name = __SS_DIR_NAME):
         # [*] configs_file_path          : Path of input configuration yaml file.
