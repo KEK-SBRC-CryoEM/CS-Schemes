@@ -5,6 +5,7 @@ SubmissionScript: qsubscript
 ScratchDirectory: scratch_dir 
 UseGpu: use_gpu 
 Partition: qsub_extra1 
+NumberOfNodes: qsub_extra2
 AdditionalArguments: other_args 
 PrereadParticles: do_preread_images 
 WhichGpusToUse: gpu_ids
