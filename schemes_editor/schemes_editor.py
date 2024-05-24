@@ -97,10 +97,6 @@ class SchemesEditor():
     __EM_SETTINGS_DIR_NAME        = 'em_settings'
     __SETTING_FILE_PATH_ENV_VAR   = 'CS_SETTING_FILE_PATH'
 
-
-    def __init__(self):
-        self.default_file_dict=[]
-
     def __load_yaml_file(self, yaml_file_path):
         with open(yaml_file_path, 'r') as yaml_file:
             yaml_dict = yaml.safe_load(yaml_file)
@@ -130,15 +126,6 @@ class SchemesEditor():
         shutil.copytree(template_schemes_dir_path, output_schemes_subdir_path)
         return output_schemes_subdir_path
     
-    def create_default_file(self): 
-        default_file_path = os.environ[type(self).__DEFAULT_FILE_PATH_ENV_VAR]
-        self.default_file_dict = self.__load_yaml_file(default_file_path)
-        parallel_setting_default = self.default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_PARALLEL_SETTING_KEY]
-        system_setting_default = self.default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SYSTEM_SETTING_KEY]
-        sample_setting_default = self.default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SAMPLE_SETTING_KEY]
-        em_settingdefault = self.default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_EM_SETTING_KEY]
-        return parallel_setting_default, system_setting_default, sample_setting_default, em_settingdefault
-
     def edit(self, template_schemes_dir_path, output_dir_path, parallel_setting_file_path = None, system_setting_file_path = None , sample_setting_file_path = None, em_setting_file_path = None):
 
         # [*] default_setting_file_path: a path of default setting file set in environment variables
@@ -152,13 +139,6 @@ class SchemesEditor():
             print('[SE_MESSAGE] The specified output directory "{}" does not exist yet! Creating the directory'.format(output_dir_path))
             os.mkdir(output_dir_path)
         assert os.path.exists(output_dir_path), '[SE_ASSERT] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
-        
-        # Generate default file paths from yaml file settings
-
-#        parallel_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_PARALLEL_SETTING_KEY]
-#        system_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SYSTEM_SETTING_KEY]
-#        sample_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SAMPLE_SETTING_KEY]
-#        em_setting_default_file_path = default_file_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_EM_SETTING_KEY]
 
         script_dir = os.path.dirname(__file__)
         job_star_key_mapping_ps_yaml_file_path = os.path.join(script_dir, type(self).__JOBSTAR_EDITOR_DIR, type(self).__JOB_STAR_KEY_MAPPING_PS_YAML_FILE_NAME)
@@ -172,6 +152,7 @@ class SchemesEditor():
 
         # Create setting yaml file path
         default_setting_file_path = os.environ[type(self).__SETTING_FILE_PATH_ENV_VAR]
+        # Generate default file paths from yaml file settings
         setting_file_path_dict = self.__load_yaml_file(default_setting_file_path)
         
         if parallel_setting_file_path == None:
@@ -198,22 +179,22 @@ class SchemesEditor():
 if __name__ == "__main__":
     # Parse command argument
     parser = argparse.ArgumentParser()
-    parser.add_argument("-ps",  "--parallel_file", type=str, default= None, help = 'Path of input parallel settig yaml file. (The default path is set to the yamal file)')
-    parser.add_argument("-sys", "--system_file",   type=str, default= None, help = 'Path of input system settig yaml file. (The default path is set to the yamal file)')
-    parser.add_argument("-sam", "--sample_file",   type=str, default= None, help = 'Path of input sample settig yaml file. (The default path is set to the yamal file)')
-    parser.add_argument("-em",  "--em_file",       type=str, default= None, help = 'Path of input em settig yaml file. (The default path is set to the yamal file)')
     parser.add_argument("-s",   "--schemes_dir",   type=str, required=True, help = 'Path of input template RELION Schemes directory containing all Schemes related files. This option is always required.')
+    parser.add_argument("-sam", "--sample_file",   type=str, default= None, help = 'Path of input sample settig yaml file. (The default path is set to the yamal file)')
+    parser.add_argument("-ps",  "--parallel_file", type=str, default= None, help = 'Path of input parallel settig yaml file. (The default path is set to the yamal file)')
+    parser.add_argument("-em",  "--em_file",       type=str, default= None, help = 'Path of input em settig yaml file. (The default path is set to the yamal file)')
+    parser.add_argument("-sys", "--system_file",   type=str, default= None, help = 'Path of input system settig yaml file. (The default path is set to the yamal file)')
     parser.add_argument("-o",   "--output_dir",    type=str, default='./',  help = 'Path of output root directroy where all outputs will be saved. (default is set to current directory "./")')
 
     # Rename arguments for readability
     # No arguments with this program
     # Rename options for readability
     args = parser.parse_args()
-    option_parallel_setting_file_path = args.parallel_file
-    option_system_setting_file_path   = args.system_file
-    option_sample_setting_file_path   = args.sample_file
-    option_em_setting_file_path       = args.em_file
     option_template_schemes_dir_path  = args.schemes_dir
+    option_sample_setting_file_path   = args.sample_file
+    option_parallel_setting_file_path = args.parallel_file
+    option_em_setting_file_path       = args.em_file
+    option_system_setting_file_path   = args.system_file
     option_output_dir_path            = args.output_dir
   
     print('[SE_MESSAGE] Specified values of all options')
