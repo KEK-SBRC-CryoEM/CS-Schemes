@@ -71,7 +71,7 @@ class SchemeStarEditor():
     __SS_DIR_NAME                        = 'schemestar_settings'
     __YAML_FILE_EXT                       = '.yml'
     __SS_SETTING_FILE_PREFIX              = 'ss_scheme_star_'
-    __SCHEME_STAR_KEY_PREFIX              = 'CS_'
+#    __SCHEME_STAR_KEY_PREFIX              = 'CS_'
 
     __SCHEMES_DIR_NAME                    = 'Schemes'  # Name of RELION Schemes Directory 
     __SCHEME_STAR_FILE_NAME               = 'scheme.star'
@@ -110,6 +110,7 @@ class SchemeStarEditor():
         if not os.path.exists(configs_file_path):
             print('[SS_MESSAGE] Error! The configs file "{}" does NOT exist! Please set the correct PATH using "--c" option.'.format(configs_file_path))
             return
+        self.__schemestar_dict_list = []
         # Load yaml file and keep the contents as a dictionary data
         setting_dict = self.__load_yaml_file(configs_file_path)
 
@@ -161,8 +162,8 @@ class SchemeStarEditor():
         for item_list in scheme_star_item_list_list:
             for i in range(len(scheme_star_dict[item_list[0]])):
                 scheme_star_key = scheme_star_dict[item_list[0]][item_list[1]][i]
-                if type(self).__SCHEME_STAR_KEY_PREFIX in scheme_star_key:
-                    scheme_star_key_list.append(scheme_star_key)
+#                if type(self).__SCHEME_STAR_KEY_PREFIX in scheme_star_key:
+                scheme_star_key_list.append(scheme_star_key)
         return scheme_star_key_list
 
     def make_output_schemes(self, template_schemes_dir_path, output_dir_path):
