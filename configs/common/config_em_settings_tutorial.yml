@@ -1,0 +1,18 @@
+Settings:
+###############Float_Variable############### 
+  GTF_Cs: 1.4
+  GTF_angpix_mic: 0.885
+  GTF_dose_per_frame: 1.277
+  GTF_eer_grouping: 32
+  GTF_first_frame_sum: 1
+  GTF_kV: 200
+  GTF_motioncorr_max_motion: 80
+  GTF_patch_x: 4
+  GTF_patch_y: 3
+  GTF_ctf_max_def: 50000
+  GTF_ctf_max_res: 3
+  GTF_ctf_min_def: 5000
+###############StringVariable###############
+  CS_fn_in_raw: Movies/*.tiff
+  GTF_gain_ref: Movies/gain.mrc 
+  GTF_fn_mtf: mtf_k2_200kV.star 

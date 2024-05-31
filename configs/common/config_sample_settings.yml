@@ -1,58 +1,107 @@
-### Do not change ###
-- SchemeName:
-  - 11_CS_Create_Stack
-  - 12_CS_AbInitReconst3D
-  - 13_CS_Clean_Stack_3D
-  Settings:
-    CS_cryolo_threshold: 0.1 
-    CS_ctf_maxres: 6.0
-    CS_mics_box: 360
-    CS_mics_box_0o95: 342
-    CS_min_nr_parts: 200000
-    CS_min_nr_mics: 2000
-    CS_parts_box: 120
-    CS_parts_x_coods_max: 3912
-    CS_parts_x_coods_min: 180
-    CS_parts_y_coods_max: 3912
-    CS_parts_y_coods_min: 180
-    CS_class2d_pmd: 200
-    CS_abinit3D_pmd: 200
-    CS_nr_2d_classes: 200
-    CS_rank_threshold_class2d: 0.06
-    CS_rank_threshold_abinit3D: 0.26
-    CS_class3d_pmd: 220
-    CS_nr_3d_classes: 4
-    CS_refine3d_pmd: 220
-    CS_angpix: 2.5
-    CS_low_pass: 7.5 
-    CS_limit_mics: 1
-    CS_sym_name_initial: C1
-    CS_ref3d_name: binned_ref3d_map.mrc
-    CS_mask3d_name: binned_mask3d_map.mrc  
-    CS_sym_name_class3d: C1
-    CS_sym_name_refine3d_apo: C1
-- SchemeName:
-  - 2_CS_Init_Refine3D
-  - 3_CS_Refine_Cycle
-  - 4_CS_Res_Fish
-  Settings:
-    CS_duplicate_threshold: 24
-    CS_mics_box: 480
-    CS_mics_box_0o95: 456
-    CS_parts_box: 480
-    CS_parts_x_coods_max: 3852
-    CS_parts_x_coods_min: 240
-    CS_parts_y_coods_max: 3852
-    CS_parts_y_coods_min: 240
-    CS_refine3d_pmd_optimal: 300
-    CS_refine3d_pmd_0o95: 378
-    CS_angpix: 0.88
-    CS_class3d_pmd: 300
-    CS_nr_3d_classes: 2
-    CS_b_factor: -50
-    CS_ref3d_name: binned_ref3d_map.mrc
-    CS_mask3d_name: binned_mask3d_map.mrc
-    CS_sym_name_refine3d_apo: C1
-
-
-
+Settings:
+###############Float_Variable###############
+#020
+  GTF_ctf_select_maxres: 6
+#040
+  GTF_adhoc_pmd: 0
+  GTF_cryolo_pmd: 100
+  GTF_min_nr_parts: 100000
+  GTF_pmd_pad_step: 20
+  GTF_pmd_pad_min: 0 
+  GTF_pmd_pad_max: 120
+  GTF_nr_2d_classes: 200
+  GTF_rank_threshold: 0.05 
+#050  
+  GTF_min_nr_parts: 4000
+  GTF_nr_2d_classes: 100 
+  GTF_class2d_pmd: 200  
+  GTF_rank_thresh_cls2d: 0.06 
+  GTF_max_cls2d_cycles: 1 
+  GTF_rank_thresh_abinit3d: 0.26 
+  GTF_abinit3D_pmd: 200
+#060
+  CSS_nr_2d_classes: 100 
+  CSS_class2d_pmd: 200 
+  CSS_rank_thresh_cls2d: 0.06 
+  CSS_max_cls2d_cycles: 0 
+  CSS_min_nr_parts: 4000 
+  CSS_class3d_lpf: 15 
+  CSS_class3d_pmd: 200  
+  CSS_nr_3d_classes: 4 
+  CSS_refine3d_pmd: 200 
+  CSS_lbin_angpix: 3.54 
+  CSS_low_pass: 10.62 
+  CSS_max_cls3d_conts: 1 
+  CSS_cls3d_iter_step: 25 
+  CSS_cls3d_offset_factor: 1 
+#070
+  CSS_duplicate_threshold: 21 
+  CSS_mbin_mics_box: 360 
+  CSS_mbin_mics_box_0o95: 342
+  CSS_mbin_parts_box: 288 
+  CSS_mbin_parts_x_coods_max: 5580 
+  CSS_mbin_parts_x_coods_min: 180 
+  CSS_mbin_parts_y_coods_max: 3912 
+  CSS_mbin_parts_y_coods_min: 180 
+  CSS_mbin_refine3d_pmd_optimal: 166 
+  CSS_mbin_refine3d_pmd_0o95: 260
+  CSS_mbin_angpix: 1.0375
+#080  
+  CSS_max_cycles: 2
+#090  
+  CSS_mbin_optimal_pmd: 232
+  CSS_mbin_0o95box_pmd: 334
+  CSS_noalign3d_classes: 2
+  CSS_noalign3d_tval: 256
+  CSS_mbin_apix: 0.8008
+  CSS_bfactor: -40 
+###############Boolean_Variable###############
+#040
+  GTF_wait_prev_proc: 1
+#060-090  
+  CSS_wait_prev_proc: 1
+#040
+  GTF_use_adhoc_pmd: 0 
+#050
+  GTF_abinit3D_run_C1: 1
+  GTF_limit_nr_parts: 0 
+#060
+  CSS_lbin_do_fast_subsets: 1
+  CSS_lbin_use_mask3d_class3d: 1 
+  CSS_lbin_use_mask3d_refine3d: 1 
+#090
+  CSS_mbin_do_fast_subsets: 0 
+###############StringVariable###############
+#050
+  GTF_sym_name_initial: D2 
+#060 
+  CSS_lbin_ref3d_path: Inputs/$$CSS_lbin_ref3d_name  
+  CSS_lbin_ref3d_name: sbin_ref3d_apix3o540_d064.mrc 
+  CSS_lbin_mask3d_path: Inputs/$$CSS_lbin_mask3d_name 
+  CSS_lbin_mask3d_name: sbin_mask3d_apix3o540_d064.mrc 
+  CSS_lbin_sym_name_class3d: C1 
+  CSS_lbin_sym_name_refine3d_apo: D2 
+#070-090
+  CSS_mbin_ref3d_path: ref3d.mrc  
+  CSS_mbin_mask3d_path: /fsx/Inputs_Map/mask3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288_wo_det.mrc
+  CSS_mbin_ref3d_name: ref3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288.mrc 
+  CSS_mbin_mask3d_name: mask3d.mrc 
+  CSS_mbin_sym_name_refine3d_apo: C1 
+  CSS_mbin_sym_name_class3d: C3 
+###############The following basically do not need to be changed############### 
+  GTF_all_parts: Schemes/030_GTF_Create_Stack/0302_Select_rm_bars_xy/particles.star
+#060
+  CSS_cls3d_parts: Schemes/060_CSS_Clean_Stack_3D/0700_Class3D/run_it025_data.star 
+  CSS_cont_data_names: run_it000_optimiser.star
+  CSS_extract_refine_data: Schemes/060_CSS_Clean_Stack_3D/0900_Refine3D/run_data.star 
+#070
+  CSS_selected_mics: Schemes/11_CS_Create_Stack/0102_Select_split_stack_mics/micrographs_split1.star
+#080
+  CSS_refine3d_refine_map: Schemes/070_CSS_Init_Refine3D/1500_Refine3D_local/run_class001.mrc 
+  CSS_postprocess_map: Schemes/070_CSS_Init_Refine3D/1600_PostProcess_local/postprocess.star 
+  CSS_ctfrefine_refine_data: Schemes/070_CSS_Init_Refine3D/1500_Refine3D_local/run_data.star  
+  CSS_motioncorr_mics: Schemes/010_GTF_Motioncorr/motioncorr/corrected_micrographs.star
+#090
+  CSS_class3d_refine_data: Schemes/080_CSS_Refine_Cycle/1607_Refine3D_polish/run_data.star
+  CSS_class3d_refine_map: Schemes/080_CSS_Refine_Cycle/1607_Refine3D_polish/run_class001.mrc 
+  CSS_imported_mbin_mask3d: Schemes/080_CSS_Refine_Cycle/1202_Import_mask3d/$$CSS_mbin_mask3d_name
