@@ -27,7 +27,7 @@ low_pass                $$CSS_lbin_center3d_postproc_adhoc_lpf
 fn_mtf                  "" 
 mtf_angpix              1 
 do_queue                No 
-queuename               060090_PostProcess 
+queuename               060090_PostProcess_global 
 qsub                    CSS_NOT_APPLICABLE 
 qsub_extra1             CSS_NOT_APPLICABLE 
 qsub_extra2             CSS_NOT_APPLICABLE 
