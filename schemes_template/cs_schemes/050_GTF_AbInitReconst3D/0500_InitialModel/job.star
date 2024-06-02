@@ -22,10 +22,10 @@ ctf_intact_first_peak  No
 nr_iter                200 
 tau_fudge              4 
 nr_classes             4 
-particle_diameter      $$GTF_abinit3D_pmd 
+particle_diameter      $$GTF_lbin_abinit3d_pmd 
 do_solvent             Yes 
-sym_name               $$GTF_sym_name_initial 
-do_run_C1              $$GTF_abinit3D_run_C1 
+sym_name               $$GTF_lbin_abinit3d_sym_name 
+do_run_C1              $$GTF_lbin_abinit3d_do_run_C1 
 do_parallel_discio     Yes 
 nr_pool                30 
 do_preread_images      No 
@@ -36,10 +36,10 @@ gpu_ids                0,1,2,3
 nr_mpi                 1 
 nr_threads             4 
 do_queue               Yes 
-queuename              0500_InitialModel 
+queuename              050060_InitialModel 
 qsub                   sbatch 
 qsub_extra1            g4dn-48c-192gb-4g 
-qsub_extra2            1
+qsub_extra2            1 
 qsubscript             "" 
 min_dedicated          1 
 other_args             "" 

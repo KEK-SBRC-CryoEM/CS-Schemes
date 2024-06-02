@@ -6,11 +6,11 @@ data_job
 _rlnJobTypeLabel             relion.select.split 
 _rlnJobIsContinue                       0 
 _rlnJobIsTomo                           0 
- 
 
-# version 30001
 
-data_joboptions_values
+# version 30001 
+
+data_joboptions_values 
 
 loop_ 
 _rlnJobOptionVariable #1 
@@ -27,14 +27,14 @@ do_regroup              No
 nr_groups               1 
 do_select_values        No 
 select_label            rlnCtfMaxResolution 
-select_maxval           9999. 
 select_minval           -9999. 
+select_maxval           9999. 
 do_discard              No 
 discard_label           rlnImageName 
 discard_sigma           4 
 do_split                Yes 
 do_random               No 
-split_size              $$GTF_min_nr_parts 
+split_size              $$GTF_lbin_abinit3d_min_nr_parts 
 nr_split                -1 
 do_remove_duplicates    No 
 duplicate_threshold     30 
@@ -43,7 +43,7 @@ do_filaments            No
 dendrogram_threshold    0.85 
 dendrogram_minclass     -1000 
 do_queue                No 
-queuename               0400_Select_split_parts 
+queuename               050010_Select_split_parts 
 qsub                    GTF_NOT_APPLICABLE 
 qsub_extra1             GTF_NOT_APPLICABLE 
 qsub_extra2             GTF_NOT_APPLICABLE 
