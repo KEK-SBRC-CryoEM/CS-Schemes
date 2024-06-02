@@ -39,8 +39,11 @@ nr_split                -1
 do_remove_duplicates    No 
 duplicate_threshold     30 
 image_angpix            -1 
+do_filaments            No 
+dendrogram_threshold    0.85 
+dendrogram_minclass     -1000 
 do_queue                No 
-queuename               040030_Select_class2d_vdam 
+queuename               040030_Select_sort2d_vdam 
 qsub                    GTF_NOT_APPLICABLE 
 qsub_extra1             GTF_NOT_APPLICABLE 
 qsub_extra2             GTF_NOT_APPLICABLE 
