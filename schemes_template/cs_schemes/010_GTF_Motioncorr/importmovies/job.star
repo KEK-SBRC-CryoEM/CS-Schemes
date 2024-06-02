@@ -32,9 +32,9 @@ node_type                "Particle coordinates (*.box, *_pick.star)"
 optics_group_particles   "" 
 do_queue                 No 
 queuename                010010_Import_movies 
-qsub                     GTC_NOT_APPLICABLE 
-qsub_extra1              GTC_NOT_APPLICABLE 
-qsub_extra2              GTC_NOT_APPLICABLE 
-qsubscript               GTC_NOT_APPLICABLE 
+qsub                     GTF_NOT_APPLICABLE 
+qsub_extra1              GTF_NOT_APPLICABLE 
+qsub_extra2              GTF_NOT_APPLICABLE 
+qsubscript               GTF_NOT_APPLICABLE 
 min_dedicated            0 
 other_args               "" 
