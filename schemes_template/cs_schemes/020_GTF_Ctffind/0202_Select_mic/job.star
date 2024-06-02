@@ -41,9 +41,9 @@ duplicate_threshold     30
 image_angpix            -1 
 do_queue                No 
 queuename               020020_Select_ctffind_mics 
-qsub                    GTC_NOT_APPLICABLE 
-qsub_extra1             GTC_NOT_APPLICABLE 
-qsub_extra2             GTC_NOT_APPLICABLE 
-qsubscript              GTC_NOT_APPLICABLE 
+qsub                    GTF_NOT_APPLICABLE 
+qsub_extra1             GTF_NOT_APPLICABLE 
+qsub_extra2             GTF_NOT_APPLICABLE 
+qsubscript              GTF_NOT_APPLICABLE 
 min_dedicated           0 
 other_args              "" 
