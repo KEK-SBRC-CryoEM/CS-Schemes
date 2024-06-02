@@ -56,7 +56,7 @@ helical_twist_min                   0
 helical_twist_max                   0 
 helical_twist_inistep               0 
 do_parallel_discio                  Yes 
-nr_pool                             30 
+nr_pool                             16 
 do_pad1                             Yes 
 do_preread_images                   No 
 scratch_dir                         /scratch 

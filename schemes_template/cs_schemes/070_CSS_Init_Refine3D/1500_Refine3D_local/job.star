@@ -56,7 +56,7 @@ helical_twist_min                   0
 helical_twist_max                   0 
 helical_twist_inistep               0 
 do_parallel_discio                  Yes 
-nr_pool                             30 
+nr_pool                             16 
 do_pad1                             Yes 
 do_preread_images                   No 
 scratch_dir                         /scratch 
@@ -66,7 +66,7 @@ gpu_ids                             0:1:2:0:1:2:3:0:1:2:3:0:1:2
 nr_mpi                              15 
 nr_threads                          6 
 do_queue                            Yes 
-queuename                           1500_Refine3D_local 
+queuename                           070090_Refine3D_local 
 qsub                                sbatch 
 qsub_extra1                         g5-vcpu48-gpu4 
 qsub_extra2                         4 

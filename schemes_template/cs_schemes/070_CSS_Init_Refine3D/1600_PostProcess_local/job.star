@@ -27,7 +27,7 @@ low_pass                5
 fn_mtf                  "" 
 mtf_angpix              1 
 do_queue                No 
-queuename               1600_PostProcess_local 
+queuename               070100_PostProcess_local 
 qsub                    CSS_NOT_APPLICABLE 
 qsub_extra1             CSS_NOT_APPLICABLE 
 qsub_extra2             CSS_NOT_APPLICABLE 
