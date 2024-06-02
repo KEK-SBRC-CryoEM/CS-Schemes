@@ -1,40 +1,40 @@
 
-# version 30001
+# version 30001 
 
-data_job
+data_job 
 
-_rlnJobTypeLabel             relion.import
-_rlnJobIsContinue                       0
-_rlnJobIsTomo                           0
- 
+_rlnJobTypeLabel             relion.import 
+_rlnJobIsContinue                       0 
+_rlnJobIsTomo                           0 
 
-# version 30001
 
-data_joboptions_values
+# version 30001 
+
+data_joboptions_values 
 
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-do_raw                   Yes
-fn_in_raw                $$GTF_fn_in_raw
-is_multiframe            Yes
-optics_group_name        opticsGroup1
-fn_mtf                   $$GTF_fn_mtf
-angpix                   $$GTF_angpix_mic
-kV                       $$GTF_kV
-Cs                       $$GTF_Cs 
+do_raw                   Yes 
+fn_in_raw                $$EM_movie_files 
+is_multiframe            Yes 
+optics_group_name        opticsGroup1 
+fn_mtf                   $$EM_mtf_file 
+angpix                   $$EM_mics_apix 
+kV                       $$EM_kV 
+Cs                       $$EM_Cs 
 Q0                       0.1 
 beamtilt_x               0 
 beamtilt_y               0 
 do_other                 No 
-fn_in_other              ref.mrc  
-node_type                "Particle coordinates (*.box, *_pick.star)"  
-optics_group_particles   ""  
+fn_in_other              "" 
+node_type                "Particle coordinates (*.box, *_pick.star)" 
+optics_group_particles   "" 
 do_queue                 No 
-qsub                     qsub 
-queuename                importmovies
-qsubscript               "" 
-min_dedicated            24 
+queuename                010010_Import_movies 
+qsub                     GTC_NOT_APPLICABLE 
+qsub_extra1              GTC_NOT_APPLICABLE 
+qsub_extra2              GTC_NOT_APPLICABLE 
+qsubscript               GTC_NOT_APPLICABLE 
+min_dedicated            0 
 other_args               "" 
-qsub_extra1              invalid_partition
-qsub_extra2              invalid_partition
