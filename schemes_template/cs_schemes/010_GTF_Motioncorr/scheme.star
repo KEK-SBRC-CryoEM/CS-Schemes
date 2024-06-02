@@ -51,14 +51,14 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-EM_movie_files              Micrographs/*.tif                                                   Micrographs/*.tif 
-EM_mtf_file                 ""                                                                  "" 
-EM_gain_ref_file            ""                                                                  "" 
-import_movies               Schemes/010_GTF_Motioncorr/importmovies/movies.star                 Schemes/010_GTF_Motioncorr/importmovies/movies.star 
-motioncorr_mics             Schemes/010_GTF_Motioncorr/motioncorr/corrected_micrographs.star    Schemes/010_GTF_Motioncorr/motioncorr/corrected_micrographs.star 
-selected_motioncorr_mics    Schemes/010_GTF_Motioncorr/select_motioncor_mics/micrographs.star   Schemes/010_GTF_Motioncorr/select_motioncor_mics/micrographs.star 
-micrographs                 micrographs                                                         micrographs 
-movies                      movies                                                              movies 
+EM_movie_files                   Micrographs/*.tif                                                   Micrographs/*.tif 
+EM_mtf_file                      ""                                                                  "" 
+EM_gain_ref_file                 ""                                                                  "" 
+movies_star                      Schemes/010_GTF_Motioncorr/importmovies/movies.star                 Schemes/010_GTF_Motioncorr/importmovies/movies.star 
+motioncorr_mics_star             Schemes/010_GTF_Motioncorr/motioncorr/corrected_micrographs.star    Schemes/010_GTF_Motioncorr/motioncorr/corrected_micrographs.star 
+selected_motioncorr_mics_star    Schemes/010_GTF_Motioncorr/select_motioncor_mics/micrographs.star   Schemes/010_GTF_Motioncorr/select_motioncor_mics/micrographs.star 
+movies                           movies                                                              movies 
+micrographs                      micrographs                                                         micrographs 
 
 
 # version 30001 
@@ -71,11 +71,11 @@ _rlnSchemeOperatorType #2
 _rlnSchemeOperatorOutput #3 
 _rlnSchemeOperatorInput1 #4 
 _rlnSchemeOperatorInput2 #5 
-COUNT_current_import_movies        float=count_images        current_nr_import_movies           import_movies               movies 
-COUNT_pre_motioncorr_mics          float=count_images        pre_nr_motioncorr_mics             motioncorr_mics             micrographs 
-EXIT_maxtime                       exit_maxtime              undefined                          maxtime_hr                  undefined 
+COUNT_current_import_movies        float=count_images        current_nr_import_movies           movies_star                 movies 
+COUNT_pre_motioncorr_mics          float=count_images        pre_nr_motioncorr_mics             motioncorr_mics_star        micrographs 
 HAS_unprocessed_motioncorr_mics    bool=gt                   has_unprocessed_motioncorr_mics    current_nr_import_movies    pre_nr_motioncorr_mics 
 WAIT                               wait                      undefined                          wait_sec                    undefined 
+EXIT_maxtime                       exit_maxtime              undefined                          maxtime_hr                  undefined 
 
 
 # version 30001 
