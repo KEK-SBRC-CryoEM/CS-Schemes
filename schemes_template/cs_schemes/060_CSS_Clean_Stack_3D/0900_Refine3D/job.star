@@ -22,10 +22,10 @@ fn_mask                             $$mask3d_ref3d
 ref_correct_greyscale               No 
 trust_ref_size                      No 
 ini_high                            15 
-sym_name                            $$CSS_lbin_sym_name_refine3d_apo 
+sym_name                            $$CSS_lbin_center3d_refine3d_sym_name 
 do_ctf_correction                   Yes 
 ctf_intact_first_peak               No 
-particle_diameter                   $$CSS_lbin_refine3d_pmd
+particle_diameter                   $$SS_comm_optimal_pmd
 do_zero_mask                        Yes 
 do_solvent_fsc                      No 
 do_blush                            Yes 
@@ -66,7 +66,7 @@ gpu_ids                             0:1:2:3:4:5:6:7
 nr_mpi                              9 
 nr_threads                          6 
 do_queue                            Yes 
-queuename                           0900_Refine3D 
+queuename                           060080_Refine3D 
 qsub                                sbatch 
 qsub_extra1                         g4dn-96c-384gb-8g 
 qsub_extra2                         1 
