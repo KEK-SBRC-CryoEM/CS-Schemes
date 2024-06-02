@@ -16,8 +16,8 @@ loop_
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
 fn_in                   Schemes/090_CSS_Res_Fish/2100_Refine3D_global/run_half1_class001_unfil.mrc 
-fn_mask                 $$CSS_imported_mbin_mask3d
-angpix                  $$CSS_mbin_apix 
+fn_mask                 $$SS_comm_mbin_imported_mask3d_path 
+angpix                  $$SS_comm_mbin_angpix 
 do_auto_bfac            Yes 
 autob_lowres            10 
 do_adhoc_bfac           No 
@@ -27,7 +27,7 @@ low_pass                5
 fn_mtf                  "" 
 mtf_angpix              1 
 do_queue                No 
-queuename               2200_PostProcess_global 
+queuename               090040_PostProcess_global 
 qsub                    CSS_NOT_APPLICABLE 
 qsub_extra1             CSS_NOT_APPLICABLE 
 qsub_extra2             CSS_NOT_APPLICABLE 
