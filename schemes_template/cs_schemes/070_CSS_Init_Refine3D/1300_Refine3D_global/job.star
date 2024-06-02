@@ -1,32 +1,34 @@
 
-# version 30001
+# version 30001 
 
-data_job
+data_job 
 
-_rlnJobTypeLabel             relion.refine3d
-_rlnJobIsContinue                       0
-_rlnJobIsTomo                           0
- 
+_rlnJobTypeLabel             relion.refine3d 
+_rlnJobIsContinue                       0 
+_rlnJobIsTomo                           0 
 
-# version 30001
 
-data_joboptions_values
+# version 30001 
+
+data_joboptions_values 
 
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_img                              Schemes/070_CSS_Init_Refine3D/1103_Select_rm_bars_xy/particles.star
+fn_img                              Schemes/070_CSS_Init_Refine3D/1103_Select_rm_bars_xy/particles.star 
 fn_cont                             "" 
-fn_ref                              $$imported_ref3d
-fn_mask                             $$imported_mask3d
-ref_correct_greyscale               No
+fn_ref                              $$imported_ref3d 
+fn_mask                             $$imported_mask3d 
+ref_correct_greyscale               No 
+trust_ref_size                      No 
 ini_high                            15 
-sym_name                            $$CSS_mbin_sym_name_refine3d_apo
+sym_name                            $$SS_comm_sym_name 
 do_ctf_correction                   Yes 
 ctf_intact_first_peak               No 
-particle_diameter                   $$CSS_mbin_refine3d_pmd_optimal 
-do_zero_mask                        Yes     
+particle_diameter                   $$SS_comm_optimal_pmd 
+do_zero_mask                        Yes 
 do_solvent_fsc                      No 
+do_blush                            Yes 
 sampling                            "7.5 degrees" 
 offset_range                        5 
 offset_step                         1 
@@ -47,7 +49,7 @@ helical_twist_initial               0
 helical_rise_initial                0 
 helical_z_percentage                30 
 do_local_search_helical_symmetry    No 
-helical_rise_min                    0
+helical_rise_min                    0 
 helical_rise_max                    0 
 helical_rise_inistep                0 
 helical_twist_min                   0 
@@ -64,11 +66,10 @@ gpu_ids                             0:1:2:0:1:2:3:0:1:2:3:0:1:2
 nr_mpi                              15 
 nr_threads                          6 
 do_queue                            Yes 
-queuename                           1300_Refine3D_global 
+queuename                           070070_Refine3D_global 
 qsub                                sbatch 
 qsub_extra1                         g5-vcpu48-gpu4 
 qsub_extra2                         4 
 qsubscript                          /efs/em/aws_slurm_relion50_gpu.sh 
 min_dedicated                       4 
 other_args                          "" 
-

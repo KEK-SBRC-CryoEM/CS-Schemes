@@ -1,61 +1,53 @@
 
-# version 30001
+# version 30001 
 
-data_job
+data_job 
 
-_rlnJobTypeLabel             relion.extract
-_rlnJobIsContinue                       0
-_rlnJobIsTomo                           0
- 
+_rlnJobTypeLabel             relion.extract 
+_rlnJobIsContinue                       0 
+_rlnJobIsTomo                           0 
 
-# version 30001
 
-data_joboptions_values
+# version 30001 
+
+data_joboptions_values 
 
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-star_mics                        $$CSS_selected_mics
-coords_suffix                    "" 
-do_reextract                     Yes 
-fndata_reextract                 $$CSS_extract_refine_data
-do_reset_offsets                 No
-do_recenter                      Yes
-recenter_x                       0 
-recenter_y                       0 
-recenter_z                       0
-do_float16                       No
-extract_size                     $$CSS_mbin_mics_box
-do_invert                        Yes
-do_norm                          Yes
-bg_diameter                      $$CSS_mbin_mics_box_0o95 
-black_dust                       -1 
-white_dust                       -1 
-do_rescale                       Yes
-rescale                          $$CSS_mbin_parts_box
-do_fom_threshold                 No 
-minimum_pick_fom                 ""
-do_extract_helix                 No 
-helical_tube_outer_diameter      200 
-helical_bimodal_angular_priors   Yes 
-do_cut_into_segments             Yes 
-do_extract_helical_tubes         Yes 
-helical_nr_asu                   1  
-helical_rise                     1 
-nr_mpi                           192 
-do_queue                         Yes 
-queuename                        1100_Extract_reextract 
-qsub                             sbatch 
-qsub_extra1                      c7i-vcpu192-gpu0 
-qsub_extra2                      1
-qsubscript                       /efs/em/aws_slurm_relion50_cpu_axcore.sh 
-min_dedicated                    192 
-other_args                       "" 
-     
-
- 
-
-
-
-
- 
+star_mics                         $$SS_comm_ctf_mics_star 
+coords_suffix                     "" 
+do_reextract                      Yes 
+fndata_reextract                  $$CSS_mbin_reextract_refined_star 
+do_reset_offsets                  No 
+do_recenter                       Yes 
+recenter_x                        0 
+recenter_y                        0 
+recenter_z                        0 
+do_float16                        No 
+extract_size                      $$CSS_mbin_reextract_mics_box 
+do_invert                         Yes 
+do_norm                           Yes 
+bg_diameter                       $$CSS_mbin_reextract_mics_0o95box 
+black_dust                        -1 
+white_dust                        -1 
+do_rescale                        Yes 
+rescale                           $$CSS_mbin_reextract_parts_box 
+do_fom_threshold                  No 
+minimum_pick_fom                  "" 
+do_extract_helix                  No 
+helical_tube_outer_diameter       200 
+helical_bimodal_angular_priors    Yes 
+do_cut_into_segments              Yes 
+do_extract_helical_tubes          Yes 
+helical_nr_asu                    1 
+helical_rise                      1 
+nr_mpi                            192 
+do_queue                          Yes 
+queuename                         070010_Extract_reextract 
+qsub                              sbatch 
+qsub_extra1                       c7i-vcpu192-gpu0 
+qsub_extra2                       1 
+qsubscript                        /efs/em/aws_slurm_relion50_cpu_axcore.sh 
+min_dedicated                     192 
+other_args                        "" 

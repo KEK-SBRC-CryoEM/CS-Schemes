@@ -1,32 +1,34 @@
 
-# version 30001
+# version 30001 
 
-data_job
+data_job 
 
-_rlnJobTypeLabel             relion.refine3d
-_rlnJobIsContinue                       0
-_rlnJobIsTomo                           0
- 
+_rlnJobTypeLabel             relion.refine3d 
+_rlnJobIsContinue                       0 
+_rlnJobIsTomo                           0 
 
-# version 30001
 
-data_joboptions_values
+# version 30001 
+
+data_joboptions_values 
 
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_img                              Schemes/070_CSS_Init_Refine3D/1300_Refine3D_global/run_data.star
+fn_img                              Schemes/070_CSS_Init_Refine3D/1300_Refine3D_global/run_data.star 
 fn_cont                             "" 
-fn_ref                              Schemes/070_CSS_Init_Refine3D/1300_Refine3D_global/run_class001.mrc
-fn_mask                             $$imported_mask3d
-ref_correct_greyscale               Yes
+fn_ref                              Schemes/070_CSS_Init_Refine3D/1300_Refine3D_global/run_class001.mrc 
+fn_mask                             $$imported_mask3d 
+ref_correct_greyscale               Yes 
+trust_ref_size                      No 
 ini_high                            0 
-sym_name                            $$CSS_mbin_sym_name_refine3d_apo 
+sym_name                            $$SS_comm_sym_name 
 do_ctf_correction                   Yes 
 ctf_intact_first_peak               No 
-particle_diameter                   $$CSS_mbin_refine3d_pmd_0o95
-do_zero_mask                        Yes     
+particle_diameter                   $$SS_comm_mbin_0o95box_pmd 
+do_zero_mask                        Yes 
 do_solvent_fsc                      Yes 
+do_blush                            Yes 
 sampling                            "1.8 degrees" 
 offset_range                        5 
 offset_step                         1 
@@ -47,7 +49,7 @@ helical_twist_initial               0
 helical_rise_initial                0 
 helical_z_percentage                30 
 do_local_search_helical_symmetry    No 
-helical_rise_min                    0
+helical_rise_min                    0 
 helical_rise_max                    0 
 helical_rise_inistep                0 
 helical_twist_min                   0 
@@ -71,4 +73,3 @@ qsub_extra2                         4
 qsubscript                          /efs/em/aws_slurm_relion50_gpu.sh 
 min_dedicated                       4 
 other_args                          "" 
-
