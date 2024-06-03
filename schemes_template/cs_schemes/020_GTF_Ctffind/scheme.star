@@ -35,7 +35,7 @@ _rlnSchemeBooleanVariableName #1
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
 has_unprocessed_ctffind_mics    0            0 
-
+has_motioncorr                  0            0
 
 # version 30001 
 
@@ -94,7 +94,8 @@ _rlnSchemeEdgeIsFork #3
 _rlnSchemeEdgeOutputNodeNameIfTrue #4 
 _rlnSchemeEdgeBooleanVariable #5 
 WAIT                             EXIT_maxtime                           0    undefined     undefined 
-EXIT_maxtime                     COUNT_current_motioncorr_mics          0    undefined     undefined 
+EXIT_maxtime                     HAS_motioncorr                         1    COUNT_current_motioncorr_mics  has_motioncorr
+HAS_motioncorr                   WAIT                                   0    undefined     undefined 
 COUNT_current_motioncorr_mics    COUNT_pre_ctffind_mics                 0    undefined     undefined 
 COUNT_pre_ctffind_mics           HAS_unprocessed_ctffind_mics           0    undefined     undefined 
 HAS_unprocessed_ctffind_mics     WAIT                                   1    ctffind       has_unprocessed_ctffind_mics
