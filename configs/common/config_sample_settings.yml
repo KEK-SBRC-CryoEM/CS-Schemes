@@ -21,14 +21,14 @@ Settings:
   SS_comm_motioncorr_mics_star: Schemes/010_GTF_Motioncorr/select_motioncor_mics/micrographs.star
   SS_comm_ctf_mics_star: Schemes/020_GTF_Ctffind/0202_Select_mic/micrographs.star
   SS_comm_class2d_classes: 100
-#010
+#010_GTF_Motioncorr
   GTF_eer_grouping: 32
   GTF_motioncorr_total_max_limit: 6
-#020
+#020_GTF_Ctffind
   GTF_ctffind_search_def_min : 5000
   GTF_ctffind_search_def_max : 50000
   GTF_ctffind_res_max_limit: 6
-#030
+#030_GTF_Create_Stack
   GTF_pick_do_limit_mics: 0
   GTF_pick_min_nr_mics: 24
   GTF_pick_cryolo_thresh: 0.3
@@ -39,31 +39,31 @@ Settings:
   GTF_lbin_extract_parts_x_max: 3582
   GTF_lbin_extract_parts_y_min: 128
   GTF_lbin_extract_parts_y_max: 3710
-#030 Advanced
+#030_GTF_Create_Stack Advanced
   GTF_pick_use_log_pick: 0
   GTF_pick_log_pdm_min: 100
   GTF_pick_log_pdm_max: 160
   GTF_pick_log_adjust_thresh: 0.25
   GTF_pick_log_upper_thresh: 5
-#040
+#040_GTF_Class2D_PMD
   GTF_lbin_class2d_pmds_parts_min: 4000
   GTF_lbin_class2d_pmds_base_pmd: 140
   GTF_lbin_class2d_pmds_pad_min: 0
   GTF_lbin_class2d_pmds_pad_max: 120
   GTF_lbin_class2d_pmds_pad_step: 20
   GTF_lbin_class2d_pmds_rank_thresh: 0.06
-#050
+#050_GTF_AbInitReconst3D
   GTF_lbin_abinit3d_do_limit_parts: 0
   GTF_lbin_abinit3d_min_nr_parts: 4000
   GTF_lbin_abinit3d_pmd: 200
   GTF_lbin_abinit3d_sym_name: D2
-#050 Advanced
+#050_GTF_AbInitReconst3D Advanced
   GTF_lbin_abinit3d_in_parts_star: Schemes/030_GTF_Create_Stack/0302_Select_rm_bars_xy/particles.star
   GTF_lbin_abinit3d_clean2d_cycles_max: 1
   GTF_lbin_abinit3d_clean2d_rank_thresh: 0.06
   GTF_lbin_abinit3d_rank_thresh: 0.26
   GTF_lbin_abinit3d_do_run_C1: 1
-#060
+#060_CSS_Clean_Stack_3D
   CSS_lbin_center3d_do_limit_parts: 0
   CSS_lbin_center3d_min_nr_parts: 4000
   CSS_lbin_center3d_class3d_use_mask3d: 1
@@ -73,7 +73,7 @@ Settings:
   CSS_lbin_center3d_refine3d_use_mask3d: 1
   CSS_lbin_center3d_refine3d_sym_name: C1
   CSS_lbin_center3d_postproc_adhoc_lpf: 10.62
-#060 Advanced
+#060_CSS_Clean_Stack_3D Advanced
   CSS_lbin_center3d_parts_star: Schemes/030_GTF_Create_Stack/0302_Select_rm_bars_xy/particles.star
   CSS_lbin_center3d_clean2d_cycles_max: 0
   CSS_lbin_center3d_clean2d_rank_thresh: 0.06
@@ -83,7 +83,7 @@ Settings:
   CSS_lbin_center3d_class3d_do_fast_subsets: 1
   CSS_lbin_center3d_class3d_cont_stars: run_it000_optimiser.star
   CSS_lbin_center3d_class3d_parts_star: Schemes/060_CSS_Clean_Stack_3D/0700_Class3D/run_it025_data.star
-#070
+#070_CSS_Init_Refine3D
   CSS_mbin_reextract_mics_box: 360
   CSS_mbin_reextract_mics_0o95box: 342
   CSS_mbin_reextract_parts_box: 256
@@ -91,19 +91,19 @@ Settings:
   CSS_mbin_reextract_parts_x_max: 3530
   CSS_mbin_reextract_parts_y_min: 180
   CSS_mbin_reextract_parts_y_max: 3658
-#070 Advanced
+#070_CSS_Init_Refine3D Advanced
   CSS_mbin_reextract_refined_star: Schemes/060_CSS_Clean_Stack_3D/0900_Refine3D/run_data.star
-#080
+#080_CSS_Refine_Cycle
   CSS_mbin_pprefine_refined_star: Schemes/070_CSS_Init_Refine3D/1500_Refine3D_local/run_data.star
   CSS_mbin_pprefine_postproc_star: Schemes/070_CSS_Init_Refine3D/1600_PostProcess_local/postprocess.star
   CSS_mbin_pprefine_ref3d: Schemes/070_CSS_Init_Refine3D/1500_Refine3D_local/run_class001.mrc
-#080 Advanced
+#080_CSS_Refine_Cycle Advanced
   CSS_mbin_pprefine_cycles_max: 2
-#090  
+#090_CSS_Res_Fish  
   CSS_mbin_resfish3d_classes: 2
   CSS_mbin_resfish3d_tval: 16
   CSS_mbin_resfish3d_locres_bfactor: -30
-#090 Advanced
+#090_CSS_Res_Fish Advanced
   CSS_mbin_resfish3d_refined_star: Schemes/080_CSS_Refine_Cycle/1607_Refine3D_polish/run_data.star
   CSS_mbin_resfish3d_ref3d: Schemes/080_CSS_Refine_Cycle/1607_Refine3D_polish/run_class001.mrc
   CSS_mbin_resfish3d_do_fast_subsets: 1

@@ -38,7 +38,7 @@ split_size              100
 nr_split                -1 
 do_remove_duplicates    Yes 
 duplicate_threshold     $$SS_comm_dup_thresh 
-image_angpix            $$SS_comm_mbin_angpix 
+image_angpix            $$EM_mics_apix 
 do_filaments            No 
 dendrogram_threshold    0.85 
 dendrogram_minclass     -1000 

@@ -16,7 +16,7 @@ _rlnSchemeFloatVariableName #1
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
 SS_comm_dup_thresh                   21               21 
-SS_comm_mbin_angpix                   1.0375           1.0375 
+EM_mics_apix                          0.885            0.885 
 CSS_mbin_reextract_mics_box         360              360 
 CSS_mbin_reextract_mics_0o95box     342              342 
 CSS_mbin_reextract_parts_box        288              288 
@@ -26,6 +26,7 @@ CSS_mbin_reextract_parts_y_min      180              180
 CSS_mbin_reextract_parts_y_max     3912             3912 
 SS_comm_optimal_pmd                 166              166 
 SS_comm_mbin_0o95box_pmd            260              260 
+SS_comm_mbin_angpix                   1.0375           1.0375 
 wait_sec                            180              180 
 maxtime_hr                           96               96 
 
