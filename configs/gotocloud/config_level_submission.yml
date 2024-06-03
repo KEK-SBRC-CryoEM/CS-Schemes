@@ -3,7 +3,7 @@
     SubmitToQueue: 'Yes'
     SubmitCommand: 'sbatch'
     SubmissionScript: '/efs/em/aws_slurm_relion50_gpu_excl.sh'
-- SubmissionLevel: intel-intelmpi-cpu_xcore_excl
+- SubmissionLevel: intel-intelmpi-cpu_xcore
   Settings:
     SubmitToQueue: 'Yes'
     SubmitCommand: 'sbatch'
@@ -18,9 +18,5 @@
     SubmitToQueue: 'No'
     SubmitCommand: '""'
     SubmissionScript: '""'
-- SubmissionLevel: intel-intelmpi-cpu_xcore
-  Settings:
-    SubmitToQueue: 'Yes'
-    SubmitCommand: 'sbatch'
-    SubmissionScript: '/efs/em/aws_slurm_relion50_cpu_xcore.sh'
+
 
