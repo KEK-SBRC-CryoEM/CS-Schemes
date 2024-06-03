@@ -1,49 +1,52 @@
 
-# version 30001
+# version 30001 
 
-data_job
+data_job 
 
-_rlnJobTypeLabel             relion.select.split
-_rlnJobIsContinue                       0
-_rlnJobIsTomo                           0
- 
+_rlnJobTypeLabel             relion.select.split 
+_rlnJobIsContinue                       0 
+_rlnJobIsTomo                           0 
 
-# version 30001
 
-data_joboptions_values
+# version 30001 
+
+data_joboptions_values 
 
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-discard_label          rlnImageName 
-discard_sigma          4 
-do_class_ranker        No 
-do_discard             No 
- do_random             No 
-do_recenter            No 
-do_regroup             No 
-do_remove_duplicates   No 
-do_select_values       No 
-  do_split             Yes 
-duplicate_threshold    30 
-   fn_data             "" 
-    fn_mic             Schemes/11_CS_Create_Stack/0101_Select_mic/micrographs.star 
-  fn_model             "" 
-image_angpix           -1 
- nr_groups             1 
-  nr_split             -1 
-rank_threshold         0.5 
-select_label           rlnCtfMaxResolution 
-select_maxval          9999. 
-select_minval          -9999. 
-select_nr_classes      -1 
-select_nr_parts        -1 
-split_size             $$CS_min_nr_mics 
-python_exe             $$python_exe 
-do_queue               No 
-queuename              0102_Select_split_stack_mics 
-qsub                   CS_NOT_APPLICABLE 
-qsub_extra1            CS_NOT_APPLICABLE 
-qsubscript             CS_NOT_APPLICABLE 
-min_dedicated          24 
-other_args             "" 
+fn_model                "" 
+fn_mic                  $$CS_ctf_mics
+fn_data                 "" 
+do_class_ranker         No 
+rank_threshold          0.5 
+select_nr_parts         -1 
+select_nr_classes       -1 
+do_recenter             No 
+do_regroup              No 
+nr_groups               1 
+do_select_values        No 
+select_label            rlnCtfMaxResolution 
+select_minval           -9999. 
+select_maxval           9999. 
+do_discard              No 
+discard_label           rlnImageName 
+discard_sigma           4 
+do_split                Yes 
+do_random               No 
+split_size              $$CS_min_nr_mics 
+nr_split                -1 
+do_remove_duplicates    No 
+duplicate_threshold     30 
+image_angpix            -1 
+do_filaments            No 
+dendrogram_threshold    0.85 
+dendrogram_minclass     -1000 
+do_queue                No 
+queuename               030010_Select_split_mics 
+qsub                    GTF_NOT_APPLICABLE 
+qsub_extra1             GTF_NOT_APPLICABLE 
+qsub_extra2             GTF_NOT_APPLICABLE 
+qsubscript              GTF_NOT_APPLICABLE 
+min_dedicated           0 
+other_args              "" 
