@@ -15,11 +15,11 @@ Settings:
   SS_comm_mbin_ref3d_name: mbin_ref3d.mrc
   SS_comm_mbin_mask3d_path: Inputs/$$SS_comm_mbin_mask3d_name
   SS_comm_mbin_mask3d_name: mbin_mask3d.mrc
-  SS_comm_mbin_imported_mask3d_path: Schemes/080_CSS_Refine_Cycle/1202_Import_mask3d/$$CSS_mbin_mask3d_name
+  SS_comm_mbin_imported_mask3d_path: Schemes/070_CSS_Init_Refine3D/1202_Import_mask3d/$$CSS_mbin_mask3d_name
 #Common Advanced
   SS_comm_wait_prev_proc: 1
-  SS_comm_motioncorr_mics_star: Schemes/010_GTF_Motioncorr/motioncorr/corrected_micrographs.star
-  SS_comm_ctf_mics_star: Schemes/11_CS_Create_Stack/0102_Select_split_stack_mics/micrographs_split1.star
+  SS_comm_motioncorr_mics_star: Schemes/010_GTF_Motioncorr/select_motioncor_mics/micrographs.star
+  SS_comm_ctf_mics_star: Schemes/020_GTF_Ctffind/0202_Select_mic/micrographs.star
   SS_comm_class2d_classes: 100
 #010
   GTF_eer_grouping: 32
@@ -29,21 +29,22 @@ Settings:
   GTF_ctffind_search_def_max : 50000
   GTF_ctffind_res_max_limit: 6
 #030
-  GTF_pick_do_limit_mics: MRK_TBD
-  GTF_pick_min_nr_mics: MRK_TBD
-  GTF_pick_cryolo_thresh: MRK_TBD
-  GTF_pick_use_log_pick: MRK_TBD
-  GTF_pick_log_pdm_min: MRK_TBD
-  GTF_pick_log_pdm_max: MRK_TBD
-  GTF_pick_log_adjust_thresh: MRK_TBD
-  GTF_pick_log_upper_thresh: MRK_TBD
-  GTF_lbin_extract_mics_box: MRK_TBD
-  GTF_lbin_extract_mics_0o95box: MRK_TBD
-  GTF_lbin_extract_parts_box: MRK_TBD
-  GTF_lbin_extract_parts_x_min: MRK_TBD
-  GTF_lbin_extract_parts_x_max: MRK_TBD
-  GTF_lbin_extract_parts_y_min: MRK_TBD
-  GTF_lbin_extract_parts_y_max: MRK_TBD
+  GTF_pick_do_limit_mics: 0
+  GTF_pick_min_nr_mics: 24
+  GTF_pick_cryolo_thresh: 0.3
+  GTF_lbin_extract_mics_box: 256
+  GTF_lbin_extract_mics_0o95box: 200
+  GTF_lbin_extract_parts_box: 64
+  GTF_lbin_extract_parts_x_min: 128
+  GTF_lbin_extract_parts_x_max: 3582
+  GTF_lbin_extract_parts_y_min: 128
+  GTF_lbin_extract_parts_y_max: 3710
+#030 Advanced
+  GTF_pick_use_log_pick: 0
+  GTF_pick_log_pdm_min: 100
+  GTF_pick_log_pdm_max: 160
+  GTF_pick_log_adjust_thresh: 0.25
+  GTF_pick_log_upper_thresh: 5
 #040
   GTF_lbin_class2d_pmds_parts_min: 4000
   GTF_lbin_class2d_pmds_base_pmd: 140
