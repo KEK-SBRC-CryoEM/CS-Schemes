@@ -87,9 +87,9 @@ _rlnSchemeJobNameOriginal #1
 _rlnSchemeJobName #2 
 _rlnSchemeJobMode #3 
 _rlnSchemeJobHasStarted #4 
-importmovies              importmovies              continue            0 
-motioncorr                motioncorr                continue            0 
-select_motioncorr_mics    select_motioncorr_mics    continue            0 
+importmovies              importmovies              continue       0 
+motioncorr                motioncorr                continue       0 
+select_motioncorr_mics    select_motioncorr_mics    continue       0 
 
 
 # version 30001 
