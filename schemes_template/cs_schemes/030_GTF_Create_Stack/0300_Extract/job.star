@@ -25,14 +25,14 @@ recenter_x                        0
 recenter_y                        0 
 recenter_z                        0 
 do_float16                        No 
-extract_size                      $$CS_mics_box 
+extract_size                      $$GTF_lbin_extract_mics_box 
 do_invert                         Yes 
 do_norm                           Yes 
-bg_diameter                       $$CS_mics_box_0o95 
+bg_diameter                       $$GTF_lbin_extract_mics_0o95box 
 black_dust                        -1 
 white_dust                        -1 
 do_rescale                        Yes 
-rescale                           $$CS_parts_box 
+rescale                           $$GTF_lbin_extract_parts_box 
 do_fom_threshold                  Yes 
 minimum_pick_fom                  $$active_thr 
 do_extract_helix                  No 

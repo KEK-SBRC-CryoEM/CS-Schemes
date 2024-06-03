@@ -21,12 +21,12 @@ do_refs                             No
 do_log                              Yes 
 do_topaz                            No 
 continue_manual                     No 
-log_diam_min                        $$CS_log_diam_min 
-log_diam_max                        $$CS_log_diam_max 
+log_diam_min                        $$GTF_pick_log_pdm_min 
+log_diam_max                        $$GTF_pick_log_pdm_max 
 log_invert                          No 
 log_maxres                          20 
-log_adjust_thr                      $$CS_log_adjust_thr 
-log_upper_thr                       $$CS_log_upper_thr 
+log_adjust_thr                      $$GTF_pick_log_adjust_thresh 
+log_upper_thr                       $$GTF_pick_log_upper_thresh 
 topaz_particle_diameter             -1 
 do_topaz_pick                       No 
 topaz_model                         "" 

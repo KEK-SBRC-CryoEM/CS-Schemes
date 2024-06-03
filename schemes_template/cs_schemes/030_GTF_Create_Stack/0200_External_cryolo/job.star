@@ -25,7 +25,7 @@ in_mask          ""
 param1_label     cryolo_repo 
 param1_value     $$cryolo_repo 
 param2_label     threshold 
-param2_value     $$CS_cryolo_thr 
+param2_value     $$GTF_pick_cryolo_thresh 
 param3_label     device 
 param3_value     0,1,2,3,4,5,6,7
 param4_label     "" 

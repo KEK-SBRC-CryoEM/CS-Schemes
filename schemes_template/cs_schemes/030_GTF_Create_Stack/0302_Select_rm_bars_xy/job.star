@@ -27,8 +27,8 @@ do_regroup              No
 nr_groups               1 
 do_select_values        Yes 
 select_label            rlnCoordinateY 
-select_minval           $$CS_parts_y_coods_min 
-select_maxval           $$CS_parts_y_coods_max 
+select_minval           $$GTF_lbin_extract_parts_y_min 
+select_maxval           $$GTF_lbin_extract_parts_y_max 
 do_discard              No 
 discard_label           rlnImageName 
 discard_sigma           4 

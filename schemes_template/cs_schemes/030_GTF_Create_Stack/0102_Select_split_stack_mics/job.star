@@ -16,7 +16,7 @@ loop_
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
 fn_model                "" 
-fn_mic                  $$CS_ctf_mics
+fn_mic                  $$SS_comm_ctf_mics_star
 fn_data                 "" 
 do_class_ranker         No 
 rank_threshold          0.5 
@@ -34,7 +34,7 @@ discard_label           rlnImageName
 discard_sigma           4 
 do_split                Yes 
 do_random               No 
-split_size              $$CS_min_nr_mics 
+split_size              $$GTF_pick_min_nr_mics 
 nr_split                -1 
 do_remove_duplicates    No 
 duplicate_threshold     30 
