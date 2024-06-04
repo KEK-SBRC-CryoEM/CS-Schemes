@@ -89,7 +89,7 @@ _rlnSchemeJobMode #3
 _rlnSchemeJobHasStarted #4 
 importmovies              importmovies              continue       0 
 motioncorr                motioncorr                continue       0 
-select_motioncorr_mics    select_motioncorr_mics    continue       0 
+select_motioncor_mics     select_motioncor_mics     continue       0 
 
 
 # version 30001 
@@ -108,5 +108,5 @@ importmovies                         COUNT_current_import_movies            0  u
 COUNT_current_import_movies          COUNT_pre_motioncorr_mics              0  undefined      undefined 
 COUNT_pre_motioncorr_mics            HAS_unprocessed_motioncorr_mics        0  undefined      undefined 
 HAS_unprocessed_motioncorr_mics      WAIT                                   1  motioncorr     has_unprocessed_motioncorr_mics 
-motioncorr                           select_motioncorr_mics                 0  undefined      undefined 
-select_motioncorr_mics               WAIT                                   0  undefined      undefined 
+motioncorr                           select_motioncor_mics                  0  undefined      undefined 
+select_motioncor_mics                WAIT                                   0  undefined      undefined 
