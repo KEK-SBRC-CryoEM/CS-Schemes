@@ -89,7 +89,6 @@ SET_prev_nr_mics          float=set             prev_nr_mics            current_
 HAS_required_nr_mics      bool=ge               has_required_nr_mics    current_nr_mics               GTF_pick_min_nr_mics 
 LIMIT_nr_mics             bool=set              limit_mics              GTF_pick_do_limit_mics        undefined 
 SET_split_mics            string=set            mics_import             split_mics                    undefined 
-SET_all_mics              string=set            mics_import             SS_comm_ctf_mics_star         undefined 
 ACTIVATE_cryolo_coords    string=set            active_coords           cryolo_coords                 undefined 
 ACTIVATE_log_coords       string=set            active_coords           log_coords                    undefined 
 ACTIVATE_cryolo_thr       float=set             active_thr              GTF_pick_cryolo_thresh        undefined 
@@ -132,11 +131,10 @@ HAS_ctffind                     WAIT                      1    COUNT_mics       
 COUNT_mics                      HAS_mics_increased        0    undefined                       undefined 
 HAS_mics_increased              WAIT                      1    SET_prev_nr_mics                has_larger_nr_mics 
 SET_prev_nr_mics                LIMIT_nr_mics             0    undefined                       undefined 
-LIMIT_nr_mics                   SET_all_mics              1    HAS_required_nr_mics            limit_mics 
+LIMIT_nr_mics                   0200_External_cryolo      1    HAS_required_nr_mics            limit_mics 
 HAS_required_nr_mics            WAIT                      1    0102_Select_split_stack_mics    has_required_nr_mics 
 0102_Select_split_stack_mics    SET_split_mics            0    undefined                       undefined 
 SET_split_mics                  0200_External_cryolo      1    0201_AutoPick_log               GTF_pick_use_log_pick 
-SET_all_mics                    0200_External_cryolo      1    0201_AutoPick_log               GTF_pick_use_log_pick 
 0200_External_cryolo            ACTIVATE_cryolo_coords    0    undefined                       undefined 
 ACTIVATE_cryolo_coords          ACTIVATE_cryolo_thr       0    undefined                       undefined 
 ACTIVATE_cryolo_thr             0300_Extract              0    undefined                       undefined 
