@@ -11,4 +11,4 @@ Settings:
   EM_motioncorr_patch_y: 5
   EM_gain_ref_file: Movies/gain.mrc 
   EM_ctffind_fit_res_min: 30
-  EM_ctffind_fit_res_max: 3
+  EM_ctffind_fit_res_max: 5

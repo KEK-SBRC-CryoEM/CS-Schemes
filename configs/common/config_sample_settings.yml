@@ -5,17 +5,17 @@ Settings:
   SS_comm_dup_thresh: 25
   SS_comm_sym_name: D2
   SS_comm_lbin_angpix: 3.54
-  SS_comm_lbin_ref3d_path: Inputs/$$SS_comm_lbin_ref3d_name
-  SS_comm_lbin_ref3d_name: lbin_ref3d.mrc
-  SS_comm_lbin_mask3d_path: Inputs/$$SS_comm_lbin_mask3d_name
-  SS_comm_lbin_mask3d_name: lbin_mask3d.mrc
+  SS_comm_lbin_ref3d_path: ref3d_beta_galactosidase_apix3o54_d64.mrc
+  SS_comm_lbin_ref3d_name: ref3d_beta_galactosidase_apix3o54_d64.mrc
+  SS_comm_lbin_mask3d_path: mask3d_beta_galactosidase_apix3o54_d64.mrc
+  SS_comm_lbin_mask3d_name: mask3d_beta_galactosidase_apix3o54_d64.mrc
   SS_comm_mbin_angpix: 1.244
   SS_comm_mbin_0o95box_pmd: 303
-  SS_comm_mbin_ref3d_path: Inputs/$$SS_comm_mbin_ref3d_name
-  SS_comm_mbin_ref3d_name: mbin_ref3d.mrc
-  SS_comm_mbin_mask3d_path: Inputs/$$SS_comm_mbin_mask3d_name
-  SS_comm_mbin_mask3d_name: mbin_mask3d.mrc
-  SS_comm_mbin_imported_mask3d_path: Schemes/070_CSS_Init_Refine3D/1202_Import_mask3d/$$CSS_mbin_mask3d_name
+  SS_comm_mbin_ref3d_path: ref3d_beta_galactosidase_apix1o244_d256.mrc
+  SS_comm_mbin_ref3d_name: ref3d_beta_galactosidase_apix1o244_d256.mrc
+  SS_comm_mbin_mask3d_path: mask3d_beta_galactosidase_apix1o244_d256.mrc
+  SS_comm_mbin_mask3d_name: mask3d_beta_galactosidase_apix1o244_d256.mrc
+  SS_comm_mbin_imported_mask3d_path: Schemes/070_CSS_Init_Refine3D/1202_Import_mask3d/$$SS_comm_mbin_mask3d_name
 #Common Advanced
   SS_comm_wait_prev_proc: 1
   SS_comm_motioncorr_mics_star: Schemes/010_GTF_Motioncorr/select_motioncor_mics/micrographs.star
@@ -23,11 +23,11 @@ Settings:
   SS_comm_class2d_classes: 100
 #010_GTF_Motioncorr
   GTF_eer_grouping: 32
-  GTF_motioncorr_total_max_limit: 6
+  GTF_motioncorr_total_max_limit: 80
 #020_GTF_Ctffind
   GTF_ctffind_search_def_min : 5000
   GTF_ctffind_search_def_max : 50000
-  GTF_ctffind_res_max_limit: 6
+  GTF_ctffind_res_max_limit: 6.0
 #030_GTF_Create_Stack
   GTF_pick_do_limit_mics: 0
   GTF_pick_min_nr_mics: 24
