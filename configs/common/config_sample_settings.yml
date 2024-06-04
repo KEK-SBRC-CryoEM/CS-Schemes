@@ -46,7 +46,9 @@ Settings:
   GTF_pick_log_adjust_thresh: 0.25
   GTF_pick_log_upper_thresh: 5
 #040_GTF_Class2D_PMD
-  GTF_lbin_class2d_pmds_parts_min: 4000
+  GTF_lbin_class2d_pmds_in_parts_star: Schemes/030_GTF_Create_Stack/0302_Select_rm_bars_xy/particles.star
+  GTF_lbin_class2d_pmds_do_limit_parts: 1
+  GTF_lbin_class2d_pmds_min_nr_parts: 4000
   GTF_lbin_class2d_pmds_base_pmd: 140
   GTF_lbin_class2d_pmds_pad_min: 0
   GTF_lbin_class2d_pmds_pad_max: 120
