@@ -132,9 +132,9 @@ EXIT_maxtime                    HAS_ctffind               0    undefined        
 HAS_ctffind                     WAIT                      1    COUNT_mics                      has_ctffind 
 COUNT_mics                      HAS_mics_increased        0    undefined                       undefined 
 HAS_mics_increased              WAIT                      1    SET_prev_nr_mics                has_larger_nr_mics 
-SET_prev_nr_mics                HAS_required_nr_mics      0    undefined                       undefined 
-HAS_required_nr_mics            WAIT                      1    LIMIT_nr_mics                   has_required_nr_mics 
-LIMIT_nr_mics                   SET_all_mics              1    0102_Select_split_stack_mics    limit_mics 
+SET_prev_nr_mics                LIMIT_nr_mics             0    undefined                       undefined 
+LIMIT_nr_mics                   SET_all_mics              1    HAS_required_nr_mics            limit_mics 
+HAS_required_nr_mics            WAIT                      1    0102_Select_split_stack_mics    has_required_nr_mics 
 0102_Select_split_stack_mics    SET_split_mics            0    undefined                       undefined 
 SET_split_mics                  0200_External_cryolo      1    0201_AutoPick_log               GTF_pick_use_log_pick 
 SET_all_mics                    0200_External_cryolo      1    0201_AutoPick_log               GTF_pick_use_log_pick 
