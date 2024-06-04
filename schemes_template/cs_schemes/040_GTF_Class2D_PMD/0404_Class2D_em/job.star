@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_img                         Schemes/040_GTF_Class2D_PMD/0401_select_split_stack/particles_split1.star 
+fn_img                         $$selected_parts 
 fn_cont                        "" 
 do_ctf_correction              Yes 
 ctf_intact_first_peak          No 
@@ -25,7 +25,7 @@ do_em                          Yes
 nr_iter_em                     25 
 do_grad                        No 
 nr_iter_grad                   200 
-particle_diameter              $$current_pmd 
+particle_diameter              $$cur_pmd 
 do_zero_mask                   Yes 
 highres_limit                  -1 
 do_center                      Yes 

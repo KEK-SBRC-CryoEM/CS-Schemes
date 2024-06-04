@@ -17,7 +17,7 @@ _rlnJobOptionVariable #1
 _rlnJobOptionValue #2 
 fn_model                "" 
 fn_mic                  "" 
-fn_data                 Schemes/gtf_class2d_pmd/select_rm_bars_xy/particles.star 
+fn_data                 $$GTF_lbin_class2d_pmds_in_parts_star 
 do_class_ranker         No 
 rank_threshold          0.5 
 select_nr_parts         -1 
