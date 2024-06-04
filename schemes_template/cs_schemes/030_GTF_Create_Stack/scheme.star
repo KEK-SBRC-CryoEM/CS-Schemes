@@ -61,7 +61,6 @@ _rlnSchemeStringVariableName #1
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
 SS_comm_ctf_mics_star    Schemes/020_GTF_Ctffind/0202_Select_mic/micrographs.star                             Schemes/020_GTF_Ctffind/0202_Select_mic/micrographs.star 
-all_mics                 Schemes/030_GTF_Create_Stack/0101_Select_mic/micrographs.star                        Schemes/030_GTF_Create_Stack/0101_Select_mic/micrographs.star 
 split_mics               Schemes/030_GTF_Create_Stack/0102_Select_split_stack_mics/micrographs_split1.star    Schemes/030_GTF_Create_Stack/0102_Select_split_stack_mics/micrographs_split1.star 
 mics_import              undefined                                                                            undefined 
 cryolo_exe               /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh                                      /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh 
@@ -90,7 +89,7 @@ SET_prev_nr_mics          float=set             prev_nr_mics            current_
 HAS_required_nr_mics      bool=ge               has_required_nr_mics    current_nr_mics               GTF_pick_min_nr_mics 
 LIMIT_nr_mics             bool=set              limit_mics              GTF_pick_do_limit_mics        undefined 
 SET_split_mics            string=set            mics_import             split_mics                    undefined 
-SET_all_mics              string=set            mics_import             all_mics                      undefined 
+SET_all_mics              string=set            mics_import             SS_comm_ctf_mics_star         undefined 
 ACTIVATE_cryolo_coords    string=set            active_coords           cryolo_coords                 undefined 
 ACTIVATE_log_coords       string=set            active_coords           log_coords                    undefined 
 ACTIVATE_cryolo_thr       float=set             active_thr              GTF_pick_cryolo_thresh        undefined 
