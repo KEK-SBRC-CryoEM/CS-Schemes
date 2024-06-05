@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_model                Schemes/040_GTF_Class2D_PMD/0402_Class2d_vdam/run_it200_optimiser.star 
+fn_model                $$active_sort2d_optimiser 
 fn_mic                  "" 
 fn_data                 "" 
 do_class_ranker         Yes 
@@ -43,7 +43,7 @@ do_filaments            No
 dendrogram_threshold    0.85 
 dendrogram_minclass     -1000 
 do_queue                No 
-queuename               040030_Select_sort2d_vdam 
+queuename               040050_Select_sort2d
 qsub                    GTF_NOT_APPLICABLE 
 qsub_extra1             GTF_NOT_APPLICABLE 
 qsub_extra2             GTF_NOT_APPLICABLE 
