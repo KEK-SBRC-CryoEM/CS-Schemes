@@ -64,7 +64,7 @@ GTF_lbin_class2d_pmds_in_parts_star    Schemes/030_GTF_Create_Stack/0302_Select_
 split_parts                            Schemes/050_GTF_AbInitReconst3D/0400_Select_split_parts/particles_split1.star    Schemes/050_GTF_AbInitReconst3D/0400_Select_split_parts/particles_split1.star 
 selected_parts                         ""                                                                               "" 
 cls2d_vdam_optimiser                   Schemes/040_GTF_Class2D_PMD/0402_Class2d_vdam/run_it200_optimiser.star           Schemes/040_GTF_Class2D_PMD/0402_Class2d_vdam/run_it200_optimiser.star 
-cls2d_em_optimiser                     Schemes/040_GTF_Class2D_PMD/0404_Class2D_em/run_it025_optimiser.star             Schemes/040_GTF_Class2D_PMD/0404_Class2D_em/run_it025_optimiser.star 
+cls2d_em_optimiser                     Schemes/040_GTF_Class2D_PMD/0403_Class2d_em/run_it025_optimiser.star             Schemes/040_GTF_Class2D_PMD/0403_Class2d_em/run_it025_optimiser.star 
 active_sort2d_optimiser                ""                                                                               "" 
 particles                              particles                                                                        particles 
 
