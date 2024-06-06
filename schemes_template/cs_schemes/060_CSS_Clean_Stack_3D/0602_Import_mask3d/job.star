@@ -27,7 +27,7 @@ Q0                        0.0
 beamtilt_x                0 
 beamtilt_y                0 
 do_other                  Yes 
-fn_in_other               $$SS_comm_lbin_ref3d_name 
+fn_in_other               $$SS_comm_lbin_mask3d_path 
 node_type                 "3D mask (.mrc)" 
 optics_group_particles    "" 
 do_queue                  No 
