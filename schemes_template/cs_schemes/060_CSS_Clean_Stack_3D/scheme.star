@@ -94,7 +94,7 @@ cls3d_cont_data_path                    ""                                      
 cls3d_cont_data_path_temp               Schemes/060_CSS_Clean_Stack_3D/0700_Class3D/$$cls3d_cont_data_name              Schemes/060_CSS_Clean_Stack_3D/0700_Class3D/$$cls3d_cont_data_name 
 CSS_lbin_center3d_class3d_parts_star    Schemes/060_CSS_Clean_Stack_3D/0700_Class3D/run_it025_data.star                 Schemes/060_CSS_Clean_Stack_3D/0700_Class3D/run_it025_data.star 
 CSS_lbin_center3d_class3d_sym           C1                                                                              C1 
-CSS_lbin_sym_name_refine3d_apo          D2                                                                              D2 
+CSS_lbin_center3d_refine3d_sym_name     D2                                                                              D2 
 particles                               particles                                                                       particles 
 
 
