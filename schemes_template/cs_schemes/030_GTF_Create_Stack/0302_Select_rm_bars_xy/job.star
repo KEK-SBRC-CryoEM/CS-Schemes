@@ -44,9 +44,9 @@ dendrogram_threshold    0.85
 dendrogram_minclass     -1000 
 do_queue                No 
 queuename               030060_Select_rm_bars_xy 
-qsub                    GTF_NOT_APPLICABLE 
-qsub_extra1             GTF_NOT_APPLICABLE 
-qsub_extra2             GTF_NOT_APPLICABLE 
-qsubscript              GTF_NOT_APPLICABLE 
+qsub                    GTC_DISABLED 
+qsub_extra1             GTC_DISABLED 
+qsub_extra2             GTC_DISABLED 
+qsubscript              GTC_DISABLED 
 min_dedicated           0 
 other_args              "" 

@@ -45,9 +45,9 @@ param10_value    ""
 nr_threads       1 
 do_queue         No 
 queuename        060070_External_select3d 
-qsub             CSS_NOT_APPLICABLE 
-qsub_extra1      CSS_NOT_APPLICABLE 
-qsub_extra2      CSS_NOT_APPLICABLE 
-qsubscript       CSS_NOT_APPLICABLE 
+qsub             CSS_DISABLED 
+qsub_extra1      CSS_DISABLED 
+qsub_extra2      CSS_DISABLED 
+qsubscript       CSS_DISABLED 
 min_dedicated    0 
 other_args       "" 
