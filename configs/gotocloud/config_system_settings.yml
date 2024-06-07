@@ -16,7 +16,7 @@
     PythonExecutable: /efs/em/pyenv/versions/anaconda3-5.3.1/envs/topaz/bin/python
 - AlgoType: algo_type_external_select3d
   Settings:
-    SelectClass3DExecutable: '"/efs/em/pyenv/versions/anaconda3-5.3.1/envs/cryolo-1.8.0/bin/python /fsx/GoToFly/SelectClass3D/gtf_relion4_run_select_class3d.py"'
+    SelectClass3DExecutable: '"/efs/em/pyenv/versions/anaconda3-5.3.1/envs/cryolo-1.8.0/bin/python /efs/em/select_class3d/gtf_relion4_run_select_class3d.py"'
 - AlgoType: algo_type_external_cryolo
   Settings:
     CrYOLOExecutable: /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh 
