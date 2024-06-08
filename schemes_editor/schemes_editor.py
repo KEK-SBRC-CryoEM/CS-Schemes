@@ -1,73 +1,114 @@
 #!/usr/bin/env python3.7
 ##########################################################################################
-# Author: Misato Yamamoto  (misatoy＠post.kek.jp), Toshio Moriya (toshio.moriya@kek.jp)
+# Authors: Misato Yamamoto (misatoy＠post.kek.jp), Toshio Moriya (toshio.moriya@kek.jp)
 # 
-# Copyright (c) 2023 KEK IMMS SBRC
+# Copyright (c) 2023-2024 KEK IMMS SBRC
 # 
 # Description:
 # Simplify setting of parameters for RELION Schemes. 
 # The parameters in all job.star files are replaced by values in yaml config files.
 # User set up the values of setting in yaml files. 
-# Administrator must set the environment variable <CS_SETTING_FILE_PATH>. It is recommended to set this variable in the .bashrc file.
+# Administrator must set the environment variable <SE_ENV_DEFAULT_CONFIGS>. 
+# It is recommended to set this variable in the .bashrc file.
+# 
+# Usage:
+# $ python3  schemes_editor.py  -t /path/to/Template_Scheme  -s /path/to/config_sample_setting.yml
+# 
 ##########################################################################################
+# 
 # ========================================================================================
-# Directory structure
+# - Installation Directory Structure
+# [Installation Root Directory]                            <<<< The root path can be arbitrary.
+#   |--- scheme_editor                                     <<<< The script directory containing Python scripts of Sheme Editor.
+#   |   |--- schemes_editor.py                             <<<< The main Python script of Sheme Editor.
+#   |   |
+#   |   |--- schemestar_editor                             
+#   |   |   |--- schemestar_editor.py                      
+#   |   |
+#   |   |--- jobstar_editor                                
+#   |       |--- jobstar_editor.py                         
+#   |       |--- config_jobtype_to_algotype_item.yml       
+#   |       |--- config_to_jobstar_keymap_parallel.yml     
+#   |       |--- config_to_jobstar_keymap_system.yml       
+#   |
+#   |--- configs                                            <<<< The configurations directory containning templates and predefined configuration files.
+#   |   |--- common
+#   |   |   |--- config_em_setting_kek_krios.yml            
+#   |   |   |--- config_em_setting_kek_talos.yml            
+#   |   |
+#   |   |--- common_tutorial
+#   |   |   |--- config_sample_settings.yml                 
+#   |   |
+#   |   |--- [System Name]                                  <<<< System environment dependent configurations (e.g., gotocloud, kek_rbl)
+#   |   |   |--- config_default_settings.yml                
+#   |   |   |--- config_level_algo.yml                      
+#   |   |   |--- config_level_device.yml                    
+#   |   |   |--- config_level_submission.yml                
+#   |   |   |--- config_system_settings.yml                 
+#   |   |   |--- config_type_algo_gtc.yml                   
+#   |   |
+#   |   |--- [System Name]_tutorial                         <<<< System environment dependent configurations for RELION tutorial dataset (e.g., gotocloud, kek_rbl)
+#   |   |   |--- config_default_settings.yml                
+#   |   |   |--- config_em_setting.yml                      
+#   |   |   |--- config_level_algo.yml                      
+#   |   |   |--- config_type_algo.yml                       
+#   |   |
+#   |   |--- (TBD)template                                  <<<< The template configurations directory.  Use the files in this directory as templates to create user-defined configurations.
+#   |       |--- (TBD)template_config_sample_settings.yml   <<<< The template configuration file for sample-depended parameters settings.
+#   |       |--- (TBD)template_config_default_settings.yml  <<<< The template configuration file for configuration default settings.
+#   |       |--- (TBD)template_config_em_settings.yml       <<<< The template configuration file for EM-depended parameters settings.
+#   |       |--- (TBD)template_config_type_algo.yml         <<<< The template configuration file for algorithm-type-depended parameters settings.
+#   |       |--- (TBD)template_config_level_algo.yml        <<<< The template configuration file for algorithm-level-depended parameters settings.
+#   |       |--- (TBD)template_config_level_device.yml      <<<< The template configuration file for device-leve-depended parameters settings.
+#   |       |--- (TBD)template_config_level_submission.yml  <<<< The template configuration file for submission-level-depended parameters settings.
+#   |       |--- (TBD)template_config_system_settings.yml   <<<< The template configuration file for system-depended parameters settings.
+#   |
+#   |--- schemes_templates                                  <<<< The Schemes templates directory containing a set of predefined RELION Schemes templates.
+#      |--- cs_schemes                                      <<<< The CS-Schemes template directory. Use this Schemes template as a example to create user-defined RELION Schemes template.
+#      |  |--- *                                            <<<< Scheme directories each containg a Scheme of this RELION Schemes template (e.g., "010_GTF_Motioncorr", "060_CSS_Clean_Stack_3D").
+#      |     |--- scheme.star                               <<<< The scheme star file of this Scheme. This file defines the SPA workflow of this RELION Schemes.
+#      |     |--- *                                         <<<< Job directories each for a job belong to this RELION Schemes (e.g., "010010_Import_movies", "060010_Select_split_parts").
+#      |        |--- job.star                               <<<< The job star file of this job.
+#      |
+#      ...                                                  <<<< More predefined Schemes template directories.
 # 
-# - Script Directory 
-#   |-- jobstar_editor
-#     |-- jobstar_editor.py
-#     |-- config_jobtype_to_algotype_item.yml
-#     |-- config_to_job_star_key_mapping_ps.yml
-#     |-- config_to_job_star_key_mapping_sys.yml
-#   |-- schemestar_editor
-#     |-- schemestar_editor.py
-#  
-# - Configs Directory   # A sample of configurations directory (Use this as a template to create user-defined configurations)
-#    |-- config_setting_file_path.yml
-#    |-- config_em_settings.yml
-#    |-- config_sample_settings_xx.yml
-#    |-- config_type_algo_xx.yml
-#    |-- config_type_algo_xx.yml
-#    |-- config_level_submission.yml
-#    |-- config_level_device.yml
-#    |-- config_level_algo.yml
-#    |-- config_system_settings_xx.yml
-#
-# -  Schemes template Directory 
-#    |-- Schemes             <<<< a sample of template schemes directory (Use this as a template to create user-defined schemes)
-#      |-- **                <<<< a single scheme directoy
-#        |-- scheme.star     <<<< a scheme star file per the single scheme   
-#        |-- **              <<<< a job directory of the single scheme
-#          |- job.star       <<<< a job star file of the single scheme
+# - <REQUIRED INPUT> User-Defined Sample Settings Configurations Files
+#   |--- /path/to/config_sample_setting*.yml                <<<< A user-defined configuration file for sample-depended parameters settings. The file path as well as the file name format can be arbitrary but recommended to use the file name formats given here.
 # 
-# - <INPUT> User-Defined Environment variables
-#     export CS_SETTING_FILE_PATH = /path/to/config_setting_file_path.yml
-#
-# - <INPUT> User-Defined Configurations Directory 
-#   |-- configs              # A sample of configurations directory (Use this as a template to create user-defined configurations)
-#     |-- config_em_settings_xx.yml
-#     |-- config_sample_settings.yml
-#     |-- config_type_algo_xx.yml
-#     |-- config_type_algo_xx.yml
-#     |-- config_system_settings_xx.yml
-#
-# - <INPUT> User-Defined Template Schemes Directory
-#   |-- Schemes             <<<< a sample of template schemes directory (Use this as a template to create user-defined schemes)
-#     |-- **                <<<< a single scheme directoy
-#       |-- scheme.star     <<<< a scheme star file per the single scheme   
-#       |-- **              <<<< a job directory of the single scheme
-#         |- job.star       <<<< a job star file of the single scheme
-#
-# - <OUTPUT> Output Directory (Can be RELION project folder)
-#   |-- Schemes             <<<< An output directory to be created. It will contain all schemes to be used for RELION Schemes execution
-#     |-- **                <<<< a single scheme directoy
-#       |-- scheme.star     <<<< a scheme star file per the single scheme   <<< change parameters in this file by this script!
-#       |-- **              <<<< a job directory of the single scheme
-#         |- job.star       <<<< a job star file of the single scheme
-#   |-- schemestar_ettings    <<<< An output directory to be created. It will contain the executable file PATH setting file.
-#     |-- ss_scheme_star_<scheme name>'.yml          <<<< Output file of the protein data setting for scheme star per single scheme.
-#   |-- jobstar_settings    <<<< An output directory to be created. It will contain the paralle setting files of all algorithm types.
-#     |-- js_algo_type_*    <<<< Output a parallel setting file of a single algorithm type
+# - <REQUIRED INPUT> User-Specified or User-Defined Schemes Template Directory Structure
+# [Input Root Directory]                                    <<<< The root path can be arbitrary. It can be RELION project directory.
+#   |--- [Schemes Template Directory Name]                  <<<< A Schemes template directory containing a use-specified or user-defined RELION Schemes template. The directory name can be arbitrary (e.g., "Schemes", "Schemes_Templates").
+#      |--- *                                               <<<< Scheme directories each containg a Scheme of this RELION Schemes template.
+#         |--- scheme.star                                  <<<< The scheme star file of this Scheme. This file defines the SPA workflow of this RELION Schemes.
+#         |--- *                                            <<<< Job directories each for a job belong to this RELION Schemes.
+#            |--- job.star                                  <<<< The job star file of this job.
+# 
+# - <OPTINAL INPUT> User-Defined Environment Variables
+#   export SE_ENV_DEFAULT_CONFIGS = /path/to/config_default_settings*.yml
+# 
+# - <OPTINAL INPUT> User-Defined Configurations Files
+#   |--- /path/to/config_default_settings*.yml              <<<< A user-defined configuration file for configuration default settings. The file path as well as the file name format can be arbitrary but recommended to use the file name formats given here.
+#   |--- /path/to/config_em_settings*.yml                   <<<< A user-defined configuration file for EM-related parameter settings. The file path as well as the file name format can be arbitrary but recommended to use the file name formats given here.
+#   |--- /path/to/config_type_algo*.yml                     <<<< A user-defined configuration file for algorithm-type-depended parameters settings. The file path as well as the file name format can be arbitrary but recommended to use the file name formats given here.
+#   |--- /path/to/config_level_algo*.yml                    <<<< A user-defined configuration file for algorithm-level-depended parameters settings. The file path as well as the file name format can be arbitrary but recommended to use the file name formats given here.
+#   |--- /path/to/config_level_device*.yml                  <<<< A user-defined configuration file for device-leve-depended parameters settings. The file path as well as the file name format can be arbitrary but recommended to use the file name formats given here.
+#   |--- /path/to/config_level_submission*.yml              <<<< A user-defined configuration file for submission-level-depended parameters settings. The file path as well as the file name format can be arbitrary but recommended to use the file name formats given here.
+#   |--- /path/to/config_system_settings*.yml               <<<< A user-defined configuration file for system-depended parameters settings. The file path as well as the file name format can be arbitrary but recommended to use the file name formats given here.
+# 
+# - <OUTPUT> User-Specified Output Directory Structure
+# [OUTPUT Root Directory]                                   <<<< The default path is "./Schemes_Edited". It can be the RELION project directory or current directory (i.e., "./").
+#   |--- Schemes                                            <<<< An output Schemes directory created by this script. This Schemes are edited and executable with "relion_schemegui.py".
+#   |  |--- *                                               
+#   |     |--- scheme.star                                  <<<< The parameters in this file are editted by this script!
+#   |     |--- *                                            
+#   |        |--- job.star                                  <<<< The parameters in this file are editted by this script!
+#   |
+#   |--- SE_schemestar_settings                             <<<< An output subdirectory created by this script. It contains the executable file PATH settings file.
+#   |  |--- sse_scheme_star_[Scheme Name].yml               <<<< Output yaml files containing the sample settings in all Schemes (one output yaml files per a single Scheme).
+#   |
+#   |--- SE_jobstar_settings                                <<<< An output subdirectory created by this script. It contains the paralle setting files of all algorithm types.
+#      |--- jse_algo_type_*                                 <<<< Output parallel setting files for all algorithm types (one output file per a single algorithm type).
+# 
 # ========================================================================================
 
 
@@ -81,129 +122,181 @@ from schemestar_editor import schemestar_editor
 
 
 class SchemesEditor():
-    # Constructors
-    __SE_DEFAULT_FILE_KEY         = 'DefaultFile'
-    __SE_PARALLEL_SETTING_KEY     = 'ParallelSettings'
-    __SE_SYSTEM_SETTING_KEY       = 'SystemSettings'
-    __SE_EM_SETTING_KEY           = 'EmSettings'
-    __SE_SAMPLE_SETTING_KEY       = 'SampleSettings'
-    __SCHEMES_DIR_NAME            = 'Schemes'
-    __JOB_STAR_KEY_MAPPING_PS_YAML_FILE_NAME = 'config_to_job_star_key_mapping_ps.yml'
-    __JOB_STAR_KEY_MAPPING_SYS_YAML_FILE_NAME = 'config_to_job_star_key_mapping_sys.yml'
-    __JOBSTAR_EDITOR_DIR          = 'jobstar_editor'
-    __PARALLEL_SETTINGS_DIR_NAME  = 'parallel_settings'
-    __SYSTEM_SETTINGS_DIR_NAME    = 'system_settings'
-    __SAMPLE_SETTINGS_DIR_NAME    = 'sample_settings'
-    __EM_SETTINGS_DIR_NAME        = 'em_settings'
-    __SETTING_FILE_PATH_ENV_VAR   = 'CS_SETTING_FILE_PATH'
-
+    # Private class constants
+    # Constants related to input Schemes directory and key mapping yaml files
+    __SCHEMES_DIR_NAME                   = 'Schemes'
+    __JOBSTAR_KEYMAP_PARALLEL_FILE_NAME  = 'config_to_jobstar_keymap_parallel.yml'
+    __JOBSTAR_KEYMAP_SYSTEM_FILE_NAME    = 'config_to_jobstar_keymap_system.yml'
+    
+    # Constants related to default configuration yaml files
+    __SE_ENV_DEFAULT_CONFIGS             = 'SE_ENV_DEFAULT_CONFIGS'
+    __SE_DEFAULT_CONFIG_FILE_PATHS_KEY   = 'DefaultConfigFilePaths'
+    __SE_CONFIG_PARALLEL_KEY             = 'ParallelSettings'
+    __SE_CONFIG_EM_KEY                   = 'EmSettings'
+    __SE_CONFIG_SYSTEM_KEY               = 'SystemSettings'
+    
+    # Constants related to outputs
+    __DEFAULT_OUTPUT_DIR_PATH            = './Schemes_Edited'
+    __JOBSTAR_EDITOR_DIR_NAME            = 'jobstar_editor'
+    __PARALLEL_SETTINGS_DIR_NAME         = 'SE_parallel_settings'
+    __SYSTEM_SETTINGS_DIR_NAME           = 'SE_system_settings'
+    __EM_SETTINGS_DIR_NAME               = 'SE_em_settings'
+    __SAMPLE_SETTINGS_DIR_NAME           = 'SE_sample_settings'
+    
+    # <Public Instance Constructor>
+    def __init__(self):
+        # Private instance variables
+        self.__edit_schemes_dir_path       = ""    # A path of tempate RELION Schemes directory.
+        self.__output_dir_path             = ""    # A path of output directory containg all outputs of this script (see "<OUTPUT> User-Specified Output Directory Structure").
+    
+    # <Private Helper Instance Method> Load yaml file and keep the contents as a dictionary 
+    # NOTE: 2024/06/08 Toshio Moriya: The following function is duplicated in mulitple scripts of Schemes Editor
+    # Need to make a shared library!
     def __load_yaml_file(self, yaml_file_path):
         with open(yaml_file_path, 'r') as yaml_file:
             yaml_dict = yaml.safe_load(yaml_file)
         return yaml_dict
-
-    def __make_output_subdir_backup(self, output_subdir_path):
-        if os.path.exists(output_subdir_path): 
-            print('[SE_MESSAGE]', 'The output subdirectory "{}" already exists! Making a backup of the existing subdirectory...'.format(output_subdir_path))
+    
+    # <Private Helper Instance Method> Make a backup if a directory with same name already exists.
+    # NOTE: 2024/06/08 Toshio Moriya: The following function is duplicated in mulitple scripts of Schemes Editor
+    # Need to make a shared library!
+    def __make_backup_dir(self, target_dir_path):
+        if os.path.exists(target_dir_path): 
+            print('[SE_MESSAGE]', 'The directory "{}" already exists! Making a backup of the existing directory...'.format(target_dir_path))
             dt_now = datetime.datetime.now()
-            backup_output_subdir_path = output_subdir_path + '_backup' + '_' + f'{dt_now.year:04}'+ f'{dt_now.month:02}' + f'{dt_now.day:02}' + f'{dt_now.hour:02}' + f'{dt_now.minute:02}' + f'{dt_now.second:02}'
-            os.rename(output_subdir_path, backup_output_subdir_path)
-        assert not os.path.exists(output_subdir_path), '[SE_ASSERT] The output subdirectory "{}" must NOT exist at this point of code!'.format(output_subdir_path)
-
-    def __make_output_schemes(self, template_schemes_dir_path, output_dir_path):
+            backup_dir_path = target_dir_path + '_backup' + '_' + f'{dt_now.year:04}'+ f'{dt_now.month:02}' + f'{dt_now.day:02}' + f'{dt_now.hour:02}' + f'{dt_now.minute:02}' + f'{dt_now.second:02}'
+            os.rename(target_dir_path, backup_dir_path)
+        assert not os.path.exists(target_dir_path), '[SE_ASSERT] The directory "{}" must NOT exist at this point of code!'.format(self.target_dir_path)
+    
+    # <Public Instance Method> 
+    # NOTE: 2024/06/08 Toshio Moriya: The following function is duplicated in mulitple scripts of Schemes Editor
+    # Need to make a shared library!
+    def make_edit_schemes(self, template_schemes_dir_path, output_dir_path):
         # Check preconditions!
         # Check if template_schemes_dir_path exists.
-        assert template_schemes_dir_path, '[SE_ASSERT] The template Schemes directory "{}" must exist!'.format(template_schemes_dir_path)
         if not os.path.exists(template_schemes_dir_path):
-            print('[SE_MESSAGE] Error! The template Schemes directory "{}" does NOT exist! Please set the correct PATH using "--s" option.'.format(template_schemes_dir_path))
-            return
+            print('[SE_ERROR] The template Schemes directory "{}" does NOT exist! Please make sure to provide correct template Schemes directory path using "--template_schemes_dir" option.'.format(template_schemes_dir_path))
+            sys.exit(1)
         
-        output_schemes_subdir_path = os.path.join(output_dir_path, type(self).__SCHEMES_DIR_NAME)
-        # Make a back up of schemes
-        self.__make_output_subdir_backup(output_schemes_subdir_path)
-        assert not os.path.exists(output_schemes_subdir_path), '[EE_ASSERT] The output Schemes subdirectory "{}" must NOT exist at this point of code!'.format(output_schemes_subdir_path)
-        # Create output Schemes directory by copying template Schemes directory 
-        shutil.copytree(template_schemes_dir_path, output_schemes_subdir_path)
-        return output_schemes_subdir_path
-    
-    def edit(self, template_schemes_dir_path, output_dir_path, parallel_setting_file_path = None, system_setting_file_path = None , sample_setting_file_path = None, em_setting_file_path = None):
-
-        # [*] default_setting_file_path: a path of default setting file set in environment variables
-        # [*] template_schemes_dir_path: a path of tempate RELION Schemes directory 
-        # [*] output_dir_path: a path of output directory.
-        #     Under this directory the following subdirecties will be created 
-        #     - Output "Schemes" subdirectroy and related files based on the template "Schemes" 
-        #     - Output "ParallelSettings" subdirectroy and parallel settings files of all algorithm types 
-        
-        if not os.path.exists(output_dir_path):
-            print('[SE_MESSAGE] The specified output directory "{}" does not exist yet! Creating the directory'.format(output_dir_path))
-            os.mkdir(output_dir_path)
         assert os.path.exists(output_dir_path), '[SE_ASSERT] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
-
+        
+        # Make a backup of schemes
+        edit_schemes_dir_path = os.path.join(output_dir_path, type(self).__SCHEMES_DIR_NAME)
+        self.__make_backup_dir(edit_schemes_dir_path)
+        assert not os.path.exists(edit_schemes_dir_path), '[SE_ASSERT] The output Schemes subdirectory "{}" must NOT exist at this point of code!'.format(edit_schemes_dir_path)
+        
+        # Create output Schemes directory by copying template Schemes directory 
+        shutil.copytree(template_schemes_dir_path, edit_schemes_dir_path)
+        
+        return edit_schemes_dir_path
+    
+    # <Public Instance Method> 
+    def edit(self, edit_schemes_dir_path, sample_config_file_path, parallel_config_file_path = None, em_config_file_path = None, system_config_file_path = None, output_dir_path = __DEFAULT_OUTPUT_DIR_PATH):
+        # [*] edit_schemes_dir_path : Path of input template RELION Schemes directory containing all Schemes related files for editing (meaning that the script overrides this Schemes).
+        # [*] config_file_path      : Path of input configuration yaml file.
+        # [*] output_dir_path       : Path of output root directroy where all outputs will be saved.
+        # 
+        # NOTE: 2024/06/08 Toshio Moriya:
+        # At this point, this function overwrites tempate Schemes (i.e., edit_schemes_dir_path) by default!
+        # To make a backup of existing Schemes in output directory and copy template Schemes to output directory for editting,
+        # the caller must use "self.make_edit_schemes()" and get the path of copy template Schemes beforehand.
+        
+        # Initialize instance variables with argument values
+        self.__edit_schemes_dir_path = edit_schemes_dir_path
+        self.__output_dir_path = output_dir_path
+        
+        # NOTE: 2024/06/08 Toshio Moriya:
+        # Actually the followings should be error checks instead of assertion!
+        assert os.path.exists(self.__edit_schemes_dir_path), '[SE_ASSERT] Specified template Schemes directory "{}" must exist at this point of code!'.format(self.__edit_schemes_dir_path)
+        assert os.path.exists(sample_config_file_path), '[SE_ASSERT] Specified configuration file "{}" must exist at this point of code!'.format(sample_config_file_path)
+        
+        # Try to get default paths of settings yaml files
+        try:
+            # os.environ throws KeyError exception if specified environment variable does not exist
+            default_config_file_path = os.environ[type(self).__SE_ENV_DEFAULT_CONFIG]
+            print('[SE_MESSAGE] Default configuration file path "{}" is set.'.format(default_config_file_path))
+            
+            # Generate default file paths from yaml file settings
+            default_config_file_path_dict = self.__load_yaml_file(default_config_file_path)
+            if parallel_config_file_path is None:
+                parallel_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_PARALLEL_KEY]
+            if em_config_file_path is None:
+                em_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_EM_KEY]
+            if system_config_file_path is None:
+                system_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_SYSTEM_KEY]
+            # NOTE: 2024/06/08 Toshio Moriya:
+            # Actually the followings should be error checks instead of assertion!
+            assert os.path.exists(parallel_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(parallel_config_file_path)
+            assert os.path.exists(em_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(em_config_file_path)
+            assert os.path.exists(system_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(system_config_file_path)
+            
+         except KeyError as e:
+            print('[SE_WARNING] Catched KeyError exception! {}".'.format(e)
+            print('[SE_WARNING] Required system environment variable does not exist! Please consider "export {}".'.format(type(self).__SE_ENV_DEFAULT_CONFIG))
+            pass
+        
+        print('[SE_MESSAGE] Applied values to Scheme Editors')
+        print('[SE_MESSAGE]   Input tempate Schemes directory path                := {}'.format(self.__edit_schemes_dir_path))
+        print('[SE_MESSAGE]   Input sample settigs configuration yaml file path   := {}'.format(sample_config_file_path))
+        print('[SE_MESSAGE]   Input parallel settigs configuration yaml file path := {}'.format(parallel_config_file_path))
+        print('[SE_MESSAGE]   Input em settigs configuration yaml file path       := {}'.format(em_config_file_path))
+        print('[SE_MESSAGE]   Input system settigs configuration yaml file path   := {}'.format(system_config_file_path))
+        print('[SE_MESSAGE]   Output root directory path                          := {}'.format(self.__output_dir_path))
+        print('[SE_MESSAGE] ')
+        print('[SE_MESSAGE] ')
+        
+        # Execute job star editor
         script_dir = os.path.dirname(__file__)
-        job_star_key_mapping_ps_yaml_file_path = os.path.join(script_dir, type(self).__JOBSTAR_EDITOR_DIR, type(self).__JOB_STAR_KEY_MAPPING_PS_YAML_FILE_NAME)
-        job_star_key_mapping_sys_yaml_file_path = os.path.join(script_dir, type(self).__JOBSTAR_EDITOR_DIR, type(self).__JOB_STAR_KEY_MAPPING_SYS_YAML_FILE_NAME)
-
-        # Execute Schemes editing
-        output_schemes_subdir_path = self.__make_output_schemes(template_schemes_dir_path, output_dir_path)
-
+        jobstar_keymap_system_file_path = os.path.join(script_dir, type(self).__JOBSTAR_EDITOR_DIR_NAME, type(self).__JOBSTAR_KEYMAP_SYSTEM_FILE_NAME)
+        jobstar_keymap_parallel_file_path = os.path.join(script_dir, type(self).__JOBSTAR_EDITOR_DIR_NAME, type(self).__JOBSTAR_KEYMAP_PARALLEL_FILE_NAME)
+        # NOTE: 2024/06/08 Toshio Moriya: Actually the followings should be error checks instead of assertion!
+        assert os.path.exists(jobstar_keymap_parallel_file_path), '[SE_ASSERT] The job star key mapping for parallel settings file "{}" must exist at this point of code!'.format(jobstar_keymap_parallel_file_path)
+        assert os.path.exists(jobstar_keymap_system_file_path), '[SE_ASSERT] The job star key mapping for system settings file "{}" must exist at this point of code!'.format(jobstar_keymap_system_file_path)
         js_editor = jobstar_editor.JobStarEditor()
+        js_editor.edit(parallel_config_file_path, jobstar_keymap_parallel_file_path, self.__output_dir_path, output_schemes_subdir_path, type(self).__PARALLEL_SETTINGS_DIR_NAME)
+        js_editor.edit(system_config_file_path, jobstar_keymap_system_file_path, self.__output_dir_path, output_schemes_subdir_path, type(self).__SYSTEM_SETTINGS_DIR_NAME)
+        
+        # Execute scheme star editor
         ss_editor = schemestar_editor.SchemeStarEditor()
-
-        # Create setting yaml file path
-        default_setting_file_path = os.environ[type(self).__SETTING_FILE_PATH_ENV_VAR]
-        # Generate default file paths from yaml file settings
-        setting_file_path_dict = self.__load_yaml_file(default_setting_file_path)
-        
-        if parallel_setting_file_path == None:
-            js_editor.edit(setting_file_path_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_PARALLEL_SETTING_KEY], job_star_key_mapping_ps_yaml_file_path, output_dir_path, output_schemes_subdir_path, type(self).__PARALLEL_SETTINGS_DIR_NAME)
-        else:
-            js_editor.edit(parallel_setting_file_path, job_star_key_mapping_ps_yaml_file_path, output_dir_path, output_schemes_subdir_path, type(self).__PARALLEL_SETTINGS_DIR_NAME)
-        
-        if system_setting_file_path == None:
-            js_editor.edit(setting_file_path_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SYSTEM_SETTING_KEY], job_star_key_mapping_sys_yaml_file_path, output_dir_path, output_schemes_subdir_path, type(self).__SYSTEM_SETTINGS_DIR_NAME)
-        else:
-            js_editor.edit(system_setting_file_path, job_star_key_mapping_sys_yaml_file_path, output_dir_path, output_schemes_subdir_path, type(self).__SYSTEM_SETTINGS_DIR_NAME)
-        
-        if sample_setting_file_path == None:
-            ss_editor.edit(setting_file_path_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_SAMPLE_SETTING_KEY], output_dir_path, output_schemes_subdir_path, type(self).__SAMPLE_SETTINGS_DIR_NAME)
-        else: 
-            ss_editor.edit(sample_setting_file_path, output_dir_path, output_schemes_subdir_path, type(self).__SAMPLE_SETTINGS_DIR_NAME)
-        
-        if em_setting_file_path == None:
-            ss_editor.edit(setting_file_path_dict[type(self).__SE_DEFAULT_FILE_KEY][type(self).__SE_EM_SETTING_KEY], output_dir_path, output_schemes_subdir_path, type(self).__EM_SETTINGS_DIR_NAME)
-        else:
-            ss_editor.edit(em_setting_file_path, output_dir_path, output_schemes_subdir_path, type(self).__EM_SETTINGS_DIR_NAME)
+        ss_editor.edit(self.__edit_schemes_dir_path, em_config_file_path, os.join(self.__output_dir_path, type(self).__EM_SETTINGS_DIR_NAME))
+        ss_editor.edit(self.__edit_schemes_dir_path, sample_config_file_path, os.join(self.__output_dir_path, type(self).__SAMPLE_SETTINGS_DIR_NAME))
 
 
 if __name__ == "__main__":
     # Parse command argument
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s",   "--schemes_dir",   type=str, required=True, help = 'Path of input template RELION Schemes directory containing all Schemes related files. This option is always required.')
-    parser.add_argument("-sam", "--sample_file",   type=str, default= None, help = 'Path of input sample settig yaml file. (The default path is set to the yamal file)')
-    parser.add_argument("-ps",  "--parallel_file", type=str, default= None, help = 'Path of input parallel settig yaml file. (The default path is set to the yamal file)')
-    parser.add_argument("-em",  "--em_file",       type=str, default= None, help = 'Path of input em settig yaml file. (The default path is set to the yamal file)')
-    parser.add_argument("-sys", "--system_file",   type=str, default= None, help = 'Path of input system settig yaml file. (The default path is set to the yamal file)')
-    parser.add_argument("-o",   "--output_dir",    type=str, default='./',  help = 'Path of output root directroy where all outputs will be saved. (default is set to current directory "./")')
+    parser.add_argument("-t",  "--template_schemes_dir",    type=str,    required=True,    help = 'Path of input template RELION Schemes directory containing all Schemes related files. This argument is always required.')
+    parser.add_argument("-s",  "--sample_config_yml",       type=str,    required=True,    help = 'Path of input sample settigs configuration yaml file. This argument is always required.')
+    parser.add_argument("-p",  "--parallel_config_yml",     type=str,    default= None,    help = 'Path of input parallel settigs configuration yaml file. (The default defined in SE_ENV_DEFAULT_CONFIGS/config_default_settings.yml)')
+    parser.add_argument("-e",  "--em_config_yml",           type=str,    default= None,    help = 'Path of input em settigs configuration yaml file.  (The default defined in SE_ENV_DEFAULT_CONFIGS/config_default_settings.yml)')
+    parser.add_argument("-y",  "--system_config_yml",       type=str,    default= None,    help = 'Path of input system settigs configuration yaml file.  (The default defined in SE_ENV_DEFAULT_CONFIGS/config_default_settings.yml)')
+    parser.add_argument("-o",  "--output_dir",              type=str,    default= None,    help = 'Path of output root directroy where all outputs will be saved. (default "./Schemes_Edited")')
 
     # Rename arguments for readability
     # No arguments with this program
     # Rename options for readability
     args = parser.parse_args()
-    option_template_schemes_dir_path  = args.schemes_dir
-    option_sample_setting_file_path   = args.sample_file
-    option_parallel_setting_file_path = args.parallel_file
-    option_em_setting_file_path       = args.em_file
-    option_system_setting_file_path   = args.system_file
-    option_output_dir_path            = args.output_dir
+    option_template_schemes_dir_path = args.template_schemes_dir
+    option_sample_config_file_path   = args.sample_config_yml
+    option_parallel_config_file_path = args.parallel_config_yml
+    option_em_config_file_path       = args.em_config_yml
+    option_system_config_file_path   = args.system_config_yml
+    option_output_dir_path           = args.output_dir
   
-    print('[SE_MESSAGE] Specified values of all options')
-    print('[SE_MESSAGE]   Input tempate Schemes directory path := {}'.format(option_template_schemes_dir_path))
-    print('[SE_MESSAGE]   Output root directory path           := {}'.format(option_output_dir_path))
+    print('[SE_MESSAGE] Parameter values provided by command line')
+    print('[SE_MESSAGE]   Input tempate Schemes directory path                := {}'.format(option_template_schemes_dir_path))
+    print('[SE_MESSAGE]   Input sample settigs configuration yaml file path   := {}'.format(option_sample_config_file_path))
+    print('[SE_MESSAGE]   Input parallel settigs configuration yaml file path := {}'.format(option_parallel_config_file_path))
+    print('[SE_MESSAGE]   Input em settigs configuration yaml file path       := {}'.format(option_em_config_file_path))
+    print('[SE_MESSAGE]   Input system settigs configuration yaml file path   := {}'.format(option_system_config_file_path))
+    print('[SE_MESSAGE]   Output root directory path                          := {}'.format(option_output_dir_path))
     print('[SE_MESSAGE] ')
     print('[SE_MESSAGE] ')
-    print('[SE_MESSAGE] Editing settings in the specified schemes...')
+    print('[SE_MESSAGE] Editing parameter settings in the specified RELION Schemes...')
     se_editor = SchemesEditor()
-    se_editor.edit(option_template_schemes_dir_path, option_output_dir_path, option_parallel_setting_file_path, option_system_setting_file_path, option_sample_setting_file_path, option_em_setting_file_path)
+    # Make a backup of existing Schemes in output directory and copy template Schemes to output directory for editting.
+    edit_schemes_dir_path = se_editor.make_edit_schemes(option_template_schemes_dir_path, option_output_dir_path)
+    print('[SE_MESSAGE]   The directory path of output Schemes for editing    := {}'.format(edit_schemes_dir_path))
+    se_editor.edit(option_template_schemes_dir_path, option_sample_config_file_path, option_parallel_config_file_path, option_em_config_file_path, option_system_config_file_path, option_output_dir_path)
     print('[SE_MESSAGE] ')
     print('[SE_MESSAGE] DONE!')

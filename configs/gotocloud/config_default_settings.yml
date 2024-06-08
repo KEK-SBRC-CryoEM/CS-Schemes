@@ -1,6 +1,5 @@
 ### Do not Change ### 
-DefaultFile: 
+DefaultConfigFilePaths: 
   ParallelSettings: /efs/em/kek_schemes/configs/gotocloud/config_type_algo_tutorial.yml
-  SystemSettings: /efs/em/kek_schemes/configs/gotocloud/config_system_settings.yml
   EmSettings: /efs/em/kek_schemes/configs/common/config_em_settings_tutorial.yml
-  SampleSettings: /efs/em/kek_schemes/configs/common/config_sample_settings_tutorial.yml
+  SystemSettings: /efs/em/kek_schemes/configs/gotocloud/config_system_settings.yml
