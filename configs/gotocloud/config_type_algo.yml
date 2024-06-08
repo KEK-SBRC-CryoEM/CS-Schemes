@@ -1,8 +1,8 @@
 ### Do not Change ### 
 LevelFile: 
-  SubmissionLevel: ../../configs/gotocloud/config_level_submission.yml
-  DeviceLevel: ../../configs/gotocloud/config_level_device.yml
-  AlgoLevel: ../../configs/gotocloud/config_level_algo.yml
+  SubmissionLevel: /fsx/github/CS-Schemes/configs/gotocloud/config_level_submission.yml
+  DeviceLevel: /fsx/github/CS-Schemes/configs/gotocloud/config_level_device.yml
+  AlgoLevel: /fsx/github/CS-Schemes/configs/gotocloud/config_level_algo.yml
 CombinationSettings:
 - AlgoType: algo_type_motioncorr_own
   SubmissionLevel: intel-intelmpi-cpu_axcore

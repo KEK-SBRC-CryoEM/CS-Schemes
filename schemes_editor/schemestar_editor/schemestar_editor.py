@@ -47,6 +47,7 @@
 
 import yaml
 import os
+import sys
 import shutil
 import datetime
 import argparse
@@ -58,7 +59,7 @@ class SchemeStarEditor():
     # Private class constants
     __SCHEMES_DIR_NAME                      = 'Schemes'  # Name of RELION Schemes directory 
     __SCHEME_STAR_FILE_NAME                 = 'scheme.star'
-#    __SSE_SCHEME_STAR_FILE_RPATH_PATTERN    = '**/' + __SSE_SCHEME_STAR_FILE_NAME
+#    __SCHEME_STAR_FILE_RPATH_PATTERN        = '**/' + __SCHEME_STAR_FILE_NAME
     
     __YAML_FILE_EXT                         = '.yml'
     __SSE_SETTING_KEY                       = 'Settings'
@@ -93,7 +94,7 @@ class SchemeStarEditor():
     
     # <Private Instance Method> 
     def __create_scheme_star_key_list(self, edit_scheme_star_file_path):
-#       edit_scheme_star_file_path = os.path.join(self.__edit_schemes_dir_path, scheme_name, type(self).__SSE_SCHEME_STAR_FILE_NAME)
+#       edit_scheme_star_file_path = os.path.join(self.__edit_schemes_dir_path, scheme_name, type(self).__SCHEME_STAR_FILE_NAME)
         assert os.path.exists(edit_scheme_star_file_path), '[SSE_ASSERT] The scheme.star file "{}" must exist at this point of code!'.format(edit_scheme_star_file_path)
         scheme_star_dict = starfile.read(edit_scheme_star_file_path)
         scheme_star_key_list = []
@@ -121,7 +122,7 @@ class SchemeStarEditor():
         for scheme_name in scheme_name_list:
             schemestar_dict = {}
             schemestar_dict[type(self).__SSE_SETTING_KEY] = {}
-            edit_scheme_star_file_path = os.path.join(self.__edit_schemes_dir_path, scheme_name, type(self).__SSE_SCHEME_STAR_FILE_NAME)
+            edit_scheme_star_file_path = os.path.join(self.__edit_schemes_dir_path, scheme_name, type(self).__SCHEME_STAR_FILE_NAME)
             if os.path.isfile(edit_scheme_star_file_path):
                 scheme_star_key_list = self.__create_scheme_star_key_list(edit_scheme_star_file_path)
                 scheme_setting_key_list = list(set(scheme_star_key_list) & set(setting_dict[type(self).__SSE_SETTING_KEY].keys()))
@@ -181,7 +182,7 @@ class SchemeStarEditor():
     def __replace_schemes_star_param(self):
         output_schemes_parent_dir_path = os.path.abspath(os.path.join(self.__edit_schemes_dir_path, os.pardir))
         current_dir_path = os.getcwd()
-        output_file = os.path.join(self.__output_dir_path, type(self).__ERROR_FILE_NAME)
+        output_file = os.path.join(current_dir_path, self.__output_dir_path, type(self).__ERROR_FILE_NAME)
         for schemestar_dict in self.__schemestar_dict_list:
             scheme_name = schemestar_dict[type(self).__SSE_SCHEME_NAME_KEY]
             for settings_key in schemestar_dict[type(self).__SSE_SETTING_KEY].keys():
@@ -205,8 +206,6 @@ class SchemeStarEditor():
         if not os.path.exists(template_schemes_dir_path):
             print('[SSE_ERROR] The template Schemes directory "{}" does NOT exist! Please make sure to provide correct template Schemes directory path using "--template_schemes_dir" option.'.format(template_schemes_dir_path))
             sys.exit(1)
-        
-        assert os.path.exists(output_dir_path), '[SSE_MESSAGE] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
         
         # Make a backup of schemes
         edit_schemes_dir_path = os.path.join(output_dir_path, type(self).__SCHEMES_DIR_NAME)

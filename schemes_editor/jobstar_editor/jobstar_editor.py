@@ -65,6 +65,7 @@
 import yaml
 import glob
 import os
+import sys
 import shutil
 import datetime
 import argparse
@@ -290,10 +291,10 @@ class JobStarEditor:
     
     __JOBSTAR_SETTINGS_LIST_YAML_FILE_NAME = __JSE_FILE_PREFIX + __ALGO_TYPE_NAME_PREFIX + 'all_list' + __YAML_FILE_EXT
     
+    __DEFAULT_OUTPUT_DIR_PATH      = './Schemes_Edited'
     __SCHEMES_DIR_NAME             = 'Schemes'  # Name of RELION Schemes Directory
     __JOB_STAR_FILE_RPATH_PATTERN  = '**/**/job.star'  # Relative to Relion Project Directory
-    __ERROR_FILE_NAME              = 'jse_error_output.txt'
-    __JOBSTAR_EDITOR_ERROR_FILE_NAME  =  __JSE_FILE_PREFIX + __ERROR_FILE_NAME
+    __ERROR_FILE_NAME              =  __JSE_FILE_PREFIX + 'error_output.txt'
 
     # Define indices for tokens of each Job Star Parameter Entry line (JSPEL is abbribiation of "Job Star Parameter Entry Line")
     __I_ENUM = -1
@@ -435,7 +436,7 @@ class JobStarEditor:
         config_to_job_star_key_mapping_dict = self.__load_yaml_file(self.__jobstar_keymap_file_path)
 
         # Create Relion Command list to replace the values of job.star  
-        error_output_file = os.path.join(self.__output_dir_path, type(self).__JOBSTAR_EDITOR_ERROR_FILE_NAME)
+        error_output_file = os.path.join(self.__output_dir_path, type(self).__ERROR_FILE_NAME)
         for output_job_star_file_path in glob.glob(output_job_star_file_path_pattern):
             assert os.path.exists(output_job_star_file_path), '[JSE_ASSERT] The file "{}" must exist at this point of code!'.format(output_job_star_file_path)
             algo_type, job_star_file_path = job_type_to_algo_type_convertor.convert(output_job_star_file_path)
@@ -464,8 +465,6 @@ class JobStarEditor:
             print('[JSE_ERROR] The template Schemes directory "{}" does NOT exist! Please make sure to provide correct template Schemes directory path using "--template_schemes_dir" option.'.format(template_schemes_dir_path))
             sys.exit(1)
         
-        assert os.path.exists(output_dir_path), '[JSE_MESSAGE] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
-        
         # Make a backup of schemes
         edit_schemes_dir_path = os.path.join(output_dir_path, type(self).__SCHEMES_DIR_NAME)
         self.__make_backup_dir(edit_schemes_dir_path)
@@ -479,7 +478,7 @@ class JobStarEditor:
     # <Public Instance Method> Edit parameter settings of all job star (job.star) files in the specified template Schemes dirctory 
     # by replacing the values with specified in config yaml files.
     # and save the results to the output Schemes directory.
-    def edit(self, edit_schemes_dir_path, configs_file_path, jobstar_keymap_file_path, output_dir_path = __DEFAULT_OUTPUT_DIR_PATH):
+    def edit(self, edit_schemes_dir_path, config_file_path, jobstar_keymap_file_path, output_dir_path = __DEFAULT_OUTPUT_DIR_PATH):
         # [*] edit_schemes_dir_path    : Path of input template RELION Schemes directory containing all Schemes related files for editing (meaning that the script overrides this Schemes).
         # [*] config_file_path         : Path of input configuration yaml file.
         # [*] jobstar_keymap_file_path : Path of input jobstar keymap file.
@@ -518,7 +517,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-t", "--template_schemes_dir",    type=str,    required=True,                 help = 'Path of input template RELION Schemes directory containing all Schemes related files. This option is always required.')
     parser.add_argument("-c", "--configs_yml",             type=str,    required=True,                 help = 'Path of input configurations yaml file. This option is always required.')
-    parser.add_argument("-k", "--keymap_file",            type=str,    required=True,                  help = 'Path of job.star keymap yaml file. This option is always required.')
+    parser.add_argument("-k", "--keymap_file",             type=str,    required=True,                 help = 'Path of job.star keymap yaml file. This option is always required.')
     parser.add_argument("-o", "--output_dir",              type=str,    default='./Schemes_Edited',    help = 'Path of output root directroy where all outputs will be saved. (default "./Schemes_Edited")')
     args = parser.parse_args()
     

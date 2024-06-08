@@ -112,8 +112,9 @@
 # ========================================================================================
 
 
-import yaml
+import yaml	
 import os
+import sys
 import shutil
 import datetime
 import argparse
@@ -178,8 +179,6 @@ class SchemesEditor():
             print('[SE_ERROR] The template Schemes directory "{}" does NOT exist! Please make sure to provide correct template Schemes directory path using "--template_schemes_dir" option.'.format(template_schemes_dir_path))
             sys.exit(1)
         
-        assert os.path.exists(output_dir_path), '[SE_ASSERT] The output directory "{}" must exist at this point of code!'.format(output_dir_path)
-        
         # Make a backup of schemes
         edit_schemes_dir_path = os.path.join(output_dir_path, type(self).__SCHEMES_DIR_NAME)
         self.__make_backup_dir(edit_schemes_dir_path)
@@ -193,7 +192,7 @@ class SchemesEditor():
     # <Public Instance Method> 
     def edit(self, edit_schemes_dir_path, sample_config_file_path, parallel_config_file_path = None, em_config_file_path = None, system_config_file_path = None, output_dir_path = __DEFAULT_OUTPUT_DIR_PATH):
         # [*] edit_schemes_dir_path : Path of input template RELION Schemes directory containing all Schemes related files for editing (meaning that the script overrides this Schemes).
-        # [*] config_file_path      : Path of input configuration yaml file.
+        # [*] *_config_file_path      : Path of input configuration yaml file.
         # [*] output_dir_path       : Path of output root directroy where all outputs will be saved.
         # 
         # NOTE: 2024/06/08 Toshio Moriya:
@@ -213,7 +212,7 @@ class SchemesEditor():
         # Try to get default paths of settings yaml files
         try:
             # os.environ throws KeyError exception if specified environment variable does not exist
-            default_config_file_path = os.environ[type(self).__SE_ENV_DEFAULT_CONFIG]
+            default_config_file_path = os.environ[type(self).__SE_ENV_DEFAULT_CONFIGS]
             print('[SE_MESSAGE] Default configuration file path "{}" is set.'.format(default_config_file_path))
             
             # Generate default file paths from yaml file settings
@@ -230,11 +229,12 @@ class SchemesEditor():
             assert os.path.exists(em_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(em_config_file_path)
             assert os.path.exists(system_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(system_config_file_path)
             
-         except KeyError as e:
-            print('[SE_WARNING] Catched KeyError exception! {}".'.format(e)
-            print('[SE_WARNING] Required system environment variable does not exist! Please consider "export {}".'.format(type(self).__SE_ENV_DEFAULT_CONFIG))
-            pass
+        except KeyError as e:
+            print('[SE_WARNING] Catched KeyError exception! {}".'.format(e))
+            print('[SE_WARNING] Required system environment variable does not exist! Please consider "export {}=path/to/default_configs.yml".'.format(type(self).__SE_ENV_DEFAULT_CONFIGS))
+            sys.exit(1)
         
+        print('[SE_MESSAGE] ')
         print('[SE_MESSAGE] Applied values to Scheme Editors')
         print('[SE_MESSAGE]   Input tempate Schemes directory path                := {}'.format(self.__edit_schemes_dir_path))
         print('[SE_MESSAGE]   Input sample settigs configuration yaml file path   := {}'.format(sample_config_file_path))
@@ -253,24 +253,24 @@ class SchemesEditor():
         assert os.path.exists(jobstar_keymap_parallel_file_path), '[SE_ASSERT] The job star key mapping for parallel settings file "{}" must exist at this point of code!'.format(jobstar_keymap_parallel_file_path)
         assert os.path.exists(jobstar_keymap_system_file_path), '[SE_ASSERT] The job star key mapping for system settings file "{}" must exist at this point of code!'.format(jobstar_keymap_system_file_path)
         js_editor = jobstar_editor.JobStarEditor()
-        js_editor.edit(parallel_config_file_path, jobstar_keymap_parallel_file_path, self.__output_dir_path, output_schemes_subdir_path, type(self).__PARALLEL_SETTINGS_DIR_NAME)
-        js_editor.edit(system_config_file_path, jobstar_keymap_system_file_path, self.__output_dir_path, output_schemes_subdir_path, type(self).__SYSTEM_SETTINGS_DIR_NAME)
+        js_editor.edit(self.__edit_schemes_dir_path, parallel_config_file_path, jobstar_keymap_parallel_file_path, os.path.join(self.__output_dir_path, type(self).__PARALLEL_SETTINGS_DIR_NAME))
+        js_editor.edit(self.__edit_schemes_dir_path, system_config_file_path, jobstar_keymap_system_file_path, os.path.join(self.__output_dir_path,type(self).__SYSTEM_SETTINGS_DIR_NAME))
         
         # Execute scheme star editor
         ss_editor = schemestar_editor.SchemeStarEditor()
-        ss_editor.edit(self.__edit_schemes_dir_path, em_config_file_path, os.join(self.__output_dir_path, type(self).__EM_SETTINGS_DIR_NAME))
-        ss_editor.edit(self.__edit_schemes_dir_path, sample_config_file_path, os.join(self.__output_dir_path, type(self).__SAMPLE_SETTINGS_DIR_NAME))
+        ss_editor.edit(self.__edit_schemes_dir_path, em_config_file_path, os.path.join(self.__output_dir_path, type(self).__EM_SETTINGS_DIR_NAME))
+        ss_editor.edit(self.__edit_schemes_dir_path, sample_config_file_path, os.path.join(self.__output_dir_path, type(self).__SAMPLE_SETTINGS_DIR_NAME))
 
 
 if __name__ == "__main__":
     # Parse command argument
     parser = argparse.ArgumentParser()
-    parser.add_argument("-t",  "--template_schemes_dir",    type=str,    required=True,    help = 'Path of input template RELION Schemes directory containing all Schemes related files. This argument is always required.')
-    parser.add_argument("-s",  "--sample_config_yml",       type=str,    required=True,    help = 'Path of input sample settigs configuration yaml file. This argument is always required.')
-    parser.add_argument("-p",  "--parallel_config_yml",     type=str,    default= None,    help = 'Path of input parallel settigs configuration yaml file. (The default defined in SE_ENV_DEFAULT_CONFIGS/config_default_settings.yml)')
-    parser.add_argument("-e",  "--em_config_yml",           type=str,    default= None,    help = 'Path of input em settigs configuration yaml file.  (The default defined in SE_ENV_DEFAULT_CONFIGS/config_default_settings.yml)')
-    parser.add_argument("-y",  "--system_config_yml",       type=str,    default= None,    help = 'Path of input system settigs configuration yaml file.  (The default defined in SE_ENV_DEFAULT_CONFIGS/config_default_settings.yml)')
-    parser.add_argument("-o",  "--output_dir",              type=str,    default= None,    help = 'Path of output root directroy where all outputs will be saved. (default "./Schemes_Edited")')
+    parser.add_argument("-t",  "--template_schemes_dir",    type=str,    required=True,                  help = 'Path of input template RELION Schemes directory containing all Schemes related files. This argument is always required.')
+    parser.add_argument("-s",  "--sample_config_yml",       type=str,    required=True,                  help = 'Path of input sample settigs configuration yaml file. This argument is always required.')
+    parser.add_argument("-p",  "--parallel_config_yml",     type=str,    default= None,                  help = 'Path of input parallel settigs configuration yaml file. (The default defined in SE_ENV_DEFAULT_CONFIGS/config_default_settings.yml)')
+    parser.add_argument("-e",  "--em_config_yml",           type=str,    default= None,                  help = 'Path of input em settigs configuration yaml file.  (The default defined in SE_ENV_DEFAULT_CONFIGS/config_default_settings.yml)')
+    parser.add_argument("-y",  "--system_config_yml",       type=str,    default= None,                  help = 'Path of input system settigs configuration yaml file.  (The default defined in SE_ENV_DEFAULT_CONFIGS/config_default_settings.yml)')
+    parser.add_argument("-o",  "--output_dir",              type=str,    default= './Schemes_Edited',    help = 'Path of output root directroy where all outputs will be saved. (default "./Schemes_Edited")')
 
     # Rename arguments for readability
     # No arguments with this program
