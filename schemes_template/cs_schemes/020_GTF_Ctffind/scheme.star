@@ -45,11 +45,11 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-SS_comm_motioncorr_mics_star    Schemes/010_GTF_Motioncorr/select_motioncor_mics/micrographs.star    Schemes/010_GTF_Motioncorr/select_motioncor_mics/micrographs.star 
-ctffind_mics_star               Schemes/020_GTF_Ctffind/ctffind/micrographs_ctf.star                 Schemes/020_GTF_Ctffind/ctffind/micrographs_ctf.star 
-ctffind_exe                     /programs/x86_64-linux/ctffind4/4.1.14-c7/bin/ctffind4               /programs/x86_64-linux/ctffind4/4.1.14-c7/bin/ctffind4 
-gctf_exe                        ""                                                                   "" 
-micrographs                     micrographs                                                          micrographs 
+SS_comm_motioncorr_mics_star    Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star    Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star 
+ctffind_mics_star               Schemes/020_GTF_CtfFind/020010_CtfFind/micrographs_ctf.star       Schemes/020_GTF_CtfFind/020010_CtfFind/micrographs_ctf.star 
+ctffind_exe                     /programs/x86_64-linux/ctffind4/4.1.14-c7/bin/ctffind4            /programs/x86_64-linux/ctffind4/4.1.14-c7/bin/ctffind4 
+gctf_exe                        ""                                                                "" 
+micrographs                     micrographs                                                       micrographs 
 
 
 # version 30001 
