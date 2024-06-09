@@ -60,16 +60,16 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-SS_comm_ctf_mics_star    Schemes/020_GTF_Ctffind/0202_Select_mic/micrographs.star                             Schemes/020_GTF_Ctffind/0202_Select_mic/micrographs.star 
-split_mics               Schemes/030_GTF_Create_Stack/0102_Select_split_stack_mics/micrographs_split1.star    Schemes/030_GTF_Create_Stack/0102_Select_split_stack_mics/micrographs_split1.star 
-mics_import              undefined                                                                            undefined 
-cryolo_exe               /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh                                      /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh 
-cryolo_repo              /efs/em/crYOLO                                                                       /efs/em/crYOLO 
-cryolo_coords            Schemes/030_GTF_Create_Stack/0200_External_cryolo/autopick.star                      Schemes/030_GTF_Create_Stack/0200_External_cryolo/autopick.star 
-log_coords               Schemes/030_GTF_Create_Stack/0201_AutoPick_log/autopick.star                         Schemes/030_GTF_Create_Stack/0201_AutoPick_log/autopick.star 
-active_coords            undefined                                                                            undefined 
-micrographs              micrographs                                                                          micrographs 
-particles                particles                                                                            particles 
+SS_comm_ctf_mics_star    Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star                      Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star 
+split_mics               Schemes/030_GTF_Create_Stack/030010_Select_split_mics/micrographs_split1.star    Schemes/030_GTF_Create_Stack/030010_Select_split_mics/micrographs_split1.star 
+mics_import              undefined                                                                        undefined 
+cryolo_exe               /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh                                  /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh 
+cryolo_repo              /efs/em/crYOLO                                                                   /efs/em/crYOLO 
+cryolo_coords            Schemes/030_GTF_Create_Stack/030020_External_cryolo/autopick.star                Schemes/030_GTF_Create_Stack/030020_External_cryolo/autopick.star 
+log_coords               Schemes/030_GTF_Create_Stack/030030_AutoPick_log/autopick.star                   Schemes/030_GTF_Create_Stack/030030_AutoPick_log/autopick.star 
+active_coords            undefined                                                                        undefined 
+micrographs              micrographs                                                                      micrographs 
+particles                particles                                                                        particles 
 
 
 # version 30001 

@@ -17,7 +17,7 @@ _rlnJobOptionVariable #1
 _rlnJobOptionValue #2 
 fn_model                "" 
 fn_mic                  "" 
-fn_data                 Schemes/030_GTF_Create_Stack/0300_Extract/particles.star 
+fn_data                 Schemes/030_GTF_Create_Stack/030040_Extract_picks/particles.star 
 do_class_ranker         No 
 rank_threshold          0.5 
 select_nr_parts         -1 
