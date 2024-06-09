@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_in                   Schemes/070_CSS_Init_Refine3D/1500_Refine3D_local/run_half1_class001_unfil.mrc 
+fn_in                   Schemes/070_CSS_Init_Refine3D/070090_Refine3D_local/run_half1_class001_unfil.mrc 
 fn_mask                 $$imported_mask3d 
 angpix                  $$SS_comm_mbin_angpix 
 do_auto_bfac            Yes 

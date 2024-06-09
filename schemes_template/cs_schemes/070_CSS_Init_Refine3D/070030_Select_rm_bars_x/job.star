@@ -17,7 +17,7 @@ _rlnJobOptionVariable #1
 _rlnJobOptionValue #2 
 fn_model                "" 
 fn_mic                  "" 
-fn_data                 Schemes/070_CSS_Init_Refine3D/1101_Select_rm_dup/particles.star 
+fn_data                 Schemes/070_CSS_Init_Refine3D/070020_Select_rm_dup/particles.star 
 do_class_ranker         No 
 rank_threshold          0.5 
 select_nr_parts         -1 

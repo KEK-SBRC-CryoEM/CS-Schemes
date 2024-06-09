@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_img                              Schemes/070_CSS_Init_Refine3D/1103_Select_rm_bars_xy/particles.star 
+fn_img                              Schemes/070_CSS_Init_Refine3D/070040_Select_rm_bars_xy/particles.star 
 fn_cont                             "" 
 fn_ref                              $$imported_ref3d 
 fn_mask                             $$imported_mask3d 

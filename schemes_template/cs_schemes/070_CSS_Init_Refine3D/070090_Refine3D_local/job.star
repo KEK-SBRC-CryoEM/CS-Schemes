@@ -15,9 +15,9 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_img                              Schemes/070_CSS_Init_Refine3D/1300_Refine3D_global/run_data.star 
+fn_img                              Schemes/070_CSS_Init_Refine3D/070070_Refine3D_global/run_data.star 
 fn_cont                             "" 
-fn_ref                              Schemes/070_CSS_Init_Refine3D/1300_Refine3D_global/run_class001.mrc 
+fn_ref                              Schemes/070_CSS_Init_Refine3D/070070_Refine3D_global/run_class001.mrc 
 fn_mask                             $$imported_mask3d 
 ref_correct_greyscale               Yes 
 trust_ref_size                      No 

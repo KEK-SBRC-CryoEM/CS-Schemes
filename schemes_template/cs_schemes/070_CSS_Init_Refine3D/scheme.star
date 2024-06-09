@@ -51,16 +51,16 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-prev_proc_exited                   Schemes/060_CSS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS                             Schemes/060_CSS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS 
-SS_comm_ctf_mics_star              Schemes/11_CS_Create_Stack/0102_Select_split_stack_mics/micrographs_split1.star    Schemes/11_CS_Create_Stack/0102_Select_split_stack_mics/micrographs_split1.star 
-CSS_mbin_reextract_refined_star    Schemes/060_CSS_Clean_Stack_3D/0900_Refine3D/run_data.star                         Schemes/060_CSS_Clean_Stack_3D/0900_Refine3D/run_data.star 
-SS_comm_mbin_ref3d_path            Inputs/ref3d.mrc                                                                   Inputs/ref3d.mrc 
-SS_comm_mbin_ref3d_name            ref3d.mrc                                                                          ref3d.mrc 
-SS_comm_mbin_mask3d_path           Inputs/mask3d.mrc                                                                  Inputs/mask3d.mrc 
-SS_comm_mbin_mask3d_name           mask3d.mrc                                                                         mask3d.mrc 
-imported_ref3d                     Schemes/070_CSS_Init_Refine3D/1201_Import_ref3d/$$SS_comm_mbin_ref3d_name          Schemes/070_CSS_Init_Refine3D/1201_Import_ref3d/$$SS_comm_mbin_ref3d_name 
-imported_mask3d                    Schemes/070_CSS_Init_Refine3D/1202_Import_mask3d/$$SS_comm_mbin_mask3d_name        Schemes/070_CSS_Init_Refine3D/1202_Import_mask3d/$$SS_comm_mbin_mask3d_name 
-SS_comm_sym_name                   D4                                                                                 D4 
+prev_proc_exited                   Schemes/060_CSS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS                           Schemes/060_CSS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS 
+SS_comm_ctf_mics_star              Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star                      Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star 
+CSS_mbin_reextract_refined_star    Schemes/060_CSS_Clean_Stack_3D/060080_Refine3D_global/run_data.star              Schemes/060_CSS_Clean_Stack_3D/060080_Refine3D_global/run_data.star 
+SS_comm_mbin_ref3d_path            Inputs/ref3d.mrc                                                                 Inputs/ref3d.mrc 
+SS_comm_mbin_ref3d_name            ref3d.mrc                                                                        ref3d.mrc 
+SS_comm_mbin_mask3d_path           Inputs/mask3d.mrc                                                                Inputs/mask3d.mrc 
+SS_comm_mbin_mask3d_name           mask3d.mrc                                                                       mask3d.mrc 
+imported_ref3d                     Schemes/070_CSS_Init_Refine3D/070050_Import_ref3d/$$SS_comm_mbin_ref3d_name      Schemes/070_CSS_Init_Refine3D/070050_Import_ref3d/$$SS_comm_mbin_ref3d_name 
+imported_mask3d                    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name 
+SS_comm_sym_name                   D4                                                                               D4 
 
 
 # version 30001 
