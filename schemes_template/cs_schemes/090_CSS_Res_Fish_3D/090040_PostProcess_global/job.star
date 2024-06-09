@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_in                   Schemes/090_CSS_Res_Fish/2100_Refine3D_global/run_half1_class001_unfil.mrc 
+fn_in                   Schemes/090_CSS_Res_Fish_3D/090030_Refine3D_global/run_half1_class001_unfil.mrc 
 fn_mask                 $$SS_comm_mbin_imported_mask3d_path 
 angpix                  $$SS_comm_mbin_angpix 
 do_auto_bfac            Yes 

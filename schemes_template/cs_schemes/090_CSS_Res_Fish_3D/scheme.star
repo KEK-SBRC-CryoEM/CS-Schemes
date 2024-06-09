@@ -3,7 +3,7 @@
 
 data_scheme_general 
 
-_rlnSchemeName                       Schemes/090_CSS_Res_Fish/ 
+_rlnSchemeName                       Schemes/090_CSS_Res_Fish_3D/ 
 _rlnSchemeCurrentNodeName            WAIT 
 
 
@@ -46,12 +46,12 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-prev_proc_exited                     Schemes/080_CSS_Refine_Cycle/RELION_JOB_EXIT_SUCCESS                          Schemes/080_CSS_Refine_Cycle/RELION_JOB_EXIT_SUCCESS 
-CSS_mbin_resfish3d_refined_star      Schemes/080_CSS_Refine_Cycle/1607_Refine3D_polish/run_data.star               Schemes/080_CSS_Refine_Cycle/1607_Refine3D_polish/run_data.star 
-CSS_mbin_resfish3d_ref3d             Schemes/080_CSS_Refine_Cycle/1607_Refine3D_polish/run_class001.mrc            Schemes/080_CSS_Refine_Cycle/1607_Refine3D_polish/run_class001.mrc 
-SS_comm_mbin_imported_mask3d_path    Schemes/080_CSS_Refine_Cycle/1202_Import_mask3d/$$SS_comm_mbin_mask3d_name    Schemes/080_CSS_Refine_Cycle/1202_Import_mask3d/$$SS_comm_mbin_mask3d_name 
-SS_comm_mbin_mask3d_name             mbin_mask3d_apix0o8008_d440.mrc                                               mbin_mask3d_apix0o8008_d440.mrc 
-SS_comm_sym_name                     D2                                                                            D2 
+prev_proc_exited                     Schemes/080_CSS_PPRefine_Cycle/RELION_JOB_EXIT_SUCCESS                           Schemes/080_CSS_PPRefine_Cycle/RELION_JOB_EXIT_SUCCESS 
+CSS_mbin_resfish3d_refined_star      Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_data.star              Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_data.star 
+CSS_mbin_resfish3d_ref3d             Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_class001.mrc           Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_class001.mrc 
+SS_comm_mbin_imported_mask3d_path    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name 
+SS_comm_mbin_mask3d_name             mbin_mask3d_apix0o8008_d440.mrc                                                  mbin_mask3d_apix0o8008_d440.mrc 
+SS_comm_sym_name                     D2                                                                               D2 
 
 # version 30001 
 
