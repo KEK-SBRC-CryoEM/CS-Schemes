@@ -51,14 +51,14 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-EM_movie_files                   Micrographs/*.tif                                                   Micrographs/*.tif 
-EM_mtf_file                      ""                                                                  "" 
-EM_gain_ref_file                 ""                                                                  "" 
-movies_star                      Schemes/010_GTF_Motioncorr/importmovies/movies.star                 Schemes/010_GTF_Motioncorr/importmovies/movies.star 
-motioncorr_mics_star             Schemes/010_GTF_Motioncorr/motioncorr/corrected_micrographs.star    Schemes/010_GTF_Motioncorr/motioncorr/corrected_micrographs.star 
-selected_motioncorr_mics_star    Schemes/010_GTF_Motioncorr/select_motioncor_mics/micrographs.star   Schemes/010_GTF_Motioncorr/select_motioncor_mics/micrographs.star 
-movies                           movies                                                              movies 
-micrographs                      micrographs                                                         micrographs 
+EM_movie_files                   Micrographs/*.tif                                                          Micrographs/*.tif 
+EM_mtf_file                      ""                                                                         "" 
+EM_gain_ref_file                 ""                                                                         "" 
+movies_star                      Schemes/010_GTF_Motioncorr/010010_Import_movies/movies.star                Schemes/010_GTF_Motioncorr/010010_Import_movies/movies.star 
+motioncorr_mics_star             Schemes/010_GTF_Motioncorr/010020_MotionCorr/corrected_micrographs.star    Schemes/010_GTF_Motioncorr/010020_MotionCorr/corrected_micrographs.star 
+selected_motioncorr_mics_star    Schemes/010_GTF_Motioncorr/010030_Select_mics/micrographs.star             Schemes/010_GTF_Motioncorr/010030_Select_mics/micrographs.star 
+movies                           movies                                                                     movies 
+micrographs                      micrographs                                                                micrographs 
 
 
 # version 30001 
