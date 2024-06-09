@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_model                Schemes/050_GTF_AbInitReconst3D/0403_Class2D_em/run_it025_optimiser.star 
+fn_model                Schemes/050_GTF_AbInitReconst3D/050040_Class2D_EM/run_it025_optimiser.star 
 fn_mic                  "" 
 fn_data                 "" 
 do_class_ranker         Yes 

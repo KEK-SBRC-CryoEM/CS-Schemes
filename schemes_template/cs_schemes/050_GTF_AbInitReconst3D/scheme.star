@@ -54,12 +54,12 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-GTF_lbin_abinit3d_in_parts_star    Schemes/030_GTF_Create_Stack/0302_Select_rm_bars_xy/particles.star               Schemes/030_GTF_Create_Stack/0302_Select_rm_bars_xy/particles.star 
-split_parts                        Schemes/050_GTF_AbInitReconst3D/0400_Select_split_parts/particles_split1.star    Schemes/050_GTF_AbInitReconst3D/0400_Select_split_parts/particles_split1.star 
-selected_parts                     ""                                                                               "" 
-cls2d_cycle_parts_temp             Schemes/050_GTF_AbInitReconst3D/0402_Select_class2d/particles.star               Schemes/050_GTF_AbInitReconst3D/0402_Select_class2d/particles.star 
-cls2d_cycle_parts                  ""                                                                               "" 
-GTF_lbin_abinit3d_sym_name         C1                                                                               C1 
+GTF_lbin_abinit3d_in_parts_star    Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star               Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star 
+split_parts                        Schemes/050_GTF_AbInitReconst3D/050010_Select_split_parts/particles_split1.star    Schemes/050_GTF_AbInitReconst3D/050010_Select_split_parts/particles_split1.star 
+selected_parts                     ""                                                                                 "" 
+cls2d_cycle_parts_temp             Schemes/050_GTF_AbInitReconst3D/050030_Select_clean2d_parts/particles.star         Schemes/050_GTF_AbInitReconst3D/050030_Select_clean2d_parts/particles.star 
+cls2d_cycle_parts                  ""                                                                                 "" 
+GTF_lbin_abinit3d_sym_name         C1                                                                                 C1 
 
 
 # version 30001 

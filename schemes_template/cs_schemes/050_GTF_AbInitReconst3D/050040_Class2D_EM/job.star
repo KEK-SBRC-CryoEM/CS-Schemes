@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_img                         Schemes/050_GTF_AbInitReconst3D/0402_Select_class2d/particles.star 
+fn_img                         Schemes/050_GTF_AbInitReconst3D/050030_Select_clean2d_parts/particles.star 
 fn_cont                        "" 
 do_ctf_correction              Yes 
 ctf_intact_first_peak          No 
