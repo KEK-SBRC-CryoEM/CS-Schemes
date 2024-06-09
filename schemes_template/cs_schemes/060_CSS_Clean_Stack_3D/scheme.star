@@ -74,28 +74,28 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-prev_proc_exited                        Schemes/050_GTF_AbInitReconst3D/RELION_JOB_EXIT_SUCCESS                         Schemes/050_GTF_AbInitReconst3D/RELION_JOB_EXIT_SUCCESS 
-CSS_lbin_center3d_parts_star            Schemes/030_GTF_Create_Stack/0302_Select_rm_bars_xy/particles.star              Schemes/030_GTF_Create_Stack/0302_Select_rm_bars_xy/particles.star 
-split_parts                             Schemes/060_CSS_Clean_Stack_3D/0400_Select_split_parts/particles_split1.star    Schemes/060_CSS_Clean_Stack_3D/0400_Select_split_parts/particles_split1.star 
-selected_parts                          ""                                                                              "" 
-SS_comm_lbin_ref3d_path                 Inputs/$$SS_comm_lbin_ref3d_name                                                Inputs/$$SS_comm_lbin_ref3d_name 
-SS_comm_lbin_ref3d_name                 lbin_ref3d_apix3o540_d064.mrc                                                   lbin_ref3d_apix3o540_d064.mrc 
-SS_comm_lbin_mask3d_path                Inputs/$$SS_comm_lbin_mask3d_name                                               Inputs/$$SS_comm_lbin_mask3d_name 
-SS_comm_lbin_mask3d_name                sbin_mask3d_apix3o540_d064.mrc                                                  sbin_mask3d_apix3o540_d064.mrc 
-imported_ref3d                          Schemes/060_CSS_Clean_Stack_3D/0601_Import_ref3d/$$SS_comm_lbin_ref3d_name      Schemes/060_CSS_Clean_Stack_3D/0601_Import_ref3d/$$SS_comm_lbin_ref3d_name 
-imported_mask3d                         Schemes/060_CSS_Clean_Stack_3D/0602_Import_mask3d/$$SS_comm_lbin_mask3d_name    Schemes/060_CSS_Clean_Stack_3D/0602_Import_mask3d/$$SS_comm_lbin_mask3d_name 
-mask3d_ref3d                            ""                                                                              "" 
-mask3d_cls3d                            ""                                                                              "" 
-CSS_lbin_center3d_class3d_cont_stars    run_it000_optimiser.star                                                        run_it000_optimiser.star 
-cls2d_cycle_parts_temp                  Schemes/060_CSS_Clean_Stack_3D/0510_Select_class2d/particles.star               Schemes/060_CSS_Clean_Stack_3D/0510_Select_class2d/particles.star 
-cls2d_cycle_parts                       ""                                                                              "" 
-cls3d_cont_data_name                    ""                                                                              "" 
-cls3d_cont_data_path                    ""                                                                              "" 
-cls3d_cont_data_path_temp               Schemes/060_CSS_Clean_Stack_3D/0700_Class3D/$$cls3d_cont_data_name              Schemes/060_CSS_Clean_Stack_3D/0700_Class3D/$$cls3d_cont_data_name 
-CSS_lbin_center3d_class3d_parts_star    Schemes/060_CSS_Clean_Stack_3D/0700_Class3D/run_it025_data.star                 Schemes/060_CSS_Clean_Stack_3D/0700_Class3D/run_it025_data.star 
-CSS_lbin_center3d_class3d_sym           C1                                                                              C1 
-CSS_lbin_center3d_refine3d_sym_name     D2                                                                              D2 
-particles                               particles                                                                       particles 
+prev_proc_exited                        Schemes/050_GTF_AbInitReconst3D/RELION_JOB_EXIT_SUCCESS                           Schemes/050_GTF_AbInitReconst3D/RELION_JOB_EXIT_SUCCESS 
+CSS_lbin_center3d_parts_star            Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star              Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star 
+split_parts                             Schemes/060_CSS_Clean_Stack_3D/060010_Select_split_parts/particles_split1.star    Schemes/060_CSS_Clean_Stack_3D/060010_Select_split_parts/particles_split1.star 
+selected_parts                          ""                                                                                "" 
+SS_comm_lbin_ref3d_path                 Inputs/$$SS_comm_lbin_ref3d_name                                                  Inputs/$$SS_comm_lbin_ref3d_name 
+SS_comm_lbin_ref3d_name                 lbin_ref3d_apix3o540_d064.mrc                                                     lbin_ref3d_apix3o540_d064.mrc 
+SS_comm_lbin_mask3d_path                Inputs/$$SS_comm_lbin_mask3d_name                                                 Inputs/$$SS_comm_lbin_mask3d_name 
+SS_comm_lbin_mask3d_name                sbin_mask3d_apix3o540_d064.mrc                                                    sbin_mask3d_apix3o540_d064.mrc 
+imported_ref3d                          Schemes/060_CSS_Clean_Stack_3D/060040_Import_ref3d/$$SS_comm_lbin_ref3d_name      Schemes/060_CSS_Clean_Stack_3D/060040_Import_ref3d/$$SS_comm_lbin_ref3d_name 
+imported_mask3d                         Schemes/060_CSS_Clean_Stack_3D/060050_Import_mask3d/$$SS_comm_lbin_mask3d_name    Schemes/060_CSS_Clean_Stack_3D/060050_Import_mask3d/$$SS_comm_lbin_mask3d_name 
+mask3d_ref3d                            ""                                                                                "" 
+mask3d_cls3d                            ""                                                                                "" 
+CSS_lbin_center3d_class3d_cont_stars    run_it000_optimiser.star                                                          run_it000_optimiser.star 
+cls2d_cycle_parts_temp                  Schemes/060_CSS_Clean_Stack_3D/060030_Select_clean2d_parts/particles.star         Schemes/060_CSS_Clean_Stack_3D/060030_Select_clean2d_parts/particles.star 
+cls2d_cycle_parts                       ""                                                                                "" 
+cls3d_cont_data_name                    ""                                                                                "" 
+cls3d_cont_data_path                    ""                                                                                "" 
+cls3d_cont_data_path_temp               Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/$$cls3d_cont_data_name              Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/$$cls3d_cont_data_name 
+CSS_lbin_center3d_class3d_parts_star    Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/run_it025_data.star                 Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/run_it025_data.star 
+CSS_lbin_center3d_class3d_sym           C1                                                                                C1 
+CSS_lbin_center3d_refine3d_sym_name     D2                                                                                D2 
+particles                               particles                                                                         particles 
 
 
 # version 30001 

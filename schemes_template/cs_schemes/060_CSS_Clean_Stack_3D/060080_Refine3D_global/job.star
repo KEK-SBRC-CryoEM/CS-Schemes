@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_img                              Schemes/060_CSS_Clean_Stack_3D/0800_External_select3d/selected_data.star 
+fn_img                              Schemes/060_CSS_Clean_Stack_3D/060070_External_select3d/selected_data.star 
 fn_cont                             "" 
 fn_ref                              $$imported_ref3d 
 fn_mask                             $$mask3d_ref3d 
