@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_data          Schemes/080_CSS_Refine_Cycle/1602_CtfRefine_magnification/particles_ctf_refine.star 
+fn_data          Schemes/080_CSS_PPRefine_Cycle/080020_CtfRefine_aniso_mag/particles_ctf_refine.star 
 fn_post          $$cycles_postprocess_map 
 do_aniso_mag     No 
 do_ctf           Yes 

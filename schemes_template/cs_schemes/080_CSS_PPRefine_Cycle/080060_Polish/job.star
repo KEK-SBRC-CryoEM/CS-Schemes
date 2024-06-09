@@ -16,8 +16,8 @@ loop_
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
 fn_mic             $$SS_comm_motioncorr_mics_star 
-fn_data            Schemes/080_CSS_Refine_Cycle/1604_Refine3D_ctfrefine/run_data.star 
-fn_post            Schemes/080_CSS_Refine_Cycle/1605_PostProcess_ctfrefine/postprocess.star 
+fn_data            Schemes/080_CSS_PPRefine_Cycle/080040_Refine3D_ctfrefine/run_data.star 
+fn_post            Schemes/080_CSS_PPRefine_Cycle/080050_PostProcess_ctfrefine/postprocess.star 
 first_frame        1 
 last_frame         -1 
 extract_size       -1 
