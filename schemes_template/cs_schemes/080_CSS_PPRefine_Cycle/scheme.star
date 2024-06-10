@@ -93,14 +93,14 @@ _rlnSchemeJobNameOriginal #1
 _rlnSchemeJobName #2 
 _rlnSchemeJobMode #3 
 _rlnSchemeJobHasStarted #4 
-1601_CtfRefine_aberration       1601_CtfRefine_aberration       new            0 
-1602_CtfRefine_magnification    1602_CtfRefine_magnification    new            0 
-1603_CtfRefine_ctf_param        1603_CtfRefine_ctf_param        new            0 
-1604_Refine3D_ctfrefine         1604_Refine3D_ctfrefine         new            0 
-1605_PostProcess_ctfrefine      1605_PostProcess_ctfrefine      new            0 
-1606_Polish                     1606_Polish                     new            0 
-1607_Refine3D_polish            1607_Refine3D_polish            new            0 
-1608_PostProcess_polish         1608_PostProcess_polish         new            0 
+080010_CtfRefine_aberration     080010_CtfRefine_aberration     new            0 
+080020_CtfRefine_aniso_mag      080020_CtfRefine_aniso_mag      new            0 
+080030_CtfRefine_ctf_params     080030_CtfRefine_ctf_params     new            0 
+080040_Refine3D_ctfrefine       080040_Refine3D_ctfrefine       new            0 
+080050_PostProcess_ctfrefine    080050_PostProcess_ctfrefine    new            0 
+080060_Polish                   080060_Polish                   new            0 
+080070_Refine3D_polish          080070_Refine3D_polish          new            0 
+080080_PostProcess_polish       080080_PostProcess_polish       new            0 
 
 
 # version 30001 
@@ -118,17 +118,17 @@ EXIT_maxtime                    HAS_prev_proc_exited            0    undefined  
 HAS_prev_proc_exited            WAIT                            1    INIT_ctfrefine_refine_data      has_exited 
 INIT_ctfrefine_refine_data      INIT_postprocess_map            0    undefined                       undefined 
 INIT_postprocess_map            INIT_refine3d_refine_map        0    undefined                       undefined 
-INIT_refine3d_refine_map        1601_CtfRefine_aberration       0    undefined                       undefined 
-1601_CtfRefine_aberration       1602_CtfRefine_magnification    0    undefined                       undefined 
-1602_CtfRefine_magnification    1603_CtfRefine_ctf_param        0    undefined                       undefined 
-1603_CtfRefine_ctf_param        1604_Refine3D_ctfrefine         0    undefined                       undefined 
-1604_Refine3D_ctfrefine         1605_PostProcess_ctfrefine      0    undefined                       undefined 
-1605_PostProcess_ctfrefine      1606_Polish                     0    undefined                       undefined 
-1606_Polish                     1607_Refine3D_polish            0    undefined                       undefined 
-1607_Refine3D_polish            1608_PostProcess_polish         0    undefined                       undefined 
-1608_PostProcess_polish         INCRE_cur_cycles                0    undefined                       undefined 
+INIT_refine3d_refine_map        080010_CtfRefine_aberration     0    undefined                       undefined 
+080010_CtfRefine_aberration     080020_CtfRefine_aniso_mag      0    undefined                       undefined 
+080020_CtfRefine_aniso_mag      080030_CtfRefine_ctf_params     0    undefined                       undefined 
+080030_CtfRefine_ctf_params     080040_Refine3D_ctfrefine       0    undefined                       undefined 
+080040_Refine3D_ctfrefine       080050_PostProcess_ctfrefine    0    undefined                       undefined 
+080050_PostProcess_ctfrefine    080060_Polish                   0    undefined                       undefined 
+080060_Polish                   080070_Refine3D_polish          0    undefined                       undefined 
+080070_Refine3D_polish          080080_PostProcess_polish       0    undefined                       undefined 
+080080_PostProcess_polish       INCRE_cur_cycles                0    undefined                       undefined 
 INCRE_cur_cycles                CHECK_max_cycles                0    undefined                       undefined 
 CHECK_max_cycles                EXIT                            1    UPDATE_ctfrefine_refine_data    do_cycle 
 UPDATE_ctfrefine_refine_data    UPDATE_postprocess_map          0    undefined                       undefined 
 UPDATE_postprocess_map          UPDATE_refine3d_refine_map      0    undefined                       undefined 
-UPDATE_refine3d_refine_map      1601_CtfRefine_aberration       0    undefined                       undefined 
+UPDATE_refine3d_refine_map      080010_CtfRefine_aberration     0    undefined                       undefined 

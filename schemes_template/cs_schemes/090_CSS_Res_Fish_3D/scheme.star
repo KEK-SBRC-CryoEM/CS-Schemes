@@ -78,13 +78,13 @@ _rlnSchemeJobNameOriginal #1
 _rlnSchemeJobName #2 
 _rlnSchemeJobMode #3 
 _rlnSchemeJobHasStarted #4 
-1900_Class3D_noalign       1900_Class3D_noalign       new            0 
-2000_External_select3d     2000_External_select3d     new            0 
-2100_Refine3D_global       2100_Refine3D_global       new            0 
-2200_PostProcess_global    2200_PostProcess_global    new            0 
-2300_Refine3D_local        2300_Refine3D_local        new            0 
-2400_PostProcess_local     2400_PostProcess_local     new            0 
-2500_LocalRes              2500_LocalRes              new            0 
+090010_Class3D_noalign       090010_Class3D_noalign       new            0 
+090020_External_select3d     090020_External_select3d     new            0 
+090030_Refine3D_global       090030_Refine3D_global       new            0 
+090040_PostProcess_global    090040_PostProcess_global    new            0 
+090050_Refine3D_local        090050_Refine3D_local        new            0 
+090060_PostProcess_local     090060_PostProcess_local     new            0 
+090070_LocalRes              090070_LocalRes              new            0 
 
 
 # version 30001 
@@ -97,13 +97,13 @@ _rlnSchemeEdgeOutputNodeName #2
 _rlnSchemeEdgeIsFork #3 
 _rlnSchemeEdgeOutputNodeNameIfTrue #4 
 _rlnSchemeEdgeBooleanVariable #5 
-WAIT                       1900_Class3D_noalign       1    EXIT_maxtime            SS_comm_wait_prev_proc 
-EXIT_maxtime               HAS_prev_proc_exited       0    undefined               undefined 
-HAS_prev_proc_exited       WAIT                       1    1900_Class3D_noalign    has_exited 
-1900_Class3D_noalign       2000_External_select3d     0    undefined               undefined 
-2000_External_select3d     2100_Refine3D_global       0    undefined               undefined 
-2100_Refine3D_global       2200_PostProcess_global    0    undefined               undefined 
-2200_PostProcess_global    2300_Refine3D_local        0    undefined               undefined 
-2300_Refine3D_local        2400_PostProcess_local     0    undefined               undefined 
-2400_PostProcess_local     2500_LocalRes              0    undefined               undefined 
-2500_LocalRes              EXIT                       0    undefined               undefined 
+WAIT                         090010_Class3D_noalign       1    EXIT_maxtime              SS_comm_wait_prev_proc 
+EXIT_maxtime                 HAS_prev_proc_exited         0    undefined                 undefined 
+HAS_prev_proc_exited         WAIT                         1    090010_Class3D_noalign    has_exited 
+090010_Class3D_noalign       090020_External_select3d     0    undefined                 undefined 
+090020_External_select3d     090030_Refine3D_global       0    undefined                 undefined 
+090030_Refine3D_global       090040_PostProcess_global    0    undefined                 undefined 
+090040_PostProcess_global    090050_Refine3D_local        0    undefined                 undefined 
+090050_Refine3D_local        090060_PostProcess_local     0    undefined                 undefined 
+090060_PostProcess_local     090070_LocalRes              0    undefined                 undefined 
+090070_LocalRes              EXIT                         0    undefined                 undefined 

@@ -148,15 +148,15 @@ _rlnSchemeJobNameOriginal #1
 _rlnSchemeJobName #2 
 _rlnSchemeJobMode #3 
 _rlnSchemeJobHasStarted #4 
-0400_Select_split_parts    0400_Select_split_parts    new            0 
-0500_Class2D_EM            0500_Class2D_EM            new            0 
-0510_Select_class2d        0510_Select_class2d        new            0 
-0601_Import_ref3d          0601_Import_ref3d          new            0 
-0602_Import_mask3d         0602_Import_mask3d         new            0 
-0700_Class3D               0700_Class3D               continue       0 
-0800_External_select3d     0800_External_select3d     new            0 
-0900_Refine3D              0900_Refine3D              new            0 
-1000_PostProcess           1000_PostProcess           new            0 
+060010_Select_split_parts      060010_Select_split_parts      new            0 
+060020_Class2D_EM              060020_Class2D_EM              new            0 
+060030_Select_clean2d_parts    060030_Select_clean2d_parts    new            0 
+060040_Import_ref3d            060040_Import_ref3d            new            0 
+060050_Import_mask3d           060050_Import_mask3d           new            0 
+060060_Class3D                 060060_Class3D                 continue       0 
+060070_External_select3d       060070_External_select3d       new            0 
+060080_Refine3D_global         060080_Refine3D_global         new            0 
+060090_PostProcess_global      060090_PostProcess_global      new            0 
 
 
 # version 30001 
@@ -177,32 +177,32 @@ INIT_selected_parts                INIT_cls2d_cycle_parts             1    COUNT
 COUNT_parts                        HAS_parts_increased                0    undefined                      undefined 
 HAS_parts_increased                WAIT                               1    SET_pre_nr_parts               has_larger_nr_parts 
 SET_pre_nr_parts                   HAS_required_nr_parts              0    undefined                      undefined 
-HAS_required_nr_parts              WAIT                               1    0400_Select_split_parts        has_required_nr_parts 
-0400_Select_split_parts            UPDATE_selected_parts_cls2d        0    undefined                      undefined 
+HAS_required_nr_parts              WAIT                               1    060010_Select_split_parts      has_required_nr_parts 
+060010_Select_split_parts          UPDATE_selected_parts_cls2d        0    undefined                      undefined 
 UPDATE_selected_parts_cls2d        INIT_cls2d_cycle_parts             0    undefined                      undefined 
 INIT_cls2d_cycle_parts             CHECK_max_cls2d_cycles             0    undefined                      undefined 
-CHECK_max_cls2d_cycles             UPDATE_selected_parts_cls3d        1    0500_Class2D_EM                do_cls2d_cycle 
-0500_Class2D_EM                    0510_Select_class2d                0    undefined                      undefined 
-0510_Select_class2d                UPDATE_cls2d_cycle_parts           0    undefined                      undefined 
+CHECK_max_cls2d_cycles             UPDATE_selected_parts_cls3d        1    060020_Class2D_EM              do_cls2d_cycle 
+060020_Class2D_EM                  060030_Select_clean2d_parts        0    undefined                      undefined 
+060030_Select_clean2d_parts        UPDATE_cls2d_cycle_parts           0    undefined                      undefined 
 UPDATE_cls2d_cycle_parts           INCR_cur_cls2d_cycles              0    undefined                      undefined 
 INCR_cur_cls2d_cycles              CHECK_max_cls2d_cycles             0    undefined                      undefined 
-UPDATE_selected_parts_cls3d        0601_Import_ref3d                  0    undefined                      undefined 
-0601_Import_ref3d                  0602_Import_mask3d                 0    undefined                      undefined 
-0602_Import_mask3d                 INIT_cls3d_cont_iter               1    SET_mask3d_class3d             CSS_lbin_center3d_class3d_use_mask3d 
+UPDATE_selected_parts_cls3d        060040_Import_ref3d                0    undefined                      undefined 
+060040_Import_ref3d                060050_Import_mask3d               0    undefined                      undefined 
+060050_Import_mask3d               INIT_cls3d_cont_iter               1    SET_mask3d_class3d             CSS_lbin_center3d_class3d_use_mask3d 
 SET_mask3d_class3d                 INIT_cls3d_cont_iter               0    undefined                      undefined 
 INIT_cls3d_cont_iter               INIT_cls3d_cont_offset_factor      0    undefined                      undefined 
 INIT_cls3d_cont_offset_factor      ROUND_cls3d_cont_offset_factor     0    undefined                      undefined 
 ROUND_cls3d_cont_offset_factor     UPDATE_cls3d_cont_offset_range     0    undefined                      undefined 
 UPDATE_cls3d_cont_offset_range     UPDATE_cls3d_cont_offset_step      0    undefined                      undefined 
-UPDATE_cls3d_cont_offset_step      0700_Class3D                       0    undefined                      undefined 
-0700_Class3D                       INCR_cur_cls3d_conts               0    undefined                      undefined 
+UPDATE_cls3d_cont_offset_step      060060_Class3D                     0    undefined                      undefined 
+060060_Class3D                     INCR_cur_cls3d_conts               0    undefined                      undefined 
 INCR_cur_cls3d_conts               CHECK_max_cls3d_conts              0    undefined                      undefined 
-CHECK_max_cls3d_conts              0800_External_select3d             1    UPDATE_cls3d_cont_data_name    do_cls3d_cont 
+CHECK_max_cls3d_conts              060070_External_select3d           1    UPDATE_cls3d_cont_data_name    do_cls3d_cont 
 UPDATE_cls3d_cont_data_name        UPDATE_cls3d_cont_data_path        0    undefined                      undefined 
 UPDATE_cls3d_cont_data_path        UPDATE_cls3d_cont_iter             0    undefined                      undefined 
 UPDATE_cls3d_cont_iter             UPDATE_cls3d_cont_offset_factor    0    undefined                      undefined 
 UPDATE_cls3d_cont_offset_factor    ROUND_cls3d_cont_offset_factor     0    undefined                      undefined 
-0800_External_select3d             0900_Refine3D                      1    SET_mask3d_refine3d            CSS_lbin_center3d_refine3d_use_mask3d 
-SET_mask3d_refine3d                0900_Refine3D                      0    undefined                      undefined 
-0900_Refine3D                      1000_PostProcess                   0    undefined                      undefined 
-1000_PostProcess                   EXIT                               0    undefined                      undefined 
+060070_External_select3d           060080_Refine3D_global             1    SET_mask3d_refine3d            CSS_lbin_center3d_refine3d_use_mask3d 
+SET_mask3d_refine3d                060080_Refine3D_global             0    undefined                      undefined 
+060080_Refine3D_global             060090_PostProcess_global          0    undefined                      undefined 
+060090_PostProcess_global          EXIT                               0    undefined                      undefined 

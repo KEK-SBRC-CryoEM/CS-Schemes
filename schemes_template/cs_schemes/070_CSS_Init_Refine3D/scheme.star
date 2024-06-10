@@ -88,16 +88,16 @@ _rlnSchemeJobNameOriginal #1
 _rlnSchemeJobName #2 
 _rlnSchemeJobMode #3 
 _rlnSchemeJobHasStarted #4 
-1100_Extract_reextract     1100_Extract_reextract     new            0 
-1101_Select_rm_dup         1101_Select_rm_dup         new            0 
-1102_Select_rm_bars_x      1102_Select_rm_bars_x      new            0 
-1103_Select_rm_bars_xy     1103_Select_rm_bars_xy     new            0 
-1201_Import_ref3d          1201_Import_ref3d          new            0 
-1202_Import_mask3d         1202_Import_mask3d         new            0 
-1300_Refine3D_global       1300_Refine3D_global       new            0 
-1400_PostProcess_global    1400_PostProcess_global    new            0 
-1500_Refine3D_local        1500_Refine3D_local        new            0 
-1600_PostProcess_local     1600_PostProcess_local     new            0 
+070010_Extract_reextract     070010_Extract_reextract     new            0 
+070020_Select_rm_dup         070020_Select_rm_dup         new            0 
+070030_Select_rm_bars_x      070030_Select_rm_bars_x      new            0 
+070040_Select_rm_bars_xy     070040_Select_rm_bars_xy     new            0 
+070050_Import_ref3d          070050_Import_ref3d          new            0 
+070060_Import_mask3d         070060_Import_mask3d         new            0 
+070070_Refine3D_global       070070_Refine3D_global       new            0 
+070080_PostProcess_global    070080_PostProcess_global    new            0 
+070090_Refine3D_local        070090_Refine3D_local        new            0 
+070100_PostProcess_local     070100_PostProcess_local     new            0 
 
 
 # version 30001 
@@ -110,16 +110,16 @@ _rlnSchemeEdgeOutputNodeName #2
 _rlnSchemeEdgeIsFork #3 
 _rlnSchemeEdgeOutputNodeNameIfTrue #4 
 _rlnSchemeEdgeBooleanVariable #5 
-WAIT                       1100_Extract_reextract     1    EXIT_maxtime              SS_comm_wait_prev_proc 
-EXIT_maxtime               HAS_prev_proc_exited       0    undefined                 undefined 
-HAS_prev_proc_exited       WAIT                       1    1100_Extract_reextract    has_exited 
-1100_Extract_reextract     1101_Select_rm_dup         0    undefined                 undefined 
-1101_Select_rm_dup         1102_Select_rm_bars_x      0    undefined                 undefined 
-1102_Select_rm_bars_x      1103_Select_rm_bars_xy     0    undefined                 undefined 
-1103_Select_rm_bars_xy     1201_Import_ref3d          0    undefined                 undefined 
-1201_Import_ref3d          1202_Import_mask3d         0    undefined                 undefined 
-1202_Import_mask3d         1300_Refine3D_global       0    undefined                 undefined 
-1300_Refine3D_global       1400_PostProcess_global    0    undefined                 undefined 
-1400_PostProcess_global    1500_Refine3D_local        0    undefined                 undefined 
-1500_Refine3D_local        1600_PostProcess_local     0    undefined                 undefined 
-1600_PostProcess_local     EXIT                       0    undefined                 undefined 
+WAIT                         070010_Extract_reextract     1    EXIT_maxtime                SS_comm_wait_prev_proc 
+EXIT_maxtime                 HAS_prev_proc_exited         0    undefined                   undefined 
+HAS_prev_proc_exited         WAIT                         1    070010_Extract_reextract    has_exited 
+070010_Extract_reextract     070020_Select_rm_dup         0    undefined                   undefined 
+070020_Select_rm_dup         070030_Select_rm_bars_x      0    undefined                   undefined 
+070030_Select_rm_bars_x      070040_Select_rm_bars_xy     0    undefined                   undefined 
+070040_Select_rm_bars_xy     070050_Import_ref3d          0    undefined                   undefined 
+070050_Import_ref3d          070060_Import_mask3d         0    undefined                   undefined 
+070060_Import_mask3d         070070_Refine3D_global       0    undefined                   undefined 
+070070_Refine3D_global       070080_PostProcess_global    0    undefined                   undefined 
+070080_PostProcess_global    070090_Refine3D_local        0    undefined                   undefined 
+070090_Refine3D_local        070100_PostProcess_local     0    undefined                   undefined 
+070100_PostProcess_local     EXIT                         0    undefined                   undefined 

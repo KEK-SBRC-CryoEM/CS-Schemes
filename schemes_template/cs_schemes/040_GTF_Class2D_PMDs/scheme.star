@@ -113,10 +113,10 @@ _rlnSchemeJobNameOriginal #1
 _rlnSchemeJobName #2 
 _rlnSchemeJobMode #3 
 _rlnSchemeJobHasStarted #4 
-0401_Select_split_stack     0401_Select_split_stack     new            0 
-0402_Class2d_vdam           0402_Class2d_vdam           new            0 
-0403_Class2d_em             0403_Class2d_em             new            0 
-0404_Select_sort2d          0404_Select_sort2d          new            0 
+040010_Select_split_parts    040010_Select_split_parts    new            0 
+040020_Class2D_VDAM          040020_Class2D_VDAM          new            0 
+040030_Class2D_EM            040030_Class2D_EM            new            0 
+040040_Select_sort2d         040040_Select_sort2d         new            0 
 
 
 # version 30001 
@@ -129,27 +129,27 @@ _rlnSchemeEdgeOutputNodeName #2
 _rlnSchemeEdgeIsFork #3 
 _rlnSchemeEdgeOutputNodeNameIfTrue #4 
 _rlnSchemeEdgeBooleanVariable #5 
-WAIT                        EXIT_maxtime                0    undefined                  undefined 
-EXIT_maxtime                HAS_all_parts               0    undefined                  undefined 
-HAS_all_parts               WAIT                        1    INIT_selected_parts        has_all_parts 
-INIT_selected_parts         INIT_base_pmd               1    COUNT_parts                GTF_lbin_class2d_pmds_do_limit_parts 
-COUNT_parts                 HAS_parts_increased         0    undefined                  undefined 
-HAS_parts_increased         WAIT                        1    SET_pre_nr_parts           has_larger_nr_parts 
-SET_pre_nr_parts            HAS_required_nr_parts       0    undefined                  undefined 
-HAS_required_nr_parts       WAIT                        1    0401_Select_split_stack    has_required_nr_parts 
-0401_Select_split_stack     UPDATE_selected_parts       0    undefined                  undefined 
-UPDATE_selected_parts       INIT_base_pmd               0    undefined                  undefined 
-INIT_base_pmd               INIT_cur_pmd_pad            0    undefined                  undefined 
-INIT_cur_pmd_pad            PLUS_cur_pmd                0    undefined                  undefined 
-PLUS_cur_pmd                CHECK_cls2d_type_vdam       0    undefined                  undefined 
-CHECK_cls2d_type_vdam       CHECK_cls2d_type_em         1    0402_Class2d_vdam          is_same_cls2d_type 
-CHECK_cls2d_type_em         EXIT                        1    0403_Class2d_em            is_same_cls2d_type 
-0402_Class2d_vdam           ACTIVATE_sort2d_vdam        0    undefined                  undefined 
-0403_Class2d_em             ACTIVATE_sort2d_em          0    undefined                  undefined 
-ACTIVATE_sort2d_vdam        0404_Select_sort2d          0    undefined                  undefined 
-ACTIVATE_sort2d_em          0404_Select_sort2d          0    undefined                  undefined 
-0404_Select_sort2d          SET_prev_pmd_pad            0    undefined                  undefined 
-SET_prev_pmd_pad            MINUS_current_pmd_pad       0    undefined                  undefined 
-MINUS_current_pmd_pad       CHECK_pmd_pad_min           0    undefined                  undefined 
-CHECK_pmd_pad_min           PLUS_cur_pmd                1    INCR_active_cls2d_type     has_subceeded_pmd_pad_min 
-INCR_active_cls2d_type      INIT_base_pmd               0    undefined                  undefined 
+WAIT                         EXIT_maxtime             0    undefined                    undefined 
+EXIT_maxtime                 HAS_all_parts            0    undefined                    undefined 
+HAS_all_parts                WAIT                     1    INIT_selected_parts          has_all_parts 
+INIT_selected_parts          INIT_base_pmd            1    COUNT_parts                  GTF_lbin_class2d_pmds_do_limit_parts 
+COUNT_parts                  HAS_parts_increased      0    undefined                    undefined 
+HAS_parts_increased          WAIT                     1    SET_pre_nr_parts             has_larger_nr_parts 
+SET_pre_nr_parts             HAS_required_nr_parts    0    undefined                    undefined 
+HAS_required_nr_parts        WAIT                     1    040010_Select_split_parts    has_required_nr_parts 
+040010_Select_split_parts    UPDATE_selected_parts    0    undefined                    undefined 
+UPDATE_selected_parts        INIT_base_pmd            0    undefined                    undefined 
+INIT_base_pmd                INIT_cur_pmd_pad         0    undefined                    undefined 
+INIT_cur_pmd_pad             PLUS_cur_pmd             0    undefined                    undefined 
+PLUS_cur_pmd                 CHECK_cls2d_type_vdam    0    undefined                    undefined 
+CHECK_cls2d_type_vdam        CHECK_cls2d_type_em      1    040020_Class2D_VDAM          is_same_cls2d_type 
+CHECK_cls2d_type_em          EXIT                     1    040030_Class2D_EM            is_same_cls2d_type 
+040020_Class2D_VDAM          ACTIVATE_sort2d_vdam     0    undefined                    undefined 
+040030_Class2D_EM            ACTIVATE_sort2d_em       0    undefined                    undefined 
+ACTIVATE_sort2d_vdam         040040_Select_sort2d     0    undefined                    undefined 
+ACTIVATE_sort2d_em           040040_Select_sort2d     0    undefined                    undefined 
+040040_Select_sort2d         SET_prev_pmd_pad         0    undefined                    undefined 
+SET_prev_pmd_pad             MINUS_current_pmd_pad    0    undefined                    undefined 
+MINUS_current_pmd_pad        CHECK_pmd_pad_min        0    undefined                    undefined 
+CHECK_pmd_pad_min            PLUS_cur_pmd             1    INCR_active_cls2d_type       has_subceeded_pmd_pad_min 
+INCR_active_cls2d_type       INIT_base_pmd            0    undefined                    undefined 

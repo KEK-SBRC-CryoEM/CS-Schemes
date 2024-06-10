@@ -79,8 +79,8 @@ _rlnSchemeJobNameOriginal #1
 _rlnSchemeJobName #2 
 _rlnSchemeJobMode #3 
 _rlnSchemeJobHasStarted #4 
-ctffind               ctffind                 continue       0 
-0202_Select_mic       0202_Select_mic         continue       0 
+020010_CtfFind        020010_CtfFind        continue       0 
+020020_Select_mics    020020_Select_mics    continue       0 
 
 
 # version 30001 
@@ -93,11 +93,11 @@ _rlnSchemeEdgeOutputNodeName #2
 _rlnSchemeEdgeIsFork #3 
 _rlnSchemeEdgeOutputNodeNameIfTrue #4 
 _rlnSchemeEdgeBooleanVariable #5 
-WAIT                             EXIT_maxtime                           0    undefined     undefined 
-EXIT_maxtime                     HAS_motioncorr                         1    COUNT_current_motioncorr_mics  has_motioncorr
-HAS_motioncorr                   WAIT                                   0    undefined     undefined 
-COUNT_current_motioncorr_mics    COUNT_pre_ctffind_mics                 0    undefined     undefined 
-COUNT_pre_ctffind_mics           HAS_unprocessed_ctffind_mics           0    undefined     undefined 
-HAS_unprocessed_ctffind_mics     WAIT                                   1    ctffind       has_unprocessed_ctffind_mics
-ctffind                          0202_Select_mic                        0    undefined     undefined 
-0202_Select_mic                  WAIT                                   0    undefined     undefined 
+WAIT                             EXIT_maxtime                           0    undefined                        undefined 
+EXIT_maxtime                     HAS_motioncorr                         1    COUNT_current_motioncorr_mics    has_motioncorr
+HAS_motioncorr                   WAIT                                   0    undefined                        undefined 
+COUNT_current_motioncorr_mics    COUNT_pre_ctffind_mics                 0    undefined                        undefined 
+COUNT_pre_ctffind_mics           HAS_unprocessed_ctffind_mics           0    undefined                        undefined 
+HAS_unprocessed_ctffind_mics     WAIT                                   1    020010_CtfFind                   has_unprocessed_ctffind_mics
+020010_CtfFind                   020020_Select_mics                     0    undefined                        undefined 
+020020_Select_mics               WAIT                                   0    undefined                        undefined 

@@ -87,9 +87,9 @@ _rlnSchemeJobNameOriginal #1
 _rlnSchemeJobName #2 
 _rlnSchemeJobMode #3 
 _rlnSchemeJobHasStarted #4 
-importmovies              importmovies              continue       0 
-motioncorr                motioncorr                continue       0 
-select_motioncor_mics     select_motioncor_mics     continue       0 
+010010_Import_movies    010010_Import_movies    continue       0 
+010020_MotionCorr       010020_MotionCorr       continue       0 
+010030_Select_mics      010030_Select_mics      continue       0 
 
 
 # version 30001 
@@ -102,11 +102,11 @@ _rlnSchemeEdgeOutputNodeName #2
 _rlnSchemeEdgeIsFork #3 
 _rlnSchemeEdgeOutputNodeNameIfTrue #4 
 _rlnSchemeEdgeBooleanVariable #5 
-WAIT                                 EXIT_maxtime                           0  undefined      undefined 
-EXIT_maxtime                         importmovies                           0  undefined      undefined 
-importmovies                         COUNT_current_import_movies            0  undefined      undefined 
-COUNT_current_import_movies          COUNT_pre_motioncorr_mics              0  undefined      undefined 
-COUNT_pre_motioncorr_mics            HAS_unprocessed_motioncorr_mics        0  undefined      undefined 
-HAS_unprocessed_motioncorr_mics      WAIT                                   1  motioncorr     has_unprocessed_motioncorr_mics 
-motioncorr                           select_motioncor_mics                  0  undefined      undefined 
-select_motioncor_mics                WAIT                                   0  undefined      undefined 
+WAIT                                 EXIT_maxtime                           0    undefined            undefined 
+EXIT_maxtime                         010010_Import_movies                   0    undefined            undefined 
+010010_Import_movies                 COUNT_current_import_movies            0    undefined            undefined 
+COUNT_current_import_movies          COUNT_pre_motioncorr_mics              0    undefined            undefined 
+COUNT_pre_motioncorr_mics            HAS_unprocessed_motioncorr_mics        0    undefined            undefined 
+HAS_unprocessed_motioncorr_mics      WAIT                                   1    010020_MotionCorr    has_unprocessed_motioncorr_mics 
+010020_MotionCorr                    010030_Select_mics                     0    undefined            undefined 
+010030_Select_mics                   WAIT                                   0    undefined            undefined 
