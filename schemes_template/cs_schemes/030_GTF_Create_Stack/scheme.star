@@ -95,7 +95,6 @@ ACTIVATE_cryolo_thr       float=set             active_thr              GTF_pick
 ACTIVATE_log_thr          float=set             active_thr              GTF_pick_log_adjust_thresh    undefined 
 WAIT                      wait                  undefined               wait_sec                      undefined 
 EXIT_maxtime              exit_maxtime          undefined               maxtime_hr                    undefined 
-EXIT                      exit                  undefined               undefined                     undefined 
 
 
 # version 30001 
@@ -143,4 +142,4 @@ ACTIVATE_log_coords         ACTIVATE_log_thr            0    undefined          
 ACTIVATE_log_thr            030040_Extract_picks        0    undefined                   undefined 
 030040_Extract_picks        030050_Select_rm_bars_x     0    undefined                   undefined 
 030050_Select_rm_bars_x     030060_Select_rm_bars_xy    0    undefined                   undefined 
-030060_Select_rm_bars_xy    EXIT                        0    undefined                   undefined 
+030060_Select_rm_bars_xy    WAIT                        0    undefined                   undefined 

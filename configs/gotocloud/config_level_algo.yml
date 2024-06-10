@@ -1,7 +1,7 @@
 - AlgoLevel: motioncorr_own
   Settings:
     PrereadParticles: 'PS_NOT_APPLICABLE'
-    WhichGpusToUse: 'PS_NOT_APPLICABLE'
+    WhichGpusToUse: ''
     Param3Value: 'PS_NOT_APPLICABLE'
     NumberOfMpi: '24'
     NumberOfThreads: '8'
@@ -21,7 +21,7 @@
 - AlgoLevel: ctffind_ctff4
   Settings:
     PrereadParticles: 'PS_NOT_APPLICABLE'
-    WhichGpusToUse: 'PS_NOT_APPLICABLE'
+    WhichGpusToUse: ''
     Param3Value: 'PS_NOT_APPLICABLE'
     NumberOfMpi: '24'
     NumberOfThreads: 'PS_NOT_APPLICABLE'

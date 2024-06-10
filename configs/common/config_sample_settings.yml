@@ -31,7 +31,7 @@ Settings:
 #030_GTF_Create_Stack
   GTF_pick_do_limit_mics: 0
   GTF_pick_min_nr_mics: 24
-  GTF_pick_cryolo_thresh: 0.3
+  GTF_pick_cryolo_thresh: 0.1
   GTF_lbin_extract_mics_box: 256
   GTF_lbin_extract_mics_0o95box: 200
   GTF_lbin_extract_parts_box: 64

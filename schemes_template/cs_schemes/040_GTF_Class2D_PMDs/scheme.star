@@ -61,7 +61,7 @@ _rlnSchemeStringVariableName #1
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
 GTF_lbin_class2d_pmds_in_parts_star    Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star               Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star 
-split_parts                            Schemes/050_GTF_AbInitReconst3D/050010_Select_split_parts/particles_split1.star    Schemes/050_GTF_AbInitReconst3D/050010_Select_split_parts/particles_split1.star 
+split_parts                            Schemes/040_GTF_Class2D_PMDs/040010_Select_split_parts/particles_split1.star       Schemes/040_GTF_Class2D_PMDs/040010_Select_split_parts/particles_split1.star 
 selected_parts                         ""                                                                                 "" 
 cls2d_vdam_optimiser                   Schemes/040_GTF_Class2D_PMDs/040020_Class2D_VDAM/run_it200_optimiser.star          Schemes/040_GTF_Class2D_PMDs/040020_Class2D_VDAM/run_it200_optimiser.star 
 cls2d_em_optimiser                     Schemes/040_GTF_Class2D_PMDs/040030_Class2D_EM/run_it025_optimiser.star            Schemes/040_GTF_Class2D_PMDs/040030_Class2D_EM/run_it025_optimiser.star 
