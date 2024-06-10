@@ -3,7 +3,7 @@
 
 data_scheme_general 
 
-_rlnSchemeName                       Schemes/020_GTF_Ctffind/ 
+_rlnSchemeName                       Schemes/020_GTF_CtfFind/ 
 _rlnSchemeCurrentNodeName            WAIT 
 
 

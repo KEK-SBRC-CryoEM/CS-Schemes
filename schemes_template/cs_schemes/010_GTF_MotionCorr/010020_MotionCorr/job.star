@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-input_star_mics          Schemes/010_GTF_Motioncorr/010010_Import_movies/movies.star 
+input_star_mics          Schemes/010_GTF_MotionCorr/010010_Import_movies/movies.star 
 first_frame_sum          $$EM_first_frame_for_sum 
 last_frame_sum           -1 
 dose_per_frame           $$EM_dose_per_frame 

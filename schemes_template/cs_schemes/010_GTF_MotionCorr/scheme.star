@@ -3,7 +3,7 @@
 
 data_scheme_general 
 
-_rlnSchemeName                       Schemes/010_GTF_Motioncorr/ 
+_rlnSchemeName                       Schemes/010_GTF_MotionCorr/ 
 _rlnSchemeCurrentNodeName            WAIT 
 
 
@@ -54,9 +54,9 @@ _rlnSchemeStringVariableResetValue #3
 EM_movie_files                   Micrographs/*.tif                                                          Micrographs/*.tif 
 EM_mtf_file                      ""                                                                         "" 
 EM_gain_ref_file                 ""                                                                         "" 
-movies_star                      Schemes/010_GTF_Motioncorr/010010_Import_movies/movies.star                Schemes/010_GTF_Motioncorr/010010_Import_movies/movies.star 
-motioncorr_mics_star             Schemes/010_GTF_Motioncorr/010020_MotionCorr/corrected_micrographs.star    Schemes/010_GTF_Motioncorr/010020_MotionCorr/corrected_micrographs.star 
-selected_motioncorr_mics_star    Schemes/010_GTF_Motioncorr/010030_Select_mics/micrographs.star             Schemes/010_GTF_Motioncorr/010030_Select_mics/micrographs.star 
+movies_star                      Schemes/010_GTF_MotionCorr/010010_Import_movies/movies.star                Schemes/010_GTF_MotionCorr/010010_Import_movies/movies.star 
+motioncorr_mics_star             Schemes/010_GTF_MotionCorr/010020_MotionCorr/corrected_micrographs.star    Schemes/010_GTF_MotionCorr/010020_MotionCorr/corrected_micrographs.star 
+selected_motioncorr_mics_star    Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star             Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star 
 movies                           movies                                                                     movies 
 micrographs                      micrographs                                                                micrographs 
 
