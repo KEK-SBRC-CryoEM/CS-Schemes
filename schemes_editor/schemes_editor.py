@@ -302,6 +302,6 @@ if __name__ == "__main__":
     # Make a backup of existing Schemes in output directory and copy template Schemes to output directory for editting.
     edit_schemes_dir_path = se_editor.make_edit_schemes(option_template_schemes_dir_path, option_output_dir_path)
     print('[SE_MESSAGE]   The directory path of output Schemes for editing    := {}'.format(edit_schemes_dir_path))
-    se_editor.edit(option_template_schemes_dir_path, option_sample_config_file_path, option_parallel_config_file_path, option_em_config_file_path, option_system_config_file_path, option_output_dir_path)
+    se_editor.edit(edit_schemes_dir_path, option_sample_config_file_path, option_parallel_config_file_path, option_em_config_file_path, option_system_config_file_path, option_output_dir_path)
     print('[SE_MESSAGE] ')
     print('[SE_MESSAGE] DONE!')
