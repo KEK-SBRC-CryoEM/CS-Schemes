@@ -40,7 +40,7 @@
 #   |   |   |--- config_sample_settings.yml                 
 #   |   |
 #   |   |--- [System Name]                                  <<<< System environment dependent configurations (e.g., gotocloud, kek_rbl)
-#   |   |   |--- config_default_settings.yml                
+#   |   |   |--- default_configs.yml                        
 #   |   |   |--- config_level_algo.yml                      
 #   |   |   |--- config_level_device.yml                    
 #   |   |   |--- config_level_submission.yml                
@@ -48,14 +48,14 @@
 #   |   |   |--- config_type_algo_gtc.yml                   
 #   |   |
 #   |   |--- [System Name]_tutorial                         <<<< System environment dependent configurations for RELION tutorial dataset (e.g., gotocloud, kek_rbl)
-#   |   |   |--- config_default_settings.yml                
+#   |   |   |--- default_configs.yml                        
 #   |   |   |--- config_em_setting.yml                      
 #   |   |   |--- config_level_algo.yml                      
 #   |   |   |--- config_type_algo.yml                       
 #   |   |
 #   |   |--- (TBD)template                                  <<<< The template configurations directory.  Use the files in this directory as templates to create user-defined configurations.
 #   |       |--- (TBD)template_config_sample_settings.yml   <<<< The template configuration file for sample-depended parameters settings.
-#   |       |--- (TBD)template_config_default_settings.yml  <<<< The template configuration file for configuration default settings.
+#   |       |--- (TBD)template_default_configs.yml          <<<< The template configuration file for default configurations.
 #   |       |--- (TBD)template_config_em_settings.yml       <<<< The template configuration file for EM-depended parameters settings.
 #   |       |--- (TBD)template_config_type_algo.yml         <<<< The template configuration file for algorithm-type-depended parameters settings.
 #   |       |--- (TBD)template_config_level_algo.yml        <<<< The template configuration file for algorithm-level-depended parameters settings.

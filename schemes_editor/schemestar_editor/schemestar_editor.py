@@ -39,8 +39,8 @@
 #   |     |--- *                                            
 #   |        |--- job.star                                  <<<< The parameters in this file are editted by this script!
 #   |
-#   |--- SSE_schemestar_settings                             <<<< An output subdirectory created by this script. It contains the executable file PATH settings file.
-#   |  |--- sse_scheme_star_[Scheme Name].yml                <<<< Output yaml files containing the sample settings in all Schemes (a single output yaml file per a single Scheme).
+#   |--- SSE_schemestar_settings                            <<<< An output subdirectory created by this script. It contains the executable file PATH settings file.
+#   |  |--- sse_scheme_star_[Scheme Name].yml               <<<< Output yaml files containing the sample settings in all Schemes (a single output yaml file per a single Scheme).
 # 
 # ========================================================================================
 

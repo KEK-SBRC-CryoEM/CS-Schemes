@@ -533,7 +533,7 @@ if __name__ == "__main__":
     print('[JSE_MESSAGE] Parameter values provided by command line')
     print('[JSE_MESSAGE]   Input tempate Schemes directory path := {}'.format(option_template_schemes_dir_path))
     print('[JSE_MESSAGE]   Input configurations file path       := {}'.format(option_configs_file_path))
-    print('[JSE_MESSAGE]   Input jobstar keymap file path  := {}'.format(option_jobstar_keymap_file_path))
+    print('[JSE_MESSAGE]   Input jobstar keymap file path       := {}'.format(option_jobstar_keymap_file_path))
     print('[JSE_MESSAGE]   Output root directory path           := {}'.format(option_output_dir_path))
     print('[JSE_MESSAGE] ')
     print('[JSE_MESSAGE] ')
