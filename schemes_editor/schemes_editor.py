@@ -213,7 +213,9 @@ class SchemesEditor():
         try:
             # os.environ throws KeyError exception if specified environment variable does not exist
             default_config_file_path = os.environ[type(self).__SE_ENV_DEFAULT_CONFIGS]
+            print('[SE_MESSAGE] ')
             print('[SE_MESSAGE] Default configuration file path "{}" is set.'.format(default_config_file_path))
+            print('[SE_MESSAGE] ')
             
             # Generate default file paths from yaml file settings
             default_config_file_path_dict = self.__load_yaml_file(default_config_file_path)
@@ -223,16 +225,19 @@ class SchemesEditor():
                 em_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_EM_KEY]
             if system_config_file_path is None:
                 system_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_SYSTEM_KEY]
-            # NOTE: 2024/06/08 Toshio Moriya:
-            # Actually the followings should be error checks instead of assertion!
-            assert os.path.exists(parallel_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(parallel_config_file_path)
-            assert os.path.exists(em_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(em_config_file_path)
-            assert os.path.exists(system_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(system_config_file_path)
             
         except KeyError as e:
+            print('[SE_WARNING] ')
             print('[SE_WARNING] Catched KeyError exception! {}".'.format(e))
             print('[SE_WARNING] Required system environment variable does not exist! Please consider "export {}=path/to/default_configs.yml".'.format(type(self).__SE_ENV_DEFAULT_CONFIGS))
-            sys.exit(1)
+            print('[SE_WARNING] ')
+            pass
+        
+        # NOTE: 2024/06/08 Toshio Moriya:
+        # Actually the followings should be error checks instead of assertion!
+        assert os.path.exists(parallel_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(parallel_config_file_path)
+        assert os.path.exists(em_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(em_config_file_path)
+        assert os.path.exists(system_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(system_config_file_path)
         
         print('[SE_MESSAGE] ')
         print('[SE_MESSAGE] Applied values to Scheme Editors')
