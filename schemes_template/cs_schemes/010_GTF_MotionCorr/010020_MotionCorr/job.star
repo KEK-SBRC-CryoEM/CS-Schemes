@@ -31,7 +31,7 @@ patch_x                  $$EM_motioncorr_patch_x
 patch_y                  $$EM_motioncorr_patch_y 
 group_frames             1 
 bin_factor               1 
-fn_gain_ref              $$EM_gain_ref_file 
+fn_gain_ref              $$GTF_gain_ref_file 
 gain_rot                 "No rotation (0)" 
 gain_flip                "No flipping (0)" 
 fn_defect                "" 
@@ -48,4 +48,4 @@ qsub_extra1              m7i-vcpu192-gpu0
 qsub_extra2              1 
 qsubscript               /efs/em/aws_slurm_relion50_cpu_axcore.sh 
 min_dedicated            24 
-other_args               "--do_at_most $$motioncorr_do_at_most" 
+other_args               "--do_at_most $$GTF_motioncorr_do_at_most" 
