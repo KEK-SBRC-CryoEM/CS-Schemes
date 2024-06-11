@@ -15,21 +15,21 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-EM_mics_apix                       0.83           0.83 
-EM_kV                            300            300 
-EM_Cs                              2.7            2.7 
-EM_first_frame_for_sum             1              1 
-EM_dose_per_frame                  0.74           0.74 
-GTF_eer_grouping                   1              1 
-EM_motioncorr_bfactor            200            200 
-EM_motioncorr_patch_x              4              4 
-EM_motioncorr_patch_y              3              3 
-GTF_motioncorr_total_max_limit    80             80 
-current_nr_import_movies           0              0 
-pre_nr_motioncorr_mics             0              0 
-motioncorr_do_at_most          99999          99999 
-wait_sec                         180            180 
-maxtime_hr                        96             96 
+EM_mics_apix                          0.83           0.83 
+EM_kV                               300            300 
+EM_Cs                                 2.7            2.7 
+EM_first_frame_for_sum                1              1 
+EM_dose_per_frame                     0.74           0.74 
+GTF_eer_grouping                      1              1 
+EM_motioncorr_bfactor               200            200 
+EM_motioncorr_patch_x                 4              4 
+EM_motioncorr_patch_y                 3              3 
+GTF_motioncorr_do_at_most         99999          99999 
+GTF_motioncorr_total_max_limit       80             80 
+current_nr_import_movies              0              0 
+pre_nr_motioncorr_mics                0              0 
+wait_sec                            180            180 
+maxtime_hr                           96             96 
 
 
 # version 30001 

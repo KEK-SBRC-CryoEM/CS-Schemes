@@ -7,7 +7,7 @@
     NumberOfThreads: '8'
     NumberOfNodes: '1'
     MinimumDedicatedCores: '24'
-    AdditionalArguments: '"--do_at_most \$\$motioncorr_do_at_most"'
+    AdditionalArguments: '"--do_at_most \$\$GTF_motioncorr_do_at_most"'
 - AlgoLevel: motioncorr_mocor2_GPU
   Settings:
     PrereadParticles: 'PS_NOT_APPLICABLE'
