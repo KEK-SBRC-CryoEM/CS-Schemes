@@ -38,6 +38,8 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
+SS_comm_wait_prev_proc_gtf_debug    1        1 
+has_exited                          0        0 
 GTF_lbin_abinit3d_do_limit_parts    0        0 
 has_all_parts                       0        0 
 has_larger_nr_parts                 0        0 
@@ -54,6 +56,7 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
+prev_proc_exited                   Schemes/040_GTF_Class2D_PMDs/RELION_JOB_EXIT_SUCCESS                               Schemes/040_GTF_Class2D_PMDs/RELION_JOB_EXIT_SUCCESS 
 GTF_lbin_abinit3d_in_parts_star    Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star               Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star 
 split_parts                        Schemes/050_GTF_AbInitReconst3D/050010_Select_split_parts/particles_split1.star    Schemes/050_GTF_AbInitReconst3D/050010_Select_split_parts/particles_split1.star 
 selected_parts                     ""                                                                                 "" 
@@ -72,6 +75,7 @@ _rlnSchemeOperatorType #2
 _rlnSchemeOperatorOutput #3 
 _rlnSchemeOperatorInput1 #4 
 _rlnSchemeOperatorInput2 #5 
+HAS_prev_proc_exited           bool=file_exists      has_exited               prev_proc_exited                   undefined 
 HAS_all_parts                  bool=file_exists      has_all_parts            GTF_lbin_abinit3d_in_parts_star    undefined 
 INIT_selected_parts            string=set            selected_parts           GTF_lbin_abinit3d_in_parts_star    undefined 
 COUNT_parts                    float=count_images    cur_nr_parts             GTF_lbin_abinit3d_in_parts_star    particles 
@@ -115,8 +119,9 @@ _rlnSchemeEdgeOutputNodeName #2
 _rlnSchemeEdgeIsFork #3 
 _rlnSchemeEdgeOutputNodeNameIfTrue #4 
 _rlnSchemeEdgeBooleanVariable #5 
-WAIT                            EXIT_maxtime                    0    undefined                    undefined 
-EXIT_maxtime                    HAS_all_parts                   0    undefined                    undefined 
+WAIT                            HAS_all_parts                   1    EXIT_maxtime                 SS_comm_wait_prev_proc_gtf_debug 
+EXIT_maxtime                    HAS_prev_proc_exited            0    undefined                    undefined 
+HAS_prev_proc_exited            WAIT                            1    HAS_all_parts                has_exited 
 HAS_all_parts                   WAIT                            1    INIT_selected_parts          has_all_parts 
 INIT_selected_parts             INIT_cls2d_cycle_parts          1    COUNT_parts                  GTF_lbin_abinit3d_do_limit_parts 
 COUNT_parts                     HAS_parts_increased             0    undefined                    undefined 

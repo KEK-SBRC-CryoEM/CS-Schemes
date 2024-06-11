@@ -17,6 +17,7 @@ Settings:
   SS_comm_mbin_mask3d_name: mask3d_beta_galactosidase_apix1o244_d256.mrc
   SS_comm_mbin_imported_mask3d_path: Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/\$\$SS_comm_mbin_mask3d_name
 #Common Advanced
+  SS_comm_wait_prev_proc_gtf_debug: 0
   SS_comm_wait_prev_proc: 1
   SS_comm_motioncorr_mics_star: Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star
   SS_comm_ctf_mics_star: Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star
