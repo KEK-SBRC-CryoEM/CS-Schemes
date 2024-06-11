@@ -249,7 +249,6 @@ class SchemesEditor():
         print('[SE_MESSAGE]   Output root directory path                          := {}'.format(self.__output_dir_path))
         print('[SE_MESSAGE] ')
         print('[SE_MESSAGE] ')
-        
         # Execute job star editor
         script_dir = os.path.dirname(__file__)
         jobstar_keymap_system_file_path = os.path.join(script_dir, type(self).__JOBSTAR_EDITOR_DIR_NAME, type(self).__JOBSTAR_KEYMAP_SYSTEM_FILE_NAME)
@@ -257,13 +256,18 @@ class SchemesEditor():
         # NOTE: 2024/06/08 Toshio Moriya: Actually the followings should be error checks instead of assertion!
         assert os.path.exists(jobstar_keymap_parallel_file_path), '[SE_ASSERT] The job star key mapping for parallel settings file "{}" must exist at this point of code!'.format(jobstar_keymap_parallel_file_path)
         assert os.path.exists(jobstar_keymap_system_file_path), '[SE_ASSERT] The job star key mapping for system settings file "{}" must exist at this point of code!'.format(jobstar_keymap_system_file_path)
+        
         js_editor = jobstar_editor.JobStarEditor()
+        print('[SE_MESSAGE] Editing Parallel Settings of all job.star in this RELION Schemes...')
         js_editor.edit(self.__edit_schemes_dir_path, parallel_config_file_path, jobstar_keymap_parallel_file_path, os.path.join(self.__output_dir_path, type(self).__PARALLEL_SETTINGS_DIR_NAME))
+        print('[SE_MESSAGE] Editing Sytem Settings of all job.star in this RELION Schemes...')
         js_editor.edit(self.__edit_schemes_dir_path, system_config_file_path, jobstar_keymap_system_file_path, os.path.join(self.__output_dir_path,type(self).__SYSTEM_SETTINGS_DIR_NAME))
         
         # Execute scheme star editor
         ss_editor = schemestar_editor.SchemeStarEditor()
+        print('[SE_MESSAGE] Editing EM Settings of all scheme.star in this RELION Schemes...')
         ss_editor.edit(self.__edit_schemes_dir_path, em_config_file_path, os.path.join(self.__output_dir_path, type(self).__EM_SETTINGS_DIR_NAME))
+        print('[SE_MESSAGE] Editing Sample Settings of all scheme.star in this RELION Schemes...')
         ss_editor.edit(self.__edit_schemes_dir_path, sample_config_file_path, os.path.join(self.__output_dir_path, type(self).__SAMPLE_SETTINGS_DIR_NAME))
 
 
