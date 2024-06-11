@@ -145,8 +145,8 @@
     Param3Value: '""'
     NumberOfMpi: 'PS_NOT_APPLICABLE'
     NumberOfThreads: '1'
-    NumberOfNodes: '1'
-    MinimumDedicatedCores: '1'
+    NumberOfNodes: '0'
+    MinimumDedicatedCores: '0'
     AdditionalArguments: '""'
 - AlgoLevel: refine3d_GPU
   Settings:
@@ -175,8 +175,8 @@
     Param3Value: 'PS_NOT_APPLICABLE'
     NumberOfMpi: 'PS_NOT_APPLICABLE'
     NumberOfThreads: 'PS_NOT_APPLICABLE'
-    NumberOfNodes: '1'
-    MinimumDedicatedCores: '1'
+    NumberOfNodes: '0'
+    MinimumDedicatedCores: '0'
     AdditionalArguments: '""'
 - AlgoLevel: ctfrefine
   Settings:
@@ -208,4 +208,3 @@
     NumberOfNodes: '1'
     MinimumDedicatedCores: '24'
     AdditionalArguments: '""'
-

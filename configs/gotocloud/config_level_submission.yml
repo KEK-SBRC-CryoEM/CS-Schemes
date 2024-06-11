@@ -16,7 +16,5 @@
 - SubmissionLevel: NOQUEUE
   Settings:
     SubmitToQueue: 'No'
-    SubmitCommand: '""'
-    SubmissionScript: '""'
-
-
+    SubmitCommand: 'PS_DISABLED'
+    SubmissionScript: 'PS_DISABLED'

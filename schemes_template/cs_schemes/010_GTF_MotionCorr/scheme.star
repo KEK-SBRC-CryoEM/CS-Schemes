@@ -27,7 +27,7 @@ EM_motioncorr_patch_y              3              3
 GTF_motioncorr_total_max_limit    80             80 
 current_nr_import_movies           0              0 
 pre_nr_motioncorr_mics             0              0 
-motioncorr_do_at_most           9999           9999 
+motioncorr_do_at_most          99999          99999 
 wait_sec                         180            180 
 maxtime_hr                        96             96 
 

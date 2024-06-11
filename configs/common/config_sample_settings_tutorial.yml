@@ -26,12 +26,12 @@ Settings:
   GTF_motioncorr_total_max_limit: 80
 #020_GTF_CtfFind
   GTF_ctffind_search_def_min : 5000
-  GTF_ctffind_search_def_max : 50000
+  GTF_ctffind_search_def_max : 20000
   GTF_ctffind_res_max_limit: 6.0
 #030_GTF_Create_Stack
   GTF_pick_do_limit_mics: 0
   GTF_pick_min_nr_mics: 24
-  GTF_pick_cryolo_thresh: 0.1
+  GTF_pick_cryolo_thresh: 0.3
   GTF_lbin_extract_mics_box: 256
   GTF_lbin_extract_mics_0o95box: 200
   GTF_lbin_extract_parts_box: 64
@@ -45,9 +45,9 @@ Settings:
   GTF_pick_log_pdm_max: 160
   GTF_pick_log_adjust_thresh: 0.25
   GTF_pick_log_upper_thresh: 5
-#040_GTF_Class2D_PMD
+#040_GTF_Class2D_PMDs
   GTF_lbin_class2d_pmds_in_parts_star: Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star
-  GTF_lbin_class2d_pmds_do_limit_parts: 1
+  GTF_lbin_class2d_pmds_do_limit_parts: 0
   GTF_lbin_class2d_pmds_min_nr_parts: 4000
   GTF_lbin_class2d_pmds_base_pmd: 180
   GTF_lbin_class2d_pmds_pad_min: 0
@@ -95,17 +95,17 @@ Settings:
   CSS_mbin_reextract_parts_y_max: 3658
 #070_CSS_Init_Refine3D Advanced
   CSS_mbin_reextract_refined_star: Schemes/060_CSS_Clean_Stack_3D/060080_Refine3D_global/run_data.star
-#080_CSS_Refine_Cycle
+#080_CSS_PPRefine_Cycle
   CSS_mbin_pprefine_refined_star: Schemes/070_CSS_Init_Refine3D/070090_Refine3D_local/run_data.star
   CSS_mbin_pprefine_postproc_star: Schemes/070_CSS_Init_Refine3D/070100_PostProcess_local/postprocess.star
   CSS_mbin_pprefine_ref3d: Schemes/070_CSS_Init_Refine3D/070090_Refine3D_local/run_class001.mrc
-#080_CSS_Refine_Cycle Advanced
+#080_CSS_PPRefine_Cycle Advanced
   CSS_mbin_pprefine_cycles_max: 2
-#090_CSS_Res_Fish  
+#090_CSS_Res_Fish_3D
   CSS_mbin_resfish3d_classes: 2
   CSS_mbin_resfish3d_tval: 16
   CSS_mbin_resfish3d_locres_bfactor: -30
-#090_CSS_Res_Fish Advanced
+#090_CSS_Res_Fish_3D Advanced
   CSS_mbin_resfish3d_refined_star: Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_data.star
   CSS_mbin_resfish3d_ref3d: Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_class001.mrc
   CSS_mbin_resfish3d_do_fast_subsets: 1

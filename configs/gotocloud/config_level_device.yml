@@ -51,7 +51,7 @@
 
 - DeviceLevel: c7i-vcpu192-gpu0
   Settings:
-    ScratchDirectory: 'PS_NOT_APPLICABLE'
+    ScratchDirectory: '""'
     UseGpu: 'PS_NOT_APPLICABLE'
     Partition: 'c7i-vcpu192-gpu0'
 - DeviceLevel: m7i-vcpu192-gpu0
@@ -66,7 +66,7 @@
     Partition: 'c6i-vcpu128-gpu0'
 - DeviceLevel: c7i-vcpu192-gpu0-spot
   Settings:
-    ScratchDirectory: 'PS_NOT_APPLICABLE'
+    ScratchDirectory: '""'
     UseGpu: 'PS_NOT_APPLICABLE'
     Partition: 'c7i-vcpu192-gpu0-spot'
 - DeviceLevel: m7i-vcpu192-gpu0-spot
@@ -83,9 +83,9 @@
   Settings:
     ScratchDirectory: '/scratch/gotofly'
     UseGpu: 'Yes'
-    Partition: 'invalid_partition'
+    Partition: 'PS_DISABLED'
 - DeviceLevel: NOQUEUE_CPU
   Settings:
     ScratchDirectory: 'PS_NOT_APPLICABLE'
     UseGpu: 'PS_NOT_APPLICABLE'
-    Partition: 'invalid_partition'
+    Partition: 'PS_DISABLED'
