@@ -8,26 +8,11 @@
     ScratchDirectory: '/scratch'
     UseGpu: 'Yes'
     Partition: 'g5-vcpu48-gpu4'
-- DeviceLevel: g5-vcpu16-gpu1 
+- DeviceLevel: g5-vcpu16-gpu1
   Settings:
     ScratchDirectory: '/scratch'
     UseGpu: 'Yes'
     Partition: 'g5-vcpu16-gpu1'
-- DeviceLevel: g5-vcpu192-gpu8-spot
-  Settings:
-    ScratchDirectory: '/scratch'
-    UseGpu: 'Yes'
-    Partition: 'g5-vcpu192-gpu8-spot'
-- DeviceLevel: g5-vcpu48-gpu4-spot
-  Settings:
-    ScratchDirectory: '/scratch'
-    UseGpu: 'Yes'
-    Partition: 'g5-vcpu48-gpu4-spot'
-- DeviceLevel: g5-vcpu16-gpu1-spot 
-  Settings:
-    ScratchDirectory: '/scratch'
-    UseGpu: 'Yes'
-    Partition: 'g5-vcpu16-gpu1-spot'
 - DeviceLevel: g4dn-vcpu96-gpu8
   Settings:
     ScratchDirectory: '/scratch'
@@ -38,6 +23,51 @@
     ScratchDirectory: '/scratch'
     UseGpu: 'Yes'
     Partition: 'g4dn-vcpu48-gpu4'
+- DeviceLevel: c7i-vcpu192-gpu0
+  Settings:
+    ScratchDirectory: '""'
+    UseGpu: 'No'
+    Partition: 'c7i-vcpu192-gpu0'
+- DeviceLevel: m7i-vcpu192-gpu0
+  Settings:
+    ScratchDirectory: '""'
+    UseGpu: 'No'
+    Partition: 'm7i-vcpu192-gpu0'
+- DeviceLevel: r7i-vcpu192-gpu0
+  Settings:
+    ScratchDirectory: '""'
+    UseGpu: 'No'
+    Partition: 'r7i-vcpu192-gpu0'
+- DeviceLevel: c6i-vcpu128-gpu0
+  Settings:
+    ScratchDirectory: '""'
+    UseGpu: 'No'
+    Partition: 'c6i-vcpu128-gpu0'
+- DeviceLevel: m6i-vcpu128-gpu0
+  Settings:
+    ScratchDirectory: '""'
+    UseGpu: 'No'
+    Partition: 'm6i-vcpu128-gpu0'
+- DeviceLevel: r6i-vcpu128-gpu0
+  Settings:
+    ScratchDirectory: '""'
+    UseGpu: 'No'
+    Partition: 'r6i-vcpu128-gpu0'
+- DeviceLevel: g5-vcpu192-gpu8-spot
+  Settings:
+    ScratchDirectory: '/scratch'
+    UseGpu: 'Yes'
+    Partition: 'g5-vcpu192-gpu8-spot'
+- DeviceLevel: g5-vcpu48-gpu4-spot
+  Settings:
+    ScratchDirectory: '/scratch'
+    UseGpu: 'Yes'
+    Partition: 'g5-vcpu48-gpu4-spot'
+- DeviceLevel: g5-vcpu16-gpu1-spot
+  Settings:
+    ScratchDirectory: '/scratch'
+    UseGpu: 'Yes'
+    Partition: 'g5-vcpu16-gpu1-spot'
 - DeviceLevel: g4dn-vcpu96-gpu8-spot
   Settings:
     ScratchDirectory: '/scratch'
@@ -48,40 +78,39 @@
     ScratchDirectory: '/scratch'
     UseGpu: 'Yes'
     Partition: 'g4dn-vcpu48-gpu4-spot'
-
-- DeviceLevel: c7i-vcpu192-gpu0
-  Settings:
-    ScratchDirectory: '""'
-    UseGpu: 'PS_NOT_APPLICABLE'
-    Partition: 'c7i-vcpu192-gpu0'
-- DeviceLevel: m7i-vcpu192-gpu0
-  Settings:
-    ScratchDirectory: '""'
-    UseGpu: 'No'
-    Partition: 'm7i-vcpu192-gpu0'
-- DeviceLevel: c6i-vcpu128-gpu0
-  Settings:
-    ScratchDirectory: '""'
-    UseGpu: 'No'
-    Partition: 'c6i-vcpu128-gpu0'
 - DeviceLevel: c7i-vcpu192-gpu0-spot
   Settings:
     ScratchDirectory: '""'
-    UseGpu: 'PS_NOT_APPLICABLE'
+    UseGpu: 'No'
     Partition: 'c7i-vcpu192-gpu0-spot'
 - DeviceLevel: m7i-vcpu192-gpu0-spot
   Settings:
     ScratchDirectory: '""'
     UseGpu: 'No'
     Partition: 'm7i-vcpu192-gpu0-spot'
+- DeviceLevel: r7i-vcpu192-gpu0-spot
+  Settings:
+    ScratchDirectory: '""'
+    UseGpu: 'No'
+    Partition: 'r7i-vcpu192-gpu0-spot'
 - DeviceLevel: c6i-vcpu128-gpu0-spot
   Settings:
     ScratchDirectory: '""'
     UseGpu: 'No'
     Partition: 'c6i-vcpu128-gpu0-spot'
+- DeviceLevel: m6i-vcpu128-gpu0-spot
+  Settings:
+    ScratchDirectory: '""'
+    UseGpu: 'No'
+    Partition: 'm6i-vcpu128-gpu0-spot'
+- DeviceLevel: r6i-vcpu128-gpu0-spot
+  Settings:
+    ScratchDirectory: '""'
+    UseGpu: 'No'
+    Partition: 'r6i-vcpu128-gpu0-spot'
 - DeviceLevel: NOQUEUE_GPU
   Settings:
-    ScratchDirectory: '/scratch/gotofly'
+    ScratchDirectory: '/scratch'
     UseGpu: 'Yes'
     Partition: 'PS_DISABLED'
 - DeviceLevel: NOQUEUE_CPU
