@@ -15,20 +15,20 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-SS_comm_dup_thresh                   21               21 
-EM_mics_apix                          0.885            0.885 
-CSS_mbin_reextract_mics_box         360              360 
-CSS_mbin_reextract_mics_0o95box     342              342 
-CSS_mbin_reextract_parts_box        288              288 
-CSS_mbin_reextract_parts_x_min      180              180 
-CSS_mbin_reextract_parts_x_max     5580             5580 
-CSS_mbin_reextract_parts_y_min      180              180 
-CSS_mbin_reextract_parts_y_max     3912             3912 
-SS_comm_optimal_pmd                 166              166 
-SS_comm_mbin_0o95box_pmd            260              260 
-SS_comm_mbin_angpix                   1.0375           1.0375 
-wait_sec                            180              180 
-maxtime_hr                           96               96 
+SS_comm_dup_thresh                 XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+EM_mics_apix                       XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
+CSS_mbin_reextract_mics_box        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_reextract_mics_0o95box    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_reextract_parts_box       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_reextract_parts_x_min     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_reextract_parts_x_max     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_reextract_parts_y_min     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_reextract_parts_y_max     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_optimal_pmd                XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_0o95box_pmd           XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_angpix                XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+wait_sec                           180                           180 
+maxtime_hr                         96                            96 
 
 
 # version 30001 
@@ -39,8 +39,8 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-SS_comm_wait_prev_proc    1        1 
-has_exited                0        0 
+SS_comm_wait_prev_proc    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+has_exited                0                             0 
 
 
 # version 30001 
@@ -52,15 +52,15 @@ _rlnSchemeStringVariableName #1
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
 prev_proc_exited                   Schemes/060_CSS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS                           Schemes/060_CSS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS 
-SS_comm_ctf_mics_star              Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star                      Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star 
-CSS_mbin_reextract_refined_star    Schemes/060_CSS_Clean_Stack_3D/060080_Refine3D_global/run_data.star              Schemes/060_CSS_Clean_Stack_3D/060080_Refine3D_global/run_data.star 
-SS_comm_mbin_ref3d_path            Inputs/ref3d.mrc                                                                 Inputs/ref3d.mrc 
-SS_comm_mbin_ref3d_name            ref3d.mrc                                                                        ref3d.mrc 
-SS_comm_mbin_mask3d_path           Inputs/mask3d.mrc                                                                Inputs/mask3d.mrc 
-SS_comm_mbin_mask3d_name           mask3d.mrc                                                                       mask3d.mrc 
+SS_comm_ctf_mics_star              XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_reextract_refined_star    XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_ref3d_path            XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_ref3d_name            XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_mask3d_path           XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_mask3d_name           XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
 imported_ref3d                     Schemes/070_CSS_Init_Refine3D/070050_Import_ref3d/$$SS_comm_mbin_ref3d_name      Schemes/070_CSS_Init_Refine3D/070050_Import_ref3d/$$SS_comm_mbin_ref3d_name 
 imported_mask3d                    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name 
-SS_comm_sym_name                   D4                                                                               D4 
+SS_comm_sym_name                   XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
 
 
 # version 30001 

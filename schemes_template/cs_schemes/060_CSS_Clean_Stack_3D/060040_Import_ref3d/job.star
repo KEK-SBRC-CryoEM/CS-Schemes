@@ -30,11 +30,11 @@ do_other                  Yes
 fn_in_other               $$SS_comm_lbin_ref3d_path 
 node_type                 "3D reference (.mrc)" 
 optics_group_particles    "" 
-do_queue                  No 
+do_queue                  XXX_JSE_REPLACE_PARALLEL_XXX 
 queuename                 060040_Import_ref3d 
-qsub                      CSS_DISABLED 
-qsub_extra1               CSS_DISABLED 
-qsub_extra2               CSS_DISABLED 
-qsubscript                CSS_DISABLED 
-min_dedicated             0 
-other_args                "" 
+qsub                      XXX_JSE_REPLACE_PARALLEL_XXX 
+qsub_extra1               XXX_JSE_REPLACE_PARALLEL_XXX 
+qsub_extra2               XXX_JSE_REPLACE_PARALLEL_XXX 
+qsubscript                XXX_JSE_REPLACE_PARALLEL_XXX 
+min_dedicated             XXX_JSE_REPLACE_PARALLEL_XXX 
+other_args                XXX_JSE_REPLACE_PARALLEL_XXX 

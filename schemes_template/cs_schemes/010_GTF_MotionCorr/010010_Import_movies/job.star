@@ -30,11 +30,11 @@ do_other                 No
 fn_in_other              "" 
 node_type                "Particle coordinates (*.box, *_pick.star)" 
 optics_group_particles   "" 
-do_queue                 No 
+do_queue                 XXX_JSE_REPLACE_PARALLEL_XXX 
 queuename                010010_Import_movies 
-qsub                     GTC_DISABLED 
-qsub_extra1              GTC_DISABLED 
-qsub_extra2              GTC_DISABLED 
-qsubscript               GTC_DISABLED 
-min_dedicated            0 
-other_args               "" 
+qsub                     XXX_JSE_REPLACE_PARALLEL_XXX 
+qsub_extra1              XXX_JSE_REPLACE_PARALLEL_XXX 
+qsub_extra2              XXX_JSE_REPLACE_PARALLEL_XXX 
+qsubscript               XXX_JSE_REPLACE_PARALLEL_XXX 
+min_dedicated            XXX_JSE_REPLACE_PARALLEL_XXX 
+other_args               XXX_JSE_REPLACE_PARALLEL_XXX 

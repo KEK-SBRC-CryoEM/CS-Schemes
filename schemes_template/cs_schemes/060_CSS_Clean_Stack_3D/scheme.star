@@ -15,34 +15,34 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-cur_nr_parts                                0                0 
-pre_nr_parts                                0                0 
-CSS_lbin_center3d_min_nr_parts           4000             4000 
-CSS_lbin_center3d_clean2d_cycles_max        0                0 
-cur_cls2d_cycles                            1                1 
-cls2d_cycle_incr                            1                1 
-SS_comm_class2d_classes                   100              100 
-SS_comm_class2d_pmd                       200              200 
-CSS_lbin_center3d_clean2d_rank_thresh       0.06             0.06 
-CSS_lbin_center3d_class3d_conts_max         1                1 
-CSS_lbin_center3d_class3d_iter_step        25               25 
-CSS_lbin_center3d_class3d_offset_factor     1                1 
-cls3d_cont_incr                             1                1 
-cur_cls3d_conts                             1                1 
-cls3d_cont_iter                             0                0 
-cls3d_offset_range_default                  5                5 
-cls3d_offset_step_default                   1                1 
-cls3d_offset_factor_step                    2                2 
-cls3d_cont_offset_factor                    0                0 
-cls3d_cont_offset_range                     0                0 
-cls3d_cont_offset_step                      0                0 
-CSS_lbin_center3d_class3d_lpf              15               15 
-CSS_lbin_center3d_class3d_classes           4                4 
-SS_comm_optimal_pmd                       200              200 
-SS_comm_lbin_angpix                         3.54             3.54 
-CSS_lbin_center3d_postproc_adhoc_lpf       10.62            10.62 
-wait_sec                                  180              180 
-maxtime_hr                                 96               96 
+cur_nr_parts                               0                             0 
+pre_nr_parts                               0                             0 
+CSS_lbin_center3d_min_nr_parts             XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_clean2d_cycles_max       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+cur_cls2d_cycles                           1                             1 
+cls2d_cycle_incr                           1                             1 
+SS_comm_class2d_classes                    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_class2d_pmd                        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_clean2d_rank_thresh      XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_class3d_conts_max        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_class3d_iter_step        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_class3d_offset_factor    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+cls3d_cont_incr                            1                             1 
+cur_cls3d_conts                            1                             1 
+cls3d_cont_iter                            0                             0 
+cls3d_offset_range_default                 5                             5 
+cls3d_offset_step_default                  1                             1 
+cls3d_offset_factor_step                   2                             2 
+cls3d_cont_offset_factor                   0                             0 
+cls3d_cont_offset_range                    0                             0 
+cls3d_cont_offset_step                     0                             0 
+CSS_lbin_center3d_class3d_lpf              XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_class3d_classes          XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_optimal_pmd                        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_lbin_angpix                        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_postproc_adhoc_lpf       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+wait_sec                                   180                           180 
+maxtime_hr                                 96                            96 
 
 
 # version 30001 
@@ -53,17 +53,17 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-SS_comm_wait_prev_proc                       1        1 
-has_exited                                   0        0 
-has_all_parts                                0        0 
-has_larger_nr_parts                          0        0 
-has_required_nr_parts                        0        0 
-CSS_lbin_center3d_do_limit_parts             0        0 
-do_cls2d_cycle                               0        0 
-do_cls3d_cont                                0        0 
-CSS_lbin_center3d_class3d_use_mask3d         1        1 
-CSS_lbin_center3d_class3d_do_fast_subsets    1        1 
-CSS_lbin_center3d_refine3d_use_mask3d        1        1 
+SS_comm_wait_prev_proc                       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+has_exited                                   0                             0 
+has_all_parts                                0                             0 
+has_larger_nr_parts                          0                             0 
+has_required_nr_parts                        0                             0 
+CSS_lbin_center3d_do_limit_parts             0                             0 
+do_cls2d_cycle                               0                             0 
+do_cls3d_cont                                0                             0 
+CSS_lbin_center3d_class3d_use_mask3d         XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_class3d_do_fast_subsets    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_refine3d_use_mask3d        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 
 
 # version 30001 
@@ -78,23 +78,23 @@ prev_proc_exited                        Schemes/050_GTF_AbInitReconst3D/RELION_J
 CSS_lbin_center3d_parts_star            Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star              Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star 
 split_parts                             Schemes/060_CSS_Clean_Stack_3D/060010_Select_split_parts/particles_split1.star    Schemes/060_CSS_Clean_Stack_3D/060010_Select_split_parts/particles_split1.star 
 selected_parts                          ""                                                                                "" 
-SS_comm_lbin_ref3d_path                 Inputs/$$SS_comm_lbin_ref3d_name                                                  Inputs/$$SS_comm_lbin_ref3d_name 
-SS_comm_lbin_ref3d_name                 lbin_ref3d_apix3o540_d064.mrc                                                     lbin_ref3d_apix3o540_d064.mrc 
-SS_comm_lbin_mask3d_path                Inputs/$$SS_comm_lbin_mask3d_name                                                 Inputs/$$SS_comm_lbin_mask3d_name 
-SS_comm_lbin_mask3d_name                sbin_mask3d_apix3o540_d064.mrc                                                    sbin_mask3d_apix3o540_d064.mrc 
+SS_comm_lbin_ref3d_path                 XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_lbin_ref3d_name                 XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_lbin_mask3d_path                XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_lbin_mask3d_name                XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
 imported_ref3d                          Schemes/060_CSS_Clean_Stack_3D/060040_Import_ref3d/$$SS_comm_lbin_ref3d_name      Schemes/060_CSS_Clean_Stack_3D/060040_Import_ref3d/$$SS_comm_lbin_ref3d_name 
 imported_mask3d                         Schemes/060_CSS_Clean_Stack_3D/060050_Import_mask3d/$$SS_comm_lbin_mask3d_name    Schemes/060_CSS_Clean_Stack_3D/060050_Import_mask3d/$$SS_comm_lbin_mask3d_name 
 mask3d_ref3d                            ""                                                                                "" 
 mask3d_cls3d                            ""                                                                                "" 
-CSS_lbin_center3d_class3d_cont_stars    run_it000_optimiser.star                                                          run_it000_optimiser.star 
+CSS_lbin_center3d_class3d_cont_stars    XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
 cls2d_cycle_parts_temp                  Schemes/060_CSS_Clean_Stack_3D/060030_Select_clean2d_parts/particles.star         Schemes/060_CSS_Clean_Stack_3D/060030_Select_clean2d_parts/particles.star 
 cls2d_cycle_parts                       ""                                                                                "" 
 cls3d_cont_data_name                    ""                                                                                "" 
 cls3d_cont_data_path                    ""                                                                                "" 
 cls3d_cont_data_path_temp               Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/$$cls3d_cont_data_name              Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/$$cls3d_cont_data_name 
-CSS_lbin_center3d_class3d_parts_star    Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/run_it025_data.star                 Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/run_it025_data.star 
-CSS_lbin_center3d_class3d_sym           C1                                                                                C1 
-CSS_lbin_center3d_refine3d_sym_name     D2                                                                                D2 
+CSS_lbin_center3d_class3d_parts_star    XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_class3d_sym           XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_refine3d_sym_name     XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
 particles                               particles                                                                         particles 
 
 

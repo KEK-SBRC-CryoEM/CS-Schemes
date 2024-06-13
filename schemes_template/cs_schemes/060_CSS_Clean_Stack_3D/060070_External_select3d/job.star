@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_exe           $$select_class3d_exe 
+fn_exe           XXX_JSE_REPLACE_SYSTEM_XXX 
 in_mov           "" 
 in_mic           "" 
 in_part          $$CSS_lbin_center3d_class3d_parts_star
@@ -42,12 +42,12 @@ param9_label     ""
 param9_value     "" 
 param10_label    "" 
 param10_value    "" 
-nr_threads       1 
-do_queue         No 
+nr_threads       XXX_JSE_REPLACE_PARALLEL_XXX 
+do_queue         XXX_JSE_REPLACE_PARALLEL_XXX 
 queuename        060070_External_select3d 
-qsub             CSS_DISABLED 
-qsub_extra1      CSS_DISABLED 
-qsub_extra2      CSS_DISABLED 
-qsubscript       CSS_DISABLED 
-min_dedicated    0 
-other_args       "" 
+qsub             XXX_JSE_REPLACE_PARALLEL_XXX 
+qsub_extra1      XXX_JSE_REPLACE_PARALLEL_XXX 
+qsub_extra2      XXX_JSE_REPLACE_PARALLEL_XXX 
+qsubscript       XXX_JSE_REPLACE_PARALLEL_XXX 
+min_dedicated    XXX_JSE_REPLACE_PARALLEL_XXX 
+other_args       XXX_JSE_REPLACE_PARALLEL_XXX 

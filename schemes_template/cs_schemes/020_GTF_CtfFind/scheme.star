@@ -15,15 +15,15 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-EM_ctffind_fit_res_min           30             30 
-EM_ctffind_fit_res_max            4              4 
-GTF_ctffind_search_def_min     3000           3000 
-GTF_ctffind_search_def_max    20000          20000 
-GTF_ctffind_res_max_limit         6              6 
-current_nr_motioncorr_mics        0              0 
-pre_nr_ctffind_mics               0              0 
-wait_sec                        180            180 
-maxtime_hr                       96             96 
+EM_ctffind_fit_res_min        XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
+EM_ctffind_fit_res_max        XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
+GTF_ctffind_search_def_min    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_ctffind_search_def_max    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_ctffind_res_max_limit     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+current_nr_motioncorr_mics    0                             0 
+pre_nr_ctffind_mics           0                             0 
+wait_sec                      180                           180 
+maxtime_hr                    96                            96 
 
 
 # version 30001 
@@ -34,8 +34,8 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-has_unprocessed_ctffind_mics    0            0 
-has_motioncorr                  0            0
+has_unprocessed_ctffind_mics    0                             0 
+has_motioncorr                  0                             0
 
 # version 30001 
 
@@ -45,10 +45,8 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-SS_comm_motioncorr_mics_star    Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star    Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star 
+SS_comm_motioncorr_mics_star    XXX_SSE_REPLACE_SAMPLE_XXX                                        XXX_SSE_REPLACE_SAMPLE_XXX 
 ctffind_mics_star               Schemes/020_GTF_CtfFind/020010_CtfFind/micrographs_ctf.star       Schemes/020_GTF_CtfFind/020010_CtfFind/micrographs_ctf.star 
-ctffind_exe                     /programs/x86_64-linux/ctffind4/4.1.14-c7/bin/ctffind4            /programs/x86_64-linux/ctffind4/4.1.14-c7/bin/ctffind4 
-gctf_exe                        ""                                                                "" 
 micrographs                     micrographs                                                       micrographs 
 
 

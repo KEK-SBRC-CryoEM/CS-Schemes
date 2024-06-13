@@ -112,9 +112,9 @@
   Settings:
     ScratchDirectory: '/scratch'
     UseGpu: 'Yes'
-    Partition: 'PS_DISABLED'
+    Partition: 'JSE_DISABLED_PARALLEL'
 - DeviceLevel: NOQUEUE_CPU
   Settings:
-    ScratchDirectory: 'PS_NOT_APPLICABLE'
-    UseGpu: 'PS_NOT_APPLICABLE'
-    Partition: 'PS_DISABLED'
+    ScratchDirectory: 'JSE_NOT_APPLICABLE_PARALLEL'
+    UseGpu: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Partition: 'JSE_DISABLED_PARALLEL'

@@ -15,25 +15,25 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-cur_nr_parts                               0               0 
-pre_nr_parts                               0               0 
-GTF_lbin_class2d_pmds_min_nr_parts    100000          100000 
-GTF_lbin_class2d_pmds_base_pmd           100             100 
-GTF_lbin_class2d_pmds_pad_min              0               0 
-GTF_lbin_class2d_pmds_pad_max            120             120 
-GTF_lbin_class2d_pmds_pad_step            20              20 
-base_pmd                                   0               0 
-pre_pmd_pad                                0               0 
-cur_pmd_pad                                0               0 
-cur_pmd                                    0               0 
-active_cls2d_type                          0               0 
-cls2d_type_incr                            1               1 
-cls2d_type_vdam                            0               0 
-cls2d_type_em                              1               1 
-SS_comm_class2d_classes                  200             200 
-GTF_lbin_class2d_pmds_rank_thresh          0.05            0.05 
-wait_sec                                 180             180 
-maxtime_hr                                96              96 
+cur_nr_parts                          0                             0 
+pre_nr_parts                          0                             0 
+GTF_lbin_class2d_pmds_min_nr_parts    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_class2d_pmds_base_pmd        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_class2d_pmds_pad_min         XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_class2d_pmds_pad_max         XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_class2d_pmds_pad_step        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+base_pmd                              0                             0 
+pre_pmd_pad                           0                             0 
+cur_pmd_pad                           0                             0 
+cur_pmd                               0                             0 
+active_cls2d_type                     0                             0 
+cls2d_type_incr                       1                             1 
+cls2d_type_vdam                       0                             0 
+cls2d_type_em                         1                             1 
+SS_comm_class2d_classes               200                           200 
+GTF_lbin_class2d_pmds_rank_thresh     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+wait_sec                              180                           180 
+maxtime_hr                            96                            96 
 
 
 # version 30001 
@@ -44,12 +44,12 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-GTF_lbin_class2d_pmds_do_limit_parts    0        0 
-has_all_parts                           0        0 
-has_larger_nr_parts                     0        0 
-has_required_nr_parts                   0        0 
-is_same_cls2d_type                      1        1 
-has_subceeded_pmd_pad_min               0        0 
+GTF_lbin_class2d_pmds_do_limit_parts    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+has_all_parts                           0                             0 
+has_larger_nr_parts                     0                             0 
+has_required_nr_parts                   0                             0 
+is_same_cls2d_type                      1                             1 
+has_subceeded_pmd_pad_min               0                             0 
 
 
 # version 30001 
@@ -60,7 +60,7 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-GTF_lbin_class2d_pmds_in_parts_star    Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star               Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star 
+GTF_lbin_class2d_pmds_in_parts_star    XXX_SSE_REPLACE_SAMPLE_XXX               XXX_SSE_REPLACE_SAMPLE_XXX 
 split_parts                            Schemes/040_GTF_Class2D_PMDs/040010_Select_split_parts/particles_split1.star       Schemes/040_GTF_Class2D_PMDs/040010_Select_split_parts/particles_split1.star 
 selected_parts                         ""                                                                                 "" 
 cls2d_vdam_optimiser                   Schemes/040_GTF_Class2D_PMDs/040020_Class2D_VDAM/run_it200_optimiser.star          Schemes/040_GTF_Class2D_PMDs/040020_Class2D_VDAM/run_it200_optimiser.star 

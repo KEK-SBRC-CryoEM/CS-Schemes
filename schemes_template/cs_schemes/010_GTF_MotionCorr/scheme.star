@@ -15,21 +15,21 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-EM_mics_apix                          0.83           0.83 
-EM_kV                               300            300 
-EM_Cs                                 2.7            2.7 
-EM_first_frame_for_sum                1              1 
-EM_dose_per_frame                     0.74           0.74 
-GTF_eer_grouping                      1              1 
-EM_motioncorr_bfactor               200            200 
-EM_motioncorr_patch_x                 4              4 
-EM_motioncorr_patch_y                 3              3 
-GTF_motioncorr_do_at_most         99999          99999 
-GTF_motioncorr_total_max_limit       80             80 
-current_nr_import_movies              0              0 
-pre_nr_motioncorr_mics                0              0 
-wait_sec                            180            180 
-maxtime_hr                           96             96 
+EM_mics_apix                      XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
+EM_kV                             XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
+EM_Cs                             XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
+EM_first_frame_for_sum            XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
+EM_dose_per_frame                 XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
+GTF_eer_grouping                  XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+EM_motioncorr_bfactor             XX_SSE_REPLACE_EM_XXX         XXX_SSE_REPLACE_EM_XXX 
+EM_motioncorr_patch_x             XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
+EM_motioncorr_patch_y             XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
+GTF_motioncorr_do_at_most         XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_motioncorr_total_max_limit    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+current_nr_import_movies          0                             0 
+pre_nr_motioncorr_mics            0                             0 
+wait_sec                          180                           180 
+maxtime_hr                        96                            96 
 
 
 # version 30001 
@@ -40,7 +40,7 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-has_unprocessed_motioncorr_mics    0            0 
+has_unprocessed_motioncorr_mics    0                             0 
 
 
 # version 30001 
@@ -51,9 +51,9 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-EM_movie_files                   Micrographs/*.tif                                                          Micrographs/*.tif 
-EM_mtf_file                      ""                                                                         "" 
-GTF_gain_ref_file                ""                                                                         "" 
+EM_movie_files                   XXX_SSE_REPLACE_EM_XXX                                                     XXX_SSE_REPLACE_EM_XXX 
+EM_mtf_file                      XXX_SSE_REPLACE_EM_XXX                                                     XXX_SSE_REPLACE_EM_XXX 
+GTF_gain_ref_file                XXX_SSE_REPLACE_SAMPLE_XXX                                                 XXX_SSE_REPLACE_SAMPLE_XXX 
 movies_star                      Schemes/010_GTF_MotionCorr/010010_Import_movies/movies.star                Schemes/010_GTF_MotionCorr/010010_Import_movies/movies.star 
 motioncorr_mics_star             Schemes/010_GTF_MotionCorr/010020_MotionCorr/corrected_micrographs.star    Schemes/010_GTF_MotionCorr/010020_MotionCorr/corrected_micrographs.star 
 selected_motioncorr_mics_star    Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star             Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star 

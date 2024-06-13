@@ -16,5 +16,5 @@
 - SubmissionLevel: NOQUEUE
   Settings:
     SubmitToQueue: 'No'
-    SubmitCommand: 'PS_DISABLED'
-    SubmissionScript: 'PS_DISABLED'
+    SubmitCommand: 'JSE_DISABLED_PARALLEL'
+    SubmissionScript: 'JSE_DISABLED_PARALLEL'

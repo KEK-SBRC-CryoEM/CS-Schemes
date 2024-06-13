@@ -36,16 +36,16 @@ gain_rot                 "No rotation (0)"
 gain_flip                "No flipping (0)" 
 fn_defect                "" 
 do_own_motioncor         Yes 
-fn_motioncor2_exe        "" 
-gpu_ids                  "" 
+fn_motioncor2_exe        XXX_JSE_REPLACE_SYSTEM_XXX 
+gpu_ids                  XXX_JSE_REPLACE_PARALLEL_XXX 
 other_motioncor2_args    "" 
-nr_mpi                   48 
-nr_threads               8 
-do_queue                 Yes 
+nr_mpi                   XXX_JSE_REPLACE_PARALLEL_XXX 
+nr_threads               XXX_JSE_REPLACE_PARALLEL_XXX 
+do_queue                 XXX_JSE_REPLACE_PARALLEL_XXX 
 queuename                010020_MotionCorr 
-qsub                     sbatch 
-qsub_extra1              m7i-vcpu192-gpu0 
-qsub_extra2              1 
-qsubscript               /efs/em/aws_slurm_relion50_cpu_axcore.sh 
-min_dedicated            24 
-other_args               "--do_at_most $$GTF_motioncorr_do_at_most" 
+qsub                     XXX_JSE_REPLACE_PARALLEL_XXX 
+qsub_extra1              XXX_JSE_REPLACE_PARALLEL_XXX 
+qsub_extra2              XXX_JSE_REPLACE_PARALLEL_XXX 
+qsubscript               XXX_JSE_REPLACE_PARALLEL_XXX 
+min_dedicated            XXX_JSE_REPLACE_PARALLEL_XXX 
+other_args               XXX_JSE_REPLACE_PARALLEL_XXX 

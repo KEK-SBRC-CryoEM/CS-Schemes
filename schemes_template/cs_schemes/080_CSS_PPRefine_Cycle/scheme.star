@@ -15,13 +15,13 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-CSS_mbin_pprefine_cycles_max      2               2 
-cur_cycles                        1               1 
-cycle_incre                       1               1 
-SS_comm_mbin_0o95box_pmd        200             200 
-SS_comm_mbin_angpix               1.244           1.244 
-wait_sec                        180             180 
-maxtime_hr                       96              96 
+CSS_mbin_pprefine_cycles_max    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+cur_cycles                      1                             1 
+cycle_incre                     1                             1 
+SS_comm_mbin_0o95box_pmd        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_angpix             XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+wait_sec                        180                           180 
+maxtime_hr                      96                            96 
 
 
 # version 30001 
@@ -32,9 +32,9 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-SS_comm_wait_prev_proc    0        0 
-has_exited                0        0 
-do_cycle                  0        0 
+SS_comm_wait_prev_proc    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+has_exited                0                             0 
+do_cycle                  0                             0 
 
 
 # version 30001 
@@ -45,20 +45,20 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-prev_proc_exited                     Schemes/070_CSS_Init_Refine3D/RELION_JOB_EXIT_SUCCESS                            Schemes/070_CSS_Init_Refine3D/RELION_JOB_EXIT_SUCCESS 
-CSS_mbin_pprefine_refined_star       Schemes/070_CSS_Init_Refine3D/070090_Refine3D_local/run_data.star                Schemes/070_CSS_Init_Refine3D/070090_Refine3D_local/run_data.star 
-CSS_mbin_pprefine_postproc_star      Schemes/070_CSS_Init_Refine3D/070100_PostProcess_local/postprocess.star          Schemes/070_CSS_Init_Refine3D/070100_PostProcess_local/postprocess.star 
-CSS_mbin_pprefine_ref3d              Schemes/070_CSS_Init_Refine3D/070090_Refine3D_local/run_class001.mrc             Schemes/070_CSS_Init_Refine3D/070090_Refine3D_local/run_class001.mrc 
-cycles_ctfrefine_refine_data_temp    Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_data.star              Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_data.star 
-cycles_postprocess_map_temp          Schemes/080_CSS_PPRefine_Cycle/080080_PostProcess_polish/postprocess.star        Schemes/080_CSS_PPRefine_Cycle/080080_PostProcess_polish/postprocess.star 
-cycles_refine3d_refine_map_temp      Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_class001.mrc           Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_class001.mrc 
-cycles_ctfrefine_refine_data         ""                                                                               "" 
-cycles_postprocess_map               ""                                                                               "" 
-cycles_refine3d_refine_map           ""                                                                               "" 
-SS_comm_mbin_imported_mask3d_path    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name 
-SS_comm_mbin_mask3d_name             mask3d.mrc                                                                       mask3d.mrc 
-SS_comm_sym_name                     D2                                                                               D2 
-SS_comm_motioncorr_mics_star         Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star                   Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star 
+prev_proc_exited                     Schemes/070_CSS_Init_Refine3D/RELION_JOB_EXIT_SUCCESS                        Schemes/070_CSS_Init_Refine3D/RELION_JOB_EXIT_SUCCESS 
+CSS_mbin_pprefine_refined_star       XXX_SSE_REPLACE_SAMPLE_XXX                                                   XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_pprefine_postproc_star      XXX_SSE_REPLACE_SAMPLE_XXX                                                   XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_pprefine_ref3d              XXX_SSE_REPLACE_SAMPLE_XXX                                                   XXX_SSE_REPLACE_SAMPLE_XXX 
+cycles_ctfrefine_refine_data_temp    Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_data.star          Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_data.star 
+cycles_postprocess_map_temp          Schemes/080_CSS_PPRefine_Cycle/080080_PostProcess_polish/postprocess.star    Schemes/080_CSS_PPRefine_Cycle/080080_PostProcess_polish/postprocess.star 
+cycles_refine3d_refine_map_temp      Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_class001.mrc       Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_class001.mrc 
+cycles_ctfrefine_refine_data         ""                                                                           "" 
+cycles_postprocess_map               ""                                                                           "" 
+cycles_refine3d_refine_map           ""                                                                           "" 
+SS_comm_mbin_imported_mask3d_path    XXX_SSE_REPLACE_SAMPLE_XXX                                                   XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_mask3d_name             XXX_SSE_REPLACE_SAMPLE_XXX                                                   XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_sym_name                     XXX_SSE_REPLACE_SAMPLE_XXX                                                   XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_motioncorr_mics_star         XXX_SSE_REPLACE_SAMPLE_XXX                                                   XXX_SSE_REPLACE_SAMPLE_XXX 
 
 
 # version 30001 

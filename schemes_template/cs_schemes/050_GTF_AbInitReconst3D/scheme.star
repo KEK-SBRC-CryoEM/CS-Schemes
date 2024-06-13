@@ -15,19 +15,19 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-GTF_lbin_abinit3d_min_nr_parts            4000             4000 
-GTF_lbin_abinit3d_clean2d_cycles_max         1                1 
-cur_nr_parts                                 0                0 
-pre_nr_parts                                 0                0 
-cur_cls2d_cycles                             1                1 
-cls2d_cycle_incr                             1                1 
-SS_comm_class2d_classes                    100              100 
-SS_comm_class2d_pmd                        200              200 
-GTF_lbin_abinit3d_clean2d_rank_thresh        0.06             0.06 
-GTF_lbin_abinit3d_rank_thresh                0.26             0.26 
-GTF_lbin_abinit3d_pmd                      200              200 
-wait_sec                                   180              180 
-maxtime_hr                                  96               96 
+GTF_lbin_abinit3d_min_nr_parts           XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_abinit3d_clean2d_cycles_max     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+cur_nr_parts                             0                             0 
+pre_nr_parts                             0                             0 
+cur_cls2d_cycles                         1                             1 
+cls2d_cycle_incr                         1                             1 
+SS_comm_class2d_classes                  XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_class2d_pmd                      XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_abinit3d_clean2d_rank_thresh    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_abinit3d_rank_thresh            XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_abinit3d_pmd                    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+wait_sec                                 180                           180 
+maxtime_hr                               96                            96 
 
 
 # version 30001 
@@ -38,14 +38,14 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-SS_comm_wait_prev_proc_gtf_debug    1        1 
-has_exited                          0        0 
-GTF_lbin_abinit3d_do_limit_parts    0        0 
-has_all_parts                       0        0 
-has_larger_nr_parts                 0        0 
-has_required_nr_parts               0        0 
-do_cls2d_cycle                      0        0 
-GTF_lbin_abinit3d_do_run_C1         1        1 
+SS_comm_wait_prev_proc_gtf_debug    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+has_exited                          0                             0 
+GTF_lbin_abinit3d_do_limit_parts    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+has_all_parts                       0                             0 
+has_larger_nr_parts                 0                             0 
+has_required_nr_parts               0                             0 
+do_cls2d_cycle                      0                             0 
+GTF_lbin_abinit3d_do_run_C1         XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 
 
 # version 30001 
@@ -57,12 +57,12 @@ _rlnSchemeStringVariableName #1
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
 prev_proc_exited                   Schemes/040_GTF_Class2D_PMDs/RELION_JOB_EXIT_SUCCESS                               Schemes/040_GTF_Class2D_PMDs/RELION_JOB_EXIT_SUCCESS 
-GTF_lbin_abinit3d_in_parts_star    Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star               Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star 
+GTF_lbin_abinit3d_in_parts_star    XXX_SSE_REPLACE_SAMPLE_XXX                                                         XXX_SSE_REPLACE_SAMPLE_XXX 
 split_parts                        Schemes/050_GTF_AbInitReconst3D/050010_Select_split_parts/particles_split1.star    Schemes/050_GTF_AbInitReconst3D/050010_Select_split_parts/particles_split1.star 
 selected_parts                     ""                                                                                 "" 
 cls2d_cycle_parts_temp             Schemes/050_GTF_AbInitReconst3D/050030_Select_clean2d_parts/particles.star         Schemes/050_GTF_AbInitReconst3D/050030_Select_clean2d_parts/particles.star 
 cls2d_cycle_parts                  ""                                                                                 "" 
-GTF_lbin_abinit3d_sym_name         C1                                                                                 C1 
+GTF_lbin_abinit3d_sym_name         XXX_SSE_REPLACE_SAMPLE_XXX                                                         XXX_SSE_REPLACE_SAMPLE_XXX 
 
 
 # version 30001 

@@ -15,25 +15,25 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-GTF_pick_min_nr_mics            2000            2000 
-prev_nr_mics                       0               0 
-current_nr_mics                    0               0 
-current_nr_parts                   0               0 
-GTF_pick_cryolo_thresh             0.1             0.1 
-GTF_pick_log_pdm_min             100             100 
-GTF_pick_log_pdm_max             160             160 
-GTF_pick_log_adjust_thresh         0.25            0.25 
-GTF_pick_log_upper_thresh          5               5 
-active_thr                         0.0             0.0 
-GTF_lbin_extract_mics_box        400             400 
-GTF_lbin_extract_mics_0o95box    380             380 
-GTF_lbin_extract_parts_box       100             100 
-GTF_lbin_extract_parts_x_min     200             200 
-GTF_lbin_extract_parts_x_max    3896            3896 
-GTF_lbin_extract_parts_y_min     200             200 
-GTF_lbin_extract_parts_y_max    3896            3896 
-wait_sec                         180             180 
-maxtime_hr                        96              96 
+GTF_pick_min_nr_mics             XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+prev_nr_mics                     0                             0 
+current_nr_mics                  0                             0 
+current_nr_parts                 0                             0 
+GTF_pick_cryolo_thresh           XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_pick_log_pdm_min             XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_pick_log_pdm_max             XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_pick_log_adjust_thresh       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_pick_log_upper_thresh        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+active_thr                       0.0                           0.0 
+GTF_lbin_extract_mics_box        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_extract_mics_0o95box    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_extract_parts_box       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_extract_parts_x_min     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_extract_parts_x_max     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_extract_parts_y_min     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_lbin_extract_parts_y_max     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+wait_sec                         180                           180 
+maxtime_hr                       96                            96 
 
 
 # version 30001 
@@ -44,12 +44,12 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-GTF_pick_do_limit_mics    1        1 
-limit_mics                0        0 
-has_ctffind               0        0 
-has_larger_nr_mics        0        0 
-has_required_nr_mics      0        0 
-GTF_pick_use_log_pick     1        1 
+GTF_pick_do_limit_mics    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+limit_mics                0                             0 
+has_ctffind               0                             0 
+has_larger_nr_mics        0                             0 
+has_required_nr_mics      0                             0 
+GTF_pick_use_log_pick     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 
 
 # version 30001 
@@ -60,11 +60,9 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-SS_comm_ctf_mics_star    Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star                      Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star 
+SS_comm_ctf_mics_star    XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
 split_mics               Schemes/030_GTF_Create_Stack/030010_Select_split_mics/micrographs_split1.star    Schemes/030_GTF_Create_Stack/030010_Select_split_mics/micrographs_split1.star 
 mics_import              undefined                                                                        undefined 
-cryolo_exe               /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh                                  /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh 
-cryolo_repo              /efs/em/crYOLO                                                                   /efs/em/crYOLO 
 cryolo_coords            Schemes/030_GTF_Create_Stack/030020_External_cryolo/autopick.star                Schemes/030_GTF_Create_Stack/030020_External_cryolo/autopick.star 
 log_coords               Schemes/030_GTF_Create_Stack/030030_AutoPick_log/autopick.star                   Schemes/030_GTF_Create_Stack/030030_AutoPick_log/autopick.star 
 active_coords            undefined                                                                        undefined 
