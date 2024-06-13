@@ -38,6 +38,16 @@
     NumberOfNodes: '1'
     MinimumDedicatedCores: '4'
     AdditionalArguments: '""'
+- AlgoLevel: autopick_log
+  Settings:
+    PrereadParticles: 'PS_NOT_APPLICABLE'
+    WhichGpusToUse: ''
+    Param3Value: 'PS_NOT_APPLICABLE'
+    NumberOfMpi: '24'
+    NumberOfThreads: 'PS_NOT_APPLICABLE'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '24'
+    AdditionalArguments: '""'
 - AlgoLevel: external_cryolo_GPU
   Settings:
     PrereadParticles: 'PS_NOT_APPLICABLE'
@@ -207,4 +217,14 @@
     NumberOfThreads: 'PS_NOT_APPLICABLE'
     NumberOfNodes: '1'
     MinimumDedicatedCores: '24'
+    AdditionalArguments: '""'
+- AlgoLevel: NOQUEUE
+  Settings:
+    PrereadParticles: 'PS_NOT_APPLICABLE'
+    WhichGpusToUse: 'PS_NOT_APPLICABLE'
+    Param3Value: 'PS_NOT_APPLICABLE'
+    NumberOfMpi: 'PS_NOT_APPLICABLE'
+    NumberOfThreads: 'PS_NOT_APPLICABLE'
+    NumberOfNodes: 'PS_DISABLED'
+    MinimumDedicatedCores: 'PS_DISABLED'
     AdditionalArguments: '""'

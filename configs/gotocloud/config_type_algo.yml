@@ -4,6 +4,22 @@ LevelFile:
   DeviceLevel: /fsx/github/CS-Schemes/configs/gotocloud/config_level_device.yml
   AlgoLevel: /fsx/github/CS-Schemes/configs/gotocloud/config_level_algo.yml
 CombinationSettings:
+- AlgoType: algo_type_import
+  SubmissionLevel: NOQUEUE
+  DeviceLevel: NOQUEUE_CPU
+  AlgoLevel: NOQUEUE
+- AlgoType: algo_type_select_class2d
+  SubmissionLevel: NOQUEUE
+  DeviceLevel: NOQUEUE_CPU
+  AlgoLevel: NOQUEUE
+- AlgoType: algo_type_select
+  SubmissionLevel: NOQUEUE
+  DeviceLevel: NOQUEUE_CPU
+  AlgoLevel: NOQUEUE
+- AlgoType: algo_type_autopick_log
+  SubmissionLevel: intel-intelmpi-cpu_axcore
+  DeviceLevel: m7i-vcpu192-gpu0
+  AlgoLevel: autopick_log
 - AlgoType: algo_type_motioncorr_own
   SubmissionLevel: intel-intelmpi-cpu_axcore
   DeviceLevel: m7i-vcpu192-gpu0

@@ -454,6 +454,10 @@ class JobStarEditor:
 #                        print('[JSE_MESSAGE] {}'.format(relion_command))
                         # Replace the values in job.star by running Relion command
                         self.__execute_command(relion_command, error_output_file)
+                    break
+            else:
+                print('[JSE_WARNING] The settings in file "{}" could not be replace because there are no settings in the configuration yaml file.'.format(job_star_file_path))
+                continue
     
     # <Public Instance Method> 
     # NOTE: 2024/06/08 Toshio Moriya: The following function is duplicated in mulitple scripts of Schemes Editor
