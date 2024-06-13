@@ -284,6 +284,8 @@ class JobStarEditor:
     __ALGO_TYPE_KEY = 'AlgoType'
     __ALGO_TYPE_NAME_PREFIX = JobTypeToAlgoTypeConvertor.ALGO_TYPE_NAME_PREFIX
     
+    __JSE_JS_KEY          = 'JobStarSettings'
+    __JSE_ALERT_KEY       = 'NonEditableAlertDisplay'
     __JSE_KEY             = 'Settings'
     __JSE_LEVEL_COMB_KEY  = 'CombinationSettings'
     __JSE_LEVEL_FILE_KEY  = 'LevelFile'
@@ -311,7 +313,7 @@ class JobStarEditor:
         self.__jobstar_keymap_file_path   = ""    # A path of jobstar keymap file
         self.__output_dir_path            = ""    # A path of output directory containg all outputs of this script (see "<OUTPUT> User-Specified Output Directory Structure").
         self.__jobstar_config_dict_list   = []    # List of dictionary holding keys and values of all job star parameter
-    
+        self.__alert_display_flag         = True
     # <Private Helper Instance Method> Load yaml file and keep the contents as a dictionary 
     # NOTE: 2024/06/08 Toshio Moriya: The following function is duplicated in mulitple scripts of Schemes Editor
     # Need to make a shared library!
@@ -355,7 +357,9 @@ class JobStarEditor:
         # Structure of algo_type_dict_dict
         #   algo_type_dict_dict := {AlgoType:*, algo_type_dict}
         #   algo_type_dict      := {SubmissionLevel:*, DeviceLevel:*, AlgoLevel:*}
-        algo_type_dict_dict = self.__load_yaml_file(self.__config_file_path)
+        config_file_dict_dict = self.__load_yaml_file(self.__config_file_path)
+        self.__alert_display_flag = config_file_dict_dict[type(self).__JSE_ALERT_KEY]
+        algo_type_dict_dict = config_file_dict_dict[type(self).__JSE_JS_KEY]
         algo_type_key =[type(self).__JSE_LEVEL_COMB_KEY, type(self).__JSE_LEVEL_FILE_KEY]
         if type(algo_type_dict_dict) == list:
             self.__jobstar_config_dict_list = algo_type_dict_dict
@@ -456,8 +460,9 @@ class JobStarEditor:
                         self.__execute_command(relion_command, error_output_file)
                     break
             else:
-                print('[JSE_WARNING] The settings in file "{}" could not be replace because there are no settings in the configuration yaml file.'.format(job_star_file_path))
-                continue
+                if self.__alert_display_flag == True:
+                    print('[JSE_WARNING] The settings in file "{}" could not be replace because there are no settings in the configuration yaml file.'.format(job_star_file_path))
+
     
     # <Public Instance Method> 
     # NOTE: 2024/06/08 Toshio Moriya: The following function is duplicated in mulitple scripts of Schemes Editor

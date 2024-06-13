@@ -1,4 +1,6 @@
 ### Do not change ###
+NonEditableAlertDisplay: False
+JobStarSettings: 
 - AlgoType: algo_type_ctffind_ctff4
   Settings:
     CTFFIND4Executable: /efs/em/ctffind-4.1.14-linux64/bin/ctffind
@@ -21,8 +23,3 @@
   Settings:
     CrYOLOExecutable: /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh 
     CrYOLORepo: /efs/em/crYOLO
-
-
-
-
-
