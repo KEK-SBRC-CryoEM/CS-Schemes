@@ -4,7 +4,7 @@ JobStarSettings:
   LevelFile: 
     SubmissionLevel: /fsx/github/CS-Schemes/configs/gotocloud/config_level_submission.yml
     DeviceLevel: /fsx/github/CS-Schemes/configs/gotocloud/config_level_device.yml
-    AlgoLevel: /fsx/github/CS-Schemes/configs/gotocloud/config_level_algo.yml
+    AlgoLevel: /fsx/github/CS-Schemes/configs/gotocloud_tutorial/config_level_algo.yml
   CombinationSettings:
   - AlgoType: algo_type_import
     SubmissionLevel: NOQUEUE
