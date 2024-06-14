@@ -141,10 +141,10 @@ def edit(system_env, setup_dir_path):
     assert not os.path.exists(setup_subdir), '[SSE_ASSERT] The setup directory "{}" must NOT exist at this point of code!'.format(dest_dir_path)
     for dir_name in dir_name_list:
         src_dir_path = os.path.join(clone_dir_path, dir_name[0])
-        assert src_dir_path, '[SSE_ASSERT] The source directory as git clone "{}" must exist!'.format(src_dir_path)
+        assert os.path.exists(src_dir_path), '[SSE_ASSERT] The source directory as git clone "{}" must exist!'.format(src_dir_path)
         dest_dir_path = os.path.join(setup_subdir, dir_name[1])
         copy_file(src_dir_path, dest_dir_path)
-        assert dest_dir_path, '[SSE_ASSERT] The destination directory to set up "{}" must exist!'.format(dest_dir_path)
+        assert os.path.exists(dest_dir_path), '[SSE_ASSERT] The destination directory to set up "{}" must exist!'.format(dest_dir_path)
 
 if __name__ == "__main__":
     # Parse command argument
