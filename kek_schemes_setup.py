@@ -117,6 +117,18 @@ def make_output_dir_backup(output_dir_path):
         os.rename(output_dir_path, backup_output_dir_path)
         assert not os.path.exists(output_dir_path), '[SE_ASSERT] The output subdirectory "{}" must NOT exist at this point of code!'.format(output_dir_path)
 
+def replace_text_in_file(file_path, old_text, new_text):
+    # Open the file in read mode
+    with open(file_path, 'r') as file:
+        file_data = file.read()
+    
+    # Replace the old text with the new text
+    file_data = file_data.replace(old_text, new_text)
+    
+    # Open the file in write mode and write the modified data
+    with open(file_path, 'w') as file:
+        file.write(file_data)
+
 def edit(system_env, setup_dir_path):
     SSE_configs_dir_name = 'configs'
     SSE_schemes_temp_dir_name ='schemes_template'
@@ -145,6 +157,19 @@ def edit(system_env, setup_dir_path):
         dest_dir_path = os.path.join(setup_subdir, dir_name[1])
         copy_file(src_dir_path, dest_dir_path)
         assert os.path.exists(dest_dir_path), '[SSE_ASSERT] The destination directory to set up "{}" must exist!'.format(dest_dir_path)
+    
+    ### # Specify the file path and the strings to replace
+    ### file_path = 'path/to/your/file.txt'
+    ### old_text = 'old string to replace'
+    ### new_text = 'new string to replace with'
+    ### # Call the function to perform the replacement
+    ### replace_text_in_file(file_path, old_text, new_text)
+    
+    evn_default_configs_file_path = os.path.join(configs_dir_name_env_dest, 'default_configs.yml')
+    replace_text_in_file(evn_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_path)
+
+    evn_tutorial_default_configs_file_path = os.path.join(configs_dir_name_env_tutorial_dest, 'default_configs.yml')
+    replace_text_in_file(evn_tutorial_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_path)
 
 if __name__ == "__main__":
     # Parse command argument
