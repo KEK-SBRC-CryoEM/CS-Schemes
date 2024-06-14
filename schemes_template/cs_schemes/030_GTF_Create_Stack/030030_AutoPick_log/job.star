@@ -35,6 +35,7 @@ topaz_nr_particles                  -1
 topaz_train_picks                   "" 
 do_topaz_train_parts                No 
 topaz_train_parts                   "" 
+fn_topaz_exe                        relion_python_topaz 
 topaz_other_args                    "" 
 fn_refs_autopick                    "" 
 do_ref3d                            No 

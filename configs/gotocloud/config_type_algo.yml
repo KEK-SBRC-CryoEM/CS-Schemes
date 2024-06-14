@@ -2,22 +2,14 @@
 NonEditableAlertDisplay: True
 JobStarSettings: 
   LevelFile: 
-    SubmissionLevel: /fsx/github/CS-Schemes/configs/gotocloud/config_level_submission.yml
-    DeviceLevel: /fsx/github/CS-Schemes/configs/gotocloud/config_level_device.yml
-    AlgoLevel: /fsx/github/CS-Schemes/configs/gotocloud/config_level_algo.yml
+    SubmissionLevel: configs/environment_dependent/config_level_submission.yml
+    DeviceLevel: configs/environment_dependent/config_level_device.yml
+    AlgoLevel: configs/environment_dependent/config_level_algo.yml
   CombinationSettings:
   - AlgoType: algo_type_import
     SubmissionLevel: NOQUEUE
     DeviceLevel: NOQUEUE_CPU
     AlgoLevel: NOQUEUE
-  - AlgoType: algo_type_select
-    SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_CPU
-    AlgoLevel: NOQUEUE
-  - AlgoType: algo_type_autopick_log
-    SubmissionLevel: intel-intelmpi-cpu_axcore
-    DeviceLevel: m7i-vcpu192-gpu0
-    AlgoLevel: autopick_log
   - AlgoType: algo_type_motioncorr_own
     SubmissionLevel: intel-intelmpi-cpu_axcore
     DeviceLevel: m7i-vcpu192-gpu0
@@ -34,30 +26,26 @@ JobStarSettings:
     SubmissionLevel: gcc-intelmpi-gpu
     DeviceLevel: g5-vcpu48-gpu4
     AlgoLevel: ctffind_gctf_GPU
-  - AlgoType: algo_type_external_cryolo
-    SubmissionLevel: gcc-intelmpi-gpu
-    DeviceLevel: g4dn-vcpu96-gpu8
-    AlgoLevel: external_cryolo_GPU
+  - AlgoType: algo_type_autopick_log
+    SubmissionLevel: intel-intelmpi-cpu_axcore
+    DeviceLevel: m7i-vcpu192-gpu0
+    AlgoLevel: autopick_log
   - AlgoType: algo_type_extract
     SubmissionLevel: intel-intelmpi-cpu_axcore
     DeviceLevel: c7i-vcpu192-gpu0
     AlgoLevel: extract
-  - AlgoType: algo_type_class2d_vdam
-    SubmissionLevel: gcc-intelmpi-gpu
-    DeviceLevel: g4dn-vcpu48-gpu4
-    AlgoLevel: class2d_vdam_GPU
   - AlgoType: algo_type_class2d_em
     SubmissionLevel: gcc-intelmpi-gpu
     DeviceLevel: g4dn-vcpu48-gpu4
     AlgoLevel: class2d_em_GPU
+  - AlgoType: algo_type_class2d_vdam
+    SubmissionLevel: gcc-intelmpi-gpu
+    DeviceLevel: g4dn-vcpu48-gpu4
+    AlgoLevel: class2d_vdam_GPU
   - AlgoType: algo_type_initialmodel
     SubmissionLevel: gcc-intelmpi-gpu
     DeviceLevel: g4dn-vcpu96-gpu8
     AlgoLevel: initialmodel_GPU
-  - AlgoType: algo_type_maskcreate
-    SubmissionLevel: intel-intelmpi-cpu_axcore
-    DeviceLevel: c7i-vcpu192-gpu0
-    AlgoLevel: maskcreate
   - AlgoType: algo_type_class3d_default
     SubmissionLevel: gcc-intelmpi-gpu
     DeviceLevel: g4dn-vcpu96-gpu8
@@ -66,18 +54,14 @@ JobStarSettings:
     SubmissionLevel: intel-intelmpi-cpu_axcore
     DeviceLevel: c7i-vcpu192-gpu0
     AlgoLevel: class3d_noalign
-  - AlgoType: algo_type_external_select3d
-    SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_CPU
-    AlgoLevel: external_select3d
   - AlgoType: algo_type_refine3d
     SubmissionLevel: gcc-intelmpi-gpu
     DeviceLevel: g4dn-vcpu96-gpu8
     AlgoLevel: refine3d_GPU
-  - AlgoType: algo_type_postprocess
+  - AlgoType: algo_type_select
     SubmissionLevel: NOQUEUE
     DeviceLevel: NOQUEUE_CPU
-    AlgoLevel: postprocess
+    AlgoLevel: NOQUEUE
   - AlgoType: algo_type_ctfrefine
     SubmissionLevel: intel-intelmpi-cpu_axcore
     DeviceLevel: m7i-vcpu192-gpu0
@@ -86,7 +70,23 @@ JobStarSettings:
     SubmissionLevel: intel-intelmpi-cpu_axcore
     DeviceLevel: m7i-vcpu192-gpu0
     AlgoLevel: polish
+  - AlgoType: algo_type_maskcreate
+    SubmissionLevel: intel-intelmpi-cpu_axcore
+    DeviceLevel: c7i-vcpu192-gpu0
+    AlgoLevel: maskcreate
+  - AlgoType: algo_type_postprocess
+    SubmissionLevel: NOQUEUE
+    DeviceLevel: NOQUEUE_CPU
+    AlgoLevel: postprocess
   - AlgoType: algo_type_localres_own
     SubmissionLevel: intel-intelmpi-cpu_axcore
     DeviceLevel: m7i-vcpu192-gpu0
     AlgoLevel: localres
+  - AlgoType: algo_type_external_cryolo
+    SubmissionLevel: gcc-intelmpi-gpu
+    DeviceLevel: g4dn-vcpu96-gpu8
+    AlgoLevel: external_cryolo_GPU
+  - AlgoType: algo_type_external_select3d
+    SubmissionLevel: NOQUEUE
+    DeviceLevel: NOQUEUE_CPU
+    AlgoLevel: external_select3d

@@ -1,15 +1,23 @@
 ### Do not change ###
 NonEditableAlertDisplay: False
 JobStarSettings: 
+- AlgoType: algo_type_motioncorr_own
+  Settings:
+    MOTIONCOR2Executable: 'JSE_DISABLED_SYSTEM'
 - AlgoType: algo_type_motioncorr_mocor2
   Settings:
-    MOTIONCOR2Executable: JSE_DISABLED_SYSTEM
+    MOTIONCOR2Executable: 'JSE_NOT_SUPPORTED_SYSTEM'
 - AlgoType: algo_type_ctffind_ctff4
   Settings:
+    GctfExecutable: /efs/em/Gctf_v1.06/bin/Gctf-v1.06_sm_20_cu7.5_x86_64
     CTFFIND4Executable: /efs/em/ctffind-4.1.14-linux64/bin/ctffind
 - AlgoType: algo_type_ctffind_gctf
   Settings:
     GctfExecutable: /efs/em/Gctf_v1.06/bin/Gctf-v1.06_sm_20_cu7.5_x86_64
+    CTFFIND4Executable: /efs/em/ctffind-4.1.14-linux64/bin/ctffind
+- AlgoType: algo_type_localres
+  Settings:
+    ResMapExecutable:  'JSE_NOT_SUPPORTED_SYSTEM'
 - AlgoType: algo_type_external_cryolo
   Settings:
     CrYOLOExecutable: /efs/em/crYOLO/gtf_relion4_run_cryolo_system.sh 
@@ -17,6 +25,3 @@ JobStarSettings:
 - AlgoType: algo_type_external_select3d
   Settings:
     SelectClass3DExecutable: '"/efs/em/pyenv/versions/anaconda3-5.3.1/envs/cryolo-1.8.0/bin/python /efs/em/select_class3d/gtf_relion4_run_select_class3d.py"'
-- AlgoType: algo_type_localres_resmap
-  Settings:
-    ResMapExecutable: JSE_DISABLED_SYSTEM
