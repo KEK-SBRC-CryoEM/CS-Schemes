@@ -2,9 +2,9 @@
 NonEditableAlertDisplay: True
 JobStarSettings: 
   LevelFile: 
-    SubmissionLevel: configs/environment_dependent/config_level_submission.yml
-    DeviceLevel: configs/environment_dependent/config_level_device.yml
-    AlgoLevel: configs/environment_dependent_tutorial/config_level_algo.yml
+    SubmissionLevel: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent/config_level_submission.yml
+    DeviceLevel: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent/config_level_device.yml
+    AlgoLevel: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent_tutorial/config_level_algo.yml
   CombinationSettings:
   - AlgoType: algo_type_import
     SubmissionLevel: NOQUEUE

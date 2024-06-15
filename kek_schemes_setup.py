@@ -165,11 +165,29 @@ def edit(system_env, setup_dir_path):
     ### # Call the function to perform the replacement
     ### replace_text_in_file(file_path, old_text, new_text)
     
-    evn_default_configs_file_path = os.path.join(configs_dir_name_env_dest, 'default_configs.yml')
-    replace_text_in_file(evn_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_path)
+    current_path = os.getcwd()
+    os.chdir(setup_dir_path)
+    setup_dir_absolute_path = os.path.join(os.getcwd(),SSE_scheme_editor_dir_name)
+    print('setup_dir_absolute_path :=', setup_dir_absolute_path)
+    setup_dir_absolute_path
+    
+    evn_default_configs_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_dest, 'default_configs.yml')
+    print('evn_default_configs_file_path :=', evn_default_configs_file_path)
+    replace_text_in_file(evn_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
 
-    evn_tutorial_default_configs_file_path = os.path.join(configs_dir_name_env_tutorial_dest, 'default_configs.yml')
-    replace_text_in_file(evn_tutorial_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_path)
+    evn_tutorial_default_configs_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_tutorial_dest, 'config_type_algo.yml')
+    print('evn_tutorial_default_configs_file_path :=', evn_tutorial_default_configs_file_path)
+    replace_text_in_file(evn_tutorial_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
+
+    evn_default_config_type_algo_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_dest, 'config_type_algo.yml')
+    print('evn_default_config_type_algo_file_path :=', evn_default_config_type_algo_file_path)
+    replace_text_in_file(evn_default_config_type_algo_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
+
+    evn_turorial_default_config_type_algo_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_tutorial_dest, 'config_type_algo.yml')
+    print('evn_turorial_default_config_type_algo_file_path :=', evn_turorial_default_config_type_algo_file_path)
+    replace_text_in_file(evn_turorial_default_config_type_algo_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
+
+    os.chdir(current_path)
 
 if __name__ == "__main__":
     # Parse command argument
