@@ -55,6 +55,22 @@
   - Key: 'dont_skip_align'
     Value: 'No'
     AlgoTypeName: 'class3d_noalign'
+- JobType: 'relion.localres.resmap'
+  JobOption: 
+  - Key: 'do_resmap_locres'
+    Value: 'Yes'
+    AlgoTypeName: 'localres'
+  - Key: 'do_resmap_locres'
+    Value: 'No'
+    AlgoTypeName: 'localres'
+- JobType: 'relion.localres.own'
+  JobOption: 
+  - Key: 'do_relion_locres'
+    Value: 'Yes'
+    AlgoTypeName: 'localres'
+  - Key: 'do_relion_locres'
+    Value: 'No'
+    AlgoTypeName: 'localres'
 - JobType: 'relion.select.class2dauto'
   JobOption: 
   - Key: 'do_class_ranker'
