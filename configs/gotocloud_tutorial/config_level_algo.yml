@@ -169,7 +169,16 @@
     NumberOfNodes: '0'
     MinimumDedicatedCores: '0'
     AdditionalArguments: '""'
-- AlgoLevel: localres
+- AlgoLevel: localres_resmap
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '1'
+    NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfNodes: '0'
+    MinimumDedicatedCores: '0'
+    AdditionalArguments: '""'
+- AlgoLevel: localres_own
   Settings:
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'

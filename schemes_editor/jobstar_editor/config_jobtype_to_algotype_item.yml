@@ -59,18 +59,18 @@
   JobOption: 
   - Key: 'do_resmap_locres'
     Value: 'Yes'
-    AlgoTypeName: 'localres'
+    AlgoTypeName: 'localres_resmap'
   - Key: 'do_resmap_locres'
     Value: 'No'
-    AlgoTypeName: 'localres'
+    AlgoTypeName: 'localres_dummy'
 - JobType: 'relion.localres.own'
   JobOption: 
   - Key: 'do_relion_locres'
     Value: 'Yes'
-    AlgoTypeName: 'localres'
+    AlgoTypeName: 'localres_own'
   - Key: 'do_relion_locres'
     Value: 'No'
-    AlgoTypeName: 'localres'
+    AlgoTypeName: 'localres_dummy'
 - JobType: 'relion.select.class2dauto'
   JobOption: 
   - Key: 'do_class_ranker'

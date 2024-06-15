@@ -78,10 +78,14 @@ JobStarSettings:
     SubmissionLevel: NOQUEUE
     DeviceLevel: NOQUEUE_CPU
     AlgoLevel: postprocess
+  - AlgoType: algo_type_localres_resmap
+    SubmissionLevel: NOQUEUE
+    DeviceLevel: NOQUEUE_CPU
+    AlgoLevel: localres_resmap
   - AlgoType: algo_type_localres_own
     SubmissionLevel: intel-intelmpi-cpu_axcore
     DeviceLevel: m7i-vcpu192-gpu0
-    AlgoLevel: localres
+    AlgoLevel: localres_own
   - AlgoType: algo_type_external_cryolo
     SubmissionLevel: gcc-intelmpi-gpu
     DeviceLevel: g4dn-vcpu96-gpu8
