@@ -111,7 +111,7 @@ def copy_file(src_dir_path, dest_path):
 
 def make_output_dir_backup(output_dir_path):
     if os.path.exists(output_dir_path): 
-        print('[SE_MESSAGE]', 'The output subdirectory "{}" already exists! Making a backup of the existing subdirectory...'.format(output_dir_path))
+        print('[KEK_MESSAGE]', 'The output subdirectory "{}" already exists! Making a backup of the existing subdirectory...'.format(output_dir_path))
         dt_now = datetime.datetime.now()
         backup_output_dir_path = output_dir_path + '_backup' + '_' + f'{dt_now.year:04}'+ f'{dt_now.month:02}' + f'{dt_now.day:02}' + f'{dt_now.hour:02}' + f'{dt_now.minute:02}' + f'{dt_now.second:02}'
         os.rename(output_dir_path, backup_output_dir_path)
@@ -150,13 +150,13 @@ def edit(system_env, setup_dir_path):
     #copy the some directory to specified path
     setup_subdir = os.path.join(setup_dir_path, SSE_scheme_editor_dir_name)
     make_output_dir_backup(setup_subdir)
-    assert not os.path.exists(setup_subdir), '[SSE_ASSERT] The setup directory "{}" must NOT exist at this point of code!'.format(dest_dir_path)
+    assert not os.path.exists(setup_subdir), '[KEK_MESSAGE] The setup directory "{}" must NOT exist at this point of code!'.format(dest_dir_path)
     for dir_name in dir_name_list:
         src_dir_path = os.path.join(clone_dir_path, dir_name[0])
-        assert os.path.exists(src_dir_path), '[SSE_ASSERT] The source directory as git clone "{}" must exist!'.format(src_dir_path)
+        assert os.path.exists(src_dir_path), '[KEK_MESSAGE] The source directory as git clone "{}" must exist!'.format(src_dir_path)
         dest_dir_path = os.path.join(setup_subdir, dir_name[1])
         copy_file(src_dir_path, dest_dir_path)
-        assert os.path.exists(dest_dir_path), '[SSE_ASSERT] The destination directory to set up "{}" must exist!'.format(dest_dir_path)
+        assert os.path.exists(dest_dir_path), '[KEK_MESSAGE] The destination directory to set up "{}" must exist!'.format(dest_dir_path)
     
     ### # Specify the file path and the strings to replace
     ### file_path = 'path/to/your/file.txt'
@@ -168,23 +168,23 @@ def edit(system_env, setup_dir_path):
     current_path = os.getcwd()
     os.chdir(setup_dir_path)
     setup_dir_absolute_path = os.path.join(os.getcwd(),SSE_scheme_editor_dir_name)
-    print('setup_dir_absolute_path :=', setup_dir_absolute_path)
+    # print('[KEK_DEBUG] setup_dir_absolute_path :=', setup_dir_absolute_path)
     setup_dir_absolute_path
     
     evn_default_configs_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_dest, 'default_configs.yml')
-    print('evn_default_configs_file_path :=', evn_default_configs_file_path)
+    # print('[KEK_DEBUG] evn_default_configs_file_path :=', evn_default_configs_file_path)
     replace_text_in_file(evn_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
 
-    evn_tutorial_default_configs_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_tutorial_dest, 'config_type_algo.yml')
-    print('evn_tutorial_default_configs_file_path :=', evn_tutorial_default_configs_file_path)
+    evn_tutorial_default_configs_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_tutorial_dest, 'default_configs.yml')
+    # print('[KEK_DEBUG] evn_tutorial_default_configs_file_path :=', evn_tutorial_default_configs_file_path)
     replace_text_in_file(evn_tutorial_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
 
     evn_default_config_type_algo_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_dest, 'config_type_algo.yml')
-    print('evn_default_config_type_algo_file_path :=', evn_default_config_type_algo_file_path)
+    # print('[KEK_DEBUG] evn_default_config_type_algo_file_path :=', evn_default_config_type_algo_file_path)
     replace_text_in_file(evn_default_config_type_algo_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
 
     evn_turorial_default_config_type_algo_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_tutorial_dest, 'config_type_algo.yml')
-    print('evn_turorial_default_config_type_algo_file_path :=', evn_turorial_default_config_type_algo_file_path)
+    # print('[KEK_DEBUG] evn_turorial_default_config_type_algo_file_path :=', evn_turorial_default_config_type_algo_file_path)
     replace_text_in_file(evn_turorial_default_config_type_algo_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
 
     os.chdir(current_path)
@@ -201,14 +201,13 @@ if __name__ == "__main__":
     option_system_env       = args.system_env
     option_setup_dir_path   = args.setup_dir_path
 
-    print('[SSE_MESSAGE] Specified values of all options')
-    print('[SSE_MESSAGE]   Input system environment         := {}'.format(option_system_env))
-    print('[SSE_MESSAGE]   Output setup directory path      := {}'.format(option_setup_dir_path))
-    print('[SSE_MESSAGE] ')
-    print('[SSE_MESSAGE] ')
-    print('[SSE_MESSAGE] setting up schemes_editor...')
-    print('[SSE_MESSAGE] ')
+    print('[KEK_MESSAGE] Specified values of all options')
+    print('[KEK_MESSAGE]   Input system environment         := {}'.format(option_system_env))
+    print('[KEK_MESSAGE]   Output setup directory path      := {}'.format(option_setup_dir_path))
+    print('[KEK_MESSAGE] ')
+    print('[KEK_MESSAGE] ')
+    print('[KEK_MESSAGE] Setting up KEK Schemes Support...')
+    print('[KEK_MESSAGE] ')
     edit(option_system_env, option_setup_dir_path)
-    print('[SSE_MESSAGE] ')
-    print('[SSE_MESSAGE] ')
-    print('[SSE_MESSAGE] DONE!')
+    print('[KEK_MESSAGE] ')
+    print('[KEK_MESSAGE] DONE!')

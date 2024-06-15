@@ -213,51 +213,59 @@ class SchemesEditor():
         assert os.path.exists(self.__edit_schemes_dir_path), '[SE_ASSERT] Specified template Schemes directory "{}" must exist at this point of code!'.format(self.__edit_schemes_dir_path)
         assert os.path.exists(sample_config_file_path), '[SE_ASSERT] Specified configuration file "{}" must exist at this point of code!'.format(sample_config_file_path)
         
-        # Try to get default paths of config yaml files from the user-defined defualt configs yaml files
-        try:
-            # os.environ throws KeyError exception if specified environment variable does not exist
-            default_config_file_path = os.environ[type(self).__SE_ENV_DEFAULT_CONFIGS]
-            print('[SE_MESSAGE] ')
-            print('[SE_MESSAGE] Found user-defined default configurations yaml file!')
-            print('[SE_MESSAGE] Default configuration file path "{}" is set now.'.format(default_config_file_path))
-            print('[SE_MESSAGE] ')
+        # Check if default configs should be used
+        if None in [parallel_config_file_path, em_config_file_path, system_config_file_path]:        
+            # Try to get default paths of config yaml files from the user-defined defualt configs yaml files
+            do_check_setup_default_configs_file_path = False
+            try:
+                # os.environ throws KeyError exception if specified environment variable does not exist
+                default_config_file_path = os.environ[type(self).__SE_ENV_DEFAULT_CONFIGS]
+                print('[SE_MESSAGE] ')
+                print('[SE_MESSAGE] Found user-defined default configurations yaml file!')
+                print('[SE_MESSAGE] Default configuration file path "{}" is set now.'.format(default_config_file_path))
+                print('[SE_MESSAGE] ')
+                
+                # Generate default file paths from yaml file settings
+                default_config_file_path_dict = self.__load_yaml_file(default_config_file_path)
+                if parallel_config_file_path is None:
+                    parallel_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_PARALLEL_KEY]
+                if em_config_file_path is None:
+                    em_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_EM_KEY]
+                if system_config_file_path is None:
+                    system_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_SYSTEM_KEY]
+                
+            except KeyError as e:
+                print('[SE_MESSAGE] ')
+                print('[SE_MESSAGE] User-defined default configurations yaml file is not provided.')
+                print('[SE_MESSAGE] ')
+                do_check_setup_default_configs_file_path = True
+                pass
             
-            # Generate default file paths from yaml file settings
-            default_config_file_path_dict = self.__load_yaml_file(default_config_file_path)
-            if parallel_config_file_path is None:
-                parallel_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_PARALLEL_KEY]
-            if em_config_file_path is None:
-                em_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_EM_KEY]
-            if system_config_file_path is None:
-                system_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_SYSTEM_KEY]
-            
-        except KeyError as e:
-            print('[SE_MESSAGE] ')
-            print('[SE_MESSAGE] User-defined default configurations yaml file is not provided.')
-            print('[SE_MESSAGE] KEK Schemes setup default configurations yaml file will be used.')
-            print('[SE_MESSAGE] ')
-            print('[SE_MESSAGE] TIPS: ')
-            print('[SE_WARNING] You can define a default configurations yaml file and export the file path as follow:')
-            print('[SE_WARNING] "export {}=path/to/default_configs.yml".'.format(type(self).__SE_ENV_DEFAULT_CONFIGS))
-            print('[SE_WARNING] ')
-            # Generate absolute path of setup default configs yaml file.
-            # from relative path of setup default configs yaml file relative to the directory containg this script.
-            setup_default_configs_file_rpath = os.path.join(type(self).__SE_setup_configs_dir_name, type(self).__SE_setup_env_depend_dir_name, __SE_setup_default_configs_file_name)
-            script_path = os.path.abspath(__file__)
-            script_dir_path = os.path.dirname(script_path)
-            default_config_file_path = os.path.join(script_dir_path, setup_default_configs_file_rpath)
-            default_config_file_path_dict = self.__load_yaml_file(default_config_file_path)
-            print('[SE_MESSAGE] Default configuration file path "{}" is set now.'.format(default_config_file_path))
-            print('[SE_MESSAGE] ')
-            # Generate default file paths from yaml file settings
-            default_config_file_path_dict = self.__load_yaml_file(default_config_file_path)
-            if parallel_config_file_path is None:
-                parallel_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_PARALLEL_KEY]
-            if em_config_file_path is None:
-                em_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_EM_KEY]
-            if system_config_file_path is None:
-                system_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_SYSTEM_KEY]
-            pass
+            if do_check_setup_default_configs_file_path:
+                print('[SE_MESSAGE] ')
+                print('[SE_MESSAGE] KEK Schemes setup default configurations yaml file will be used.')
+                print('[SE_MESSAGE] <TIPS> ')
+                print('[SE_WARNING] You can define a default configurations yaml file and export the file path as follow:')
+                print('[SE_WARNING] "export {}=path/to/default_configs.yml".'.format(type(self).__SE_ENV_DEFAULT_CONFIGS))
+                print('[SE_WARNING] ')
+                
+                # Generate absolute path of setup default configs yaml file.
+                # from relative path of setup default configs yaml file relative to the directory containg this script.
+                setup_default_configs_file_rpath = os.path.join(type(self).__SE_setup_configs_dir_name, type(self).__SE_setup_env_depend_dir_name, type(self).__SE_setup_default_configs_file_name)
+                script_path = os.path.abspath(__file__)
+                script_dir_path = os.path.dirname(script_path)
+                default_config_file_path = os.path.join(script_dir_path, setup_default_configs_file_rpath)
+                default_config_file_path_dict = self.__load_yaml_file(default_config_file_path)
+                print('[SE_MESSAGE] Default configurations file path "{}" is set now.'.format(default_config_file_path))
+                print('[SE_MESSAGE] ')
+                # Generate default file paths from yaml file settings
+                default_config_file_path_dict = self.__load_yaml_file(default_config_file_path)
+                if parallel_config_file_path is None:
+                    parallel_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_PARALLEL_KEY]
+                if em_config_file_path is None:
+                    em_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_EM_KEY]
+                if system_config_file_path is None:
+                    system_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_SYSTEM_KEY]
         
         assert os.path.exists(parallel_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(parallel_config_file_path)
         assert os.path.exists(em_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(em_config_file_path)
