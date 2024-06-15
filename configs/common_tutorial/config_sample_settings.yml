@@ -44,9 +44,9 @@ Settings:
   GTF_lbin_extract_parts_y_max: 3710
 #030_GTF_Create_Stack Advanced
   GTF_pick_use_log_pick: 0
-  GTF_pick_log_pdm_min: 100
-  GTF_pick_log_pdm_max: 160
-  GTF_pick_log_adjust_thresh: 0.25
+  GTF_pick_log_pdm_min: 150
+  GTF_pick_log_pdm_max: 180
+  GTF_pick_log_adjust_thresh: 0
   GTF_pick_log_upper_thresh: 5
 #040_GTF_Class2D_PMDs
   GTF_lbin_class2d_pmds_in_parts_star: Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star

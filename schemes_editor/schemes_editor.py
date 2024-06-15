@@ -112,7 +112,7 @@
 # ========================================================================================
 
 
-import yaml	
+import yaml
 import os
 import sys
 import shutil
@@ -125,24 +125,28 @@ from schemestar_editor import schemestar_editor
 class SchemesEditor():
     # Private class constants
     # Constants related to input Schemes directory and key mapping yaml files
-    __SCHEMES_DIR_NAME                   = 'Schemes'
-    __JOBSTAR_KEYMAP_PARALLEL_FILE_NAME  = 'config_to_jobstar_keymap_parallel.yml'
-    __JOBSTAR_KEYMAP_SYSTEM_FILE_NAME    = 'config_to_jobstar_keymap_system.yml'
+    __SCHEMES_DIR_NAME                    = 'Schemes'
+    __JOBSTAR_KEYMAP_PARALLEL_FILE_NAME   = 'config_to_jobstar_keymap_parallel.yml'
+    __JOBSTAR_KEYMAP_SYSTEM_FILE_NAME     = 'config_to_jobstar_keymap_system.yml'
     
     # Constants related to default configuration yaml files
-    __SE_ENV_DEFAULT_CONFIGS             = 'SE_ENV_DEFAULT_CONFIGS'
-    __SE_DEFAULT_CONFIG_FILE_PATHS_KEY   = 'DefaultConfigFilePaths'
-    __SE_CONFIG_PARALLEL_KEY             = 'ParallelSettings'
-    __SE_CONFIG_EM_KEY                   = 'EmSettings'
-    __SE_CONFIG_SYSTEM_KEY               = 'SystemSettings'
+    __SE_ENV_DEFAULT_CONFIGS              = 'SE_ENV_DEFAULT_CONFIGS'
+    __SE_DEFAULT_CONFIG_FILE_PATHS_KEY    = 'DefaultConfigFilePaths'
+    __SE_CONFIG_PARALLEL_KEY              = 'ParallelSettings'
+    __SE_CONFIG_EM_KEY                    = 'EmSettings'
+    __SE_CONFIG_SYSTEM_KEY                = 'SystemSettings'
+    
+    __SE_setup_configs_dir_name           = 'configs'
+    __SE_setup_env_depend_dir_name        = 'environment_dependent'
+    __SE_setup_default_configs_file_name  = 'default_configs.yml'
     
     # Constants related to outputs
-    __DEFAULT_OUTPUT_DIR_PATH            = './Schemes_Edited'
-    __JOBSTAR_EDITOR_DIR_NAME            = 'jobstar_editor'
-    __PARALLEL_SETTINGS_DIR_NAME         = 'SE_parallel_settings'
-    __SYSTEM_SETTINGS_DIR_NAME           = 'SE_system_settings'
-    __EM_SETTINGS_DIR_NAME               = 'SE_em_settings'
-    __SAMPLE_SETTINGS_DIR_NAME           = 'SE_sample_settings'
+    __DEFAULT_OUTPUT_DIR_PATH             = './Schemes_Edited'
+    __JOBSTAR_EDITOR_DIR_NAME             = 'jobstar_editor'
+    __PARALLEL_SETTINGS_DIR_NAME          = 'SE_parallel_settings'
+    __SYSTEM_SETTINGS_DIR_NAME            = 'SE_system_settings'
+    __EM_SETTINGS_DIR_NAME                = 'SE_em_settings'
+    __SAMPLE_SETTINGS_DIR_NAME            = 'SE_sample_settings'
     
     # <Public Instance Constructor>
     def __init__(self):
@@ -192,7 +196,7 @@ class SchemesEditor():
     # <Public Instance Method> 
     def edit(self, edit_schemes_dir_path, sample_config_file_path, parallel_config_file_path = None, em_config_file_path = None, system_config_file_path = None, output_dir_path = __DEFAULT_OUTPUT_DIR_PATH):
         # [*] edit_schemes_dir_path : Path of input template RELION Schemes directory containing all Schemes related files for editing (meaning that the script overrides this Schemes).
-        # [*] *_config_file_path      : Path of input configuration yaml file.
+        # [*] *_config_file_path    : Paths of input configuration yaml files.
         # [*] output_dir_path       : Path of output root directroy where all outputs will be saved.
         # 
         # NOTE: 2024/06/08 Toshio Moriya:
@@ -209,12 +213,13 @@ class SchemesEditor():
         assert os.path.exists(self.__edit_schemes_dir_path), '[SE_ASSERT] Specified template Schemes directory "{}" must exist at this point of code!'.format(self.__edit_schemes_dir_path)
         assert os.path.exists(sample_config_file_path), '[SE_ASSERT] Specified configuration file "{}" must exist at this point of code!'.format(sample_config_file_path)
         
-        # Try to get default paths of settings yaml files
+        # Try to get default paths of config yaml files from the user-defined defualt configs yaml files
         try:
             # os.environ throws KeyError exception if specified environment variable does not exist
             default_config_file_path = os.environ[type(self).__SE_ENV_DEFAULT_CONFIGS]
             print('[SE_MESSAGE] ')
-            print('[SE_MESSAGE] Default configuration file path "{}" is set.'.format(default_config_file_path))
+            print('[SE_MESSAGE] Found user-defined default configurations yaml file!')
+            print('[SE_MESSAGE] Default configuration file path "{}" is set now.'.format(default_config_file_path))
             print('[SE_MESSAGE] ')
             
             # Generate default file paths from yaml file settings
@@ -227,14 +232,33 @@ class SchemesEditor():
                 system_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_SYSTEM_KEY]
             
         except KeyError as e:
+            print('[SE_MESSAGE] ')
+            print('[SE_MESSAGE] User-defined default configurations yaml file is not provided.')
+            print('[SE_MESSAGE] KEK Schemes setup default configurations yaml file will be used.')
+            print('[SE_MESSAGE] ')
+            print('[SE_MESSAGE] TIPS: ')
+            print('[SE_WARNING] You can define a default configurations yaml file and export the file path as follow:')
+            print('[SE_WARNING] "export {}=path/to/default_configs.yml".'.format(type(self).__SE_ENV_DEFAULT_CONFIGS))
             print('[SE_WARNING] ')
-            print('[SE_WARNING] Catched KeyError exception! {}".'.format(e))
-            print('[SE_WARNING] Required system environment variable does not exist! Please consider "export {}=path/to/default_configs.yml".'.format(type(self).__SE_ENV_DEFAULT_CONFIGS))
-            print('[SE_WARNING] ')
+            # Generate absolute path of setup default configs yaml file.
+            # from relative path of setup default configs yaml file relative to the directory containg this script.
+            setup_default_configs_file_rpath = os.path.join(type(self).__SE_setup_configs_dir_name, type(self).__SE_setup_env_depend_dir_name, __SE_setup_default_configs_file_name)
+            script_path = os.path.abspath(__file__)
+            script_dir_path = os.path.dirname(script_path)
+            default_config_file_path = os.path.join(script_dir_path, setup_default_configs_file_rpath)
+            default_config_file_path_dict = self.__load_yaml_file(default_config_file_path)
+            print('[SE_MESSAGE] Default configuration file path "{}" is set now.'.format(default_config_file_path))
+            print('[SE_MESSAGE] ')
+            # Generate default file paths from yaml file settings
+            default_config_file_path_dict = self.__load_yaml_file(default_config_file_path)
+            if parallel_config_file_path is None:
+                parallel_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_PARALLEL_KEY]
+            if em_config_file_path is None:
+                em_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_EM_KEY]
+            if system_config_file_path is None:
+                system_config_file_path = default_config_file_path_dict[type(self).__SE_DEFAULT_CONFIG_FILE_PATHS_KEY][type(self).__SE_CONFIG_SYSTEM_KEY]
             pass
         
-        # NOTE: 2024/06/08 Toshio Moriya:
-        # Actually the followings should be error checks instead of assertion!
         assert os.path.exists(parallel_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(parallel_config_file_path)
         assert os.path.exists(em_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(em_config_file_path)
         assert os.path.exists(system_config_file_path), '[SE_ASSERT] The configuration file "{}" must exist at this point of code!'.format(system_config_file_path)
@@ -250,9 +274,9 @@ class SchemesEditor():
         print('[SE_MESSAGE] ')
         print('[SE_MESSAGE] ')
         # Execute job star editor
-        script_dir = os.path.dirname(__file__)
-        jobstar_keymap_system_file_path = os.path.join(script_dir, type(self).__JOBSTAR_EDITOR_DIR_NAME, type(self).__JOBSTAR_KEYMAP_SYSTEM_FILE_NAME)
-        jobstar_keymap_parallel_file_path = os.path.join(script_dir, type(self).__JOBSTAR_EDITOR_DIR_NAME, type(self).__JOBSTAR_KEYMAP_PARALLEL_FILE_NAME)
+        script_dir_path = os.path.dirname(__file__)
+        jobstar_keymap_system_file_path = os.path.join(script_dir_path, type(self).__JOBSTAR_EDITOR_DIR_NAME, type(self).__JOBSTAR_KEYMAP_SYSTEM_FILE_NAME)
+        jobstar_keymap_parallel_file_path = os.path.join(script_dir_path, type(self).__JOBSTAR_EDITOR_DIR_NAME, type(self).__JOBSTAR_KEYMAP_PARALLEL_FILE_NAME)
         # NOTE: 2024/06/08 Toshio Moriya: Actually the followings should be error checks instead of assertion!
         assert os.path.exists(jobstar_keymap_parallel_file_path), '[SE_ASSERT] The job star key mapping for parallel settings file "{}" must exist at this point of code!'.format(jobstar_keymap_parallel_file_path)
         assert os.path.exists(jobstar_keymap_system_file_path), '[SE_ASSERT] The job star key mapping for system settings file "{}" must exist at this point of code!'.format(jobstar_keymap_system_file_path)
