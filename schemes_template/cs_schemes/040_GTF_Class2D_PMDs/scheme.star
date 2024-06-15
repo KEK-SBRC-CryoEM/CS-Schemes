@@ -31,6 +31,7 @@ cls2d_type_incr                       1                             1
 cls2d_type_vdam                       0                             0 
 cls2d_type_em                         1                             1 
 SS_comm_class2d_classes               200                           200 
+SS_comm_lbin_nr_pool                  XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 GTF_lbin_class2d_pmds_rank_thresh     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 wait_sec                              180                           180 
 maxtime_hr                            96                            96 
@@ -50,7 +51,7 @@ has_larger_nr_parts                     0                             0
 has_required_nr_parts                   0                             0 
 is_same_cls2d_type                      1                             1 
 has_subceeded_pmd_pad_min               0                             0 
-
+SS_comm_lbin_do_preread_images          XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 
 # version 30001 
 

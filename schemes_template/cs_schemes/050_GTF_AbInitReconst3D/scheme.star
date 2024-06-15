@@ -23,6 +23,7 @@ cur_cls2d_cycles                         1                             1
 cls2d_cycle_incr                         1                             1 
 SS_comm_class2d_classes                  XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_class2d_pmd                      XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_lbin_nr_pool                     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 GTF_lbin_abinit3d_clean2d_rank_thresh    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 GTF_lbin_abinit3d_rank_thresh            XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 GTF_lbin_abinit3d_pmd                    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
@@ -45,6 +46,7 @@ has_all_parts                       0                             0
 has_larger_nr_parts                 0                             0 
 has_required_nr_parts               0                             0 
 do_cls2d_cycle                      0                             0 
+SS_comm_lbin_do_preread_images      XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 GTF_lbin_abinit3d_do_run_C1         XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 
 

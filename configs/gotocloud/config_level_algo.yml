@@ -1,6 +1,5 @@
 - AlgoLevel: motioncorr_own
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: ''
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '24'
@@ -10,7 +9,6 @@
     AdditionalArguments: '"--do_at_most \$\$GTF_motioncorr_do_at_most"'
 - AlgoLevel: motioncorr_mocor2_GPU
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: '0:1:2:3'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '4'
@@ -20,7 +18,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: ctffind_ctff4
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: ''
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '24'
@@ -30,7 +27,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: ctffind_gctf_GPU
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: '0:1:2:3'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '4'
@@ -40,7 +36,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: autopick_log
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: ''
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '24'
@@ -50,7 +45,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: extract
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '24'
@@ -60,7 +54,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: class2d_em_GPU
   Settings:
-    PrereadParticles: 'No'
     WhichGpusToUse: '0:1:2:3'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '129'
@@ -70,7 +63,6 @@
     AdditionalArguments: '"--fast_subsets"'
 - AlgoLevel: class2d_em_CPU
   Settings:
-    PrereadParticles: 'No'
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '65'
@@ -80,7 +72,6 @@
     AdditionalArguments: '"--fast_subsets --cpu"'
 - AlgoLevel: class2d_vdam_GPU
   Settings:
-    PrereadParticles: 'No'
     WhichGpusToUse: '0,1,2,3'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '1'
@@ -90,7 +81,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: initialmodel_GPU
   Settings:
-    PrereadParticles: 'No'
     WhichGpusToUse: '0,1,2,3'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '1'
@@ -100,7 +90,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: class3d_default_GPU
   Settings:
-    PrereadParticles: 'No'
     WhichGpusToUse: '0:1:2:3:4:5:6:7:0:1:2:3:4:5:6:7'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '17'
@@ -110,7 +99,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: class3d_default_CPU
   Settings:
-    PrereadParticles: 'No'
     WhichGpusToUse: '""'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '63'
@@ -120,7 +108,6 @@
     AdditionalArguments: '--cpu'
 - AlgoLevel: class3d_noalign
   Settings:
-    PrereadParticles: 'No'
     WhichGpusToUse: '""'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '25'
@@ -130,7 +117,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: refine3d_GPU
   Settings:
-    PrereadParticles: 'No'
     WhichGpusToUse: '0:1:2:3:4:5:6:7'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '9'
@@ -140,7 +126,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: refine3d_CPU
   Settings:
-    PrereadParticles: 'No'
     WhichGpusToUse: '""'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '63'
@@ -150,7 +135,6 @@
     AdditionalArguments: '--cpu'
 - AlgoLevel: ctfrefine
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '24'
@@ -160,7 +144,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: polish
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '16'
@@ -170,7 +153,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: maskcreate
   Settings:
-    PrereadParticles: 'No'
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
@@ -180,7 +162,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: postprocess
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
@@ -190,7 +171,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: localres
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '24'
@@ -200,7 +180,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: external_cryolo_GPU
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: '0,1,2,3,4,5,6,7'
     NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
@@ -210,7 +189,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: external_select3d
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: '""'
     NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
@@ -220,7 +198,6 @@
     AdditionalArguments: '""'
 - AlgoLevel: NOQUEUE
   Settings:
-    PrereadParticles: 'JSE_NOT_APPLICABLE_PARALLEL'
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'

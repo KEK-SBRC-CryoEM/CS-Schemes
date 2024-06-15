@@ -41,8 +41,8 @@ range_psi                      6
 do_restrict_xoff               Yes 
 helical_rise                   4.75 
 do_parallel_discio             Yes 
-nr_pool                        30 
-do_preread_images              XXX_JSE_REPLACE_PARALLEL_XXX 
+nr_pool                        $$SS_comm_lbin_nr_pool 
+do_preread_images              $$SS_comm_lbin_do_preread_images 
 scratch_dir                    XXX_JSE_REPLACE_PARALLEL_XXX 
 do_combine_thru_disc           No 
 use_gpu                        XXX_JSE_REPLACE_PARALLEL_XXX 

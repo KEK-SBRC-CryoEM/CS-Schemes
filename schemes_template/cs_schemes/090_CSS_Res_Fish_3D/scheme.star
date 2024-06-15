@@ -20,6 +20,7 @@ CSS_mbin_resfish3d_tval              XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLA
 SS_comm_optimal_pmd                  XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_mbin_0o95box_pmd             XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_mbin_angpix                  XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_nr_pool                 XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_mbin_resfish3d_locres_bfactor    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 wait_sec                             180                           180 
 maxtime_hr                           96                            96 
@@ -34,6 +35,7 @@ _rlnSchemeBooleanVariableName #1
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
 SS_comm_wait_prev_proc                XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_do_preread_images        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_mbin_resfish3d_do_fast_subsets    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 has_exited                            0                             0 
 

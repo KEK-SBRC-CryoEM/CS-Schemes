@@ -21,6 +21,10 @@ Settings:
   SS_comm_wait_prev_proc: 1
   SS_comm_motioncorr_mics_star: Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star
   SS_comm_ctf_mics_star: Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star
+  SS_comm_lbin_do_preread_images: 0
+  SS_comm_lbin_nr_pool: 30
+  SS_comm_mbin_do_preread_images: 0
+  SS_comm_mbin_nr_pool: 16
   SS_comm_class2d_classes: 100
 #010_GTF_MotionCorr
   GTF_eer_grouping: 32

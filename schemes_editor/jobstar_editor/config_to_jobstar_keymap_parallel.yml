@@ -1,5 +1,4 @@
 ### Do not Change ####
-PrereadParticles: do_preread_images 
 ScratchDirectory: scratch_dir 
 UseGpu: use_gpu 
 WhichGpusToUse: gpu_ids
