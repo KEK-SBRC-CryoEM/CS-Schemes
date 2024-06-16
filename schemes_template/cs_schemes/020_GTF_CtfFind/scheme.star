@@ -45,8 +45,9 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-SS_comm_motioncorr_mics_star    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
-micrographs                     micrographs                   micrographs 
+SS_comm_motioncorr_mics_star    XXX_SSE_REPLACE_SAMPLE_XXX                                     XXX_SSE_REPLACE_SAMPLE_XXX 
+ctffind_mics_star               Schemes/020_GTF_CtfFind/020010_CtfFind/micrographs_ctf.star    Schemes/020_GTF_CtfFind/020010_CtfFind/micrographs_ctf.star
+micrographs                     micrographs                                                    micrographs 
 
 
 # version 30001 
