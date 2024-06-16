@@ -84,7 +84,7 @@
     WhichGpusToUse: '0,1,2,3'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: '1'
-    NumberOfThreads: '8'
+    NumberOfThreads: '4'
     NumberOfNodes: '1'
     MinimumDedicatedCores: '1'
     AdditionalArguments: '""'

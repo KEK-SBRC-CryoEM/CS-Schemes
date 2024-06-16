@@ -44,7 +44,7 @@ JobStarSettings:
     AlgoLevel: class2d_vdam_GPU
   - AlgoType: algo_type_initialmodel
     SubmissionLevel: gcc-intelmpi-gpu
-    DeviceLevel: g4dn-vcpu96-gpu8
+    DeviceLevel: g4dn-vcpu48-gpu4
     AlgoLevel: initialmodel_GPU
   - AlgoType: algo_type_class3d_default
     SubmissionLevel: gcc-intelmpi-gpu
