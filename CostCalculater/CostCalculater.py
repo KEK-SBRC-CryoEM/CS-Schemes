@@ -216,13 +216,17 @@ class CostCalculater():
                 self.__parallel_settings_list.append(nr_gpus)
             else:
                 self.__parallel_settings_list.append(None)   # If the key dose not exist, add empty to list.
-        # Calculates number of nodes
-        if set(['do_queue','nr_mpi', 'min_dedicated']).issubset(self.__job_star_options_dict.keys()) and self.__job_star_options_dict['do_queue'] == 'Yes':  
-            self.__nr_nodes = (int(self.__job_star_options_dict['nr_mpi']) + int(self.__job_star_options_dict['min_dedicated']) - 1) // int(self.__job_star_options_dict['min_dedicated'])
-        elif 'cryolo' in self.__job_star_options_dict['queuename']:
-            self.__nr_nodes = self.__job_star_options_dict['param3_value'].count('0')  # Number of '0' is considered as the number of nodes in the case of 'cyrolo.
-        else:
-            self.__nr_nodes = None
+
+        # # Calculates number of nodes
+        # if set(['do_queue','nr_mpi', 'min_dedicated']).issubset(self.__job_star_options_dict.keys()) and self.__job_star_options_dict['do_queue'] == 'Yes':  
+        #     self.__nr_nodes = (int(self.__job_star_options_dict['nr_mpi']) + int(self.__job_star_options_dict['min_dedicated']) - 1) // int(self.__job_star_options_dict['min_dedicated'])
+        # elif 'cryolo' in self.__job_star_options_dict['queuename']:
+        #     self.__nr_nodes = self.__job_star_options_dict['param3_value'].count('0')  # Number of '0' is considered as the number of nodes in the case of 'cyrolo.
+        # else:
+        #     self.__nr_nodes = None
+
+        # Get the number of used nodes directly from 'qsub_extra2', not estimate/calculate from 'nr_mpi' & 'min_dedicated'
+        self.__nr_nodes = int(self.__job_star_options_dict['qsub_extra2'])
         self.__parallel_settings_list.append(self.__nr_nodes)
 
     # Get instance information from yaml file where instance name, price, etc are set.
