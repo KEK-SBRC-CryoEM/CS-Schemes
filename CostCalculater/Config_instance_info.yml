@@ -51,6 +51,68 @@
     InstanceType: c6i.32xlarge
     NunberOfCores: 128
     CostPerHours: 5.440
-
-
-
+  - Name: m6i-vcpu128-gpu0
+    InstanceType: m6i.32xlarge
+    NunberOfCores: 128
+    CostPerHours: 6.144
+  - Name: r6i-vcpu128-gpu0
+    InstanceType: r6i.32xlarge
+    NunberOfCores: 128
+    CostPerHours: 8.064
+  - Name: c7i-vcpu192-gpu0
+    InstanceType: c7i.48xlarge
+    NunberOfCores: 192
+    CostPerHours: 8.568
+  - Name: m7i-vcpu192-gpu0 
+    InstanceType: m7i.48xlarge
+    NunberOfCores: 192
+    CostPerHours: 9.6768
+  - Name: r7i-vcpu192-gpu0
+    InstanceType: r7i.48xlarge
+    NunberOfCores: 192
+    CostPerHours: 12.7008
+# Spot Instance average of periods 2024/Feb/8 to 2024/Feb/15 at us-east-1c(use1-az4)
+  - Name: g5-vcpu192-gpu8-spot
+    InstanceType: g5.48xlarge-spot
+    NunberOfCores: 192
+    CostPerHours: 7.4722
+  - Name: g5-vcpu96-gpu4-spot
+    InstanceType: g5.24xlarge-spot
+    NunberOfCores: 96
+    CostPerHours: 4.0033
+  - Name: g5-vcpu48-gpu4-spot
+    InstanceType: g5.12xlarge-spot
+    NunberOfCores: 48
+    CostPerHours: 2.9119
+  - Name: g4dn-vcpu96-gpu8-spot
+    InstanceType: g4dn.metal-spot
+    NunberOfCores: 96
+    CostPerHours: 3.5863
+  - Name: g4dn-vcpu48-gpu4-spot
+    InstanceType: g4dn.12xlarge-spot
+    NunberOfCores: 48
+    CostPerHours: 1.6888
+  - Name: c6i-vcpu128-gpu0-spot
+    InstanceType: c6i.32xlarge-spot
+    NunberOfCores: 128
+    CostPerHours: 2.5405
+  - Name: m6i-vcpu128-gpu0-spot
+    InstanceType: m6i.32xlarge-spot
+    NunberOfCores: 128
+    CostPerHours: 2.8295
+  - Name: r6i-vcpu128-gpu0-spot
+    InstanceType: r6i.32xlarge-spot
+    NunberOfCores: 128
+    CostPerHours: 3.4519
+  - Name: c7i-vcpu192-gpu0-spot
+    InstanceType: c7i.48xlarge-spot
+    NunberOfCores: 192
+    CostPerHours: 3.9552
+  - Name: m7i-vcpu192-gpu0-spot
+    InstanceType: m7i.48xlarge-spot
+    NunberOfCores: 192
+    CostPerHours: 4.0849
+  - Name: r7i-vcpu192-gpu0-spot
+    InstanceType: r7i.48xlarge-spot
+    NunberOfCores: 192
+    CostPerHours: 7.0275
