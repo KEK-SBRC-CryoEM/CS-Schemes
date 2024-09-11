@@ -1,0 +1,5 @@
+- DeviceLevel: NOQUEUE_GPU
+  Settings:
+    ScratchDirectory: '/scratch/cs_schemes'
+    UseGpu: 'Yes'
+    Partition: 'JSE_DISABLED_PARALLEL'

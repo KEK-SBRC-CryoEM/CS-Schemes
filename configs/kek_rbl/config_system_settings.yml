@@ -1,0 +1,30 @@
+### Do not change ###
+NonEditableAlertDisplay: False
+JobStarSettings: 
+- AlgoType: algo_type_motioncorr_own
+  Settings:
+    MOTIONCOR2Executable: 'JSE_DISABLED_SYSTEM'
+- AlgoType: algo_type_motioncorr_mocor2
+  Settings:
+    MOTIONCOR2Executable: '/lustre1/emsystem/apps/MotionCor2/MotionCor2_1.4.7_Cuda115_12-09-2021'
+- AlgoType: algo_type_ctffind_ctff4
+  Settings:
+    GctfExecutable: 'JSE_DISABLED_SYSTEM'
+    CTFFIND4Executable: '/lustre1/emsystem/apps/ctffind-4.1.14/ctffind'
+- AlgoType: algo_type_ctffind_gctf
+  Settings:
+    GctfExecutable: '/lustre1/emsystem/apps/GCTF_Gautomatch_Cu10.1/GCTF_v1.18_sm30-75_cu10.1'
+    CTFFIND4Executable: 'JSE_DISABLED_SYSTEM'
+- AlgoType: algo_type_localres_resmap
+  Settings:
+    ResMapExecutable:  '/lustre1/emsystem/apps/ResMap/ResMap-1.1.4-linux64'
+- AlgoType: algo_type_localres_own
+  Settings:
+    ResMapExecutable:  'JSE_DISABLED_SYSTEM'
+- AlgoType: algo_type_external_cryolo
+  Settings:
+    CrYOLOExecutable: '/lustre1/emsystem/apps/crYOLO/gtf_relion4_run_cryolo_system.sh'
+    CrYOLORepo: '/lustre1/emsystem/apps/crYOLO'
+- AlgoType: algo_type_external_select3d
+  Settings:
+    SelectClass3DExecutable: '"/lustre1/emsystem/apps/pyenv/versions/anaconda3-5.3.1/envs/topaz/bin/python /lustre1/emsystem/apps/SelectClass3D/gtf_relion4_run_select_class3d.py"'

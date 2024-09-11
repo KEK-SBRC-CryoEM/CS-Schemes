@@ -1,0 +1,5 @@
+- SubmissionLevel: NOQUEUE
+  Settings:
+    SubmitToQueue: 'No'
+    SubmitCommand: 'JSE_DISABLED_PARALLEL'
+    SubmissionScript: 'JSE_DISABLED_PARALLEL'
