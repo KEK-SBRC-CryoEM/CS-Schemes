@@ -92,8 +92,8 @@ class CostCalculater():
     __OUTPUT_HEADER_JOB=['JobType/JobID']
     __OUTPUT_HEADER_PARALLEL_SETTINGS = ['Job Name','GPUs','MPI','Thread','MPIs/Node','Nodes']
     __OUTPUT_HEADER_PROCESS_TIME_STAMP = ['Process time(hh:mm:ss)','Process time(hours)'] 
-    __OUTPUT_HEADER_PROCESS_TIME_COMMAND = ['Running time(hours)', 'Time diff(minutes)'] 
-    __OUTPUT_HEADER_INSTANCE= ['EC2 Instance Name','EC2 Instance Type','Cores/node','Cost/hours(USD)','Cost(USD)']
+    __OUTPUT_HEADER_PROCESS_TIME_COMMAND = ['Running time(hh:mm:ss)','Running time(hours)', 'Time diff(minutes)'] 
+    __OUTPUT_HEADER_INSTANCE= ['EC2 Instance Name','EC2 Instance Type','Cores/node','Cost/hours(USD)','Cost(ProcessTime,USD)','Cost(RunnningTime,USD)']
     __PIPELINE_STAR_FILE_NAME = 'default_pipeline.star'
     __NOTE_TXT_FILE_NAME = 'note.txt'
     __EXIT_SUCCESS_FILE_NAME = 'RELION_JOB_EXIT_SUCCESS'
@@ -109,7 +109,9 @@ class CostCalculater():
         self.__job_id_dir_path_list = []
         self.__cc_result_processtime_and_cost_list_list = []
         self.__process_time_hours_list = []
+        self.__running_time_hours_list = []
         self.__cost_per_job_list = []
+        self.__run_cost_per_job_list = []
         self.__output_header =[]
         self.__total_time_and_cost_list = []
 
@@ -148,7 +150,7 @@ class CostCalculater():
         last_created_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__EXIT_SUCCESS_FILE_NAME)
         if not os.path.exists(first_created_file_path) or not os.path.exists(last_created_file_path):
             print('[CC_MESSAGE] WARNING: Relion output file "{}" or "{}" dose not exist!'.format(first_created_file_path, last_created_file_path))
-            self.__process_time_hhmm = 'n/a' 
+            self.__process_time_hhmm = 'N/A' 
             self.__process_time_hour = 0
         else:
             [self.__process_time_hhmm, self.__process_time_hour] = self.__calc_timestamp_diff(first_created_file_path, last_created_file_path)
@@ -160,8 +162,10 @@ class CostCalculater():
     #  - run.err exists
     #  - Job excuted with time command  (slurm is used -> do_queueu = Yes)
     #  - except external_cryolo  (becase external_cryolo job doesn't leave time in run.err file)
-    def __get_process_time_from_runerr(self, relion_dir_path, job_id_dir_path):
-        self.__process_time_runerr_hours = None
+    def __get_running_time_from_runerr(self, relion_dir_path, job_id_dir_path):
+        self.__running_time_hours = self.__process_time_hour
+        self.__running_time_hhmm = self.__process_time_hhmm
+        self.__running_time_list = []
         runerr_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__RUNERR_FILE_NAME)
         if set(['do_queue','queuename']).issubset(self.__job_star_options_dict.keys()) and self.__job_star_options_dict['do_queue'] == 'Yes' and not 'cryolo' in self.__job_star_options_dict['queuename']:
             if not os.path.exists(runerr_file_path):
@@ -174,10 +178,13 @@ class CostCalculater():
                 # change 'xxxmxxxs' format to hours 
                 for runerr_line in runerr_line_list:
                     if 'real' in runerr_line:
-                        process_time_runerr = runerr_line.split()[1]
-                        (min, sec) = re.findall(r"[0-9.]+", process_time_runerr)
-                        self.__process_time_runerr_hours = round((int(min)*60 + float(sec))/int(3600),3)
+                        running_time = runerr_line.split()[1]
+                        (min, sec) = re.findall(r"[0-9.]+", running_time)
+                        self.__running_time_hours = (int(min)*60 + float(sec))/int(3600)
+                        self.__running_time_hhmm = datetime.timedelta(hours = self.__running_time_hours)
                         break
+        self.__running_time_list.extend([self.__running_time_hhmm, round(self.__running_time_hours,3)])
+        self.__running_time_hours_list.append(self.__running_time_hours)
     
     # Get job id directories recorded in default_pipeline.star under RELION project dir.
     # Create job id directories list (self.__job_id_dir_path_list).
@@ -263,40 +270,57 @@ class CostCalculater():
             self.__construct_job_star_dict(job_star_file_path)
             self.__get_parallel_settings()
             self.__get_process_time(relion_dir_path, job_id_dir_path)
+            # Create results list per job
             self.__results_list.append(job_id_dir_path)
             self.__results_list.extend(self.__parallel_settings_list)
             self.__results_list.extend(self.__process_time_list)
+            # Add header
             self.__output_header.extend(type(self).__OUTPUT_HEADER_JOB)
             self.__output_header.extend(type(self).__OUTPUT_HEADER_PARALLEL_SETTINGS)
             self.__output_header.extend(type(self).__OUTPUT_HEADER_PROCESS_TIME_STAMP)
+            # Calculate total processing time and cost for all job
+            self.__total_time_and_cost_list = [None]*(len(self.__output_header)-2)
+            self.__total_time_and_cost_list.extend(['Total Time', round(sum(self.__process_time_hours_list),3)])
             # If the instance price file exists, add instance information list and calculate cost per job and total cost.
             instance_info_yml_path = os.path.join(instance_yml_dir_path, type(self).__INSTANCE_INFO_YML_NAME)
             if os.path.exists(instance_info_yml_path):
-                self.__get_process_time_from_runerr(relion_dir_path, job_id_dir_path)
-                if self.__process_time_hour != None and self.__process_time_runerr_hours != None:
-                    time_diff = round((float(self.__process_time_hour) - float(self.__process_time_runerr_hours))*60,1)
+                self.__get_running_time_from_runerr(relion_dir_path, job_id_dir_path)
+                if self.__process_time_hour != None and self.__running_time_hours != None:
+                    time_diff = round((float(self.__process_time_hour) - float(self.__running_time_hours))*60,1)
                 else:
-                    time_diff = None
+                    time_diff = 'N/A'
                 self.__get_instance_info(instance_info_yml_path, aws_region)
                 cost_per_hours = self.__instance_info_list[-1]
-                if cost_per_hours != None and self.__nr_nodes != None and self.__process_time_hour != None:
-                    cost_per_job = cost_per_hours * self.__nr_nodes * self.__process_time_hour
+                if cost_per_hours != None and self.__nr_nodes != None: 
+                    if self.__process_time_hour != None:
+                        cost_per_job = cost_per_hours * self.__nr_nodes * self.__process_time_hour
+                    else:
+                        cost_per_job = 0
+                    if self.__running_time_hours != None:
+                        run_cost_per_job = cost_per_hours * self.__nr_nodes * self.__running_time_hours
+                    else:
+                        run_cost_per_job = 0
                 else:
                     cost_per_job = 0
-                self.__results_list.append(self.__process_time_runerr_hours)
+                    run_cost_per_job = 0
+                # Create results list per job (add cost information)
+                self.__results_list.extend(self.__running_time_list)
                 self.__results_list.append(time_diff)
                 self.__results_list.extend(self.__instance_info_list)
-                self.__results_list.append(round(cost_per_job,3))
-                self.__cost_per_job_list.append(round(cost_per_job,3))
+                self.__results_list.extend([round(cost_per_job,3),round(run_cost_per_job,3)])
+                self.__cost_per_job_list.append(cost_per_job)
+                self.__run_cost_per_job_list.append(run_cost_per_job)
+                # Add Header (add cost information)
                 self.__output_header.extend(type(self).__OUTPUT_HEADER_PROCESS_TIME_COMMAND)
                 self.__output_header.extend(type(self).__OUTPUT_HEADER_INSTANCE)
+                # Calculate total processing time and cost for all job
+                self.__total_time_and_cost_list.extend([None,round(sum(self.__running_time_hours_list),3)])
+                self.__total_time_and_cost_list.extend([None]*(len(type(self).__OUTPUT_HEADER_PROCESS_TIME_COMMAND)+len(type(self).__OUTPUT_HEADER_INSTANCE)-5))           
+                self.__total_time_and_cost_list.extend(['Total Cost', round(sum(self.__cost_per_job_list),3),round(sum(self.__run_cost_per_job_list),3)])
+            # Create results list of all jobs
             self.__cc_result_processtime_and_cost_list_list.append(self.__results_list)
-        
-        # Calculate total processing time and cost for all job 
-        self.__total_time_and_cost_list = [None]*(len(self.__output_header)-len(type(self).__OUTPUT_HEADER_PROCESS_TIME_COMMAND)-len(type(self).__OUTPUT_HEADER_INSTANCE)-2)
-        self.__total_time_and_cost_list.extend(['Total Time', round(sum(self.__process_time_hours_list),3)])
-        self.__total_time_and_cost_list.extend([None]*(len(type(self).__OUTPUT_HEADER_PROCESS_TIME_COMMAND)+len(type(self).__OUTPUT_HEADER_INSTANCE)-2))
-        self.__total_time_and_cost_list.extend(['Total Cost', round(sum(self.__cost_per_job_list),3)])
+
+ 
 
     # Save the parallel settings, processing time, instance information and cost to a csv file.
     def __save_cc_result_csv(self, relion_dir_path, output_dir_path):
