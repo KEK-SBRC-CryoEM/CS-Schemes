@@ -15,16 +15,16 @@
 #
 # Example)
 #  -- fsx
-#   |-- CostCalculater
-#     |-- CostCalculater.py
-#     |-- Config_instance_info.yml
+#   |-- cost_calculator
+#     |-- cost_calculator.py
+#     |-- config_instance_info.yml
 #   |-- RELION project directory
 #
 # $ cd /fsx/RELION project directory
-# $ python3 /fsx/CostCalculater/CostCalculater.py
+# $ python3 /fsx/cost_calculator/cost_calculator.py
 #
 #　You can also use as follows.
-# $ python3 /fsx/CostCalculater/CostCalculater.py --relion_dir /fsx/<RELION project directory>
+# $ python3 /fsx/cost_calculator/cost_calculator.py --relion_dir /fsx/<RELION project directory>
 #
 ##########################################################################################
 # Output data to csv file.
@@ -62,8 +62,8 @@
 # Directory structure
 # 
 # - Script Directory 
-#   |-- CostCalculaterr.py
-#   |-- Config_instance_info.yml
+#   |-- cost_calculator.py
+#   |-- config_instance_info.yml
 #
 # - <INPUT>
 #   |-- RELION Project dir   (default: current dir)
@@ -87,7 +87,7 @@ import yaml
 import starfile
 import argparse
 
-class CostCalculater():
+class CostCalculator():
     # Private class constants
     __OUTPUT_HEADER_JOB=['JobType/JobID']
     __OUTPUT_HEADER_PARALLEL_SETTINGS = ['Job Name','GPUs','MPI','Thread','MPIs/Node','Nodes']
@@ -378,8 +378,8 @@ if __name__ == "__main__":
     print('[CC_MESSAGE] Calculating execution time and cost of all jobs in relion project directory...')
     print('[CC_MESSAGE] ')
     print('[CC_MESSAGE] ')
-    cost_calculater = CostCalculater()
-    cost_calculater.edit(option_instance_yml_dir_path, option_relion_dir_path, option_output_dir_path, option_aws_region)
+    cost_calculator = CostCalculator()
+    cost_calculator.edit(option_instance_yml_dir_path, option_relion_dir_path, option_output_dir_path, option_aws_region)
     print('[CC_MESSAGE] ')
     print('[CC_MESSAGE] ')
     print('[CC_MESSAGE] DONE!')
