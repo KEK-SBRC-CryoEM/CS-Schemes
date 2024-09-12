@@ -5,15 +5,15 @@ Settings:
   SS_comm_dup_thresh: 25
   SS_comm_sym_name: D2
   SS_comm_lbin_angpix: 3.54
-  SS_comm_lbin_ref3d_path: ref3d_beta_galactosidase_apix3o54_d64.mrc
+  SS_comm_lbin_ref3d_path: Inputs/ref3d_beta_galactosidase_apix3o54_d64.mrc
   SS_comm_lbin_ref3d_name: ref3d_beta_galactosidase_apix3o54_d64.mrc
-  SS_comm_lbin_mask3d_path: mask3d_beta_galactosidase_apix3o54_d64.mrc
+  SS_comm_lbin_mask3d_path: Inputs/mask3d_beta_galactosidase_apix3o54_d64.mrc
   SS_comm_lbin_mask3d_name: mask3d_beta_galactosidase_apix3o54_d64.mrc
   SS_comm_mbin_angpix: 1.244
   SS_comm_mbin_0o95box_pmd: 303
-  SS_comm_mbin_ref3d_path: ref3d_beta_galactosidase_apix1o244_d256.mrc
+  SS_comm_mbin_ref3d_path: Inputs/ref3d_beta_galactosidase_apix1o244_d256.mrc
   SS_comm_mbin_ref3d_name: ref3d_beta_galactosidase_apix1o244_d256.mrc
-  SS_comm_mbin_mask3d_path: mask3d_beta_galactosidase_apix1o244_d256.mrc
+  SS_comm_mbin_mask3d_path: Inputs/mask3d_beta_galactosidase_apix1o244_d256.mrc
   SS_comm_mbin_mask3d_name: mask3d_beta_galactosidase_apix1o244_d256.mrc
   SS_comm_mbin_imported_mask3d_path: Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/\$\$SS_comm_mbin_mask3d_name
 #Common Advanced

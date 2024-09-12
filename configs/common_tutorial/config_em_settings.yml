@@ -1,6 +1,6 @@
 Settings:
   EM_movie_files: Movies/*.tiff
-  EM_mtf_file: mtf_k2_200kV.star
+  EM_mtf_file: Inputs/mtf_k2_200kV.star
   EM_mics_apix: 0.885
   EM_kV: 200
   EM_Cs: 1.4
