@@ -20,10 +20,10 @@
   Settings:
     WhichGpusToUse: ''
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: '36'
+    NumberOfMpi: '24'
     NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfNodes: '1'
-    MinimumDedicatedCores: '36'
+    MinimumDedicatedCores: '24'
     AdditionalArguments: '""'
 - AlgoLevel: ctffind_gctf_GPU
   Settings:
@@ -38,19 +38,19 @@
   Settings:
     WhichGpusToUse: ''
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: '36'
+    NumberOfMpi: '24'
     NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfNodes: '1'
-    MinimumDedicatedCores: '36'
+    MinimumDedicatedCores: '24'
     AdditionalArguments: '""'
 - AlgoLevel: extract
   Settings:
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: '36'
+    NumberOfMpi: '24'
     NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfNodes: '1'
-    MinimumDedicatedCores: '36'
+    MinimumDedicatedCores: '24'
     AdditionalArguments: '""'
 - AlgoLevel: class2d_em_GPU
   Settings:
