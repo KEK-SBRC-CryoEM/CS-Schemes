@@ -8,89 +8,89 @@ JobStarSettings:
   CombinationSettings:
   - AlgoType: algo_type_import
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: NOQUEUE
   - AlgoType: algo_type_motioncorr_own
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: motioncorr_own
   - AlgoType: algo_type_motioncorr_mocor2
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: motioncorr_mocor2_GPU
   - AlgoType: algo_type_ctffind_ctff4
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: ctffind_ctff4
   - AlgoType: algo_type_ctffind_gctf
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_USE_GPU
     AlgoLevel: ctffind_gctf_GPU
   - AlgoType: algo_type_autopick_log
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: autopick_log
   - AlgoType: algo_type_extract
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: extract
   - AlgoType: algo_type_class2d_em
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_USE_GPU
     AlgoLevel: class2d_em_GPU
   - AlgoType: algo_type_class2d_vdam
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_USE_GPU
     AlgoLevel: class2d_vdam_GPU
   - AlgoType: algo_type_initialmodel
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_USE_GPU
     AlgoLevel: initialmodel_GPU
   - AlgoType: algo_type_class3d_default
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_USE_GPU
     AlgoLevel: class3d_default_GPU
   - AlgoType: algo_type_class3d_noalign
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: class3d_noalign
   - AlgoType: algo_type_refine3d
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_USE_GPU
     AlgoLevel: refine3d_GPU
   - AlgoType: algo_type_select
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: NOQUEUE
   - AlgoType: algo_type_ctfrefine
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: ctfrefine
   - AlgoType: algo_type_polish
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: polish
   - AlgoType: algo_type_maskcreate
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: maskcreate
   - AlgoType: algo_type_postprocess
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: postprocess
   - AlgoType: algo_type_localres_resmap
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: localres_resmap
   - AlgoType: algo_type_localres_own
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: localres_own
   - AlgoType: algo_type_external_cryolo
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_USE_GPU
     AlgoLevel: external_cryolo_GPU
   - AlgoType: algo_type_external_select3d
     SubmissionLevel: NOQUEUE
-    DeviceLevel: NOQUEUE_GPU
+    DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: external_select3d
