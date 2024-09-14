@@ -24,8 +24,9 @@
     Value: 'No'
     AlgoTypeName: 'motioncorr_mocor2'
 # NOTE: 2024/09/13 Toshio Moriya
-# The following options of relion.ctffind have been existed until relion/5.0-beta-0
+# The following RELION Job parameters of relion.ctffind have been existed until relion/5.0-beta-0
 # but both were removed from relion/5.0-beta-1
+# The algorithm type of the first entry will be priotized if the parameter is not supported.
 - JobType: 'relion.ctffind'
   JobOption:
   - Key: 'use_ctffind4'
