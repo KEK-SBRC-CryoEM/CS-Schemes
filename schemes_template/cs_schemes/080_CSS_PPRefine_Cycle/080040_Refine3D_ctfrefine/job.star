@@ -16,9 +16,9 @@ loop_
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
 fn_img                              Schemes/080_CSS_PPRefine_Cycle/080030_CtfRefine_ctf_params/particles_ctf_refine.star 
-fn_cont                             "" 
 fn_ref                              $$cycles_refine3d_refine_map 
 fn_mask                             $$SS_comm_mbin_imported_mask3d_path 
+fn_cont                             "" 
 ref_correct_greyscale               Yes 
 trust_ref_size                      No 
 ini_high                            0 

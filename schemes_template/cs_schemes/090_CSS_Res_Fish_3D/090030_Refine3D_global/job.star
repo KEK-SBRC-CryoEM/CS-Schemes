@@ -16,9 +16,9 @@ loop_
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
 fn_img                              Schemes/090_CSS_Res_Fish_3D/090020_External_select3d/selected_data.star 
-fn_cont                             "" 
 fn_ref                              Schemes/090_CSS_Res_Fish_3D/090020_External_select3d/selected_model_map.mrc 
 fn_mask                             $$SS_comm_mbin_imported_mask3d_path 
+fn_cont                             "" 
 ref_correct_greyscale               Yes 
 trust_ref_size                      No 
 ini_high                            15 

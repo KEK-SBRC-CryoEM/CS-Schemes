@@ -16,9 +16,9 @@ loop_
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
 fn_img                              Schemes/080_CSS_PPRefine_Cycle/080060_Polish/shiny.star 
-fn_cont                             "" 
 fn_ref                              Schemes/080_CSS_PPRefine_Cycle/080040_Refine3D_ctfrefine/run_class001.mrc 
 fn_mask                             $$SS_comm_mbin_imported_mask3d_path 
+fn_cont                             "" 
 ref_correct_greyscale               Yes 
 trust_ref_size                      No 
 ini_high                            0 

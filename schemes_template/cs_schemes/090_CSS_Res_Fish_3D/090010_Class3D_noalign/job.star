@@ -16,9 +16,9 @@ loop_
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
 fn_img                              $$CSS_mbin_resfish3d_refined_star 
-fn_cont                             "" 
 fn_ref                              $$CSS_mbin_resfish3d_ref3d 
 fn_mask                             $$SS_comm_mbin_imported_mask3d_path 
+fn_cont                             "" 
 ref_correct_greyscale               Yes 
 trust_ref_size                      No 
 ini_high                            0 

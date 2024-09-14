@@ -16,9 +16,9 @@ loop_
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
 fn_img                              $$selected_parts 
-fn_cont                             $$cls3d_cont_data_path 
 fn_ref                              $$imported_ref3d 
 fn_mask                             $$mask3d_cls3d 
+fn_cont                             $$cls3d_cont_data_path 
 ref_correct_greyscale               No 
 trust_ref_size                      No 
 ini_high                            $$CSS_lbin_center3d_class3d_lpf 
