@@ -1,0 +1,20 @@
+- SubmissionLevel: slurm_2gpu
+  Settings: 
+    SubmitToQueue: 'Yes'
+    SubmitCommand: 'sbatch'
+    SubmissionScript: '/apps/packages/relion-5.0/relion-5.0-slurm-2gpu.sh'
+- SubmissionLevel: slurm_4gpu
+  Settings:
+    SubmitToQueue: 'Yes'
+    SubmitCommand: 'sbatch'
+    SubmissionScript: '/apps/packages/relion-5.0/relion-5.0-slurm-4gpu.sh'
+- SubmissionLevel: slurm_cpu
+  Settings:
+    SubmitToQueue: 'Yes'
+    SubmitCommand: 'sbatch'
+    SubmissionScript: '/apps/packages/relion-5.0/relion-5.0-slurm-cpu.sh '
+- SubmissionLevel: NOQUEUE
+  Settings:
+    SubmitToQueue: 'No'
+    SubmitCommand: 'JSE_DISABLED_PARALLEL'
+    SubmissionScript: 'JSE_DISABLED_PARALLEL'

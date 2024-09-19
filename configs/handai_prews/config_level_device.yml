@@ -1,0 +1,20 @@
+- DeviceLevel: device_gpu
+  Settings:
+    ScratchDirectory: '\$SCRATCH_DIR'
+    UseGpu: 'Yes'
+    Partition: 'gpu'
+- DeviceLevel: device_cpu
+  Settings:
+    ScratchDirectory: '\$SCRATCH_DIR'
+    UseGpu: 'No'
+    Partition: 'cpu'
+- DeviceLevel: NOQUEUE_GPU
+  Settings:
+    ScratchDirectory: '\$SCRATCH_DIR'
+    UseGpu: 'Yes'
+    Partition: 'JSE_DISABLED_PARALLEL'
+- DeviceLevel: NOQUEUE_CPU
+  Settings:
+    ScratchDirectory: 'JSE_NOT_APPLICABLE_PARALLEL'
+    UseGpu: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Partition: 'JSE_DISABLED_PARALLEL'

@@ -1,0 +1,96 @@
+### Do not Change ### 
+NonEditableAlertDisplay: True
+JobStarSettings: 
+  LevelFile: 
+    SubmissionLevel: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent/config_level_submission.yml
+    DeviceLevel: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent/config_level_device.yml
+    AlgoLevel: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent/config_level_algo.yml
+  CombinationSettings:
+  - AlgoType: algo_type_import
+    SubmissionLevel: NOQUEUE
+    DeviceLevel: NOQUEUE_CPU
+    AlgoLevel: NOQUEUE
+  - AlgoType: algo_type_motioncorr_own
+    SubmissionLevel: slurm_cpu
+    DeviceLevel: device_cpu
+    AlgoLevel: motioncorr_own
+  - AlgoType: algo_type_motioncorr_mocor2
+    SubmissionLevel: slurm_4gpu
+    DeviceLevel: device_gpu
+    AlgoLevel: motioncorr_mocor2_GPU
+  - AlgoType: algo_type_ctffind_ctff4
+    SubmissionLevel: slurm_cpu
+    DeviceLevel: device_cpu
+    AlgoLevel: ctffind_ctff4
+  - AlgoType: algo_type_ctffind_gctf
+    SubmissionLevel: slurm_4gpu
+    DeviceLevel: device_gpu
+    AlgoLevel: ctffind_gctf_GPU
+  - AlgoType: algo_type_autopick_log
+    SubmissionLevel: slurm_cpu
+    DeviceLevel: device_cpu
+    AlgoLevel: autopick_log
+  - AlgoType: algo_type_extract
+    SubmissionLevel: slurm_cpu
+    DeviceLevel: device_cpu
+    AlgoLevel: extract
+  - AlgoType: algo_type_class2d_em
+    SubmissionLevel: slurm_4gpu
+    DeviceLevel: device_gpu
+    AlgoLevel: class2d_em_GPU
+  - AlgoType: algo_type_class2d_vdam
+    SubmissionLevel: slurm_4gpu
+    DeviceLevel: device_gpu
+    AlgoLevel: class2d_vdam_GPU
+  - AlgoType: algo_type_initialmodel
+    SubmissionLevel: slurm_4gpu
+    DeviceLevel: device_gpu
+    AlgoLevel: initialmodel_GPU
+  - AlgoType: algo_type_class3d_default
+    SubmissionLevel: slurm_4gpu
+    DeviceLevel: device_gpu
+    AlgoLevel: class3d_default_GPU
+  - AlgoType: algo_type_class3d_noalign
+    SubmissionLevel: slurm_cpu
+    DeviceLevel: device_cpu
+    AlgoLevel: class3d_noalign
+  - AlgoType: algo_type_refine3d
+    SubmissionLevel: slurm_4gpu
+    DeviceLevel: device_gpu
+    AlgoLevel: refine3d_GPU
+  - AlgoType: algo_type_select
+    SubmissionLevel: NOQUEUE
+    DeviceLevel: NOQUEUE_CPU
+    AlgoLevel: NOQUEUE
+  - AlgoType: algo_type_ctfrefine
+    SubmissionLevel: slurm_cpu
+    DeviceLevel: device_cpu
+    AlgoLevel: ctfrefine
+  - AlgoType: algo_type_polish
+    SubmissionLevel: slurm_cpu
+    DeviceLevel: device_cpu
+    AlgoLevel: polish
+  - AlgoType: algo_type_maskcreate
+    SubmissionLevel: slurm_cpu
+    DeviceLevel: device_cpu
+    AlgoLevel: maskcreate
+  - AlgoType: algo_type_postprocess
+    SubmissionLevel: NOQUEUE
+    DeviceLevel: NOQUEUE_CPU
+    AlgoLevel: postprocess
+  - AlgoType: algo_type_localres_resmap
+    SubmissionLevel: NOQUEUE
+    DeviceLevel: NOQUEUE_CPU
+    AlgoLevel: localres_resmap
+  - AlgoType: algo_type_localres_own
+    SubmissionLevel: slurm_cpu
+    DeviceLevel: device_cpu
+    AlgoLevel: localres_own
+  - AlgoType: algo_type_external_cryolo
+    SubmissionLevel: slurm_4gpu
+    DeviceLevel: device_gpu
+    AlgoLevel: external_cryolo_GPU
+  - AlgoType: algo_type_external_select3d
+    SubmissionLevel: NOQUEUE
+    DeviceLevel: NOQUEUE_CPU
+    AlgoLevel: external_select3d

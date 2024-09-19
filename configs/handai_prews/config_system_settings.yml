@@ -1,0 +1,30 @@
+### Do not change ###
+NonEditableAlertDisplay: False
+JobStarSettings: 
+- AlgoType: algo_type_motioncorr_own
+  Settings:
+    MOTIONCOR2Executable: 'JSE_DISABLED_SYSTEM'
+- AlgoType: algo_type_motioncorr_mocor2
+  Settings:
+    MOTIONCOR2Executable: 'JSE_NOT_SUPPORTED_SYSTEM'
+- AlgoType: algo_type_ctffind_ctff4
+  Settings:
+    GctfExecutable: 'JSE_DISABLED_SYSTEM'
+    CTFFIND4Executable: '/apps/packages/cisTEM-2.0.0-alpha-183/bin/ctffind'
+- AlgoType: algo_type_ctffind_gctf
+  Settings:
+    GctfExecutable: 'JSE_NOT_SUPPORTED_SYSTEM'
+    CTFFIND4Executable: 'JSE_DISABLED_SYSTEM'
+- AlgoType: algo_type_localres_resmap
+  Settings:
+    ResMapExecutable:  'JSE_NOT_SUPPORTED_SYSTEM'
+- AlgoType: algo_type_localres_own
+  Settings:
+    ResMapExecutable:  'JSE_DISABLED_SYSTEM'
+- AlgoType: algo_type_external_cryolo
+  Settings:
+    CrYOLOExecutable: '/home/tmoriya/mrk_apps/cryolo/gtf_relion4_run_cryolo_system.sh'
+    CrYOLORepo: '/home/tmoriya/mrk_apps/cryolo'
+- AlgoType: algo_type_external_select3d
+  Settings:
+    SelectClass3DExecutable: '"/home/tmoriya/mrk_apps/select_class3d/gtf_relion4_run_select_class3d.py"'
