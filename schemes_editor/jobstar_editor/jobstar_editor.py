@@ -113,7 +113,7 @@ class JobTypeToAlgoTypeHandler:
             # print('[JSE_DEBUG] self.__algo_type_converted   := "{}"'.format(self.__algo_type_converted))
             # print('[JSE_DEBUG] self.__algo_type_unconverted := "{}"'.format(self.__algo_type_unconverted))
             # print('[JSE_DEBUG] ')
-            print('[JSE_WARNING] The targeted RELION Job STAR parameter key "{}" is not found for for job_type "{}"'.format(self.__job_star_param_key, job_type))
+            print('[JSE_WARNING] The targeted RELION Job STAR parameter key "{}" is not found for job_type "{}"'.format(self.__job_star_param_key, job_type))
             print('[JSE_WARNING]   The currently active RELION version must not support this parameter.')
             print('[JSE_WARNING]   Setting this RELION Job type to the algorithm type "{}".'.format(self.__algo_type_converted))
             algo_type = self.__algo_type_converted
