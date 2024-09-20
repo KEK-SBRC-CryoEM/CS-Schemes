@@ -15,7 +15,7 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_exe           $$select_class3d_exe 
+fn_exe           XXX_JSE_REPLACE_SYSTEM_XXX 
 in_mov           "" 
 in_mic           "" 
 in_part          Schemes/090_CSS_Res_Fish_3D/090010_Class3D_noalign/run_it025_data.star 
