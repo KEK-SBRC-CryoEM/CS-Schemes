@@ -97,6 +97,7 @@ class CostCalculator():
     __PIPELINE_STAR_FILE_NAME = 'default_pipeline.star'
     __NOTE_TXT_FILE_NAME = 'note.txt'
     __EXIT_SUCCESS_FILE_NAME = 'RELION_JOB_EXIT_SUCCESS'
+    __RUNOUT_FILE_NAME = 'run.out'
     __RUNERR_FILE_NAME = 'run.err'
     __JOB_STAR_FILE_NAME = 'job.star'
     __JOB_STAR_KEY_LIST = ['queuename', 'gpu_ids', 'nr_mpi', 'nr_threads', 'min_dedicated']
@@ -186,6 +187,32 @@ class CostCalculator():
         self.__running_time_list.extend([self.__running_time_hhmm, round(self.__running_time_hours,3)])
         self.__running_time_hours_list.append(self.__running_time_hours)
     
+    # Get process time from run.out
+    # Availability conditions
+    #  - run.out exists
+    #  - Job excuted with time command  (slurm is used -> do_queueu = Yes)
+    def __get_running_time_from_runout(self, relion_dir_path, job_id_dir_path):
+        self.__running_time_hours = self.__process_time_hour
+        self.__running_time_hhmm = self.__process_time_hhmm
+        self.__running_time_list = []
+        runout_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__RUNOUT_FILE_NAME)
+        if set(['do_queue','queuename']).issubset(self.__job_star_options_dict.keys()) and self.__job_star_options_dict['do_queue'] == 'Yes':
+            if not os.path.exists(runout_file_path):
+                print('[CC_MESSAGE] WARNING: Relion output file "{}" dose not exist!'.format(runout_file_path))
+            else:
+                assert os.path.exists(runout_file_path), '[PS_ASSERT] The file "{}" must exist at this point of code!'.format(runout_file_path)
+                with open(runout_file_path, 'r') as runout_file:
+                    runout_line_list = [runout_line for runout_line in runout_file.readlines()]
+                assert len(runout_line_list) > 0, '[PS_ASSERT] The file "{}" contains no lines! Something is seriously wrong with this star file!'.format(runout_file_path)
+                for runout_line in runout_line_list:
+                    if runout_line.startswith("Elapsed (Unix time):"):
+                        sec = int(runout_line.split(":")[1])
+                        self.__running_time_hours = sec/3600
+                        self.__running_time_hhmm = datetime.timedelta(hours = self.__running_time_hours)
+                        break
+        self.__running_time_list.extend([self.__running_time_hhmm, round(self.__running_time_hours,3)])
+        self.__running_time_hours_list.append(self.__running_time_hours)
+
     # Get job id directories recorded in default_pipeline.star under RELION project dir.
     # Create job id directories list (self.__job_id_dir_path_list).
     def __get_jobid_dir_path(self,relion_dir_path):
@@ -284,7 +311,7 @@ class CostCalculator():
             # If the instance price file exists, add instance information list and calculate cost per job and total cost.
             instance_info_yml_path = os.path.join(instance_yml_dir_path, type(self).__INSTANCE_INFO_YML_NAME)
             if os.path.exists(instance_info_yml_path):
-                self.__get_running_time_from_runerr(relion_dir_path, job_id_dir_path)
+                self.__get_running_time_from_runout(relion_dir_path, job_id_dir_path)
                 if self.__process_time_hour != None and self.__running_time_hours != None:
                     time_diff = round((float(self.__process_time_hour) - float(self.__running_time_hours))*60,1)
                 else:
