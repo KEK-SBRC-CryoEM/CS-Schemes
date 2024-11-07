@@ -83,9 +83,18 @@ import csv
 import re
 import os.path
 import datetime
+import argparse
+import warnings
+warnings.simplefilter('ignore', FutureWarning)
+# suppress FutureWarning(s) in starfile package
+# /efs/em/pyenv/versions/anaconda3-2023.03/envs/schemes-editing-py3.12/lib/python3.12/site-packages/starfile/parser.py:106: FutureWarning: The 'delim_whitespace' keyword in pd.read_csv is deprecated and will be removed in a future version. Use ``sep='\s+'`` instead
+#   df = pd.read_csv(
+# /home/ubuntu/conda/envs/schemes-editing-py3.12/lib/python3.12/site-packages/starfile/parser.py:113: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_numeric without passing `errors` and catch exceptions explicitly instead
+#   df_numeric = df.apply(pd.to_numeric, errors='ignore')
+
 import yaml
 import starfile
-import argparse
+
 
 class CostCalculator():
     # Private class constants
@@ -138,8 +147,9 @@ class CostCalculator():
         start_date = self.__get_timestamp(first_created_file_path)
         end_date = self.__get_timestamp(last_created_file_path)
         timestamp_diff = end_date - start_date
-        timestamp_diff_hour = timestamp_diff.total_seconds()/3600
-        return timestamp_diff, timestamp_diff_hour
+        timestamp_diff_round_milliseconds = datetime.timedelta(seconds=round(timestamp_diff.total_seconds()))
+        timestamp_diff_hour = timestamp_diff_round_milliseconds.total_seconds()/3600
+        return timestamp_diff_round_milliseconds, timestamp_diff_hour
 
     # Get Relion processing time (type of hh:mm:ss and hours)
     def __get_process_time(self, relion_dir_path, job_id_dir_path):
@@ -251,17 +261,20 @@ class CostCalculator():
             else:
                 self.__parallel_settings_list.append(None)   # If the key dose not exist, add empty to list.
 
-        # # Calculates number of nodes
-        # if set(['do_queue','nr_mpi', 'min_dedicated']).issubset(self.__job_star_options_dict.keys()) and self.__job_star_options_dict['do_queue'] == 'Yes':  
-        #     self.__nr_nodes = (int(self.__job_star_options_dict['nr_mpi']) + int(self.__job_star_options_dict['min_dedicated']) - 1) // int(self.__job_star_options_dict['min_dedicated'])
-        # elif 'cryolo' in self.__job_star_options_dict['queuename']:
-        #     self.__nr_nodes = self.__job_star_options_dict['param3_value'].count('0')  # Number of '0' is considered as the number of nodes in the case of 'cyrolo.
-        # else:
-        #     self.__nr_nodes = None
-
-        # Get the number of used nodes directly from 'qsub_extra2', not estimate/calculate from 'nr_mpi' & 'min_dedicated'
-        self.__nr_nodes = int(self.__job_star_options_dict['qsub_extra2'])
+        if 'qsub_extra2' in self.__job_star_options_dict:
+            # Get the number of used nodes directly from 'qsub_extra2', not estimating/calculating from 'nr_mpi' & 'min_dedicated'
+            self.__nr_nodes = int(self.__job_star_options_dict['qsub_extra2'])
+        else:
+            # Calculates number of nodes
+            if set(['do_queue','nr_mpi', 'min_dedicated']).issubset(self.__job_star_options_dict.keys()) and self.__job_star_options_dict['do_queue'] == 'Yes':  
+                self.__nr_nodes = (int(self.__job_star_options_dict['nr_mpi']) + int(self.__job_star_options_dict['min_dedicated']) - 1) // int(self.__job_star_options_dict['min_dedicated'])
+            elif 'cryolo' in self.__job_star_options_dict['queuename']:
+                self.__nr_nodes = self.__job_star_options_dict['param3_value'].count('0')  # Number of '0' is considered as the number of nodes in the case of 'cyrolo.
+            else:
+                self.__nr_nodes = None
+        
         self.__parallel_settings_list.append(self.__nr_nodes)
+
 
     # Get instance information from yaml file where instance name, price, etc are set.
     # Create instance information list (self.__instance_info_list)
