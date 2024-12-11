@@ -63,7 +63,7 @@ Settings:
   GTF_lbin_class2d_pmds_rank_thresh: 0.06
 #050_GTF_AbInitReconst3D
   GTF_lbin_abinit3d_do_limit_parts: 0
-  GTF_lbin_abinit3d_min_nr_parts: 4000
+  GTF_lbin_abinit3d_min_nr_parts: 6000
   GTF_lbin_abinit3d_pmd: 200
   GTF_lbin_abinit3d_sym_name: D2
 #050_GTF_AbInitReconst3D Advanced
@@ -74,7 +74,7 @@ Settings:
   GTF_lbin_abinit3d_do_run_C1: 1
 #060_CSS_Clean_Stack_3D
   CSS_lbin_center3d_do_limit_parts: 0
-  CSS_lbin_center3d_min_nr_parts: 4000
+  CSS_lbin_center3d_min_nr_parts: 6000
   CSS_lbin_center3d_class3d_use_mask3d: 1
   CSS_lbin_center3d_class3d_lpf: 30
   CSS_lbin_center3d_class3d_sym: C1

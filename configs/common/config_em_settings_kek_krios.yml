@@ -1,5 +1,5 @@
 Settings:
-  EM_movie_files: Micrographs/*.eer
+  EM_movie_files: Micrographs/*.tiff
   EM_mtf_file: '""' 
   EM_mics_apix: 0.75
   EM_kV: 300
@@ -10,4 +10,4 @@ Settings:
   EM_motioncorr_patch_x: 5
   EM_motioncorr_patch_y: 5
   EM_ctffind_fit_res_min: 30
-  EM_ctffind_fit_res_max: 4
+  EM_ctffind_fit_res_max: 3

@@ -56,9 +56,9 @@
   Settings:
     WhichGpusToUse: '0:1:2:3'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: '65'
+    NumberOfMpi: '129'
     NumberOfThreads: '3'
-    NumberOfNodes: '4'
+    NumberOfNodes: '8'
     MinimumDedicatedCores: '16'
     AdditionalArguments: '"--fast_subsets"'
 - AlgoLevel: class2d_em_CPU
@@ -90,12 +90,12 @@
     AdditionalArguments: '""'
 - AlgoLevel: class3d_default_GPU
   Settings:
-    WhichGpusToUse: '0:1:2:3:4:5:6:7'
+    WhichGpusToUse: '0:1:2:3:4:5:6:7:0:1:2:3:4:5:6:7'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: '33'
-    NumberOfThreads: '12'
+    NumberOfMpi: '17'
+    NumberOfThreads: '6'
     NumberOfNodes: '2'
-    MinimumDedicatedCores: '16'
+    MinimumDedicatedCores: '9'
     AdditionalArguments: '""'
 - AlgoLevel: class3d_default_CPU
   Settings:
@@ -119,10 +119,10 @@
   Settings:
     WhichGpusToUse: '0:1:2:3:4:5:6:7'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: '17'
-    NumberOfThreads: '12'
-    NumberOfNodes: '2'
-    MinimumDedicatedCores: '8'
+    NumberOfMpi: '9'
+    NumberOfThreads: '6'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '9'
     AdditionalArguments: '""'
 - AlgoLevel: refine3d_CPU
   Settings:
