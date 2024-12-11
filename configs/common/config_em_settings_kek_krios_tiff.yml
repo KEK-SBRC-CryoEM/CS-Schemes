@@ -1,6 +1,6 @@
 Settings:
   EM_movie_files: Micrographs/*.tiff
-  EM_mtf_file: "" 
+  EM_mtf_file: '""' 
   EM_mics_apix: 0.75
   EM_kV: 300
   EM_Cs: 2.7
