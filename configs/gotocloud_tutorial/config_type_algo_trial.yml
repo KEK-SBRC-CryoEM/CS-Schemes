@@ -4,7 +4,7 @@ JobStarSettings:
   LevelFile: 
     SubmissionLevel: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent/config_level_submission.yml
     DeviceLevel: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent/config_level_device.yml
-    AlgoLevel: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent_tutorial/c
+    AlgoLevel: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent_tutorial/config_level_algo_trial.yml
   CombinationSettings:
   - AlgoType: algo_type_import
     SubmissionLevel: NOQUEUE
