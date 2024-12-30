@@ -17,8 +17,6 @@ Settings:
   SS_comm_mbin_mask3d_name: mask3d_beta_galactosidase_apix1o244_d256.mrc
   SS_comm_mbin_imported_mask3d_path: Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/\$\$SS_comm_mbin_mask3d_name
 #Common Advanced
-  SS_comm_wait_prev_proc_gtf_debug: 1
-  SS_comm_wait_prev_proc: 1
   SS_comm_motioncorr_mics_star: Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star
   SS_comm_ctf_mics_star: Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star
   SS_comm_lbin_do_preread_images: 1
@@ -31,10 +29,14 @@ Settings:
   GTF_gain_ref_file: Movies/gain.mrc
   GTF_motioncorr_do_at_most: 99999
   GTF_motioncorr_total_max_limit: 80
+#010_GTF_MotionCorr Advanced
+  GTF_motioncorr_run_only_once: 1
 #020_GTF_CtfFind
   GTF_ctffind_search_def_min : 5000
   GTF_ctffind_search_def_max : 20000
   GTF_ctffind_res_max_limit: 6.0
+#020_GTF_CtfFind Advanced
+  GTF_ctffind_run_only_once: 1
 #030_GTF_Create_Stack
   GTF_pick_do_limit_mics: 0
   GTF_pick_min_nr_mics: 24
@@ -52,21 +54,27 @@ Settings:
   GTF_pick_log_pdm_max: 180
   GTF_pick_log_adjust_thresh: 0
   GTF_pick_log_upper_thresh: 5
+  GTF_lbin_extract_run_only_once: 1
 #040_GTF_Class2D_PMDs
-  GTF_lbin_class2d_pmds_in_parts_star: Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star
   GTF_lbin_class2d_pmds_do_limit_parts: 0
   GTF_lbin_class2d_pmds_min_nr_parts: 4000
   GTF_lbin_class2d_pmds_base_pmd: 180
   GTF_lbin_class2d_pmds_pad_min: 0
   GTF_lbin_class2d_pmds_pad_max: 40
-  GTF_lbin_class2d_pmds_pad_step: 20
+  GTF_lbin_class2d_pmds_pad_step: 40
   GTF_lbin_class2d_pmds_rank_thresh: 0.06
+#040_GTF_Class2D_PMDs Advanced
+  GTF_lbin_class2d_pmds_wait_prev_proc: 1
+  GTF_lbin_class2d_pmds_prev_proc_exited: Schemes/030_GTF_Create_Stack/RELION_JOB_EXIT_SUCCESS
+  GTF_lbin_class2d_pmds_in_parts_star: Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star
 #050_GTF_AbInitReconst3D
   GTF_lbin_abinit3d_do_limit_parts: 0
   GTF_lbin_abinit3d_min_nr_parts: 4000
   GTF_lbin_abinit3d_pmd: 200
   GTF_lbin_abinit3d_sym_name: D2
 #050_GTF_AbInitReconst3D Advanced
+  GTF_lbin_abinit3d_wait_prev_proc: 1
+  GTF_lbin_abinit3d_prev_proc_exited: Schemes/040_GTF_Class2D_PMDs/RELION_JOB_EXIT_SUCCESS
   GTF_lbin_abinit3d_in_parts_star: Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star
   GTF_lbin_abinit3d_clean2d_cycles_max: 1
   GTF_lbin_abinit3d_clean2d_rank_thresh: 0.06
@@ -83,6 +91,8 @@ Settings:
   CSS_lbin_center3d_refine3d_sym_name: C1
   CSS_lbin_center3d_postproc_adhoc_lpf: 10.62
 #060_CSS_Clean_Stack_3D Advanced
+  CSS_lbin_center3d_wait_prev_proc: 1
+  CSS_lbin_center3d_prev_proc_exited: Schemes/050_GTF_AbInitReconst3D/RELION_JOB_EXIT_SUCCESS
   CSS_lbin_center3d_parts_star: Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star
   CSS_lbin_center3d_clean2d_cycles_max: 0
   CSS_lbin_center3d_clean2d_rank_thresh: 0.06
@@ -101,18 +111,24 @@ Settings:
   CSS_mbin_reextract_parts_y_min: 180
   CSS_mbin_reextract_parts_y_max: 3658
 #070_CSS_Init_Refine3D Advanced
+  CSS_mbin_reextract_wait_prev_proc: 1
+  CSS_mbin_reextract_prev_proc_exited: Schemes/060_CSS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS
   CSS_mbin_reextract_refined_star: Schemes/060_CSS_Clean_Stack_3D/060080_Refine3D_global/run_data.star
 #080_CSS_PPRefine_Cycle
+  CSS_mbin_pprefine_cycles_max: 2
+#080_CSS_PPRefine_Cycle Advanced
+  CSS_mbin_pprefine_wait_prev_proc: 1
+  CSS_mbin_pprefine_prev_proc_exited: Schemes/070_CSS_Init_Refine3D/RELION_JOB_EXIT_SUCCESS
   CSS_mbin_pprefine_refined_star: Schemes/070_CSS_Init_Refine3D/070090_Refine3D_local/run_data.star
   CSS_mbin_pprefine_postproc_star: Schemes/070_CSS_Init_Refine3D/070100_PostProcess_local/postprocess.star
   CSS_mbin_pprefine_ref3d: Schemes/070_CSS_Init_Refine3D/070090_Refine3D_local/run_class001.mrc
-#080_CSS_PPRefine_Cycle Advanced
-  CSS_mbin_pprefine_cycles_max: 2
 #090_CSS_Res_Fish_3D
   CSS_mbin_resfish3d_classes: 2
   CSS_mbin_resfish3d_tval: 16
   CSS_mbin_resfish3d_locres_bfactor: -30
 #090_CSS_Res_Fish_3D Advanced
+  CSS_mbin_resfish3d_wait_prev_proc: 1
+  CSS_mbin_resfish3d_prev_proc_exited: Schemes/080_CSS_PPRefine_Cycle/RELION_JOB_EXIT_SUCCESS
   CSS_mbin_resfish3d_refined_star: Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_data.star
   CSS_mbin_resfish3d_ref3d: Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_class001.mrc
   CSS_mbin_resfish3d_do_fast_subsets: 1
