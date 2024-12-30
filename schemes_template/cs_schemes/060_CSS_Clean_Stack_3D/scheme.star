@@ -54,7 +54,7 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-SS_comm_wait_prev_proc                       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_wait_prev_proc             XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 has_exited                                   0                             0 
 has_all_parts                                0                             0 
 has_larger_nr_parts                          0                             0 
@@ -76,8 +76,8 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-prev_proc_exited                        Schemes/050_GTF_AbInitReconst3D/RELION_JOB_EXIT_SUCCESS                           Schemes/050_GTF_AbInitReconst3D/RELION_JOB_EXIT_SUCCESS 
-CSS_lbin_center3d_parts_star            Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star              Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star 
+CSS_lbin_center3d_prev_proc_exited      XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_lbin_center3d_parts_star            XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
 split_parts                             Schemes/060_CSS_Clean_Stack_3D/060010_Select_split_parts/particles_split1.star    Schemes/060_CSS_Clean_Stack_3D/060010_Select_split_parts/particles_split1.star 
 selected_parts                          ""                                                                                "" 
 SS_comm_lbin_ref3d_path                 XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
@@ -110,7 +110,7 @@ _rlnSchemeOperatorType #2
 _rlnSchemeOperatorOutput #3 
 _rlnSchemeOperatorInput1 #4 
 _rlnSchemeOperatorInput2 #5 
-HAS_prev_proc_exited               bool=file_exists      has_exited                                 prev_proc_exited                           undefined 
+HAS_prev_proc_exited               bool=file_exists      has_exited                                 CSS_lbin_center3d_prev_proc_exited         undefined 
 HAS_all_parts                      bool=file_exists      has_all_parts                              CSS_lbin_center3d_parts_star               undefined 
 INIT_selected_parts                string=set            selected_parts                             CSS_lbin_center3d_parts_star               undefined 
 COUNT_parts                        float=count_images    cur_nr_parts                               CSS_lbin_center3d_parts_star               particles 
@@ -171,7 +171,7 @@ _rlnSchemeEdgeOutputNodeName #2
 _rlnSchemeEdgeIsFork #3 
 _rlnSchemeEdgeOutputNodeNameIfTrue #4 
 _rlnSchemeEdgeBooleanVariable #5 
-WAIT                               HAS_all_parts                      1    EXIT_maxtime                   SS_comm_wait_prev_proc 
+WAIT                               HAS_all_parts                      1    EXIT_maxtime                   CSS_lbin_center3d_wait_prev_proc 
 EXIT_maxtime                       HAS_prev_proc_exited               0    undefined                      undefined 
 HAS_prev_proc_exited               WAIT                               1    HAS_all_parts                  has_exited 
 HAS_all_parts                      WAIT                               1    INIT_selected_parts            has_all_parts 

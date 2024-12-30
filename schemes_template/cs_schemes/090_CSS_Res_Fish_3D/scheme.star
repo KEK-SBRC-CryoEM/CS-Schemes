@@ -34,7 +34,7 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-SS_comm_wait_prev_proc                XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_resfish3d_wait_prev_proc     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_mbin_do_preread_images        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_mbin_resfish3d_do_fast_subsets    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 has_exited                            0                             0 
@@ -48,12 +48,12 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-prev_proc_exited                     Schemes/080_CSS_PPRefine_Cycle/RELION_JOB_EXIT_SUCCESS    Schemes/080_CSS_PPRefine_Cycle/RELION_JOB_EXIT_SUCCESS 
-CSS_mbin_resfish3d_refined_star      XXX_SSE_REPLACE_SAMPLE_XXX                                XXX_SSE_REPLACE_SAMPLE_XXX 
-CSS_mbin_resfish3d_ref3d             XXX_SSE_REPLACE_SAMPLE_XXX                                XXX_SSE_REPLACE_SAMPLE_XXX 
-SS_comm_mbin_imported_mask3d_path    XXX_SSE_REPLACE_SAMPLE_XXX                                XXX_SSE_REPLACE_SAMPLE_XXX 
-SS_comm_mbin_mask3d_name             XXX_SSE_REPLACE_SAMPLE_XXX                                XXX_SSE_REPLACE_SAMPLE_XXX 
-SS_comm_sym_name                     XXX_SSE_REPLACE_SAMPLE_XXX                                XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_resfish3d_prev_proc_exited    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_resfish3d_refined_star        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_resfish3d_ref3d               XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_imported_mask3d_path      XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_mask3d_name               XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_sym_name                       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 
 # version 30001 
 
@@ -65,10 +65,10 @@ _rlnSchemeOperatorType #2
 _rlnSchemeOperatorOutput #3 
 _rlnSchemeOperatorInput1 #4 
 _rlnSchemeOperatorInput2 #5 
-HAS_prev_proc_exited    bool=file_exists    has_exited    prev_proc_exited    undefined 
-WAIT                    wait                undefined     wait_sec            undefined 
-EXIT_maxtime            exit_maxtime        undefined     maxtime_hr          undefined 
-EXIT                    exit                undefined     undefined           undefined 
+HAS_prev_proc_exited    bool=file_exists    has_exited    CSS_mbin_resfish3d_prev_proc_exited    undefined 
+WAIT                    wait                undefined     wait_sec                               undefined 
+EXIT_maxtime            exit_maxtime        undefined     maxtime_hr                             undefined 
+EXIT                    exit                undefined     undefined                              undefined 
 
 
 # version 30001 
@@ -99,7 +99,7 @@ _rlnSchemeEdgeOutputNodeName #2
 _rlnSchemeEdgeIsFork #3 
 _rlnSchemeEdgeOutputNodeNameIfTrue #4 
 _rlnSchemeEdgeBooleanVariable #5 
-WAIT                         090010_Class3D_noalign       1    EXIT_maxtime              SS_comm_wait_prev_proc 
+WAIT                         090010_Class3D_noalign       1    EXIT_maxtime              CSS_mbin_resfish3d_wait_prev_proc 
 EXIT_maxtime                 HAS_prev_proc_exited         0    undefined                 undefined 
 HAS_prev_proc_exited         WAIT                         1    090010_Class3D_noalign    has_exited 
 090010_Class3D_noalign       090020_External_select3d     0    undefined                 undefined 

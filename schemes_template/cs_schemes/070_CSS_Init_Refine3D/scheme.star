@@ -40,9 +40,9 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-SS_comm_wait_prev_proc            XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
-has_exited                        0                             0 
-SS_comm_mbin_do_preread_images    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_reextract_wait_prev_proc    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+has_exited                           0                             0 
+SS_comm_mbin_do_preread_images       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 
 # version 30001 
 
@@ -52,16 +52,16 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-prev_proc_exited                   Schemes/060_CSS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS                           Schemes/060_CSS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS 
-SS_comm_ctf_mics_star              XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
-CSS_mbin_reextract_refined_star    XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
-SS_comm_mbin_ref3d_path            XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
-SS_comm_mbin_ref3d_name            XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
-SS_comm_mbin_mask3d_path           XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
-SS_comm_mbin_mask3d_name           XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
-imported_ref3d                     Schemes/070_CSS_Init_Refine3D/070050_Import_ref3d/$$SS_comm_mbin_ref3d_name      Schemes/070_CSS_Init_Refine3D/070050_Import_ref3d/$$SS_comm_mbin_ref3d_name 
-imported_mask3d                    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name 
-SS_comm_sym_name                   XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_reextract_prev_proc_exited    XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_ctf_mics_star                  XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_reextract_refined_star        XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_ref3d_path                XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_ref3d_name                XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_mask3d_path               XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+SS_comm_mbin_mask3d_name               XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+imported_ref3d                         Schemes/070_CSS_Init_Refine3D/070050_Import_ref3d/$$SS_comm_mbin_ref3d_name      Schemes/070_CSS_Init_Refine3D/070050_Import_ref3d/$$SS_comm_mbin_ref3d_name 
+imported_mask3d                        Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name 
+SS_comm_sym_name                       XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
 
 
 # version 30001 
@@ -74,10 +74,10 @@ _rlnSchemeOperatorType #2
 _rlnSchemeOperatorOutput #3 
 _rlnSchemeOperatorInput1 #4 
 _rlnSchemeOperatorInput2 #5 
-HAS_prev_proc_exited    bool=file_exists    has_exited    prev_proc_exited    undefined 
-WAIT                    wait                undefined     wait_sec            undefined 
-EXIT_maxtime            exit_maxtime        undefined     maxtime_hr          undefined 
-EXIT                    exit                undefined     undefined           undefined 
+HAS_prev_proc_exited    bool=file_exists    has_exited    CSS_mbin_reextract_prev_proc_exited    undefined 
+WAIT                    wait                undefined     wait_sec                               undefined 
+EXIT_maxtime            exit_maxtime        undefined     maxtime_hr                             undefined 
+EXIT                    exit                undefined     undefined                              undefined 
 
 
 # version 30001 
@@ -111,7 +111,7 @@ _rlnSchemeEdgeOutputNodeName #2
 _rlnSchemeEdgeIsFork #3 
 _rlnSchemeEdgeOutputNodeNameIfTrue #4 
 _rlnSchemeEdgeBooleanVariable #5 
-WAIT                         070010_Extract_reextract     1    EXIT_maxtime                SS_comm_wait_prev_proc 
+WAIT                         070010_Extract_reextract     1    EXIT_maxtime                CSS_mbin_reextract_wait_prev_proc 
 EXIT_maxtime                 HAS_prev_proc_exited         0    undefined                   undefined 
 HAS_prev_proc_exited         WAIT                         1    070010_Extract_reextract    has_exited 
 070010_Extract_reextract     070020_Select_rm_dup         0    undefined                   undefined 

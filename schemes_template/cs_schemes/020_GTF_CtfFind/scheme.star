@@ -34,8 +34,9 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-has_motioncorr        0                             0 
-has_larger_nr_mics    0                             0 
+has_motioncorr               0                             0 
+has_larger_nr_mics           0                             0 
+GTF_ctffind_run_only_once    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 
 # version 30001 
 
@@ -66,6 +67,7 @@ HAS_mics_increased    bool=gt               has_larger_nr_mics    current_nr_mic
 SET_prev_nr_mics      float=set             prev_nr_mics          current_nr_mics                 undefined 
 WAIT                  wait                  undefined             wait_sec                        undefined 
 EXIT_maxtime          exit_maxtime          undefined             maxtime_hr                      undefined 
+EXIT                  exit                  undefined             undefined                       undefined 
 
 
 # version 30001 
@@ -98,4 +100,4 @@ COUNT_mics            HAS_mics_increased    0    undefined           undefined
 HAS_mics_increased    WAIT                  1    SET_prev_nr_mics    has_larger_nr_mics 
 SET_prev_nr_mics      020010_CtfFind        0    undefined           undefined 
 020010_CtfFind        020020_Select_mics    0    undefined           undefined 
-020020_Select_mics    WAIT                  0    undefined           undefined 
+020020_Select_mics    WAIT                  1    EXIT                GTF_ctffind_run_only_once 

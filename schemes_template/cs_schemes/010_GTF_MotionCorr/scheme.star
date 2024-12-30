@@ -23,7 +23,7 @@ current_nr_movies                 0                             0
 EM_first_frame_for_sum            XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
 EM_dose_per_frame                 XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
 GTF_eer_grouping                  XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
-EM_motioncorr_bfactor             XX_SSE_REPLACE_EM_XXX         XXX_SSE_REPLACE_EM_XXX 
+EM_motioncorr_bfactor             XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
 EM_motioncorr_patch_x             XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
 EM_motioncorr_patch_y             XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
 GTF_motioncorr_do_at_most         XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
@@ -40,7 +40,8 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-has_larger_nr_movies    0                             0 
+has_larger_nr_movies             0                             0 
+GTF_motioncorr_run_only_once     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 
 
 # version 30001 
@@ -74,6 +75,7 @@ HAS_movies_increased    bool=gt               has_larger_nr_movies    current_nr
 SET_prev_nr_movies      float=set             prev_nr_movies          current_nr_movies    undefined 
 WAIT                    wait                  undefined               wait_sec             undefined 
 EXIT_maxtime            exit_maxtime          undefined               maxtime_hr           undefined 
+EXIT                    exit                  undefined               undefined            undefined 
 
 
 # version 30001 
@@ -107,4 +109,4 @@ COUNT_movies            HAS_movies_increased    0    undefined             undef
 HAS_movies_increased    WAIT                    1    SET_prev_nr_movies    has_larger_nr_movies 
 SET_prev_nr_movies      010020_MotionCorr       0    undefined             undefined 
 010020_MotionCorr       010030_Select_mics      0    undefined             undefined 
-010030_Select_mics      WAIT                    0    undefined             undefined 
+010030_Select_mics      WAIT                    1    EXIT                  GTF_motioncorr_run_only_once 
