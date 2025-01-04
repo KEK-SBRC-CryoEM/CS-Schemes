@@ -41,6 +41,7 @@ Settings:
   GTF_pick_do_limit_mics: 0
   GTF_pick_min_nr_mics: 1000
   GTF_pick_cryolo_thresh: 0.1
+  GTF_lbin_extract_cryolo_fom: 0.1
   GTF_lbin_extract_mics_box: 256
   GTF_lbin_extract_mics_0o95box: 244
   GTF_lbin_extract_parts_box: 64
@@ -54,6 +55,8 @@ Settings:
   GTF_pick_log_pdm_max: 250
   GTF_pick_log_adjust_thresh: 0
   GTF_pick_log_upper_thresh: 999
+  GTF_lbin_extract_log_fom: 0
+  GTF_lbin_extract_do_fom_threshold: 1
   GTF_lbin_extract_run_only_once: 1
 #040_GTF_Class2D_PMDs
   GTF_lbin_class2d_pmds_do_limit_parts: 1

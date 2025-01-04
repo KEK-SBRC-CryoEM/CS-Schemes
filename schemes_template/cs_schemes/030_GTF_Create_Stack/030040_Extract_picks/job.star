@@ -33,8 +33,8 @@ black_dust                        -1
 white_dust                        -1 
 do_rescale                        Yes 
 rescale                           $$GTF_lbin_extract_parts_box 
-do_fom_threshold                  Yes 
-minimum_pick_fom                  $$active_thr 
+do_fom_threshold                  $$GTF_lbin_extract_do_fom_threshold 
+minimum_pick_fom                  $$active_fom 
 do_extract_helix                  No 
 helical_tube_outer_diameter       200 
 helical_bimodal_angular_priors    Yes 
