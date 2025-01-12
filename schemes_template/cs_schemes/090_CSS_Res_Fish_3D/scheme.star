@@ -21,6 +21,7 @@ SS_comm_optimal_pmd                  XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLA
 SS_comm_mbin_0o95box_pmd             XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_mbin_angpix                  XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_mbin_nr_pool                 XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+EM_mics_apix                         XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
 CSS_mbin_resfish3d_locres_bfactor    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 wait_sec                             180                           180 
 maxtime_hr                           96                            96 
@@ -54,6 +55,7 @@ CSS_mbin_resfish3d_ref3d               XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REP
 SS_comm_mbin_imported_mask3d_path      XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_mbin_mask3d_name               XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_sym_name                       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+EM_mtf_file                            XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
 
 # version 30001 
 

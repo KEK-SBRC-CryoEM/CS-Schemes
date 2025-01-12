@@ -24,8 +24,8 @@ do_adhoc_bfac           No
 adhoc_bfac              -1000 
 do_skip_fsc_weighting   Yes 
 low_pass                $$CSS_lbin_center3d_postproc_adhoc_lpf 
-fn_mtf                  "" 
-mtf_angpix              1 
+fn_mtf                  $$EM_mtf_file 
+mtf_angpix              $$EM_mics_apix 
 do_queue                XXX_JSE_REPLACE_PARALLEL_XXX 
 queuename               060090_PostProcess_global 
 qsub                    XXX_JSE_REPLACE_PARALLEL_XXX 

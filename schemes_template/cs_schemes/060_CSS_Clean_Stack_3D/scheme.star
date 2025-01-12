@@ -42,6 +42,7 @@ CSS_lbin_center3d_class3d_classes          XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE
 SS_comm_optimal_pmd                        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_lbin_angpix                        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_lbin_center3d_postproc_adhoc_lpf       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+EM_mics_apix                               XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_XXX 
 wait_sec                                   180                           180 
 maxtime_hr                                 96                            96 
 
@@ -97,6 +98,7 @@ cls3d_cont_data_path_temp               Schemes/060_CSS_Clean_Stack_3D/060060_Cl
 CSS_lbin_center3d_class3d_parts_star    XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_lbin_center3d_class3d_sym           XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_lbin_center3d_refine3d_sym_name     XXX_SSE_REPLACE_SAMPLE_XXX                                                        XXX_SSE_REPLACE_SAMPLE_XXX 
+EM_mtf_file                             XXX_SSE_REPLACE_EM_XXX                                                            XXX_SSE_REPLACE_EM_XXX 
 particles                               particles                                                                         particles 
 
 

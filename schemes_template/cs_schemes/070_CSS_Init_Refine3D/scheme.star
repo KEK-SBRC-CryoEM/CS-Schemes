@@ -62,6 +62,7 @@ SS_comm_mbin_mask3d_name               XXX_SSE_REPLACE_SAMPLE_XXX               
 imported_ref3d                         Schemes/070_CSS_Init_Refine3D/070050_Import_ref3d/$$SS_comm_mbin_ref3d_name      Schemes/070_CSS_Init_Refine3D/070050_Import_ref3d/$$SS_comm_mbin_ref3d_name 
 imported_mask3d                        Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name    Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/$$SS_comm_mbin_mask3d_name 
 SS_comm_sym_name                       XXX_SSE_REPLACE_SAMPLE_XXX                                                       XXX_SSE_REPLACE_SAMPLE_XXX 
+EM_mtf_file                            XXX_SSE_REPLACE_EM_XXX                                                           XXX_SSE_REPLACE_EM_XXX 
 
 
 # version 30001 

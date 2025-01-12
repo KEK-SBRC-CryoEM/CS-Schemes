@@ -26,7 +26,7 @@ minres                0
 stepres               1 
 do_relion_locres      Yes 
 adhoc_bfac            $$CSS_mbin_resfish3d_locres_bfactor 
-fn_mtf                "" 
+fn_mtf                $$EM_mtf_file 
 nr_mpi                XXX_JSE_REPLACE_PARALLEL_XXX 
 do_queue              XXX_JSE_REPLACE_PARALLEL_XXX 
 queuename             090070_LocalRes 
