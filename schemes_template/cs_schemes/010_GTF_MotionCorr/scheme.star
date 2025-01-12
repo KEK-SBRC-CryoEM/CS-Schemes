@@ -52,12 +52,14 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-EM_movie_files          XXX_SSE_REPLACE_EM_XXX                                                     XXX_SSE_REPLACE_EM_XXX 
-EM_mtf_file             XXX_SSE_REPLACE_EM_XXX                                                     XXX_SSE_REPLACE_EM_XXX 
-GTF_gain_ref_file       XXX_SSE_REPLACE_SAMPLE_XXX                                                 XXX_SSE_REPLACE_SAMPLE_XXX 
-movies_star             Schemes/010_GTF_MotionCorr/010010_Import_movies/movies.star                Schemes/010_GTF_MotionCorr/010010_Import_movies/movies.star 
-motioncorr_mics_star    Schemes/010_GTF_MotionCorr/010020_MotionCorr/corrected_micrographs.star    Schemes/010_GTF_MotionCorr/010020_MotionCorr/corrected_micrographs.star
-movies                  movies                                                                     movies 
+EM_movie_files             XXX_SSE_REPLACE_EM_XXX                                                     XXX_SSE_REPLACE_EM_XXX 
+EM_mtf_file                XXX_SSE_REPLACE_EM_XXX                                                     XXX_SSE_REPLACE_EM_XXX 
+movies_star                Schemes/010_GTF_MotionCorr/010010_Import_movies/movies.star                Schemes/010_GTF_MotionCorr/010010_Import_movies/movies.star 
+GTF_gain_ref_file          XXX_SSE_REPLACE_SAMPLE_XXX                                                 XXX_SSE_REPLACE_SAMPLE_XXX 
+EM_motioncorr_gain_rot     XXX_SSE_REPLACE_EM_XXX                                                     XXX_SSE_REPLACE_EM_XXX 
+EM_motioncorr_gain_flip    XXX_SSE_REPLACE_EM_XXX                                                     XXX_SSE_REPLACE_EM_XXX 
+motioncorr_mics_star       Schemes/010_GTF_MotionCorr/010020_MotionCorr/corrected_micrographs.star    Schemes/010_GTF_MotionCorr/010020_MotionCorr/corrected_micrographs.star
+movies                     movies                                                                     movies 
 
 
 # version 30001 

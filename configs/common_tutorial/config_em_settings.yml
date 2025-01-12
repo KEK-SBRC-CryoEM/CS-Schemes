@@ -9,5 +9,7 @@ Settings:
   EM_motioncorr_bfactor: 150
   EM_motioncorr_patch_x: 5
   EM_motioncorr_patch_y: 5
+  EM_motioncorr_gain_rot: '"No rotation (0)"'
+  EM_motioncorr_gain_flip: '"No flipping (0)"'
   EM_ctffind_fit_res_min: 30
   EM_ctffind_fit_res_max: 5

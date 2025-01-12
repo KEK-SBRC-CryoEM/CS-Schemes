@@ -32,8 +32,8 @@ patch_y                  $$EM_motioncorr_patch_y
 group_frames             1 
 bin_factor               1 
 fn_gain_ref              $$GTF_gain_ref_file 
-gain_rot                 "No rotation (0)" 
-gain_flip                "No flipping (0)" 
+gain_rot                 $$EM_motioncorr_gain_rot 
+gain_flip                $$EM_motioncorr_gain_flip 
 fn_defect                "" 
 do_own_motioncor         Yes 
 fn_motioncor2_exe        XXX_JSE_REPLACE_SYSTEM_XXX 
