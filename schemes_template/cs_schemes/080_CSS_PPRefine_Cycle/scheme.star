@@ -34,10 +34,13 @@ loop_
 _rlnSchemeBooleanVariableName #1 
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
-CSS_mbin_pprefine_wait_prev_proc    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
-has_exited                          0                             0 
-do_cycle                            0                             0 
-SS_comm_mbin_do_preread_images      XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_pprefine_wait_prev_proc       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+has_exited                             0                             0 
+stop_at_ctfrefine                      0                             0 
+is_max_cycle                           0                             0 
+do_next_cycle                          1                             1 
+CSS_mbin_pprefine_stop_at_ctfrefine    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX
+SS_comm_mbin_do_preread_images         XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 
 
 # version 30001 
@@ -76,17 +79,21 @@ _rlnSchemeOperatorOutput #3
 _rlnSchemeOperatorInput1 #4 
 _rlnSchemeOperatorInput2 #5 
 HAS_prev_proc_exited            bool=file_exists    has_exited                      CSS_mbin_pprefine_prev_proc_exited    undefined 
-INCRE_cur_cycles                float=plus          cur_cycles                      cycle_incre                           cur_cycles 
-CHECK_max_cycles                bool=le             do_cycle                        cur_cycles                            CSS_mbin_pprefine_cycles_max 
 INIT_ctfrefine_refine_data      string=set          cycles_ctfrefine_refine_data    CSS_mbin_pprefine_refined_star        undefined 
 INIT_postprocess_map            string=set          cycles_postprocess_map          CSS_mbin_pprefine_postproc_star       undefined 
 INIT_refine3d_refine_map        string=set          cycles_refine3d_refine_map      CSS_mbin_pprefine_ref3d               undefined 
+INIT_is_max_cycle               bool=ge             is_max_cycle                    cur_cycles                            CSS_mbin_pprefine_cycles_max 
+CHECK_stop_at_ctfrefine         bool=and            stop_at_ctfrefine               is_max_cycle                          CSS_mbin_pprefine_stop_at_ctfrefine 
+INCRE_cur_cycles                float=plus          cur_cycles                      cycle_incre                           cur_cycles 
+CHECK_max_cycles                bool=ge             is_max_cycle                    cur_cycles                            CSS_mbin_pprefine_cycles_max 
+CHECK_do_next_cycle             bool=le             do_next_cycle                   cur_cycles                            CSS_mbin_pprefine_cycles_max 
 UPDATE_ctfrefine_refine_data    string=set          cycles_ctfrefine_refine_data    cycles_ctfrefine_refine_data_temp     undefined 
 UPDATE_postprocess_map          string=set          cycles_postprocess_map          cycles_postprocess_map_temp           undefined 
 UPDATE_refine3d_refine_map      string=set          cycles_refine3d_refine_map      cycles_refine3d_refine_map_temp       undefined 
 WAIT                            wait                undefined                       wait_sec                              undefined 
 EXIT_maxtime                    exit_maxtime        undefined                       maxtime_hr                            undefined 
 EXIT                            exit                undefined                       undefined                             undefined 
+
 
 # version 30001 
 
@@ -122,17 +129,20 @@ EXIT_maxtime                    HAS_prev_proc_exited            0    undefined  
 HAS_prev_proc_exited            WAIT                            1    INIT_ctfrefine_refine_data      has_exited 
 INIT_ctfrefine_refine_data      INIT_postprocess_map            0    undefined                       undefined 
 INIT_postprocess_map            INIT_refine3d_refine_map        0    undefined                       undefined 
-INIT_refine3d_refine_map        080010_CtfRefine_aberration     0    undefined                       undefined 
+INIT_refine3d_refine_map        INIT_is_max_cycle               0    undefined                       undefined 
+INIT_is_max_cycle               080010_CtfRefine_aberration     0    undefined                       undefined 
 080010_CtfRefine_aberration     080020_CtfRefine_aniso_mag      0    undefined                       undefined 
 080020_CtfRefine_aniso_mag      080030_CtfRefine_ctf_params     0    undefined                       undefined 
 080030_CtfRefine_ctf_params     080040_Refine3D_ctfrefine       0    undefined                       undefined 
 080040_Refine3D_ctfrefine       080050_PostProcess_ctfrefine    0    undefined                       undefined 
-080050_PostProcess_ctfrefine    080060_Polish                   0    undefined                       undefined 
+080050_PostProcess_ctfrefine    CHECK_stop_at_ctfrefine         0    undefined                       undefined 
+CHECK_stop_at_ctfrefine         080060_Polish                   1    EXIT                            stop_at_ctfrefine 
 080060_Polish                   080070_Refine3D_polish          0    undefined                       undefined 
 080070_Refine3D_polish          080080_PostProcess_polish       0    undefined                       undefined 
 080080_PostProcess_polish       INCRE_cur_cycles                0    undefined                       undefined 
 INCRE_cur_cycles                CHECK_max_cycles                0    undefined                       undefined 
-CHECK_max_cycles                EXIT                            1    UPDATE_ctfrefine_refine_data    do_cycle 
+CHECK_max_cycles                CHECK_do_next_cycle             0    undefined                       undefined 
+CHECK_do_next_cycle             EXIT                            1    UPDATE_ctfrefine_refine_data    do_next_cycle 
 UPDATE_ctfrefine_refine_data    UPDATE_postprocess_map          0    undefined                       undefined 
 UPDATE_postprocess_map          UPDATE_refine3d_refine_map      0    undefined                       undefined 
 UPDATE_refine3d_refine_map      080010_CtfRefine_aberration     0    undefined                       undefined 

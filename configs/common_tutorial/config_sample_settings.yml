@@ -119,6 +119,7 @@ Settings:
   CSS_mbin_reextract_refined_star: Schemes/060_CSS_Clean_Stack_3D/060080_Refine3D_global/run_data.star
 #080_CSS_PPRefine_Cycle
   CSS_mbin_pprefine_cycles_max: 2
+  CSS_mbin_pprefine_stop_at_ctfrefine: 1
 #080_CSS_PPRefine_Cycle Advanced
   CSS_mbin_pprefine_wait_prev_proc: 1
   CSS_mbin_pprefine_prev_proc_exited: Schemes/070_CSS_Init_Refine3D/RELION_JOB_EXIT_SUCCESS
@@ -126,12 +127,12 @@ Settings:
   CSS_mbin_pprefine_postproc_star: Schemes/070_CSS_Init_Refine3D/070100_PostProcess_local/postprocess.star
   CSS_mbin_pprefine_ref3d: Schemes/070_CSS_Init_Refine3D/070090_Refine3D_local/run_class001.mrc
 #090_CSS_Res_Fish_3D
+  CSS_mbin_resfish3d_refined_star: Schemes/080_CSS_PPRefine_Cycle/080040_Refine3D_ctfrefine/run_data.star
+  CSS_mbin_resfish3d_ref3d: Schemes/080_CSS_PPRefine_Cycle/080040_Refine3D_ctfrefine/run_class001.mrc
   CSS_mbin_resfish3d_classes: 2
   CSS_mbin_resfish3d_tval: 16
   CSS_mbin_resfish3d_locres_bfactor: -30
 #090_CSS_Res_Fish_3D Advanced
   CSS_mbin_resfish3d_wait_prev_proc: 1
   CSS_mbin_resfish3d_prev_proc_exited: Schemes/080_CSS_PPRefine_Cycle/RELION_JOB_EXIT_SUCCESS
-  CSS_mbin_resfish3d_refined_star: Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_data.star
-  CSS_mbin_resfish3d_ref3d: Schemes/080_CSS_PPRefine_Cycle/080070_Refine3D_polish/run_class001.mrc
   CSS_mbin_resfish3d_do_fast_subsets: 1
