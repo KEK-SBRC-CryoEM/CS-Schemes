@@ -27,6 +27,38 @@
     CostPerHours: 6.848
 - Region: us-east-1
   InstanceSettings:
+  - Name: g6-vcpu192-gpu8
+    InstanceType: g6.48xlarge
+    NunberOfCores: 192
+    CostPerHours: 13.3504
+  - Name: g6-vcpu96-gpu4
+    InstanceType: g6.24xlarge
+    NunberOfCores: 96
+    CostPerHours: 6.6752
+  - Name: g6-vcpu48-gpu4
+    InstanceType: g6.12xlarge
+    NunberOfCores: 48
+    CostPerHours: 4.6016
+  - Name: g6-vcpu64-gpu1
+    InstanceType: g6.16xlarge
+    NunberOfCores: 64
+    CostPerHours: 3.3968
+  - Name: g6-vcpu32-gpu1
+    InstanceType: g6.8xlarge
+    NunberOfCores: 32
+    CostPerHours: 2.0144
+  - Name: g6-vcpu16-gpu1
+    InstanceType: g6.4xlarge
+    NunberOfCores: 16
+    CostPerHours: 1.3232
+  - Name: g6-vcpu8-gpu1
+    InstanceType: g6.2xlarge
+    NunberOfCores: 8
+    CostPerHours: 0.9776
+  - Name: g6-vcpu4-gpu1
+    InstanceType: g6.1xlarge
+    NunberOfCores: 4
+    CostPerHours: 0.8048
   - Name: g5-vcpu192-gpu8
     InstanceType: g5.48xlarge
     NunberOfCores: 192
