@@ -71,6 +71,10 @@
     InstanceType: g5.12xlarge
     NunberOfCores: 48
     CostPerHours: 5.672
+  - Name: g5-vcpu16-gpu1
+    InstanceType: g5.4xlarge
+    NunberOfCores: 16
+    CostPerHours: 1.624
   - Name: g4dn-vcpu96-gpu8
     InstanceType: g4dn.metal
     NunberOfCores: 96
