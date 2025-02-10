@@ -1,6 +1,38 @@
 ### Do not change ###
 - Region: ap-northeast-1
   InstanceSettings:
+  - Name: g6-vcpu192-gpu8
+    InstanceType: g6.48xlarge
+    NunberOfCores: 192
+    CostPerHours: 19.36206
+  - Name: g6-vcpu96-gpu4
+    InstanceType: g6.24xlarge
+    NunberOfCores: 96
+    CostPerHours: 9.68103
+  - Name: g6-vcpu48-gpu4
+    InstanceType: g6.12xlarge
+    NunberOfCores: 48
+    CostPerHours: 6.67369
+  - Name: g6-vcpu64-gpu1
+    InstanceType: g6.16xlarge
+    NunberOfCores: 64
+    CostPerHours: 4.92637
+  - Name: g6-vcpu32-gpu1
+    InstanceType: g6.8xlarge
+    NunberOfCores: 32
+    CostPerHours: 2.92148
+  - Name: g6-vcpu16-gpu1
+    InstanceType: g6.4xlarge
+    NunberOfCores: 16
+    CostPerHours: 1.91903
+  - Name: g6-vcpu8-gpu1
+    InstanceType: g6.2xlarge
+    NunberOfCores: 8
+    CostPerHours: 1.41781
+  - Name: g6-vcpu4-gpu1
+    InstanceType: g6.xlarge
+    NunberOfCores: 4
+    CostPerHours: 1.1672
   - Name: g5-vcpu192-gpu8
     InstanceType: g5.48xlarge
     NunberOfCores: 192
@@ -13,6 +45,10 @@
     InstanceType: g5.12xlarge
     NunberOfCores: 48
     CostPerHours: 8.22609
+  - Name: g5-vcpu16-gpu1
+    InstanceType: g5.4xlarge
+    NunberOfCores: 16
+    CostPerHours: 2.35528
   - Name: g4dn-vcpu96-gpu8
     InstanceType: g4dn.metal
     NunberOfCores: 96
@@ -56,7 +92,7 @@
     NunberOfCores: 8
     CostPerHours: 0.9776
   - Name: g6-vcpu4-gpu1
-    InstanceType: g6.1xlarge
+    InstanceType: g6.xlarge
     NunberOfCores: 4
     CostPerHours: 0.8048
   - Name: g5-vcpu192-gpu8
