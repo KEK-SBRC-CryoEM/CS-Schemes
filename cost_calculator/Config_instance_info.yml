@@ -61,6 +61,26 @@
     InstanceType: c6i.32xlarge
     NunberOfCores: 128
     CostPerHours: 6.848
+  - Name: m6i-vcpu128-gpu0
+    InstanceType: m6i.32xlarge
+    NunberOfCores: 128
+    CostPerHours: 7.936
+  - Name: r6i-vcpu128-gpu0
+    InstanceType: r6i.32xlarge
+    NunberOfCores: 128
+    CostPerHours: 9.728
+  - Name: c7i-vcpu192-gpu0
+    InstanceType: c7i.48xlarge
+    NunberOfCores: 192
+    CostPerHours: 10.7856
+  - Name: m7i-vcpu192-gpu0
+    InstanceType: m7i.48xlarge
+    NunberOfCores: 192
+    CostPerHours: 12.4992
+  - Name: r7i-vcpu192-gpu0
+    InstanceType: r7i.48xlarge
+    NunberOfCores: 192
+    CostPerHours: 15.3216
 - Region: us-east-1
   InstanceSettings:
   - Name: g6-vcpu192-gpu8
@@ -135,7 +155,7 @@
     InstanceType: c7i.48xlarge
     NunberOfCores: 192
     CostPerHours: 8.568
-  - Name: m7i-vcpu192-gpu0 
+  - Name: m7i-vcpu192-gpu0
     InstanceType: m7i.48xlarge
     NunberOfCores: 192
     CostPerHours: 9.6768
