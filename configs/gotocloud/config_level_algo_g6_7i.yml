@@ -1,0 +1,216 @@
+- AlgoLevel: motioncorr_own
+  Settings:
+    WhichGpusToUse: ''
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '24'
+    NumberOfThreads: '8'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '24'
+    AdditionalArguments: '"--do_at_most \$\$GTF_motioncorr_do_at_most"'
+- AlgoLevel: motioncorr_mocor2_GPU
+  Settings:
+    WhichGpusToUse: '0:1:2:3'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '4'
+    NumberOfThreads: '1'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '4'
+    AdditionalArguments: '""'
+- AlgoLevel: ctffind_ctff4
+  Settings:
+    WhichGpusToUse: ''
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '24'
+    NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '24'
+    AdditionalArguments: '""'
+- AlgoLevel: ctffind_gctf_GPU
+  Settings:
+    WhichGpusToUse: '0:1:2:3'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '4'
+    NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '4'
+    AdditionalArguments: '""'
+- AlgoLevel: autopick_log
+  Settings:
+    WhichGpusToUse: ''
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '24'
+    NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '24'
+    AdditionalArguments: '""'
+- AlgoLevel: extract
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '24'
+    NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '24'
+    AdditionalArguments: '""'
+- AlgoLevel: class2d_em_GPU
+  Settings:
+    WhichGpusToUse: '0:1:2:3'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '65'
+    NumberOfThreads: '3'
+    NumberOfNodes: '4'
+    MinimumDedicatedCores: '16'
+    AdditionalArguments: '"--fast_subsets"'
+- AlgoLevel: class2d_em_CPU
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '65'
+    NumberOfThreads: '12'
+    NumberOfNodes: 4'
+    MinimumDedicatedCores: '16'
+    AdditionalArguments: '"--fast_subsets --cpu"'
+- AlgoLevel: class2d_vdam_GPU
+  Settings:
+    WhichGpusToUse: '0,1,2,3'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '1'
+    NumberOfThreads: '4'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '1'
+    AdditionalArguments: '""'
+- AlgoLevel: initialmodel_GPU
+  Settings:
+    WhichGpusToUse: '0,1,2,3'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '1'
+    NumberOfThreads: '4'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '1'
+    AdditionalArguments: '""'
+- AlgoLevel: class3d_default_GPU
+  Settings:
+    WhichGpusToUse: '0:1:2:3:4:5:6:7'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '33'
+    NumberOfThreads: '12'
+    NumberOfNodes: '2'
+    MinimumDedicatedCores: '16'
+    AdditionalArguments: '""'
+- AlgoLevel: class3d_default_CPU
+  Settings:
+    WhichGpusToUse: '""'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '63'
+    NumberOfThreads: '12'
+    NumberOfNodes: '4'
+    MinimumDedicatedCores: '16'
+    AdditionalArguments: '--cpu'
+- AlgoLevel: class3d_noalign
+  Settings:
+    WhichGpusToUse: '""'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '25'
+    NumberOfThreads: '7'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '25'
+    AdditionalArguments: '""'
+- AlgoLevel: refine3d_GPU
+  Settings:
+    WhichGpusToUse: '0:1:2:3:4:5:6:7'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '17'
+    NumberOfThreads: '12'
+    NumberOfNodes: '2'
+    MinimumDedicatedCores: '8'
+    AdditionalArguments: '""'
+- AlgoLevel: refine3d_CPU
+  Settings:
+    WhichGpusToUse: '""'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '63'
+    NumberOfThreads: '12'
+    NumberOfNodes: '4'
+    MinimumDedicatedCores: '16'
+    AdditionalArguments: '--cpu'
+- AlgoLevel: ctfrefine
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '24'
+    NumberOfThreads: '8'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '24'
+    AdditionalArguments: '""'
+- AlgoLevel: polish
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '16'
+    NumberOfThreads: '12'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '16'
+    AdditionalArguments: '""'
+- AlgoLevel: maskcreate
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfThreads: '192'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '1'
+    AdditionalArguments: '""'
+- AlgoLevel: postprocess
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfNodes: '0'
+    MinimumDedicatedCores: '0'
+    AdditionalArguments: '""'
+- AlgoLevel: localres_resmap
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '1'
+    NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfNodes: '0'
+    MinimumDedicatedCores: '0'
+    AdditionalArguments: '""'
+- AlgoLevel: localres_own
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: '24'
+    NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '24'
+    AdditionalArguments: '""'
+- AlgoLevel: external_cryolo_GPU
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: '0,1,2,3,4,5,6,7'
+    NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfThreads: '1'
+    NumberOfNodes: '1'
+    MinimumDedicatedCores: '1'
+    AdditionalArguments: '""'
+- AlgoLevel: external_select3d
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: '""'
+    NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfThreads: '1'
+    NumberOfNodes: '0'
+    MinimumDedicatedCores: '0'
+    AdditionalArguments: '""'
+- AlgoLevel: NOQUEUE
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfThreads: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfNodes: '0'
+    MinimumDedicatedCores: '0'
+    AdditionalArguments: '""'

@@ -1,3 +1,18 @@
+- DeviceLevel: g6-vcpu192-gpu8
+  Settings:
+    ScratchDirectory: '/scratch'
+    UseGpu: 'Yes'
+    Partition: 'g6-vcpu192-gpu8'
+- DeviceLevel: g6-vcpu48-gpu4
+  Settings:
+    ScratchDirectory: '/scratch'
+    UseGpu: 'Yes'
+    Partition: 'g6-vcpu48-gpu4'
+- DeviceLevel: g6-vcpu16-gpu1
+  Settings:
+    ScratchDirectory: '/scratch'
+    UseGpu: 'Yes'
+    Partition: 'g6-vcpu16-gpu1'
 - DeviceLevel: g5-vcpu192-gpu8
   Settings:
     ScratchDirectory: '/scratch'
@@ -53,6 +68,21 @@
     ScratchDirectory: '""'
     UseGpu: 'No'
     Partition: 'r6i-vcpu128-gpu0'
+- DeviceLevel: g6-vcpu192-gpu8-spot
+  Settings:
+    ScratchDirectory: '/scratch'
+    UseGpu: 'Yes'
+    Partition: 'g6-vcpu192-gpu8-spot'
+- DeviceLevel: g6-vcpu48-gpu4-spot
+  Settings:
+    ScratchDirectory: '/scratch'
+    UseGpu: 'Yes'
+    Partition: 'g6-vcpu48-gpu4-spot'
+- DeviceLevel: g6-vcpu16-gpu1-spot
+  Settings:
+    ScratchDirectory: '/scratch'
+    UseGpu: 'Yes'
+    Partition: 'g6-vcpu16-gpu1-spot'
 - DeviceLevel: g5-vcpu192-gpu8-spot
   Settings:
     ScratchDirectory: '/scratch'

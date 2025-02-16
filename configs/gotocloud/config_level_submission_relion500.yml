@@ -1,0 +1,20 @@
+- SubmissionLevel: gcc-intelmpi-gpu
+  Settings: 
+    SubmitToQueue: 'Yes'
+    SubmitCommand: 'sbatch'
+    SubmissionScript: '/efs/em/aws_slurm_relion500_gpu.sh'
+- SubmissionLevel: intel-intelmpi-cpu_xcore
+  Settings:
+    SubmitToQueue: 'Yes'
+    SubmitCommand: 'sbatch'
+    SubmissionScript: '/efs/em/aws_slurm_relion500_cpu_sse42.sh'
+- SubmissionLevel: intel-intelmpi-cpu_axcore
+  Settings:
+    SubmitToQueue: 'Yes'
+    SubmitCommand: 'sbatch'
+    SubmissionScript: '/efs/em/aws_slurm_relion500_cpu_avx512.sh'
+- SubmissionLevel: NOQUEUE
+  Settings:
+    SubmitToQueue: 'No'
+    SubmitCommand: 'JSE_DISABLED_PARALLEL'
+    SubmissionScript: 'JSE_DISABLED_PARALLEL'
