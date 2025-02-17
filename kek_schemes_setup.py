@@ -129,9 +129,6 @@ def make_output_dir_backup(output_dir_path):
 ###     with open(file_path, 'w') as file:
 ###         file.write(file_data)
 
-    replace_string_in_yaml_files(src_configs_dir_path, SSE_target_string, setup_dir_absolute_path)
-
-
 ### def replace_string_in_yaml_files(configs_dir_relative_path: str, dist_setup_dir_absolute_path: str):
 def replace_string_in_yaml_files(configs_dir_relative_path, target_string, dist_setup_dir_absolute_path):
     src_dir_absolute_path = os.path.join(dist_setup_dir_absolute_path, configs_dir_relative_path)
