@@ -117,17 +117,45 @@ def make_output_dir_backup(output_dir_path):
         os.rename(output_dir_path, backup_output_dir_path)
         assert not os.path.exists(output_dir_path), '[KEK_ASSERT] The output subdirectory "{}" must NOT exist at this point of code!'.format(output_dir_path)
 
-def replace_text_in_file(file_path, old_text, new_text):
-    # Open the file in read mode
-    with open(file_path, 'r') as file:
-        file_data = file.read()
-    
-    # Replace the old text with the new text
-    file_data = file_data.replace(old_text, new_text)
-    
-    # Open the file in write mode and write the modified data
-    with open(file_path, 'w') as file:
-        file.write(file_data)
+### def replace_text_in_file(file_path, old_text, new_text):
+###     # Open the file in read mode
+###     with open(file_path, 'r') as file:
+###         file_data = file.read()
+###     
+###     # Replace the old text with the new text
+###     file_data = file_data.replace(old_text, new_text)
+###     
+###     # Open the file in write mode and write the modified data
+###     with open(file_path, 'w') as file:
+###         file.write(file_data)
+
+### def replace_string_in_yaml_files(dir_path: str, replacement_path: str):
+def replace_string_in_yaml_files(dir_path, target_string, replacement_path):
+    # Retrieve all files in the specified folder
+    for filename in os.listdir(dir_path):
+        ### if filename.endswith(".yaml") or filename.endswith(".yml"):
+        if filename.endswith(".yml"):
+            file_path = os.path.join(dir_path, filename)
+            
+            try:
+                ### with open(file_path, 'r', encoding='utf-8') as file:
+                with open(file_path, 'r') as file:
+                    content = file.read()
+                
+                # Check if the target string is present
+                ### if "XXX_SETUP_DIR_PATH_XXX" in content:
+                if target_string in content:
+                    ### print(f"Updating: {filename}")
+                    print('[KEK_MESSAGE] Editing configuration file paths in "{}"...'.format(file_path))
+                    ### updated_content = content.replace("XXX_SETUP_DIR_PATH_XXX", replacement_path)
+                    updated_content = content.replace(target_string, replacement_path)
+                    
+                    # Update the file
+                    ### with open(file_path, 'w', encoding='utf-8') as file:
+                    with open(file_path, 'w') as file:
+                        file.write(updated_content)
+            except Exception as e:
+                print(f"Error processing {filename}: {e}")
 
 def edit(system_env, setup_dir_path):
     SSE_configs_dir_name = 'configs'
@@ -136,6 +164,7 @@ def edit(system_env, setup_dir_path):
     SSE_env_depend_dir_name = 'environment_dependent'
     SSE_tutorial_suffix = '_tutorial'
     SSE_common_dir_name = 'common'
+    SSE_target_string = 'XXX_SETUP_DIR_PATH_XXX'
 
     configs_dir_name_common = os.path.join(SSE_configs_dir_name, SSE_common_dir_name)
     configs_dir_name_common_tutorial = os.path.join(SSE_configs_dir_name, SSE_common_dir_name + SSE_tutorial_suffix)
@@ -165,21 +194,29 @@ def edit(system_env, setup_dir_path):
     print('[KEK_MESSAGE] Specified path of the setup directory is "{}"'.format(setup_dir_path))
     print('[KEK_MESSAGE] Absolute path of the setup directory is "{}"'.format(setup_dir_absolute_path))
     
-    evn_default_configs_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_dest, 'default_configs.yml')
-    print('[KEK_MESSAGE] Editing configuration file paths in "{}"...'.format(evn_default_configs_file_path))
-    replace_text_in_file(evn_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
+    replace_string_in_yaml_files(configs_dir_name_env_dest, SSE_target_string, setup_dir_absolute_path)
+    
+    ### evn_default_configs_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_dest, 'default_configs.yml')
+    ### print('[KEK_MESSAGE] Editing configuration file paths in "{}"...'.format(evn_default_configs_file_path))
+    ### replace_text_in_file(evn_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
 
-    evn_tutorial_default_configs_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_tutorial_dest, 'default_configs.yml')
-    print('[KEK_MESSAGE] Editing configuration file paths in "{}"...'.format(evn_tutorial_default_configs_file_path))
-    replace_text_in_file(evn_tutorial_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
+    replace_string_in_yaml_files(configs_dir_name_env_tutorial_dest, SSE_target_string, setup_dir_absolute_path)
 
-    evn_default_config_type_algo_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_dest, 'config_type_algo.yml')
-    print('[KEK_MESSAGE] Editing configuration file paths in "{}"...'.format(evn_default_config_type_algo_file_path))
-    replace_text_in_file(evn_default_config_type_algo_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
+    ### evn_tutorial_default_configs_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_tutorial_dest, 'default_configs.yml')
+    ### print('[KEK_MESSAGE] Editing configuration file paths in "{}"...'.format(evn_tutorial_default_configs_file_path))
+    ### replace_text_in_file(evn_tutorial_default_configs_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
 
-    evn_turorial_default_config_type_algo_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_tutorial_dest, 'config_type_algo.yml')
-    print('[KEK_MESSAGE] Editing configuration file paths in "{}"...'.format(evn_turorial_default_config_type_algo_file_path))
-    replace_text_in_file(evn_turorial_default_config_type_algo_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
+    replace_string_in_yaml_files(configs_dir_name_env_dest, SSE_target_string, setup_dir_absolute_path)
+
+    ### evn_default_config_type_algo_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_dest, 'config_type_algo.yml')
+    ### print('[KEK_MESSAGE] Editing configuration file paths in "{}"...'.format(evn_default_config_type_algo_file_path))
+    ### replace_text_in_file(evn_default_config_type_algo_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
+
+    replace_string_in_yaml_files(configs_dir_name_env_tutorial_dest, SSE_target_string, setup_dir_absolute_path)
+
+    ### evn_turorial_default_config_type_algo_file_path = os.path.join(setup_dir_absolute_path, configs_dir_name_env_tutorial_dest, 'config_type_algo.yml')
+    ### print('[KEK_MESSAGE] Editing configuration file paths in "{}"...'.format(evn_turorial_default_config_type_algo_file_path))
+    ### replace_text_in_file(evn_turorial_default_config_type_algo_file_path, 'XXX_SETUP_DIR_PATH_XXX', setup_dir_absolute_path)
 
 
 if __name__ == "__main__":
