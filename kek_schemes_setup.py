@@ -129,13 +129,18 @@ def make_output_dir_backup(output_dir_path):
 ###     with open(file_path, 'w') as file:
 ###         file.write(file_data)
 
-### def replace_string_in_yaml_files(dir_path: str, replacement_path: str):
-def replace_string_in_yaml_files(dir_path, target_string, replacement_path):
+    replace_string_in_yaml_files(src_configs_dir_path, SSE_target_string, setup_dir_absolute_path)
+
+
+### def replace_string_in_yaml_files(configs_dir_relative_path: str, dist_setup_dir_absolute_path: str):
+def replace_string_in_yaml_files(configs_dir_relative_path, target_string, dist_setup_dir_absolute_path):
+    src_dir_absolute_path = os.path.join(dist_setup_dir_absolute_path, configs_dir_relative_path)
+    
     # Retrieve all files in the specified folder
-    for filename in os.listdir(dir_path):
+    for filename in os.listdir(src_dir_absolute_path):
         ### if filename.endswith(".yaml") or filename.endswith(".yml"):
         if filename.endswith(".yml"):
-            file_path = os.path.join(dir_path, filename)
+            file_path = os.path.join(src_dir_absolute_path, filename)
             
             try:
                 ### with open(file_path, 'r', encoding='utf-8') as file:
@@ -147,8 +152,8 @@ def replace_string_in_yaml_files(dir_path, target_string, replacement_path):
                 if target_string in content:
                     ### print(f"Updating: {filename}")
                     print('[KEK_MESSAGE] Editing configuration file paths in "{}"...'.format(file_path))
-                    ### updated_content = content.replace("XXX_SETUP_DIR_PATH_XXX", replacement_path)
-                    updated_content = content.replace(target_string, replacement_path)
+                    ### updated_content = content.replace("XXX_SETUP_DIR_PATH_XXX", dist_setup_dir_absolute_path)
+                    updated_content = content.replace(target_string, dist_setup_dir_absolute_path)
                     
                     # Update the file
                     ### with open(file_path, 'w', encoding='utf-8') as file:
