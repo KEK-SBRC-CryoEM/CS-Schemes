@@ -1,20 +1,20 @@
 Settings:
 #Common
-  SS_comm_class2d_pmd: 105
-  SS_comm_optimal_pmd: 200
-  SS_comm_dup_thresh: 25
-  SS_comm_sym_name: C3
-  SS_comm_lbin_angpix: 2.64
-  SS_comm_lbin_ref3d_path: Inputs/ref3d_emd_0731_apix2o64_d84.mrc
-  SS_comm_lbin_ref3d_name: ref3d_emd_0731_apix2o64_d84.mrc
-  SS_comm_lbin_mask3d_path: Inputs/mask3d_emd_0731_apix2o64_d84.mrc
-  SS_comm_lbin_mask3d_name: mask3d_emd_0731_apix2o64_d84.mrc
-  SS_comm_mbin_angpix: 0.968
-  SS_comm_mbin_0o95box_pmd: 405
-  SS_comm_mbin_ref3d_path: Inputs/ref3d_emd_0731_apix0o968_d440.mrc
-  SS_comm_mbin_ref3d_name: ref3d_emd_0731_apix0o968_d440.mrc
-  SS_comm_mbin_mask3d_path:  Inputs/mask3d_emd_0731_apix0o968_d440.mrc
-  SS_comm_mbin_mask3d_name: mask3d_emd_0731_apix0o968_d440.mrc
+  SS_comm_class2d_pmd: 169
+  SS_comm_optimal_pmd: 166
+  SS_comm_dup_thresh: 21
+  SS_comm_sym_name: C1
+  SS_comm_lbin_angpix: 2.49
+  SS_comm_lbin_ref3d_path: Inputs_Map/ref3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc
+  SS_comm_lbin_ref3d_name: ref3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc
+  SS_comm_lbin_mask3d_path: Inputs_Map/mask3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc
+  SS_comm_lbin_mask3d_name: mask3d_emd_21992_additional_3_align_manu_tm_lpf7o47_apix2o49_d112.mrc
+  SS_comm_mbin_angpix: 1.0375
+  SS_comm_mbin_0o95box_pmd: 260
+  SS_comm_mbin_ref3d_path: Inputs_Map/ref3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288.mrc
+  SS_comm_mbin_ref3d_name: ref3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288.mrc
+  SS_comm_mbin_mask3d_path:  Inputs_Map/mask3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288_wo_det.mrc
+  SS_comm_mbin_mask3d_name: mask3d_emd_21992_additional_3_align_manu_tm_lpf3o1125_apix1o0375_d288_wo_det.mrc
   SS_comm_mbin_imported_mask3d_path: Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/\$\$SS_comm_mbin_mask3d_name
 #Common Advanced
   SS_comm_motioncorr_mics_star: Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star
@@ -26,29 +26,29 @@ Settings:
   SS_comm_class2d_classes: 200
 #010_GTF_MotionCorr
   GTF_eer_grouping: 32
-  GTF_gain_ref_file: '""'
+  GTF_gain_ref_file: GLP-1_gain.mrc 
   GTF_motioncorr_do_at_most: 99999
   GTF_motioncorr_total_max_limit: 80
 #010_GTF_MotionCorr Advanced
   GTF_motioncorr_run_only_once: 1
 #020_GTF_CtfFind
-  GTF_ctffind_search_def_min : 5000
-  GTF_ctffind_search_def_max : 30000
+  GTF_ctffind_search_def_min : 3000
+  GTF_ctffind_search_def_max : 20000
   GTF_ctffind_res_max_limit: 6.0
 #020_GTF_CtfFind Advanced
   GTF_ctffind_run_only_once: 1
 #030_GTF_Create_Stack
-  GTF_pick_do_limit_mics: 0
-  GTF_pick_min_nr_mics: 1000
+  GTF_pick_do_limit_mics: 1
+  GTF_pick_min_nr_mics: 2000
   GTF_pick_cryolo_thresh: 0.1
   GTF_lbin_extract_cryolo_fom: 0.1
-  GTF_lbin_extract_mics_box: 252
-  GTF_lbin_extract_mics_0o95box: 240
-  GTF_lbin_extract_parts_box: 84
-  GTF_lbin_extract_parts_x_min: 126
-  GTF_lbin_extract_parts_x_max: 3970
-  GTF_lbin_extract_parts_y_min: 126
-  GTF_lbin_extract_parts_y_max: 3970
+  GTF_lbin_extract_mics_box: 336
+  GTF_lbin_extract_mics_0o95box: 320
+  GTF_lbin_extract_parts_box: 112
+  GTF_lbin_extract_parts_x_min: 168
+  GTF_lbin_extract_parts_x_max: 5592
+  GTF_lbin_extract_parts_y_min: 168
+  GTF_lbin_extract_parts_y_max: 3924
 #030_GTF_Create_Stack Advanced
   GTF_pick_use_log_pick: 0
   GTF_pick_log_pdm_min: 200
@@ -59,7 +59,7 @@ Settings:
   GTF_lbin_extract_do_fom_threshold: 1
   GTF_lbin_extract_run_only_once: 1
 #040_GTF_Class2D_PMDs
-  GTF_lbin_class2d_pmds_do_limit_parts: 0
+  GTF_lbin_class2d_pmds_do_limit_parts: 1
   GTF_lbin_class2d_pmds_min_nr_parts: 200000
   GTF_lbin_class2d_pmds_base_pmd: 180
   GTF_lbin_class2d_pmds_pad_min: 0
@@ -71,9 +71,9 @@ Settings:
   GTF_lbin_class2d_pmds_prev_proc_exited: Schemes/030_GTF_Create_Stack/RELION_JOB_EXIT_SUCCESS
   GTF_lbin_class2d_pmds_in_parts_star: Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star
 #050_GTF_AbInitReconst3D
-  GTF_lbin_abinit3d_do_limit_parts: 0
+  GTF_lbin_abinit3d_do_limit_parts: 1
   GTF_lbin_abinit3d_min_nr_parts: 200000
-  GTF_lbin_abinit3d_pmd: 105
+  GTF_lbin_abinit3d_pmd: 169
   GTF_lbin_abinit3d_sym_name: C1
 #050_GTF_AbInitReconst3D Advanced
   GTF_lbin_abinit3d_wait_prev_proc: 1
@@ -84,7 +84,7 @@ Settings:
   GTF_lbin_abinit3d_rank_thresh: 0.26
   GTF_lbin_abinit3d_do_run_C1: 1
 #060_CSS_Clean_Stack_3D
-  CSS_lbin_center3d_do_limit_parts: 0
+  CSS_lbin_center3d_do_limit_parts: 1
   CSS_lbin_center3d_min_nr_parts: 400000
   CSS_lbin_center3d_class3d_use_mask3d: 1
   CSS_lbin_center3d_class3d_lpf: 30
@@ -92,7 +92,7 @@ Settings:
   CSS_lbin_center3d_class3d_classes: 3
   CSS_lbin_center3d_refine3d_use_mask3d: 1
   CSS_lbin_center3d_refine3d_sym_name: C1
-  CSS_lbin_center3d_postproc_adhoc_lpf: 7.92
+  CSS_lbin_center3d_postproc_adhoc_lpf: 7.47
 #060_CSS_Clean_Stack_3D Advanced
   CSS_lbin_center3d_wait_prev_proc: 1
   CSS_lbin_center3d_prev_proc_exited: Schemes/030_GTF_Create_Stack/RELION_JOB_EXIT_SUCCESS
@@ -106,13 +106,13 @@ Settings:
   CSS_lbin_center3d_class3d_cont_stars: run_it000_optimiser.star
   CSS_lbin_center3d_class3d_parts_star: Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/run_it050_data.star
 #070_CSS_Init_Refine3D
-  CSS_mbin_reextract_mics_box: 484
-  CSS_mbin_reextract_mics_0o95box: 460
-  CSS_mbin_reextract_parts_box: 440
-  CSS_mbin_reextract_parts_x_min: 242
-  CSS_mbin_reextract_parts_x_max: 3854
-  CSS_mbin_reextract_parts_y_min: 242
-  CSS_mbin_reextract_parts_y_max: 3854
+  CSS_mbin_reextract_mics_box: 360
+  CSS_mbin_reextract_mics_0o95box: 342
+  CSS_mbin_reextract_parts_box: 288
+  CSS_mbin_reextract_parts_x_min: 180
+  CSS_mbin_reextract_parts_x_max: 5580
+  CSS_mbin_reextract_parts_y_min: 180
+  CSS_mbin_reextract_parts_y_max: 3912
 #070_CSS_Init_Refine3D Advanced
   CSS_mbin_reextract_wait_prev_proc: 1
   CSS_mbin_reextract_prev_proc_exited: Schemes/060_CSS_Clean_Stack_3D/RELION_JOB_EXIT_SUCCESS
@@ -131,7 +131,7 @@ Settings:
   CSS_mbin_resfish3d_ref3d: Schemes/080_CSS_PPRefine_Cycle/080040_Refine3D_ctfrefine/run_class001.mrc
   CSS_mbin_resfish3d_classes: 2
   CSS_mbin_resfish3d_tval: 256
-  CSS_mbin_resfish3d_locres_bfactor: -55
+  CSS_mbin_resfish3d_locres_bfactor: -67
 #090_CSS_Res_Fish_3D Advanced
   CSS_mbin_resfish3d_wait_prev_proc: 1
   CSS_mbin_resfish3d_prev_proc_exited: Schemes/080_CSS_PPRefine_Cycle/RELION_JOB_EXIT_SUCCESS

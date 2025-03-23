@@ -1,0 +1,5 @@
+### Do not Change ### 
+DefaultConfigFilePaths: 
+  ParallelSettings: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent/config_type_algo_g6_7i_relion500.yml
+  EmSettings: XXX_SETUP_DIR_PATH_XXX/configs/common/config_em_settings_empiar10673_gpcr.yml
+  SystemSettings: XXX_SETUP_DIR_PATH_XXX/configs/environment_dependent/config_system_settings.yml
