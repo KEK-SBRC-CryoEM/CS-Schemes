@@ -2,9 +2,9 @@
   Settings:
     WhichGpusToUse: ''
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: '96'
+    NumberOfMpi: '24'
     NumberOfThreads: '8'
-    NumberOfNodes: '4'
+    NumberOfNodes: '1'
     MinimumDedicatedCores: '24'
     AdditionalArguments: '"--do_at_most \$\$GTF_motioncorr_do_at_most"'
 - AlgoLevel: motioncorr_mocor2_GPU

@@ -99,12 +99,12 @@ Settings:
   CSS_lbin_center3d_parts_star: Schemes/030_GTF_Create_Stack/030060_Select_rm_bars_xy/particles.star
   CSS_lbin_center3d_clean2d_cycles_max: 0
   CSS_lbin_center3d_clean2d_rank_thresh: 0.06
-  CSS_lbin_center3d_class3d_conts_max: 1
-  CSS_lbin_center3d_class3d_iter_step: 50
-  CSS_lbin_center3d_class3d_offset_factor: 1
+  CSS_lbin_center3d_class3d_conts_max: 3
+  CSS_lbin_center3d_class3d_iter_step: 25
+  CSS_lbin_center3d_class3d_offset_factor: 4
   CSS_lbin_center3d_class3d_do_fast_subsets: 1
-  CSS_lbin_center3d_class3d_cont_stars: run_it000_optimiser.star
-  CSS_lbin_center3d_class3d_parts_star: Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/run_it050_data.star
+  CSS_lbin_center3d_class3d_cont_stars: run_it000_optimiser.star,run_it025_optimiser.star,run_it050_optimiser.star
+  CSS_lbin_center3d_class3d_parts_star: Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/run_it075_data.star
 #070_CSS_Init_Refine3D
   CSS_mbin_reextract_mics_box: 360
   CSS_mbin_reextract_mics_0o95box: 342
