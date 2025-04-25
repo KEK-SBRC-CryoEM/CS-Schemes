@@ -22,6 +22,7 @@ EM_ctffind_fit_res_max        XXX_SSE_REPLACE_EM_XXX        XXX_SSE_REPLACE_EM_X
 GTF_ctffind_search_def_min    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 GTF_ctffind_search_def_max    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 GTF_ctffind_res_max_limit     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+GTF_ctffind_icering_limit     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 wait_sec                      180                           180 
 maxtime_hr                    96                            96 
 
@@ -79,9 +80,9 @@ _rlnSchemeJobNameOriginal #1
 _rlnSchemeJobName #2 
 _rlnSchemeJobMode #3 
 _rlnSchemeJobHasStarted #4 
-020010_CtfFind        020010_CtfFind        continue       0 
-020020_Select_mics    020020_Select_mics    continue       0 
-
+020010_CtfFind            020010_CtfFind            continue       0 
+020020_Select_mics        020020_Select_mics        continue       0 
+020030_Select_icering     020030_Select_icering     continue       0 
 
 # version 30001 
 
@@ -93,11 +94,12 @@ _rlnSchemeEdgeOutputNodeName #2
 _rlnSchemeEdgeIsFork #3 
 _rlnSchemeEdgeOutputNodeNameIfTrue #4 
 _rlnSchemeEdgeBooleanVariable #5 
-WAIT                  EXIT_maxtime          0    undefined           undefined 
-EXIT_maxtime          HAS_motioncorr        0    undefined           undefined 
-HAS_motioncorr        WAIT                  1    COUNT_mics          has_motioncorr 
-COUNT_mics            HAS_mics_increased    0    undefined           undefined 
-HAS_mics_increased    WAIT                  1    SET_prev_nr_mics    has_larger_nr_mics 
-SET_prev_nr_mics      020010_CtfFind        0    undefined           undefined 
-020010_CtfFind        020020_Select_mics    0    undefined           undefined 
-020020_Select_mics    WAIT                  1    EXIT                GTF_ctffind_run_only_once 
+WAIT                      EXIT_maxtime              0    undefined           undefined 
+EXIT_maxtime              HAS_motioncorr            0    undefined           undefined 
+HAS_motioncorr            WAIT                      1    COUNT_mics          has_motioncorr 
+COUNT_mics                HAS_mics_increased        0    undefined           undefined 
+HAS_mics_increased        WAIT                      1    SET_prev_nr_mics    has_larger_nr_mics 
+SET_prev_nr_mics          020010_CtfFind            0    undefined           undefined 
+020010_CtfFind            020020_Select_mics        0    undefined           undefined 
+020020_Select_mics        020030_Select_icering     0    undefined           undefined 
+020030_Select_icering     WAIT                      1    EXIT                GTF_ctffind_run_only_once 

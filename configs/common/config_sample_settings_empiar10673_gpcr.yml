@@ -35,6 +35,7 @@ Settings:
   GTF_ctffind_search_def_min : 3000
   GTF_ctffind_search_def_max : 20000
   GTF_ctffind_res_max_limit: 6.0
+  GTF_ctffind_icering_limit: 2.0
 #020_GTF_CtfFind Advanced
   GTF_ctffind_run_only_once: 1
 #030_GTF_Create_Stack
