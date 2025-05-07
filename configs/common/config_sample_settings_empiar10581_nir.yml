@@ -18,7 +18,7 @@ Settings:
   SS_comm_mbin_imported_mask3d_path: Schemes/070_CSS_Init_Refine3D/070060_Import_mask3d/\$\$SS_comm_mbin_mask3d_name
 #Common Advanced
   SS_comm_motioncorr_mics_star: Schemes/010_GTF_MotionCorr/010030_Select_mics/micrographs.star
-  SS_comm_ctf_mics_star: Schemes/020_GTF_CtfFind/020020_Select_mics/micrographs.star
+  SS_comm_ctf_mics_star: Schemes/020_GTF_CtfFind/020030_Select_icering/micrographs.star
   SS_comm_lbin_do_preread_images: 0
   SS_comm_lbin_nr_pool: 30
   SS_comm_mbin_do_preread_images: 0
@@ -35,7 +35,7 @@ Settings:
   GTF_ctffind_search_def_min : 5000
   GTF_ctffind_search_def_max : 30000
   GTF_ctffind_res_max_limit: 6.0
-  GTF_ctffind_icering_limit: 2.0
+  GTF_ctffind_icering_limit: 10.0
 #020_GTF_CtfFind Advanced
   GTF_ctffind_run_only_once: 1
 #030_GTF_Create_Stack

@@ -16,7 +16,7 @@ loop_
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
 fn_model                "" 
-fn_mic                  $$ctffind_mics_star 
+fn_mic                  $$select_mics_star 
 fn_data                 "" 
 do_class_ranker         No 
 rank_threshold          0.5 
