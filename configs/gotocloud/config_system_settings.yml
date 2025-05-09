@@ -28,3 +28,6 @@ JobStarSettings:
 - AlgoType: algo_type_external_select3d
   Settings:
     SelectClass3DExecutable: '"/efs/em/pyenv/versions/anaconda3-5.3.1/envs/cryolo-1.8.0/bin/python /efs/em/select_class3d/gtf_relion4_run_select_class3d.py"'
+- AlgoType: algo_type_external_bfactor_plot
+  Settings:
+    BfactorPlotExecutable: '"/fsx/cs_schemes_tutorial_yatabe/bfactor_plot/bfactor_plot.py"'

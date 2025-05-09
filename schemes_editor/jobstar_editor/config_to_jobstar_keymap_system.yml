@@ -7,3 +7,4 @@ CrYOLOExecutable: fn_exe
 CrYOLORepo: param1_value
 SelectClass3DExecutable: fn_exe
 ResMapExecutable: fn_resmap
+BfactorPlotExecutable: fn_exe

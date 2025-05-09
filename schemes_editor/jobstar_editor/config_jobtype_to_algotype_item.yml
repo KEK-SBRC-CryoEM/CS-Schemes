@@ -115,3 +115,6 @@
   - Key: 'queuename'
     Value: 'select3d'
     AlgoTypeName: 'external_select3d'
+  - Key: 'queuename'
+    Value: 'bfactor'
+    AlgoTypeName: 'external_bfactor_plot'

@@ -137,3 +137,11 @@ Settings:
   CSS_mbin_resfish3d_wait_prev_proc: 1
   CSS_mbin_resfish3d_prev_proc_exited: Schemes/080_CSS_PPRefine_Cycle/RELION_JOB_EXIT_SUCCESS
   CSS_mbin_resfish3d_do_fast_subsets: 1
+#100_CSS_Bfactor_Plot
+  CSS_mbin_bfactor_refine3d_job: Schemes/090_CSS_Res_Fish_3D/090050_Refine3D_local/
+  CSS_mbin_bfactor_postproc_job: Schemes/090_CSS_Res_Fish_3D/090060_PostProcess_local/
+  CSS_mbin_bfactor_min_nr_parts: 1100
+  CSS_mbin_bfactor_max_nr_parts: 4400
+#100_CSS_Bfactor_Plot Advanced
+  CSS_mbin_bfactor_wait_prev_proc: 1
+  CSS_mbin_bfactor_prev_proc_exited: Schemes/090_CSS_Res_Fish_3D/RELION_JOB_EXIT_SUCCESS

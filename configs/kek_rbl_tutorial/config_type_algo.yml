@@ -94,3 +94,7 @@ JobStarSettings:
     SubmissionLevel: NOQUEUE
     DeviceLevel: NOQUEUE_NOT_USE_GPU
     AlgoLevel: external_select3d
+  - AlgoType: algo_type_external_bfactor_plot
+    SubmissionLevel: NOQUEUE
+    DeviceLevel: NOQUEUE_CPU
+    AlgoLevel: external_bfactor_plot

@@ -205,6 +205,14 @@
     NumberOfNodes: '0'
     MinimumDedicatedCores: '0'
     AdditionalArguments: '""'
+- AlgoLevel: external_bfactor_plot
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfThreads: '1'
+    NumberOfNodes: '0'
+    MinimumDedicatedCores: '0'
+    AdditionalArguments: '""'
 - AlgoLevel: NOQUEUE
   Settings:
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
