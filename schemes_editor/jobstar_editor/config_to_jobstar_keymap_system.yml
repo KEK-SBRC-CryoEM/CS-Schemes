@@ -8,3 +8,5 @@ CrYOLORepo: param1_value
 SelectClass3DExecutable: fn_exe
 ResMapExecutable: fn_resmap
 BfactorPlotExecutable: fn_exe
+StackSplitExecutable: fn_exe
+ResultMergeExecutable: fn_exe

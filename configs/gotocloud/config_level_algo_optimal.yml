@@ -213,6 +213,22 @@
     NumberOfNodes: '0'
     MinimumDedicatedCores: '0'
     AdditionalArguments: '""'
+- AlgoLevel: external_stack_splot
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfThreads: '1'
+    NumberOfNodes: '0'
+    MinimumDedicatedCores: '0'
+    AdditionalArguments: '""'
+- AlgoLevel: external_result_merge
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfThreads: '1'
+    NumberOfNodes: '0'
+    MinimumDedicatedCores: '0'
+    AdditionalArguments: '""'
 - AlgoLevel: NOQUEUE
   Settings:
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
