@@ -137,6 +137,16 @@ Settings:
   CSS_mbin_resfish3d_wait_prev_proc: 1
   CSS_mbin_resfish3d_prev_proc_exited: Schemes/080_CSS_PPRefine_Cycle/RELION_JOB_EXIT_SUCCESS
   CSS_mbin_resfish3d_do_fast_subsets: 1
+#091_CSS_Merge_Stack_Split
+  CSS_mbin_result_merge_yml: Schemes/061_CSS_Stack_Split/061010_External_stack_split/merge_setting.yml
+  CSS_mbin_mergesplit_refined_star: External/job016/merged_star_data.star
+  CSS_mbin_mergesplit_ref3d: Schemes/091_CSS_Merge_Stack_Split/091020_Import_ref3d/\$\$SS_comm_mbin_ref3d_name
+  CSS_mbin_imported_mask3d_path: Schemes/091_CSS_Merge_Stack_Split/091030_Import_mask3d/\$\$SS_comm_mbin_mask3d_name
+  CSS_mbin_mergesplit_classes: 2
+  CSS_mbin_mergesplit_tval: 32
+  CSS_mbin_mergesplit_locres_bfactor: -80
+#091_CSS_Merge_Stack_Split Advanced
+  CSS_mbin_mergesplit_do_fast_subsets: 1
 #100_CSS_Bfactor_Plot
   CSS_mbin_bfactor_refine3d_job: Schemes/090_CSS_Res_Fish_3D/090050_Refine3D_local/
   CSS_mbin_bfactor_postproc_job: Schemes/090_CSS_Res_Fish_3D/090060_PostProcess_local/

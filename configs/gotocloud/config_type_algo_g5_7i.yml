@@ -98,3 +98,8 @@ JobStarSettings:
     SubmissionLevel: NOQUEUE
     DeviceLevel: NOQUEUE_CPU
     AlgoLevel: external_bfactor_plot
+  - AlgoType: algo_type_external_result_merge
+    SubmissionLevel: NOQUEUE
+    DeviceLevel: NOQUEUE_CPU
+    AlgoLevel: external_result_merge
+
