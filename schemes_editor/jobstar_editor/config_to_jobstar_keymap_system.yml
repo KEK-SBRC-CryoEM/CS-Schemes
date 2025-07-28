@@ -10,3 +10,5 @@ ResMapExecutable: fn_resmap
 BfactorPlotExecutable: fn_exe
 StackSplitExecutable: fn_exe
 ResultMergeExecutable: fn_exe
+MergeStackSplitExecutable: fn_exe
+
