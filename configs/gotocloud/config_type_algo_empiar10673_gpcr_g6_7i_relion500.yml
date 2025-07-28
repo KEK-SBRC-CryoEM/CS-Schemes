@@ -106,4 +106,3 @@ JobStarSettings:
     SubmissionLevel: NOQUEUE
     DeviceLevel: NOQUEUE_CPU
     AlgoLevel: external_result_merge
-

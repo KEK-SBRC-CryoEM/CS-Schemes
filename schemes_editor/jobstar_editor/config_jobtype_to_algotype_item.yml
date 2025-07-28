@@ -124,3 +124,7 @@
   - Key: 'queuename'
     Value: 'result_merge'
     AlgoTypeName: 'external_result_merge'
+  - Key: 'queuename'
+    Value: 'merge_stack_split'
+    AlgoTypeName: 'external_merge_stack_split' 
+
