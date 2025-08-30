@@ -229,8 +229,13 @@ class CostCalculator():
         pipline_star_file_path = os.path.join(relion_dir_path, type(self).__PIPELINE_STAR_FILE_NAME)
         assert os.path.exists(pipline_star_file_path), '[CC_ASSERT] The default_pipeline.star file "{}" must exist!'.format(pipline_star_file_path)
         pipline_dict = starfile.read(pipline_star_file_path)
+        ### print('[CC_DEBUG] pipline_dict := {}'.format(pipline_dict))
         for i in range(len(pipline_dict['pipeline_processes'])):
-            self.__job_id_dir_path_list.append(pipline_dict['pipeline_processes']['rlnPipeLineProcessName'][i])
+            ### print('[CC_DEBUG] pipline_dict := {}'.format(pipline_dict['pipeline_processes']['rlnPipeLineProcessStatusLabel'][i]))
+            if pipline_dict['pipeline_processes']['rlnPipeLineProcessStatusLabel'][i] == "Succeeded":
+                self.__job_id_dir_path_list.append(pipline_dict['pipeline_processes']['rlnPipeLineProcessName'][i])
+            else:
+                print('[CC_MESSAGE] WARNING: The status of "{}" is "{}" instead "Succeeded". Ignoring this job'.format(pipline_dict['pipeline_processes']['rlnPipeLineProcessName'][i], pipline_dict['pipeline_processes']['rlnPipeLineProcessStatusLabel'][i]))
 
     # Get parallel settings from job.star file saved when relion execution.
     # - number of GPUs : Count the numbers set in 'gpu_ids' or 'param3_value'(for cryolo).
