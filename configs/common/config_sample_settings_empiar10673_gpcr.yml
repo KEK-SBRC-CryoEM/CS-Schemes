@@ -106,6 +106,12 @@ Settings:
   CSS_lbin_center3d_class3d_do_fast_subsets: 1
   CSS_lbin_center3d_class3d_cont_stars: run_it000_optimiser.star,run_it025_optimiser.star,run_it050_optimiser.star
   CSS_lbin_center3d_class3d_parts_star: Schemes/060_CSS_Clean_Stack_3D/060060_Class3D/run_it075_data.star
+#061_CSS_Stack_Split
+  CSS_mbin_stack_split_yml: stack_split_scheme.yml
+#061_CSS_Stack_Split Advanced
+  CSS_mbin_stack_split_wait_prev_proc: 1
+  CSS_mbin_stack_split_prev_proc_exited: Schemes/030_GTF_Create_Stack/RELION_JOB_EXIT_SUCCESS
+  CSS_mbin_result_merge_yml: Schemes/061_CSS_Stack_Split/061010_External_stack_split/merge_setting.yml
 #070_CSS_Init_Refine3D
   CSS_mbin_reextract_mics_box: 360
   CSS_mbin_reextract_mics_0o95box: 342
@@ -146,6 +152,8 @@ Settings:
   CSS_mbin_mergesplit_tval: 32
   CSS_mbin_mergesplit_locres_bfactor: -80
 #091_CSS_Merge_Stack_Split Advanced
+  CSS_mbin_mergesplit_wait_prev_proc: 1
+  CSS_mbin_mergesplit_prev_proc_exited: Schemes/061_CSS_Stack_Split/RELION_JOB_EXIT_SUCCESS
   CSS_mbin_mergesplit_do_fast_subsets: 1
 #100_CSS_Bfactor_Plot
   CSS_mbin_bfactor_refine3d_job: Schemes/090_CSS_Res_Fish_3D/090050_Refine3D_local/
