@@ -1,0 +1,15 @@
+Settings:
+  EM_movie_files: Micrographs/*.tiff
+  EM_mtf_file: '""' 
+  EM_mics_apix: 0.75
+  EM_kV: 300
+  EM_Cs: 2.7
+  EM_first_frame_for_sum: 1
+  EM_dose_per_frame: 1.0
+  EM_motioncorr_bfactor: 150
+  EM_motioncorr_patch_x: 5
+  EM_motioncorr_patch_y: 5
+  EM_motioncorr_gain_rot: '"No rotation (0)"'
+  EM_motioncorr_gain_flip: '"No flipping (0)"'
+  EM_ctffind_fit_res_min: 30
+  EM_ctffind_fit_res_max: 3

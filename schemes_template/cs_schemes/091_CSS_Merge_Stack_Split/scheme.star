@@ -36,6 +36,7 @@ _rlnSchemeBooleanVariableName #1
 _rlnSchemeBooleanVariableValue #2 
 _rlnSchemeBooleanVariableResetValue #3 
 CSS_mbin_mergesplit_wait_prev_proc     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_mergesplit_skip_nacls3d       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_mbin_do_preread_images         XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_mbin_mergesplit_do_fast_subsets    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 has_exited                             0                             0 
@@ -55,6 +56,10 @@ SS_comm_mbin_ref3d_path                 XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_RE
 SS_comm_mbin_ref3d_name                 XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_mbin_mergesplit_refined_star        XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_mbin_mergesplit_ref3d               XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+gref3d_parts                            ""                            "" 
+gref3d_ref3d                            ""                            "" 
+selected_nacls3d_parts                  Schemes/091_CSS_Merge_Stack_Split/091050_External_select3d/selected_data.star        Schemes/091_CSS_Merge_Stack_Split/091050_External_select3d/selected_data.star 
+selected_nacls3d_ref3d                  Schemes/091_CSS_Merge_Stack_Split/091050_External_select3d/selected_model_map.mrc    Schemes/091_CSS_Merge_Stack_Split/091050_External_select3d/selected_model_map.mrc 
 CSS_mbin_imported_mask3d_path           XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_mbin_mask3d_path                XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 SS_comm_mbin_mask3d_name                XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
@@ -72,10 +77,14 @@ _rlnSchemeOperatorType #2
 _rlnSchemeOperatorOutput #3 
 _rlnSchemeOperatorInput1 #4 
 _rlnSchemeOperatorInput2 #5 
-HAS_prev_proc_exited    bool=file_exists    has_exited    CSS_mbin_mergesplit_prev_proc_exited    undefined 
-WAIT                    wait                undefined     wait_sec                                undefined 
-EXIT_maxtime            exit_maxtime        undefined     maxtime_hr                              undefined 
-EXIT                    exit                undefined     undefined                               undefined 
+HAS_prev_proc_exited    bool=file_exists    has_exited      CSS_mbin_mergesplit_prev_proc_exited    undefined 
+INIT_gref3d_parts       string=set          gref3d_parts    CSS_mbin_mergesplit_refined_star        undefined 
+INIT_gref3d_ref3d       string=set          gref3d_ref3d    CSS_mbin_mergesplit_ref3d               undefined 
+UPDATE_gref3d_parts     string=set          gref3d_parts    selected_nacls3d_parts                  undefined 
+UPDATE_gref3d_ref3d     string=set          gref3d_ref3d    selected_nacls3d_ref3d                  undefined 
+WAIT                    wait                undefined       wait_sec                                undefined 
+EXIT_maxtime            exit_maxtime        undefined       maxtime_hr                              undefined 
+EXIT                    exit                undefined       undefined                               undefined 
 
 
 # version 30001 
@@ -114,7 +123,12 @@ EXIT_maxtime                    HAS_prev_proc_exited            0    undefined  
 HAS_prev_proc_exited            WAIT                            1    091010_External_result_merge    has_exited 
 091010_External_result_merge    091020_Import_ref3d             0    undefined                       undefined 
 091020_Import_ref3d             091030_Import_mask3d            0    undefined                       undefined 
-091030_Import_mask3d            091040_Class3D_noalign          0    undefined                       undefined 
+091030_Import_mask3d            INIT_gref3d_parts               0    undefined                       undefined 
+INIT_gref3d_parts               INIT_gref3d_ref3d               0    undefined                       undefined 
+INIT_gref3d_ref3d               CHECK_do_nacls3d                0    undefined                       undefined 
+CHECK_skip_nacls3d              UPDATE_gref3d_parts             1    091060_Refine3D_global          CSS_mbin_mergesplit_skip_nacls3d 
+UPDATE_gref3d_parts             UPDATE_gref3d_ref3d             0    undefined                       undefined 
+UPDATE_gref3d_ref3d             091040_Class3D_noalign          0    undefined                       undefined 
 091040_Class3D_noalign          091050_External_select3d        0    undefined                       undefined 
 091050_External_select3d        091060_Refine3D_global          0    undefined                       undefined 
 091060_Refine3D_global          091070_PostProcess_global       0    undefined                       undefined 
@@ -122,3 +136,4 @@ HAS_prev_proc_exited            WAIT                            1    091010_Exte
 091080_Refine3D_local           091090_PostProcess_local        0    undefined                       undefined 
 091090_PostProcess_local        091100_LocalRes                 0    undefined                       undefined 
 091100_LocalRes                 EXIT                            0    undefined                       undefined 
+

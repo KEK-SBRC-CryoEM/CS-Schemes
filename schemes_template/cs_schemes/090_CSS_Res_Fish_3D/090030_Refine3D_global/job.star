@@ -15,8 +15,8 @@ data_joboptions_values
 loop_ 
 _rlnJobOptionVariable #1 
 _rlnJobOptionValue #2 
-fn_img                              Schemes/090_CSS_Res_Fish_3D/090020_External_select3d/selected_data.star 
-fn_ref                              Schemes/090_CSS_Res_Fish_3D/090020_External_select3d/selected_model_map.mrc 
+fn_img                              $$gref3d_parts 
+fn_ref                              $$gref3d_ref3d 
 fn_mask                             $$SS_comm_mbin_imported_mask3d_path 
 fn_cont                             "" 
 ref_correct_greyscale               Yes 

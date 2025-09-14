@@ -15,8 +15,10 @@ loop_
 _rlnSchemeFloatVariableName #1 
 _rlnSchemeFloatVariableValue #2 
 _rlnSchemeFloatVariableResetValue #3 
-wait_sec      180    180 
-maxtime_hr    96     96 
+CSS_mbin_stack_split_splits_num       XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_stack_split_particles_num    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+wait_sec                              180                           180 
+maxtime_hr                            96                            96 
 
 
 # version 50001 
@@ -39,9 +41,13 @@ loop_
 _rlnSchemeStringVariableName #1 
 _rlnSchemeStringVariableValue #2 
 _rlnSchemeStringVariableResetValue #3 
-CSS_mbin_stack_split_prev_proc_exited    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
-CSS_mbin_stack_split_yml                 XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
-CSS_mbin_result_merge_yml                XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_stack_split_prev_proc_exited      XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_stack_split_refined_star          XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_stack_split_scheme_list           XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_stack_split_scheme_copy_source    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_stack_split_link                  XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_stack_split_merge_scheme_node     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_stack_split_merge_file            XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 
 
 # version 50001 
@@ -70,7 +76,6 @@ _rlnSchemeJobName #2
 _rlnSchemeJobMode #3 
 _rlnSchemeJobHasStarted #4 
 061010_External_stack_split     061010_External_stack_split     new    0 
-061020_External_result_merge    061020_External_result_merge    new    0 
 
 
 # version 50001 
@@ -86,5 +91,4 @@ _rlnSchemeEdgeBooleanVariable #5
 WAIT                            061010_External_stack_split     1    EXIT_maxtime                   CSS_mbin_stack_split_wait_prev_proc 
 EXIT_maxtime                    HAS_prev_proc_exited            0    undefined                      undefined 
 HAS_prev_proc_exited            WAIT                            1    061010_External_stack_split    has_exited 
-061010_External_stack_split     061020_External_result_merge    0    undefined                      undefined 
-061020_External_result_merge    EXIT                            0    undefined                      undefined 
+061010_External_stack_split     EXIT                            0    undefined                      undefined 

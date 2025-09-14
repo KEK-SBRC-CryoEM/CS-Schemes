@@ -28,12 +28,12 @@ JobStarSettings:
 - AlgoType: algo_type_external_select3d
   Settings:
     SelectClass3DExecutable: '"/efs/em/pyenv/versions/anaconda3-5.3.1/envs/cryolo-1.8.0/bin/python /efs/em/select_class3d/gtf_relion4_run_select_class3d.py"'
-- AlgoType: algo_type_external_bfactor_plot
-  Settings:
-    BfactorPlotExecutable: '"/efs/em/bfactor_analysis/bfactor_plot.py"'
 - AlgoType: algo_type_external_stack_split
   Settings:
     StackSplitExecutable: '"/efs/em/stacksplit_scheme/stack_split_scheme.py"'
 - AlgoType: algo_type_external_result_merge
   Settings:
     ResultMergeExecutable: '"/efs/em/stacksplit_scheme/result_merge_scheme.py"' 
+- AlgoType: algo_type_external_bfactor_plot
+  Settings:
+    BfactorPlotExecutable: '"/efs/em/bfactor_analysis/bfactor_plot.py"'

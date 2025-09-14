@@ -2,9 +2,9 @@
   Settings:
     WhichGpusToUse: ''
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: '24'
+    NumberOfMpi: '96'
     NumberOfThreads: '8'
-    NumberOfNodes: '1'
+    NumberOfNodes: '4'
     MinimumDedicatedCores: '24'
     AdditionalArguments: '"--do_at_most \$\$GTF_motioncorr_do_at_most"'
 - AlgoLevel: motioncorr_mocor2_GPU
@@ -205,15 +205,7 @@
     NumberOfNodes: '0'
     MinimumDedicatedCores: '0'
     AdditionalArguments: '""'
-- AlgoLevel: external_bfactor_plot
-  Settings:
-    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfThreads: '1'
-    NumberOfNodes: '0'
-    MinimumDedicatedCores: '0'
-    AdditionalArguments: '""'
-- AlgoLevel: external_stack_splot
+- AlgoLevel: external_stack_split
   Settings:
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
@@ -222,6 +214,14 @@
     MinimumDedicatedCores: '0'
     AdditionalArguments: '""'
 - AlgoLevel: external_result_merge
+  Settings:
+    WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
+    NumberOfThreads: '1'
+    NumberOfNodes: '0'
+    MinimumDedicatedCores: '0'
+    AdditionalArguments: '""'
+- AlgoLevel: external_bfactor_plot
   Settings:
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     NumberOfMpi: 'JSE_NOT_APPLICABLE_PARALLEL'
