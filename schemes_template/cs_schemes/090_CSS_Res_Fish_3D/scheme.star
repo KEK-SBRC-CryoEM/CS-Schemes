@@ -115,12 +115,11 @@ WAIT                            INIT_gref3d_parts               1    EXIT_maxtim
 EXIT_maxtime                    HAS_prev_proc_exited            0    undefined                 undefined 
 HAS_prev_proc_exited            WAIT                            1    INIT_gref3d_parts         has_exited 
 INIT_gref3d_parts               INIT_gref3d_ref3d               0    undefined                 undefined 
-INIT_gref3d_ref3d               CHECK_do_nacls3d                0    undefined                 undefined 
-CHECK_skip_nacls3d              UPDATE_gref3d_parts             1    090030_Refine3D_global    CSS_mbin_resfish3d_skip_nacls3d 
-UPDATE_gref3d_parts             UPDATE_gref3d_ref3d             0    undefined                 undefined 
-UPDATE_gref3d_ref3d             090010_Class3D_noalign          0    undefined                 undefined 
+INIT_gref3d_ref3d               090010_Class3D_noalign          1    090030_Refine3D_global    CSS_mbin_resfish3d_skip_nacls3d 
 090010_Class3D_noalign          090020_External_select3d        0    undefined                 undefined 
-090020_External_select3d        090030_Refine3D_global          0    undefined                 undefined 
+090020_External_select3d        UPDATE_gref3d_parts             0    undefined                 undefined 
+UPDATE_gref3d_parts             UPDATE_gref3d_ref3d             0    undefined                 undefined 
+UPDATE_gref3d_ref3d             090030_Refine3D_global          0    undefined                 undefined 
 090030_Refine3D_global          090040_PostProcess_global       0    undefined                 undefined 
 090040_PostProcess_global       090050_Refine3D_local           0    undefined                 undefined 
 090050_Refine3D_local           090060_PostProcess_local        0    undefined                 undefined 

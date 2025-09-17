@@ -116,7 +116,7 @@ Settings:
   CSS_mbin_stack_split_particles_num: '""' 
   CSS_mbin_stack_split_scheme_list: 060_CSS_Clean_Stack_3D,070_CSS_Init_Refine3D,080_CSS_PPRefine_Cycle,090_CSS_Res_Fish_3D
   CSS_mbin_stack_split_scheme_copy_source: Schemes_Edited/Schemes/
-  CSS_mbin_stack_split_link: symbolic
+  CSS_mbin_stack_split_link_type: symbolic
   CSS_mbin_stack_split_merge_scheme_node: 090050_Refine3D_local
   CSS_mbin_stack_split_merge_file: run_data.star
 #070_CSS_Init_Refine3D

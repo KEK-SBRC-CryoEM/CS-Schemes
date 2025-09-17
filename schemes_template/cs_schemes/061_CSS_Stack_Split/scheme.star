@@ -45,7 +45,7 @@ CSS_mbin_stack_split_prev_proc_exited      XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE
 CSS_mbin_stack_split_refined_star          XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_mbin_stack_split_scheme_list           XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_mbin_stack_split_scheme_copy_source    XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
-CSS_mbin_stack_split_link                  XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
+CSS_mbin_stack_split_link_type             XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_mbin_stack_split_merge_scheme_node     XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 CSS_mbin_stack_split_merge_file            XXX_SSE_REPLACE_SAMPLE_XXX    XXX_SSE_REPLACE_SAMPLE_XXX 
 

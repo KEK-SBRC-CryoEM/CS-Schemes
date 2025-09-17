@@ -125,12 +125,11 @@ HAS_prev_proc_exited            WAIT                            1    091010_Exte
 091020_Import_ref3d             091030_Import_mask3d            0    undefined                       undefined 
 091030_Import_mask3d            INIT_gref3d_parts               0    undefined                       undefined 
 INIT_gref3d_parts               INIT_gref3d_ref3d               0    undefined                       undefined 
-INIT_gref3d_ref3d               CHECK_do_nacls3d                0    undefined                       undefined 
-CHECK_skip_nacls3d              UPDATE_gref3d_parts             1    091060_Refine3D_global          CSS_mbin_mergesplit_skip_nacls3d 
-UPDATE_gref3d_parts             UPDATE_gref3d_ref3d             0    undefined                       undefined 
-UPDATE_gref3d_ref3d             091040_Class3D_noalign          0    undefined                       undefined 
+INIT_gref3d_ref3d               091040_Class3D_noalign          1    091060_Refine3D_global          CSS_mbin_mergesplit_skip_nacls3d 
 091040_Class3D_noalign          091050_External_select3d        0    undefined                       undefined 
-091050_External_select3d        091060_Refine3D_global          0    undefined                       undefined 
+091050_External_select3d        UPDATE_gref3d_parts             0    undefined                       undefined 
+UPDATE_gref3d_parts             UPDATE_gref3d_ref3d             0    undefined                       undefined 
+UPDATE_gref3d_ref3d             091060_Refine3D_global          0    undefined                       undefined 
 091060_Refine3D_global          091070_PostProcess_global       0    undefined                       undefined 
 091070_PostProcess_global       091080_Refine3D_local           0    undefined                       undefined 
 091080_Refine3D_local           091090_PostProcess_local        0    undefined                       undefined 
