@@ -10,7 +10,7 @@ JobStarSettings:
 - AlgoType: algo_type_ctffind_ctff4
   Settings:
     GctfExecutable: 'JSE_DISABLED_SYSTEM'
-    CTFFIND4Executable: '/apps/packages/cisTEM-2.0.0-alpha-183/bin/ctffind'
+    CTFFIND4Executable: '/apps/packages/cisTEM-2.0.0-alpha-183/bin/ctffind'    
 - AlgoType: algo_type_ctffind_gctf
   Settings:
     GctfExecutable: 'JSE_NOT_SUPPORTED_SYSTEM'
@@ -23,8 +23,9 @@ JobStarSettings:
     ResMapExecutable:  'JSE_DISABLED_SYSTEM'
 - AlgoType: algo_type_external_cryolo
   Settings:
-    CrYOLOExecutable: '/home/tmoriya/mrk_apps/cryolo/gtf_relion4_run_cryolo_system.sh'
-    CrYOLORepo: '/home/tmoriya/mrk_apps/cryolo'
+    CrYOLOExecutable: '/home/tmoriya/shared_for_all/apps/rln_external/cryolo/gtf_relion4_run_cryolo_system.sh'
+    CrYOLORepo: '/home/tmoriya/shared_for_all/apps/rln_external/cryolo/'
 - AlgoType: algo_type_external_select3d
   Settings:
-    SelectClass3DExecutable: '"/home/tmoriya/mrk_apps/pyenv/versions/anaconda3-2023.03/envs/cryolo-1.9.6/bin/python /home/tmoriya/mrk_apps/select_class3d/gtf_relion4_run_select_class3d.py"'
+    SelectClass3DExecutable: '"/home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/cryolo-1.9.6 shared_for_all/apps/rln_external/select_class3d/gtf_relion4_run_select_class3d.py"'
+    
