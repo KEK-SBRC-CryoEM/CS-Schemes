@@ -27,5 +27,4 @@ JobStarSettings:
     CrYOLORepo: '/home/tmoriya/shared_for_all/apps/rln_external/cryolo/'
 - AlgoType: algo_type_external_select3d
   Settings:
-    SelectClass3DExecutable: '"/home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/cryolo-1.9.6/bin/python shared_for_all/apps/rln_external/select_class3d/gtf_relion4_run_select_class3d.py"'
-    
+    SelectClass3DExecutable: '"/home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/cryolo-1.9.6/bin/python /home/tmoriya/shared_for_all/apps/rln_external/select_class3d/gtf_relion4_run_select_class3d.py"'
