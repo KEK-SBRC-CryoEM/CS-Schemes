@@ -208,3 +208,14 @@
     InstanceType: r7i.48xlarge-spot
     NunberOfCores: 192
     CostPerHours: 7.0275
+- Region: handai_prews
+  InstanceSettings:
+  - Name: cpu
+    InstanceType: prews.cpu-test
+    NunberOfCores: 40
+    CostPerHours: 60
+  - Name: gpu
+    InstanceType: prews.gpu-test
+    NunberOfCores: 1  
+    CostPerHours: 120
+    
