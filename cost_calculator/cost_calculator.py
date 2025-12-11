@@ -214,12 +214,13 @@ class CostCalculator():
                 with open(runout_file_path, 'r') as runout_file:
                     runout_line_list = [runout_line for runout_line in runout_file.readlines()]
                 assert len(runout_line_list) > 0, '[PS_ASSERT] The file "{}" contains no lines! Something is seriously wrong with this star file!'.format(runout_file_path)
-                for runout_line in runout_line_list:
-                    if runout_line.startswith("Elapsed (Unix time):"):
-                        sec = int(runout_line.split(":")[1])
-                        self.__running_time_hours = sec/3600
-                        self.__running_time_hhmm = datetime.timedelta(hours = self.__running_time_hours)
-                        break
+                
+                matches  = [re.search(r"Elapsed time is (\d+) seconds", line) for line in runout_line_list]
+                elapsed_time_list = [int(m.group(1)) for m in matches if m] # filter out None from no-matches
+                if len(elapsed_time_list)>0:
+                    self.__running_time_hours = sum(elapsed_time_list)/3600
+                    self.__running_time_hhmm = datetime.timedelta(hours = self.__running_time_hours)
+
         self.__running_time_list.extend([self.__running_time_hhmm, round(self.__running_time_hours,3)])
         self.__running_time_hours_list.append(self.__running_time_hours)
 
