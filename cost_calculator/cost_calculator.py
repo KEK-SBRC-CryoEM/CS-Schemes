@@ -69,9 +69,10 @@
 #   |-- RELION Project dir   (default: current dir)
 #     |-- default_pipeline.star
 #     |-- Job type dir/Job ID dir
-#       |-- note.txt     <- first create file 
-#       |-- RELION_JOB_EXIT_SUCCESS    <- last create file
-#       |-- job.star
+#       |-- note.txt
+#       |-- default_pipeline.star, job_pipeline.star, run_submit.script <- (only for certain jobs) candidate first created files
+#       |-- RELION_JOB_EXIT_SUCCESS    <- last created file
+#       |-- job.star <- candidate first created file
 #
 # - <OUTPUT>  (default: current dir)
 #   |-- cc_result_<project dir name>.csv
@@ -113,6 +114,7 @@ class CostCalculator():
     __INSTANCE_INFO_YML_NAME = 'Config_instance_info.yml'
     __CC_FILE_PREFIX  = 'cc_result_' 
     __CC_RESULT_FILE_EXT = '.csv'
+    __CANDIDATE_FIRST_CREATED_FILENAME_LIST = ["default_pipeline.star", "job_pipeline.star", "job.star", "run_submit.script"]
 
     def __init__(self):
         # Private instance variables
@@ -151,13 +153,24 @@ class CostCalculator():
         timestamp_diff_hour = timestamp_diff_round_milliseconds.total_seconds()/3600
         return timestamp_diff_round_milliseconds, timestamp_diff_hour
 
+    # Get filepath of the first created file from a candidate file list by comparing their mtime 
+    def __get_path_first_created_file(self, candidate_filepath_list):
+        filepath_timestamp_list = [(os.path.getmtime(filename), filename) # := [(timestamp, filename), ...]
+                                        for filename in candidate_filepath_list 
+                                            if os.path.exists(filename)] # filter out non-existing files
+        try:
+            return min(filepath_timestamp_list)[1] # return filepath of the oldest timestamp
+        except ValueError:
+            return "" # otherwhise return a string that os.path.exists evaluates to False
+
     # Get Relion processing time (type of hh:mm:ss and hours)
     def __get_process_time(self, relion_dir_path, job_id_dir_path):
         self.__process_time_list = []
         # Calculate processing time per job from difference between timestamps of 2 files.
-        # first created file: note.txt
+        # first created file: decided from the following list "default_pipeline.star", "job_pipeline.star", "job.star", "run_submit.script"
         # last created file: RELION_JOB_EXIT_SUCCESS
-        first_created_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__NOTE_TXT_FILE_NAME)
+        candidate_filepath_list = [os.path.join(relion_dir_path, job_id_dir_path, filename) for filename in type(self).__CANDIDATE_FIRST_CREATED_FILENAME_LIST]
+        first_created_file_path = self.__get_path_first_created_file(candidate_filepath_list)
         last_created_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__EXIT_SUCCESS_FILE_NAME)
         if not os.path.exists(first_created_file_path) or not os.path.exists(last_created_file_path):
             print('[CC_MESSAGE] WARNING: Relion output file "{}" or "{}" dose not exist!'.format(first_created_file_path, last_created_file_path))
