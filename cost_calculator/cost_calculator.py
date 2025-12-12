@@ -114,7 +114,7 @@ class CostCalculator():
     __INSTANCE_INFO_YML_NAME = 'Config_instance_info.yml'
     __CC_FILE_PREFIX  = 'cc_result_' 
     __CC_RESULT_FILE_EXT = '.csv'
-    __CANDIDATE_FIRST_CREATED_FILENAME_LIST = ["default_pipeline.star", "job_pipeline.star", "job.star", "run_submit.script"]
+    __CANDIDATE_FIRST_CREATED_FILENAME_LIST = ["default_pipeline.star", "job_pipeline.star", "job.star", "run_submit.script"] # important: In jobs that use the continue option (e.g. Class3D), the timestamp reflects only the last run, not the original start time.
 
     def __init__(self):
         # Private instance variables
