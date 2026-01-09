@@ -82,6 +82,7 @@
 import os
 import csv
 import re
+import glob
 import os.path
 import datetime
 import argparse
@@ -167,13 +168,19 @@ class CostCalculator():
     def __get_process_time(self, relion_dir_path, job_id_dir_path):
         self.__process_time_list = []
         # Calculate processing time per job from difference between timestamps of 2 files.
-        # first created file: decided from the following list "default_pipeline.star", "job_pipeline.star", "job.star", "run_submit.script"
+        # first created file: decided from the following list "default_pipeline.star", "job_pipeline.star", "job.star", "run_submit.script" with possible suffix "_bkup*"
         # last created file: RELION_JOB_EXIT_SUCCESS
+
+        # original files
         candidate_filepath_list = [os.path.join(relion_dir_path, job_id_dir_path, filename) for filename in type(self).__CANDIDATE_FIRST_CREATED_FILENAME_LIST]
+        # backup files
+        patterns  = [f"{relion_dir_path}/{job_id_dir_path}/{filename}_bkup*" for filename in type(self).__CANDIDATE_FIRST_CREATED_FILENAME_LIST]
+        candidate_filepath_list += list(set([path for p in patterns for path in glob.glob(p)]))
+        
         first_created_file_path = self.__get_path_first_created_file(candidate_filepath_list)
         last_created_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__EXIT_SUCCESS_FILE_NAME)
         if not os.path.exists(first_created_file_path) or not os.path.exists(last_created_file_path):
-            print('[CC_MESSAGE] WARNING: Relion output file "{}" or "{}" dose not exist!'.format(first_created_file_path, last_created_file_path))
+            print('[CC_MESSAGE] WARNING: Relion output file "{}" or "{}" does not exist!'.format(first_created_file_path, last_created_file_path))
             self.__process_time_hhmm = 'N/A' 
             self.__process_time_hour = 0
         else:
@@ -193,7 +200,7 @@ class CostCalculator():
         runerr_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__RUNERR_FILE_NAME)
         if set(['do_queue','queuename']).issubset(self.__job_star_options_dict.keys()) and self.__job_star_options_dict['do_queue'] == 'Yes' and not 'cryolo' in self.__job_star_options_dict['queuename']:
             if not os.path.exists(runerr_file_path):
-                print('[CC_MESSAGE] WARNING: Relion output file "{}" dose not exist!'.format(runerr_file_path))
+                print('[CC_MESSAGE] WARNING: Relion output file "{}" does not exist!'.format(runerr_file_path))
             else:
                 assert os.path.exists(runerr_file_path), '[PS_ASSERT] The file "{}" must exist at this point of code!'.format(runerr_file_path)
                 with open(runerr_file_path, 'r') as runerr_file:
@@ -221,14 +228,14 @@ class CostCalculator():
         runout_file_path = os.path.join(relion_dir_path, job_id_dir_path, type(self).__RUNOUT_FILE_NAME)
         if set(['do_queue','queuename']).issubset(self.__job_star_options_dict.keys()) and self.__job_star_options_dict['do_queue'] == 'Yes':
             if not os.path.exists(runout_file_path):
-                print('[CC_MESSAGE] WARNING: Relion output file "{}" dose not exist!'.format(runout_file_path))
+                print('[CC_MESSAGE] WARNING: Relion output file "{}" does not exist!'.format(runout_file_path))
             else:
                 assert os.path.exists(runout_file_path), '[PS_ASSERT] The file "{}" must exist at this point of code!'.format(runout_file_path)
                 with open(runout_file_path, 'r') as runout_file:
                     runout_line_list = [runout_line for runout_line in runout_file.readlines()]
                 assert len(runout_line_list) > 0, '[PS_ASSERT] The file "{}" contains no lines! Something is seriously wrong with this star file!'.format(runout_file_path)
                 
-                matches  = [re.search(r"Elapsed (Unix time): (\d+) seconds", line) for line in runout_line_list]
+                matches  = [re.search(r"Elapsed (Unix time): (\d+)", line) for line in runout_line_list]
                 elapsed_time_list = [int(m.group(1)) for m in matches if m] # filter out None from no-matches
                 if len(elapsed_time_list)>0:
                     self.__running_time_hours = sum(elapsed_time_list)/3600
@@ -278,7 +285,7 @@ class CostCalculator():
                 nr_gpus = len(re.sub(r'[^0-9]', '', self.__job_star_options_dict['param3_value']))
                 self.__parallel_settings_list.append(nr_gpus)
             else:
-                self.__parallel_settings_list.append(None)   # If the key dose not exist, add empty to list.
+                self.__parallel_settings_list.append(None)   # If the key does not exist, add empty to list.
 
         if 'qsub_extra2' in self.__job_star_options_dict:
             # Get the number of used nodes directly from 'qsub_extra2', not estimating/calculating from 'nr_mpi' & 'min_dedicated'
