@@ -119,10 +119,10 @@
   Settings:
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: '8'
-    NumberOfThreads: '7'
-    NumberOfNodes: '1'
-    MinimumDedicatedCores: '8'
+    NumberOfMpi: '4'
+    NumberOfThreads: '4'
+    NumberOfNodes: '2'
+    MinimumDedicatedCores: '2'
     AdditionalArguments: '""'
 - AlgoLevel: maskcreate
   Settings:
