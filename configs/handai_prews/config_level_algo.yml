@@ -2,10 +2,10 @@
   Settings:
     WhichGpusToUse: ''
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: '4'
+    NumberOfMpi: '8'
     NumberOfThreads: '14'
     NumberOfNodes: '1'
-    MinimumDedicatedCores: '4'
+    MinimumDedicatedCores: '112'
     AdditionalArguments: '"--do_at_most \$\$GTF_motioncorr_do_at_most"'
 - AlgoLevel: motioncorr_mocor2_GPU
   Settings:
@@ -119,10 +119,10 @@
   Settings:
     WhichGpusToUse: 'JSE_NOT_APPLICABLE_PARALLEL'
     Param3Value: 'JSE_NOT_APPLICABLE_PARALLEL'
-    NumberOfMpi: '4'
-    NumberOfThreads: '4'
-    NumberOfNodes: '2'
-    MinimumDedicatedCores: '2'
+    NumberOfMpi: '8'
+    NumberOfThreads: '28'
+    NumberOfNodes: '4'
+    MinimumDedicatedCores: '112'
     AdditionalArguments: '""'
 - AlgoLevel: maskcreate
   Settings:
