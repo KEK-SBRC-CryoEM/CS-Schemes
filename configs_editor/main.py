@@ -15,6 +15,8 @@ from css_parameters import CSSParameters
 import pickle
 ### / ###
 
+logger = logging.getLogger("ANALYSES PIPELINE")
+
 ## preprocessing ##
 def make_command(executable, script, args, basedir=None, outdir=None): 
     cmd = [executable, script] + [a for line in args for a in line.replace(" ", "").replace("$OUTDIR", outdir).replace("$BASEDIR", basedir).split(":")]
@@ -110,8 +112,7 @@ if __name__ == "__main__":
     base_dir = utils.prepare_output_environment(args.output_dir or ".")
 
     # Logging
-    logger = utils.configure_logging(verbose=args.verbose, output_directory=base_dir, capture_warnings=True)
-    logger = logging.getLogger("ANALYSES PIPELINE")
+    utils.configure_logging(verbose=args.verbose, output_directory=base_dir, capture_warnings=True)
     logger.info(f"\n- Config file: {args.config_file} \n- Output directory: {base_dir}  \n- Verbose: {args.verbose}")
 
     # run main
