@@ -107,7 +107,7 @@ def prepare_output_environment(output_dir):
     return final_dir
 
 ### handling output ###
-def handle_output(result, to_json=False, output_directory=None):
+def handle_output(result, to_json=False, output_directory=None, show=True):
     """
     Print results to stdout (pretty or JSON) and optionally save to a file.
 
@@ -127,6 +127,7 @@ def handle_output(result, to_json=False, output_directory=None):
     >>> handle_output(result, to_json=False, output_directory="result")
     """
 
+    # file conversion
     if to_json:
         output = json.dumps(result, cls=NumpyEncoder, indent=2)
         ext = "json"
@@ -135,8 +136,11 @@ def handle_output(result, to_json=False, output_directory=None):
         output = yaml.safe_dump(result, sort_keys=False)
         ext = "yaml"
 
-    print(output)
+    # print to stdout
+    if show:
+        print(output)
 
+    # save to file
     if output_directory:
         filepath = os.path.join(output_directory, f"output.{ext}")
         with open(filepath, "w") as file:
