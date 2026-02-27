@@ -30,6 +30,7 @@ analyses:
     script    : /home/tmoriya/shared_for_all/apps/rln_external/volume_analysis/mask_size.py
     args:
       - "--mask: $BASEDIR/contour_cryoread/prot_mask_final.mrc"
+      - "--json"
   - name: ctf_limit
     executable: /home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/dev/bin/python
     script:     /home/tmoriya/shared_for_all/apps/rln_external/ctf_analysis/boxsize_analysis.py
