@@ -27,20 +27,49 @@ class CSSParameters:
     ##### Common 
     @property
     def SS_comm_class2d_pmd(self): # todo
-        # particle mask diameter without the soft edge from cryoread's contour.py
-        pass
+        return
+        # todo: define in the input yaml that we want 'radius' from 'contour_size'
+        # example inputs
+        # radius = json.loads(analyses["contour_size"]["runtime"]["output"].stdout)["radius"] # [pixel]
+        # apix   = analyses["parameters"]["EM_mics_apix"] # [angstrom/pixel]
+        # compute_SS_comm_class2d_pmd(radius, apix)
+
+        # adjust boxsize
+        boxsize = adjust_boxsize(radius*2, force_eman=True) # [pixel]
+        
+        # convert to A
+        particle_diameter = boxsize * apix # [angstrom]
+        
+        return particle_diameter
     
     @property
-    def SS_comm_optimal_pmd(self): # todo
-        # negative density diameter 
-        pass
+    def SS_comm_optimal_pmd(self): # todo        
+        # todo: similar logic to SS_comm_class2d_pmd, write the general function
+        # example inputs
+        # apix   = analyses["parameters"]["EM_mics_apix"] # [angstrom/pixel]
+        # neg_radius = json.loads(analyses["negative_density"]["runtime"]["output"].stdout)["negative_radius"]
+        # compute_SS_comm_optimal_pmd(neg_radius, apix)
+
+        return
 
     ##### 030_GTF_Create_Stack #####
     @property
     def GTF_lbin_extract_mics_box(self): # todo
-        # max(SS_comm_optimal_pmd, fresnel boxsize)
         return 4050
         
+        # todo: clarify about the inputs properly (pixel size for conversion)
+        # example inputs
+        # fresnel_boxsize = json.loads(analyses["fresnel"]["runtime"]["output"].stdout)["boxsize"]
+        # neg_radius      = json.loads(analyses["negative_density"]["runtime"]["output"].stdout)["negative_radius"]
+        # compute_GTF_lbin_extract_mics_box(fresnel_boxsize, neg_radius)
+
+        # 1. adjust boxsize   
+        fresnel  = adjust_boxsize(fresnel_boxsize, force_eman=True)
+        negative = adjust_boxsize(neg_radius*2, force_eman=True)
+
+        return max(fresnel, negative)
+
+
     @property
     def GTF_lbin_extract_mics_0o95box(self):
         result = self.GTF_lbin_extract_mics_box * 0.95
