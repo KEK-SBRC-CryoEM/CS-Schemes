@@ -85,14 +85,22 @@ def make_command2(executable, script, args, analyses_data=None, basedir=None, ou
     return cmd
 
 ## postprocessing ##
-def compute_css_parameters(input_parameters, css_params_of_interest, output_directory):
-    params = CSSParameters(EM_mics_apix        = input_parameters["EM_mics_apix"],        # from: config_em_settings.yml
-                           SS_comm_lbin_angpix = input_parameters["SS_comm_lbin_angpix"], # from: ???
-                           SS_comm_mbin_angpix = input_parameters["SS_comm_mbin_angpix"], # from: ???
-                           mics_upper_bound    = input_parameters["micrograph_size"])     # from micrograph
+def compute_css_parameters(analyses_data, css_params_of_interest, output_directory):
+    user_input = analyses_data["parameters"]
+    data       = analyses_data["analyses_data"]
 
-    data = {"Settings":params.to_dict(css_params_of_interest)}
-    utils.handle_output(data, output_directory=output_directory, show=False)
+    params = CSSParameters(EM_mics_apix        = user_input["EM_mics_apix"],        # from: config_em_settings.yml
+                           SS_comm_lbin_angpix = user_input["SS_comm_lbin_angpix"], # from: ???
+                           SS_comm_mbin_angpix = user_input["SS_comm_mbin_angpix"], # from: ???
+                           mics_upper_bound    = user_input["micrograph_size"],     # from micrograph
+                           
+                           # particle_diameter         = get_output(data, al_name, attr),
+                           # negative_density_diameter = get_output(data, al_name, attr),
+                           # fresnel_boxsize           = get_output(data, al_name, attr),
+    )
+
+    result = {"Settings":params.to_dict(css_params_of_interest)}
+    utils.handle_output(result, output_directory=output_directory, show=False)
 
 ## pipeline ##
 def run_subprocess(command, output_directory=None):
@@ -145,8 +153,10 @@ def run(config_filepath, base_dir):
         logger.info(f"+ Output: {analyses[name]['runtime']['output'].stdout}")
         logger.info("Done!\n--------------------")
 
-    analyses["parameters"] = config_yaml["parameters"]
-    return analyses
+    result = {"analyses_data" : analyses,
+              "parameters"    : config_yaml["parameters"]
+    }
+    return result
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -170,7 +180,7 @@ if __name__ == "__main__":
             pickle.dump(analyses, f) 
 
         # cs-schemes parameter computation
-        compute_css_parameters(analyses["parameters"], PARAMS_OF_INTEREST, base_dir)
+        compute_css_parameters(analyses, PARAMS_OF_INTEREST, base_dir)
 
     except Exception:
         logger.exception("Pipeline Crashed!!".upper())
