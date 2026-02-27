@@ -13,34 +13,86 @@ from css_parameters import CSSParameters
 
 ### dev ###
 import pickle
+
+PARAMS_OF_INTEREST = [
+    #Common
+    "SS_comm_class2d_pmd",
+    "SS_comm_optimal_pmd",
+    
+    #030_GTF_Create_Stack
+    "GTF_lbin_extract_mics_box",
+    "GTF_lbin_extract_mics_0o95box",
+    "GTF_lbin_extract_parts_box",
+    "GTF_lbin_extract_parts_x_min",
+    "GTF_lbin_extract_parts_x_max",
+    "GTF_lbin_extract_parts_y_min",
+    "GTF_lbin_extract_parts_y_max",
+    
+    #050_GTF_AbInitReconst3D
+    # "GTF_lbin_abinit3d_pmd",
+
+    #070_CSS_Init_Refine3D
+    "CSS_mbin_reextract_mics_box",
+    "CSS_mbin_reextract_mics_0o95box",
+    "CSS_mbin_reextract_parts_box",
+    "CSS_mbin_reextract_parts_x_min",
+    "CSS_mbin_reextract_parts_x_max",
+    "CSS_mbin_reextract_parts_y_min",
+    "CSS_mbin_reextract_parts_y_max",
+]
+
 ### / ###
 
 logger = logging.getLogger("ANALYSES PIPELINE")
 
 ## preprocessing ##
-def make_command(executable, script, args, basedir=None, outdir=None): 
+def make_command(executable, script, args, basedir=None, outdir=None):
     cmd = [executable, script] + [a for line in args for a in line.replace(" ", "").replace("$OUTDIR", outdir).replace("$BASEDIR", basedir).split(":")]
     return cmd
 
-## postprocessing ## 
-def func():
-    params = CSSParameters(EM_mics_apix=analyses["parameters"]["EM_mics_apix"],               # from: config_em_settings.yml
-                           SS_comm_lbin_angpix=analyses["parameters"]["SS_comm_lbin_angpix"], # from: ???
-                           SS_comm_mbin_angpix=analyses["parameters"]["SS_comm_mbin_angpix"], # from: ???
-                           mics_upper_bound=analyses["parameters"]["micrograph_size"])        # from micrograph
+def get_output(analyses_data, analysis_name, attribute_name):
+    return json.loads(analyses_data[analysis_name]["runtime"]["output"].stdout)[attribute_name]
 
+def resolve_value(value, analyses_data, base_dir, outdir):
+    # regular input; replaces directories
+    elif isinstance(value, str):
+        value = value.replace("$OUTDIR", outdir).replace("$BASEDIR", base_dir)
+    # input comes from another analysis
+    if isinstance(value, dict):
+        value = get_output(analyses_data, value["from"], value["attribute"])
 
+    return value
 
-    # save YAML
-    yaml.SafeDumper.add_representer(np.int64,   lambda dumper, data: dumper.represent_int(data.item()))
-    yaml.SafeDumper.add_representer(np.float64, lambda dumper, data: dumper.represent_float(data.item()))
+def make_command2(executable, script, args, analyses_data=None, basedir=None, outdir=None):
+    cmd = [executable, script]
 
-    data = {"Settings":params.to_dict(params_of_interest)}
-    with open(filepath, "w") as file:
-        yaml.safe_dump(data, file, sort_keys=False)
+    for arg in args:
+        # flag only
+        if isinstance(arg, str) or (isinstance(arg, list) and len(arg)==1):
+            # example: arg = "--test" or arg = ["--test"]
+            a = arg 
+            cmd.append(a)
+            
+        # flag and value
+        elif isinstance(arg, list) and len(arg)>1:
+            # example: arg = ["--test", 1.1]
+            flag, value = arg
 
+            resolved = resolve_value(value, analyses_data, base_dir, outdir)
+            
+            cmd.extend([flag, str(resolved)])
+        
+    return cmd
 
+## postprocessing ##
+def compute_css_parameters(input_parameters, css_params_of_interest, output_directory):
+    params = CSSParameters(EM_mics_apix        = input_parameters["EM_mics_apix"],        # from: config_em_settings.yml
+                           SS_comm_lbin_angpix = input_parameters["SS_comm_lbin_angpix"], # from: ???
+                           SS_comm_mbin_angpix = input_parameters["SS_comm_mbin_angpix"], # from: ???
+                           mics_upper_bound    = input_parameters["micrograph_size"])     # from micrograph
 
+    data = {"Settings":params.to_dict(css_params_of_interest)}
+    utils.handle_output(data, output_directory=output_directory, show=False)
 
 ## pipeline ##
 def run_subprocess(command, output_directory=None):
@@ -78,8 +130,7 @@ def run(config_filepath, base_dir):
                                                             base_dir,
                                                             analyses[name]["runtime"]["outdir"])
 
-    ## 3. Execution
-    for name in analyses.keys():
+        ## 3. Execution
         logger.info(f"Running {name.upper()}...")
         # make output directory
         Path(analyses[name]["runtime"]["outdir"]).mkdir(parents=True, exist_ok=True)
@@ -94,13 +145,8 @@ def run(config_filepath, base_dir):
         logger.info(f"+ Output: {analyses[name]['runtime']['output'].stdout}")
         logger.info("Done!\n--------------------")
 
-    # 4. Postprocess
-    ## manually use this information to compute the desired parameters
-
     analyses["parameters"] = config_yaml["parameters"]
     return analyses
-
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -115,13 +161,20 @@ if __name__ == "__main__":
     utils.configure_logging(verbose=args.verbose, output_directory=base_dir, capture_warnings=True)
     logger.info(f"\n- Config file: {args.config_file} \n- Output directory: {base_dir}  \n- Verbose: {args.verbose}")
 
-    # run main
     try:
+        # prepare and run all analyses
         analyses = run(config_filepath=args.config_file, base_dir=base_dir)
+
+        # dev
+        with open(os.path.join(output_directory, "analyses.pkl"), "wb") as f:
+            pickle.dump(analyses, f) 
+
+        # cs-schemes parameter computation
+        compute_css_parameters(analyses["parameters"], PARAMS_OF_INTEREST, base_dir)
+
     except Exception:
         logger.exception("Pipeline Crashed!!".upper())
         raise
 
-    with open("analyses.pkl", "wb") as f: # dev
-        pickle.dump(analyses, f) # dev
+
     
