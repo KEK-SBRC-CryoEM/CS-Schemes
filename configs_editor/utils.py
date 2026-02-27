@@ -5,6 +5,7 @@ import sys
 import time
 import logging
 import argparse
+import numpy as np
 
 from pathlib import Path
 
@@ -127,9 +128,10 @@ def handle_output(result, to_json=False, output_directory=None):
     """
 
     if to_json:
-        output = json.dumps(result, indent=2)
+        output = json.dumps(result, cls=NumpyEncoder, indent=2)
         ext = "json"
     else:
+        setup_yaml()
         output = yaml.safe_dump(result, sort_keys=False)
         ext = "yaml"
 
@@ -139,6 +141,26 @@ def handle_output(result, to_json=False, output_directory=None):
         filepath = os.path.join(output_directory, f"output.{ext}")
         with open(filepath, "w") as file:
             file.write(output)
+
+#### under testing ####
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)      # np.int64   to int
+        if isinstance(obj, np.floating):
+            return float(obj)    # np.float64 to float
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()  # array      to list
+        return super().default(obj)
+
+def setup_yaml():
+    yaml.SafeDumper.add_representer(np.integer, 
+        lambda dumper, x: dumper.represent_int(x.item()))
+    yaml.SafeDumper.add_representer(np.floating, 
+        lambda dumper, x: dumper.represent_float(x.item()))    
+    yaml.SafeDumper.add_representer(np.ndarray, 
+        lambda dumper, x: dumper.represent_list(x.tolist()))
+#### #####
 
 ### output directory related functions ###
 def create_numbered_folder(base_path):
