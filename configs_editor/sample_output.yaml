@@ -1,0 +1,17 @@
+Settings:
+  SS_comm_class2d_pmd: 216.0
+  SS_comm_optimal_pmd: 264.0
+  GTF_lbin_extract_mics_box: 352
+  GTF_lbin_extract_mics_0o95box: 352
+  GTF_lbin_extract_parts_box: 96
+  GTF_lbin_extract_parts_x_min: 180
+  GTF_lbin_extract_parts_x_max: 3920
+  GTF_lbin_extract_parts_y_min: 180
+  GTF_lbin_extract_parts_y_max: 3920
+  CSS_mbin_reextract_mics_box: 352
+  CSS_mbin_reextract_mics_0o95box: 352
+  CSS_mbin_reextract_parts_box: 288
+  CSS_mbin_reextract_parts_x_min: 180
+  CSS_mbin_reextract_parts_x_max: 3920
+  CSS_mbin_reextract_parts_y_min: 180
+  CSS_mbin_reextract_parts_y_max: 3920
