@@ -158,9 +158,9 @@ class NumpyEncoder(json.JSONEncoder):
         return super().default(obj)
 
 def setup_yaml():
-    yaml.SafeDumper.add_representer(np.integer, 
+    yaml.SafeDumper.add_representer(np.int64, 
         lambda dumper, x: dumper.represent_int(x.item()))
-    yaml.SafeDumper.add_representer(np.floating, 
+    yaml.SafeDumper.add_representer(np.float64, 
         lambda dumper, x: dumper.represent_float(x.item()))    
     yaml.SafeDumper.add_representer(np.ndarray, 
         lambda dumper, x: dumper.represent_list(x.tolist()))
