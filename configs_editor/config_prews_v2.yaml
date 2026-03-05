@@ -21,10 +21,10 @@ analyses:
       - ["--morph_radius"  , "3"]
       - ["--mask_diameter" , "95"]
       - ["--cutoff_prob"   , "0.3"]
-      # - "--plot_all"
-      # - "--refinement_mask" # run gmm for quick testing
-      # - "--aggressive"
-      # - "--debug"
+      # - ["--plot_all"]
+      # - ["--refinement_mask"] # run gmm for quick testing
+      # - ["--aggressive"]
+      # - ["--debug"]
   - name: contour_size
     executable: /home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/dev/bin/python
     script    : /home/tmoriya/shared_for_all/apps/rln_external/volume_analysis/mask_size.py
