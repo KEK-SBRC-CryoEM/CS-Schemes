@@ -12,6 +12,9 @@ from pathlib import Path
 
 from css_parameters import CSSParameters
 
+# todo: when choosing a directory, existing analysis shouldnt be re-run 
+# this could be matched by name or exact CL invokation 
+
 ### dev ###
 import pickle
 
@@ -179,7 +182,7 @@ if __name__ == "__main__":
         analyses = run(config_filepath=args.config_file, basedir=basedir)
 
         # dev
-        with open(os.path.join(output_directory, "analyses.pkl"), "wb") as f:
+        with open(os.path.join(basedir, "analyses.pkl"), "wb") as f:
             pickle.dump(analyses, f) 
 
         # cs-schemes parameter computation
