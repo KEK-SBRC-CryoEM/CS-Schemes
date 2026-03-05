@@ -43,7 +43,7 @@ class CSSParameters:
         # convert to A
         particle_diameter = boxsize * self.EM_mics_apix # [angstrom] # todo: check if EM_mics_apix or from mrc file
         
-        return particle_diameter
+        return particle_diameter # todo: due to pix multiplication, should it be converted to int?
     
     @property
     def SS_comm_optimal_pmd(self): # to test
@@ -162,6 +162,10 @@ class CSSParameters:
 
     def to_dict(self, parameters_of_interest):
         return {poi:getattr(self, poi) for poi in parameters_of_interest}
+
+    @classmethod
+    def get_valid_fields(cls):
+        return {f.name for f in fields(cls)}
 
 ### css parameter calculation
 def compute_extract_coordinates_min(boxsize, lower_bound=0):
