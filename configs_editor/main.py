@@ -14,6 +14,7 @@ from css_parameters import CSSParameters
 
 # todo: when choosing a directory, existing analysis shouldnt be re-run 
 # this could be matched by name or exact CL invokation 
+# check if there isnt two outputdir being created
 
 ### dev ###
 import pickle
@@ -55,6 +56,9 @@ def make_commandv0(executable, script, args, basedir=None, outdir=None):
     return cmd
 
 def get_output(analyses_data, analysis_name, attribute_name):
+    # todo: when reruning and skipping some analysis, 
+    #    we shouldnt modify this funciton to read from the file
+    #    instead, file content should be added to analyses_data
     try:
         return json.loads(analyses_data[analysis_name]["runtime"]["output"].stdout)[attribute_name]
     except AttributeError as e:
@@ -99,9 +103,14 @@ def compute_css_parameters(analyses_data, css_params_of_interest, output_directo
                            SS_comm_mbin_angpix = user_input["SS_comm_mbin_angpix"], # from: ???
                            mics_upper_bound    = user_input["micrograph_size"],     # from micrograph
                            
-                           # particle_diameter         = get_output(data, al_name, attr),
-                           # negative_density_diameter = get_output(data, al_name, attr),
-                           # fresnel_boxsize           = get_output(data, al_name, attr),
+                           particle_contour_radius         = get_output(data, "contour_size", "radius"),
+                           negative_density_region_radius  = get_output(data, "contour_size", "radius")*1.2, # todo: integrate
+                           fresnel_boxsize                 = get_output(data, "fresnel_test", "boxsize"),
+
+                           # ideally, data analysis processing should be defined in the yaml.analyses
+                           #  then yaml.parameters define which of those are fed to the CSSparameters class
+                           #  eg: autocontour:mask, size_estimation(mask):radius, adjust_boxsize(radius):adjusted_boxsize, diameter(adjusted_boxsize):diameter
+                           #  so in the we define yaml.parameters.SS_comm_optimal_pmd = from: diameter, attribute: particle_diameter
     )
 
     result = {"Settings":params.to_dict(css_params_of_interest)}
