@@ -6,6 +6,7 @@ import logging
 import argparse
 import subprocess
 import utils
+import json
 
 from pathlib import Path
 
@@ -46,24 +47,26 @@ PARAMS_OF_INTEREST = [
 logger = logging.getLogger("ANALYSES PIPELINE")
 
 ## preprocessing ##
-def make_command(executable, script, args, basedir=None, outdir=None):
+def make_commandv0(executable, script, args, basedir=None, outdir=None):
     cmd = [executable, script] + [a for line in args for a in line.replace(" ", "").replace("$OUTDIR", outdir).replace("$BASEDIR", basedir).split(":")]
     return cmd
 
 def get_output(analyses_data, analysis_name, attribute_name):
-    return json.loads(analyses_data[analysis_name]["runtime"]["output"].stdout)[attribute_name]
+    try:
+        return json.loads(analyses_data[analysis_name]["runtime"]["output"].stdout)[attribute_name]
+    except AttributeError as e:
+        return "ERROR: VALUE NOT FOUND"
 
 def resolve_value(value, analyses_data, base_dir, outdir):
     # regular input; replaces directories
-    elif isinstance(value, str):
+    if isinstance(value, str):
         value = value.replace("$OUTDIR", outdir).replace("$BASEDIR", base_dir)
     # input comes from another analysis
-    if isinstance(value, dict):
+    elif isinstance(value, dict):
         value = get_output(analyses_data, value["from"], value["attribute"])
-
     return value
 
-def make_command2(executable, script, args, analyses_data=None, basedir=None, outdir=None):
+def make_command(executable, script, args, analyses_data=None, basedir=None, outdir=None):
     cmd = [executable, script]
 
     for arg in args:
