@@ -94,7 +94,8 @@ def add_common_cli_arguments(parser):
     """
     parser.add_argument("--json", action="store_true", help="Output results as JSON. Useful for the automation pipeline. If not provided, output will be shown in a human-friendly manner.")
     parser.add_argument("--output-dir", type=str, help="Directory path where all outputs and logs will be saved. If not provided, results are printed to stdout and logs to stderr only.")
-    parser.add_argument("--verbose", action="store_true", help="Enable debug logging.")
+    parser.add_argument("--verbose", action="store_true", help="Enable more detailed logging.")
+    parser.add_argument("--debug", action="store_true", help="May generate extra log and data.")
     return parser
 
 def prepare_output_environment(output_dir):
