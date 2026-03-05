@@ -31,12 +31,6 @@ class CSSParameters:
     ##### Common 
     @property
     def SS_comm_class2d_pmd(self): # to test
-        # todo: define in the input yaml that we want 'radius' from 'contour_size'
-        # example inputs
-        # radius = json.loads(analyses["contour_size"]["runtime"]["output"].stdout)["radius"] # [pixel]
-        # apix   = analyses["parameters"]["EM_mics_apix"] # [angstrom/pixel]
-        # compute_SS_comm_class2d_pmd(radius, apix)
-
         # adjust boxsize
         boxsize = adjust_boxsize(self.particle_contour_radius*2, force_eman=True) # [pixel]
         
@@ -58,12 +52,7 @@ class CSSParameters:
     ##### 030_GTF_Create_Stack #####
     @property
     def GTF_lbin_extract_mics_box(self): # to test
-        # todo: pixel size conversion?
-        # todo: clarify about the inputs properly (pixel size for conversion)
-        # example inputs
-        # fresnel_boxsize = json.loads(analyses["fresnel"]["runtime"]["output"].stdout)["boxsize"]
-        # neg_radius      = json.loads(analyses["negative_density"]["runtime"]["output"].stdout)["negative_radius"]
-        # compute_GTF_lbin_extract_mics_box(fresnel_boxsize, neg_radius)
+        # todo: clarify about the inputs (pixel size for conversion)
 
         # 1. adjust boxsize   
         fresnel  = adjust_boxsize(self.fresnel_boxsize, force_eman=True)
@@ -116,7 +105,7 @@ class CSSParameters:
     ##### 070_CSS_Init_Refine3D #####
     @property
     def CSS_mbin_reextract_mics_box(self): # to test
-        # todo: pixel size conversion?
+        # todo: clarify about the inputs (pixel size for conversion)
         # same as GTF_lbin_extract_mics_box but different pixel size conversion
         # 1. adjust boxsize   
         fresnel  = adjust_boxsize(self.fresnel_boxsize, force_eman=True)
