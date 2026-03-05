@@ -51,10 +51,6 @@ PARAMS_OF_INTEREST = [
 logger = logging.getLogger("ANALYSES PIPELINE")
 
 ## preprocessing ##
-def make_commandv0(executable, script, args, basedir=None, outdir=None):
-    cmd = [executable, script] + [a for line in args for a in line.replace(" ", "").replace("$OUTDIR", outdir).replace("$BASEDIR", basedir).split(":")]
-    return cmd
-
 def get_output(analyses_data, analysis_name, attribute_name):
     # todo: when reruning and skipping some analysis, 
     #    we shouldnt modify this funciton to read from the file
@@ -94,14 +90,14 @@ def make_command(executable, script, args, analyses_data=None, basedir=None, out
     return cmd
 
 ## postprocessing ##
-def compute_css_parameters(analyses_data, css_params_of_interest, output_directory):
+def compute_css_parametersv0(analyses_data, css_params_of_interest, output_directory):
     user_input = analyses_data["parameters"]
     data       = analyses_data["analyses_data"]
 
     params = CSSParameters(EM_mics_apix        = user_input["EM_mics_apix"],        # from: config_em_settings.yml
                            SS_comm_lbin_angpix = user_input["SS_comm_lbin_angpix"], # from: ???
                            SS_comm_mbin_angpix = user_input["SS_comm_mbin_angpix"], # from: ???
-                           mics_upper_bound    = user_input["micrograph_size"],     # from micrograph
+                           mics_upper_bound    = user_input["mics_upper_bound"],    # from micrograph
                            
                            particle_contour_radius         = get_output(data, "contour_size", "radius"),
                            negative_density_region_radius  = get_output(data, "contour_size", "radius")*1.2, # todo: integrate
@@ -114,6 +110,22 @@ def compute_css_parameters(analyses_data, css_params_of_interest, output_directo
     )
 
     result = {"Settings":params.to_dict(css_params_of_interest)}
+    utils.handle_output(result, output_directory=output_directory, show=False)
+
+def compute_css_parameters(input_parameters, analyses_data, css_params_of_interest, output_directory):
+    # process inputs from the yaml
+    input_dict = {name:resolve_value(value, analyses_data, None, None) 
+                    for name, value in input_parameters.items()}
+
+    # filter fields that CSSParameters does not expect
+    filtered_input = {k: v for k, v in input_dict.items() if k in CSSParameters.get_valid_fields()}
+    filtered_input["negative_density_region_radius"] *= 1.2 # todo: integrate this analysis
+
+    # instantiate and run calculations
+    params = CSSParameters(**filtered_input)
+    result = {"Settings":params.to_dict(css_params_of_interest)}
+
+    # save to a yaml file
     utils.handle_output(result, output_directory=output_directory, show=False)
 
 ## pipeline ##
@@ -169,7 +181,7 @@ def run(config_filepath, basedir):
             assert analyses[name]['runtime']['output'].returncode==0
         except Exception:
             logger.exception("Pipeline Crashed!!".upper())
-            logger.exception("+ Current analysis failed to run.\nPlease, check its log file.")
+            logger.exception("+ Current analysis failed to run. Please, check its log file.")
             raise
         logger.info(f"+ Output: {analyses[name]['runtime']['output'].stdout}")
         logger.info("Done!\n--------------------")
@@ -201,7 +213,10 @@ if __name__ == "__main__":
             pickle.dump(analyses, f) 
 
         # cs-schemes parameter computation
-        compute_css_parameters(analyses, PARAMS_OF_INTEREST, basedir)
+        compute_css_parameters(analyses["parameters"],
+                               analyses["analyses_data"],
+                               PARAMS_OF_INTEREST,
+                               basedir)
 
     except Exception:
         logger.exception("Pipeline Crashed!!".upper())
