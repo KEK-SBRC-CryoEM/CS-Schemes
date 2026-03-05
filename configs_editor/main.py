@@ -13,9 +13,9 @@ from pathlib import Path
 
 from css_parameters import CSSParameters
 
-# todo: when choosing a directory, existing analysis shouldnt be re-run 
-# this could be matched by name or exact CL invokation 
-# check if there isnt two outputdir being created
+# todo: user can specify a directory that already exists
+#       in this case, failed analyses are moved to a bkup folder and are reran
+#       successfull analyses have their output from files appended to the dict:analysis_data
 
 PARAMS_OF_INTEREST = [
     #Common
