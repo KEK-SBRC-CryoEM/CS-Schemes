@@ -1,4 +1,4 @@
-# todo: this should be a standalone library installed when setting up gotocloud
+# todo: rename to gtc_utils, provide documentation to set it up so any gtc script easily import it
 
 import os
 import sys
