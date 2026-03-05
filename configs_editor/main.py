@@ -105,7 +105,7 @@ def compute_css_parameters(analyses_data, css_params_of_interest, output_directo
                            
                            particle_contour_radius         = get_output(data, "contour_size", "radius"),
                            negative_density_region_radius  = get_output(data, "contour_size", "radius")*1.2, # todo: integrate
-                           fresnel_boxsize                 = get_output(data, "fresnel_test", "boxsize"),
+                           fresnel_boxsize                 = get_output(data, "fresnel", "boxsize"),
 
                            # ideally, data analysis processing should be defined in the yaml.analyses
                            #  then yaml.parameters define which of those are fed to the CSSparameters class
@@ -165,6 +165,12 @@ def run(config_filepath, basedir):
                                                              analyses[name]["runtime"]["outdir"])
         # important attributes from subprocess: stdout, stderr, returncode
         logger.info(f"+ Return code: {analyses[name]['runtime']['output'].returncode}")
+        try:
+            assert analyses[name]['runtime']['output'].returncode==0
+        except Exception:
+            logger.exception("Pipeline Crashed!!".upper())
+            logger.exception("+ Current analysis failed to run.\nPlease, check its log file.")
+            raise
         logger.info(f"+ Output: {analyses[name]['runtime']['output'].stdout}")
         logger.info("Done!\n--------------------")
 
