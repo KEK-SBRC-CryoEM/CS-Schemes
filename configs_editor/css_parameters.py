@@ -15,6 +15,10 @@ class CSSParameters:
     SS_comm_lbin_angpix : float
     SS_comm_mbin_angpix : float
 
+    particle_contour_radius        : float
+    negative_density_region_radius : float
+    fresnel_boxsize : float
+
     ##### Temporary input (later: calculate from micrograph) #####
     mics_upper_bound : int # = micrograph size
     mics_lower_bound : int = 0
@@ -26,8 +30,7 @@ class CSSParameters:
 
     ##### Common 
     @property
-    def SS_comm_class2d_pmd(self): # todo
-        return
+    def SS_comm_class2d_pmd(self): # to test
         # todo: define in the input yaml that we want 'radius' from 'contour_size'
         # example inputs
         # radius = json.loads(analyses["contour_size"]["runtime"]["output"].stdout)["radius"] # [pixel]
@@ -35,28 +38,27 @@ class CSSParameters:
         # compute_SS_comm_class2d_pmd(radius, apix)
 
         # adjust boxsize
-        boxsize = adjust_boxsize(radius*2, force_eman=True) # [pixel]
+        boxsize = adjust_boxsize(self.particle_contour_radius*2, force_eman=True) # [pixel]
         
         # convert to A
-        particle_diameter = boxsize * apix # [angstrom]
+        particle_diameter = boxsize * self.EM_mics_apix # [angstrom] # todo: check if EM_mics_apix or from mrc file
         
         return particle_diameter
     
     @property
-    def SS_comm_optimal_pmd(self): # todo        
-        # todo: similar logic to SS_comm_class2d_pmd, write the general function
-        # example inputs
-        # apix   = analyses["parameters"]["EM_mics_apix"] # [angstrom/pixel]
-        # neg_radius = json.loads(analyses["negative_density"]["runtime"]["output"].stdout)["negative_radius"]
-        # compute_SS_comm_optimal_pmd(neg_radius, apix)
-
-        return
+    def SS_comm_optimal_pmd(self): # to test
+        # adjust boxsize
+        boxsize = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True) # [pixel]
+        
+        # convert to A
+        particle_diameter = boxsize * self.EM_mics_apix # [angstrom] # todo: check if EM_mics_apix or from mrc file
+        
+        return particle_diameter
 
     ##### 030_GTF_Create_Stack #####
     @property
-    def GTF_lbin_extract_mics_box(self): # todo
-        return 4050
-        
+    def GTF_lbin_extract_mics_box(self): # to test
+        # todo: pixel size conversion?
         # todo: clarify about the inputs properly (pixel size for conversion)
         # example inputs
         # fresnel_boxsize = json.loads(analyses["fresnel"]["runtime"]["output"].stdout)["boxsize"]
@@ -64,11 +66,10 @@ class CSSParameters:
         # compute_GTF_lbin_extract_mics_box(fresnel_boxsize, neg_radius)
 
         # 1. adjust boxsize   
-        fresnel  = adjust_boxsize(fresnel_boxsize, force_eman=True)
-        negative = adjust_boxsize(neg_radius*2, force_eman=True)
+        fresnel  = adjust_boxsize(self.fresnel_boxsize, force_eman=True)
+        negative = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True)
 
         return max(fresnel, negative)
-
 
     @property
     def GTF_lbin_extract_mics_0o95box(self):
@@ -114,9 +115,14 @@ class CSSParameters:
 
     ##### 070_CSS_Init_Refine3D #####
     @property
-    def CSS_mbin_reextract_mics_box(self): # todo
+    def CSS_mbin_reextract_mics_box(self): # to test
+        # todo: pixel size conversion?
         # same as GTF_lbin_extract_mics_box but different pixel size conversion
-        return 4050
+        # 1. adjust boxsize   
+        fresnel  = adjust_boxsize(self.fresnel_boxsize, force_eman=True)
+        negative = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True)
+
+        return max(fresnel, negative)
         
     @property
     def CSS_mbin_reextract_mics_0o95box(self):
