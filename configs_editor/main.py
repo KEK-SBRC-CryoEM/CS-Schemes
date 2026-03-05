@@ -90,28 +90,6 @@ def make_command(executable, script, args, analyses_data=None, basedir=None, out
     return cmd
 
 ## postprocessing ##
-def compute_css_parametersv0(analyses_data, css_params_of_interest, output_directory):
-    user_input = analyses_data["parameters"]
-    data       = analyses_data["analyses_data"]
-
-    params = CSSParameters(EM_mics_apix        = user_input["EM_mics_apix"],        # from: config_em_settings.yml
-                           SS_comm_lbin_angpix = user_input["SS_comm_lbin_angpix"], # from: ???
-                           SS_comm_mbin_angpix = user_input["SS_comm_mbin_angpix"], # from: ???
-                           mics_upper_bound    = user_input["mics_upper_bound"],    # from micrograph
-                           
-                           particle_contour_radius         = get_output(data, "contour_size", "radius"),
-                           negative_density_region_radius  = get_output(data, "contour_size", "radius")*1.2, # todo: integrate
-                           fresnel_boxsize                 = get_output(data, "fresnel", "boxsize"),
-
-                           # ideally, data analysis processing should be defined in the yaml.analyses
-                           #  then yaml.parameters define which of those are fed to the CSSparameters class
-                           #  eg: autocontour:mask, size_estimation(mask):radius, adjust_boxsize(radius):adjusted_boxsize, diameter(adjusted_boxsize):diameter
-                           #  so in the we define yaml.parameters.SS_comm_optimal_pmd = from: diameter, attribute: particle_diameter
-    )
-
-    result = {"Settings":params.to_dict(css_params_of_interest)}
-    utils.handle_output(result, output_directory=output_directory, show=False)
-
 def compute_css_parameters(input_parameters, analyses_data, css_params_of_interest, output_directory):
     # process inputs from the yaml
     input_dict = {name:resolve_value(value, analyses_data, None, None) 
