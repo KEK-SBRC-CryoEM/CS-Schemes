@@ -81,7 +81,7 @@ def make_command(executable, script, args, analyses_data=None, basedir=None, out
         elif isinstance(arg, list) and len(arg)>1:
             # example: arg = ["--test", 1.1]
             flag, value = arg
-            resolved = main.resolve_value(value, analyses_data, basedir, outdir)
+            resolved = resolve_value(value, analyses_data, basedir, outdir)
             cmd.extend([flag, str(resolved)])
         
     return cmd
