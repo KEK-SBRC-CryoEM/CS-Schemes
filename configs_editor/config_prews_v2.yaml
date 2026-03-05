@@ -5,8 +5,8 @@ parameters:
   EM_mics_apix: 0.75
   SS_comm_lbin_angpix: 3.00
   SS_comm_mbin_angpix: 0.9375
-
   micrograph_size: 4090
+
 
 analyses:
   - name: contour_cryoread 
@@ -42,16 +42,6 @@ analyses:
       - ["--defocus"   , "-0.8"]
       - ["--cs"        , "2.7"]
   - name: fresnel
-    executable: /home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/dev/bin/python
-    script:     /home/tmoriya/shared_for_all/apps/rln_external/ctf_analysis/boxsize_analysis.py
-    args:
-      - ["--json"]
-      - ["fresnel"]
-      - ["--particle_diameter", "200"]
-      - ["--voltage"          , "300"]
-      - ["--defocus"          , "1"]
-      - ["--resolution"       , "2"]
-  - name: fresnel_test
     executable: /home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/dev/bin/python
     script:     /home/tmoriya/shared_for_all/apps/rln_external/ctf_analysis/boxsize_analysis.py
     args:
