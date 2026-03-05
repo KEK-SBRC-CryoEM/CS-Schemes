@@ -7,6 +7,7 @@ import argparse
 import subprocess
 import utils
 import json
+import pickle
 
 from pathlib import Path
 
@@ -15,9 +16,6 @@ from css_parameters import CSSParameters
 # todo: when choosing a directory, existing analysis shouldnt be re-run 
 # this could be matched by name or exact CL invokation 
 # check if there isnt two outputdir being created
-
-### dev ###
-import pickle
 
 PARAMS_OF_INTEREST = [
     #Common
@@ -45,8 +43,6 @@ PARAMS_OF_INTEREST = [
     "CSS_mbin_reextract_parts_y_min",
     "CSS_mbin_reextract_parts_y_max",
 ]
-
-### / ###
 
 logger = logging.getLogger("ANALYSES PIPELINE")
 
@@ -172,7 +168,7 @@ def run(config_filepath, basedir):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config_file", type=str, required=True, help="Path to the configuration file (yaml).")
-    parser = utils.add_common_cli_arguments(parser) # adds --verbose, --json, --output-dir
+    parser = utils.add_common_cli_arguments(parser) # adds --verbose, --json, --output-dir --debug
     args = parser.parse_args()
 
     # Directory creation
@@ -186,9 +182,10 @@ if __name__ == "__main__":
         # prepare and run all analyses
         analyses = run(config_filepath=args.config_file, basedir=basedir)
 
-        # dev
-        with open(os.path.join(basedir, "analyses.pkl"), "wb") as f:
-            pickle.dump(analyses, f) 
+        # save data for debugging
+        if args.debug:
+            with open(os.path.join(basedir, "pipeline_data.pkl"), "wb") as f:
+                pickle.dump(analyses, f) 
 
         # cs-schemes parameter computation
         compute_css_parameters(analyses["parameters"],
