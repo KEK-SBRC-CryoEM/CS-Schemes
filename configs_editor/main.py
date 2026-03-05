@@ -57,10 +57,10 @@ def get_output(analyses_data, analysis_name, attribute_name):
     except AttributeError as e:
         return "ERROR: VALUE NOT FOUND"
 
-def resolve_value(value, analyses_data, base_dir, outdir):
+def resolve_value(value, analyses_data, basedir, outdir):
     # regular input; replaces directories
     if isinstance(value, str):
-        value = value.replace("$OUTDIR", outdir).replace("$BASEDIR", base_dir)
+        value = value.replace("$OUTDIR", outdir).replace("$BASEDIR", basedir)
     # input comes from another analysis
     elif isinstance(value, dict):
         value = get_output(analyses_data, value["from"], value["attribute"])
@@ -71,18 +71,17 @@ def make_command(executable, script, args, analyses_data=None, basedir=None, out
 
     for arg in args:
         # flag only
-        if isinstance(arg, str) or (isinstance(arg, list) and len(arg)==1):
-            # example: arg = "--test" or arg = ["--test"]
-            a = arg 
-            cmd.append(a)
-            
+        if isinstance(arg, str):
+            # example: arg = "--test"
+            cmd.extend([arg])
+        elif isinstance(arg, list) and len(arg)==1:
+            # example: arg = ["--test"]
+            cmd.extend(arg)
         # flag and value
         elif isinstance(arg, list) and len(arg)>1:
             # example: arg = ["--test", 1.1]
             flag, value = arg
-
-            resolved = resolve_value(value, analyses_data, base_dir, outdir)
-            
+            resolved = main.resolve_value(value, analyses_data, basedir, outdir)
             cmd.extend([flag, str(resolved)])
         
     return cmd
@@ -119,7 +118,7 @@ def run_subprocess(command, output_directory=None):
     
     return result
 
-def run(config_filepath, base_dir):
+def run(config_filepath, basedir):
     # 1. Load config file
     config_yaml = utils.load_yaml(config_filepath)
 
@@ -132,14 +131,14 @@ def run(config_filepath, base_dir):
     ## 2.2 runtime properties
     for name in analyses.keys():
     # output directory path
-        analyses[name]["runtime"]["outdir"] = os.path.join(base_dir, name)
+        analyses[name]["runtime"]["outdir"] = os.path.join(basedir, name)
 
         # command to exec
         analyses[name]["runtime"]["command"] = make_command(analyses[name]["config"]["executable"], 
                                                             analyses[name]["config"]["script"], 
                                                             analyses[name]["config"]["args"], 
                                                             analyses,
-                                                            base_dir,
+                                                            basedir,
                                                             analyses[name]["runtime"]["outdir"])
 
         ## 3. Execution
@@ -169,22 +168,22 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Directory creation
-    base_dir = utils.prepare_output_environment(args.output_dir or ".")
+    basedir = utils.prepare_output_environment(args.output_dir or ".")
 
     # Logging
-    utils.configure_logging(verbose=args.verbose, output_directory=base_dir, capture_warnings=True)
-    logger.info(f"\n- Config file: {args.config_file} \n- Output directory: {base_dir}  \n- Verbose: {args.verbose}")
+    utils.configure_logging(verbose=args.verbose, output_directory=basedir, capture_warnings=True)
+    logger.info(f"\n- Config file: {args.config_file} \n- Output directory: {basedir}  \n- Verbose: {args.verbose}")
 
     try:
         # prepare and run all analyses
-        analyses = run(config_filepath=args.config_file, base_dir=base_dir)
+        analyses = run(config_filepath=args.config_file, basedir=basedir)
 
         # dev
         with open(os.path.join(output_directory, "analyses.pkl"), "wb") as f:
             pickle.dump(analyses, f) 
 
         # cs-schemes parameter computation
-        compute_css_parameters(analyses, PARAMS_OF_INTEREST, base_dir)
+        compute_css_parameters(analyses, PARAMS_OF_INTEREST, basedir)
 
     except Exception:
         logger.exception("Pipeline Crashed!!".upper())
