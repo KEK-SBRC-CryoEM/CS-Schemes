@@ -138,6 +138,7 @@ def run(config_filepath, base_dir):
         analyses[name]["runtime"]["command"] = make_command(analyses[name]["config"]["executable"], 
                                                             analyses[name]["config"]["script"], 
                                                             analyses[name]["config"]["args"], 
+                                                            analyses,
                                                             base_dir,
                                                             analyses[name]["runtime"]["outdir"])
 
