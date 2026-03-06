@@ -147,6 +147,8 @@ def handle_output(result, to_json=False, output_directory=None, show=True):
         with open(filepath, "w") as file:
             file.write(output)
 
+    return output
+
 #### under testing ####
 class NumpyEncoder(json.JSONEncoder):
     def default(self, obj):
