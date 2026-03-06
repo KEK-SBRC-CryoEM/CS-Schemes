@@ -48,9 +48,7 @@ logger = logging.getLogger("ANALYSES PIPELINE")
 
 ## preprocessing ##
 def get_output(analyses_data, analysis_name, attribute_name):
-    # todo: when reruning and skipping some analysis, 
-    #    we shouldnt modify this funciton to read from the file
-    #    instead, file content should be added to analyses_data
+    # todo: it doesnt work with dict of dicts, I believe a solution is not hard to implement but need many testing
     try:
         return json.loads(analyses_data[analysis_name]["runtime"]["output"].stdout)[attribute_name]
     except AttributeError as e:
