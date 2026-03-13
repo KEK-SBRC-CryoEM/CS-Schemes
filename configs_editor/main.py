@@ -149,9 +149,9 @@ def run(config_filepath, basedir):
         # important attributes from subprocess: stdout, stderr, returncode
         logger.info(f"+ Return code: {analyses[name]['runtime']['output'].returncode}")
         try:
-            assert analyses[name]['runtime']['output'].returncode==0
+            assert int(analyses[name]['runtime']['output'].returncode)==0
         except Exception:
-            logger.exception("Pipeline Crashed!!".upper())
+            logger.exception("Pipeline Crashed while running {name.upper()}!!".upper())
             logger.exception("+ Current analysis failed to run. Please, check its log file.")
             raise
         logger.info(f"+ Output: {analyses[name]['runtime']['output'].stdout}")
