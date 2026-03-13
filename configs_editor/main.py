@@ -91,7 +91,6 @@ def compute_css_parameters(input_parameters, analyses_data, css_params_of_intere
 
     # filter fields that CSSParameters does not expect
     filtered_input = {k: v for k, v in input_dict.items() if k in CSSParameters.get_valid_fields()}
-    filtered_input["negative_density_region_radius"] *= 1.2 # todo: integrate this analysis
 
     # instantiate and run calculations
     params = CSSParameters(**filtered_input)
