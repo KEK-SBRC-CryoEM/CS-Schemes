@@ -47,12 +47,29 @@ PARAMS_OF_INTEREST = [
 logger = logging.getLogger("ANALYSES PIPELINE")
 
 ## preprocessing ##
-def get_output(analyses_data, analysis_name, attribute_name):
+def get_output_single(analyses_data, analysis_name, attribute_name):
     # todo: it doesnt work with dict of dicts, I believe a solution is not hard to implement but need many testing
     try:
         return json.loads(analyses_data[analysis_name]["runtime"]["output"].stdout)[attribute_name]
     except AttributeError as e:
         return "ERROR: VALUE NOT FOUND"
+
+def get_output(analyses_data, analysis_name, attribute_name):
+    try:
+        data = json.loads(analyses_data[analysis_name]["runtime"]["output"].stdout)
+        if isinstance(attribute_name, str):
+            # parse key1.key2 so we can access attributes of dict of dict
+            keys = attribute_name.split(".")
+        else:
+            keys = attribute_name
+        value = data
+        for k in keys:
+            value = value[k]
+        return value
+
+    except (AttributeError, KeyError, TypeError, json.JSONDecodeError):
+        logger.exception(f"ERROR: VALUE NOT FOUND FOR {analysis_name} {attribute_name}")
+        return None
 
 def resolve_value(value, analyses_data, basedir, outdir):
     # regular input; replaces directories
