@@ -16,6 +16,7 @@ from css_parameters import CSSParameters
 # todo: user can specify a directory that already exists
 #       in this case, failed analyses are moved to a bkup folder and are reran
 #       successfull analyses have their output from files appended to the dict:analysis_data
+# todo: in the config.yaml and here, rename "from" to "analysis_name"
 
 PARAMS_OF_INTEREST = [
     #Common
