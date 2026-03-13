@@ -7,7 +7,7 @@ parameters:
   SS_comm_mbin_angpix: 0.9375
   mics_upper_bound: 4090
   particle_contour_radius:        {from: "contour_size",           attribute: "radius"}
-  negative_density_region_radius: {from: "negative_region_radius", attribute: "radius"}
+  negative_density_region_radius: {from: "negative_region_radius", attribute: "sphere_negative.radius"}
   fresnel_boxsize:                {from: "fresnel",                attribute: "boxsize"}
 
 analyses:
