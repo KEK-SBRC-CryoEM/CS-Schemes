@@ -39,7 +39,6 @@ analyses:
     args:
       - ["--json"]
       - ["--output-dir", "$OUTDIR"]
-      - ["-s"]
       - ["--volume", "/home/tmoriya/shared_for_all/data/jair/EMPIAR10673_GPCR/PostProcess/job115/postprocess.mrc"]
       - ["--mask", "$BASEDIR/contour_cryoread/prot_mask_final.mrc"]
   - name: fresnel
