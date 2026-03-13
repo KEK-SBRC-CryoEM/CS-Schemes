@@ -168,7 +168,7 @@ def run(config_filepath, basedir):
         try:
             assert int(analyses[name]['runtime']['output'].returncode)==0
         except Exception:
-            logger.exception("Pipeline Crashed while running {name.upper()}!!".upper())
+            logger.exception(f"Pipeline Crashed while running {name.upper()}!!".upper())
             logger.exception("+ Current analysis failed to run. Please, check its log file.")
             raise
         logger.info(f"+ Output: {analyses[name]['runtime']['output'].stdout}")
