@@ -5,9 +5,16 @@ parameters:
   EM_mics_apix: 0.75
   SS_comm_lbin_angpix: 3.00
   SS_comm_mbin_angpix: 0.9375
+
+  GTF_lbin_abinit3d_pmd_increase_percentage: 1.2
+
   mics_upper_bound: 4090
+  
   particle_contour_radius:        {from: "contour_size",           attribute: "radius"}
+  particle_contour_pixelsize:     {from: "contour_size",           attribute: "voxel_size"}
+
   negative_density_region_radius: {from: "negative_region_radius", attribute: "sphere_negative.radius"}
+  negative_density_pixelsize:     {from: "contour_size",           attribute: "sphere_negative.voxel_size"}
   fresnel_boxsize:                {from: "fresnel",                attribute: "boxsize"}
 
 analyses:
