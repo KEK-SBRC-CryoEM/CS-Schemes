@@ -14,6 +14,7 @@ class CSSParameters:
     EM_mics_apix        : float
     SS_comm_lbin_angpix : float
     SS_comm_mbin_angpix : float
+    GTF_lbin_abinit3d_pmd_increase_percentage: float
 
     particle_contour_radius        : float
     negative_density_region_radius : float
@@ -100,7 +101,7 @@ class CSSParameters:
     @property
     def GTF_lbin_abinit3d_pmd(self): # todo
         # input percentage: Fixed size - factor of 1.1 or 1.2 - or  1pixel or 5 pixels - or user input
-        return input_percentage * self.SS_comm_class2d_pmd
+        return GTF_lbin_abinit3d_pmd_increase_percentage * self.SS_comm_class2d_pmd
 
     ##### 070_CSS_Init_Refine3D #####
     @property
@@ -110,6 +111,8 @@ class CSSParameters:
         # 1. adjust boxsize   
         fresnel  = adjust_boxsize(self.fresnel_boxsize, force_eman=True)
         negative = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True)
+
+        # to use particle_contour_pixelsize and negative_density_pixelsize
 
         return max(fresnel, negative)
         
