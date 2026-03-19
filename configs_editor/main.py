@@ -33,7 +33,7 @@ PARAMS_OF_INTEREST = [
     "GTF_lbin_extract_parts_y_max",
     
     #050_GTF_AbInitReconst3D
-    # "GTF_lbin_abinit3d_pmd",
+    "GTF_lbin_abinit3d_pmd",
 
     #070_CSS_Init_Refine3D
     "CSS_mbin_reextract_mics_box",
