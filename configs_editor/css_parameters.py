@@ -16,8 +16,12 @@ class CSSParameters:
     SS_comm_mbin_angpix : float
     GTF_lbin_abinit3d_pmd_increase_percentage: float
 
-    particle_contour_radius        : float
-    negative_density_region_radius : float
+    particle_contour_radius    : float
+    particle_contour_pixelsize : float
+
+    negative_density_region_radius    : float
+    negative_density_region_pixelsize : float
+
     fresnel_boxsize : float
 
     ##### Temporary input (later: calculate from micrograph) #####
@@ -31,34 +35,33 @@ class CSSParameters:
 
     ##### Common 
     @property
-    def SS_comm_class2d_pmd(self): # to test
+    def SS_comm_class2d_pmd(self):
         # adjust boxsize
         boxsize = adjust_boxsize(self.particle_contour_radius*2, force_eman=True) # [pixel]
         
         # convert to A
-        particle_diameter = boxsize * self.EM_mics_apix # [angstrom] # todo: check if EM_mics_apix or from mrc file
+        particle_diameter = boxsize * self.particle_contour_pixelsize # [angstrom]
         
-        return particle_diameter # todo: due to pix multiplication, should it be converted to int?
+        return particle_diameter
     
     @property
-    def SS_comm_optimal_pmd(self): # to test
+    def SS_comm_optimal_pmd(self):
         # adjust boxsize
         boxsize = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True) # [pixel]
         
         # convert to A
-        particle_diameter = boxsize * self.EM_mics_apix # [angstrom] # todo: check if EM_mics_apix or from mrc file
+        particle_diameter = boxsize * self.negative_density_region_pixelsize # [angstrom]
         
         return particle_diameter
 
     ##### 030_GTF_Create_Stack #####
     @property
-    def GTF_lbin_extract_mics_box(self): # to test
-        # todo: clarify about the inputs (pixel size for conversion)
-
-        # 1. adjust boxsize   
+    def GTF_lbin_extract_mics_box(self):
+        # adjust boxsize   
         fresnel  = adjust_boxsize(self.fresnel_boxsize, force_eman=True)
         negative = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True)
 
+        # choose bigger box
         return max(fresnel, negative)
 
     @property
@@ -105,15 +108,12 @@ class CSSParameters:
 
     ##### 070_CSS_Init_Refine3D #####
     @property
-    def CSS_mbin_reextract_mics_box(self): # to test
-        # todo: clarify about the inputs (pixel size for conversion)
-        # same as GTF_lbin_extract_mics_box but different pixel size conversion
-        # 1. adjust boxsize   
+    def CSS_mbin_reextract_mics_box(self):
+        # adjust boxsize   
         fresnel  = adjust_boxsize(self.fresnel_boxsize, force_eman=True)
         negative = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True)
 
-        # to use particle_contour_pixelsize and negative_density_pixelsize
-
+        # choose bigger box
         return max(fresnel, negative)
         
     @property
