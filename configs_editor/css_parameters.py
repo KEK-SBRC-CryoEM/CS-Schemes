@@ -58,7 +58,7 @@ class CSSParameters:
     @property
     def GTF_lbin_extract_mics_box(self):
         # convert real-space box to pixels
-        fresnel_boxpix = self.fresnel_boxsize/SS_comm_lbin_angpix
+        fresnel_boxpix = self.fresnel_boxsize/self.SS_comm_lbin_angpix
 
         # adjust boxsize
         fresnel  = adjust_boxsize(fresnel_boxpix, force_eman=True)
@@ -113,7 +113,7 @@ class CSSParameters:
     @property
     def CSS_mbin_reextract_mics_box(self):
         # convert real-space box to pixels
-        fresnel_boxpix = self.fresnel_boxsize/SS_comm_mbin_angpix
+        fresnel_boxpix = self.fresnel_boxsize/self.SS_comm_mbin_angpix
         
         # adjust boxsize   
         fresnel  = adjust_boxsize(fresnel_boxpix, force_eman=True)
