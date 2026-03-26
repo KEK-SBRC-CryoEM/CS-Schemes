@@ -83,25 +83,25 @@ class CSSParameters:
     def GTF_lbin_extract_parts_x_min(self):
         result = compute_extract_coordinates_min(boxsize=self.GTF_lbin_extract_mics_box, 
                                                  lower_bound=self.mics_lower_bound)
-        return adjust_boxsize(result, self.force_eman)
+        return result
 
     @property
     def GTF_lbin_extract_parts_x_max(self):
         result = compute_extract_coordinates_max(boxsize=self.GTF_lbin_extract_mics_box,
                                                  upper_bound=self.mics_upper_bound)
-        return adjust_boxsize(result, self.force_eman)
+        return result
 
     @property
     def GTF_lbin_extract_parts_y_min(self):
         result = compute_extract_coordinates_min(boxsize=self.GTF_lbin_extract_mics_box, 
                                                  lower_bound=self.mics_lower_bound)
-        return adjust_boxsize(result, self.force_eman)
+        return result
 
     @property
     def GTF_lbin_extract_parts_y_max(self):
         result = compute_extract_coordinates_max(boxsize=self.GTF_lbin_extract_mics_box,
                                                  upper_bound=self.mics_upper_bound)
-        return adjust_boxsize(result, self.force_eman)
+        return result
 
     ##### 050_GTF_AbInitReconst3D #####
     @property
@@ -138,25 +138,25 @@ class CSSParameters:
     def CSS_mbin_reextract_parts_x_min(self):
         result = compute_extract_coordinates_min(boxsize=self.CSS_mbin_reextract_mics_box, 
                                                  lower_bound=self.mics_lower_bound)
-        return adjust_boxsize(result, self.force_eman)
+        return result
 
     @property
     def CSS_mbin_reextract_parts_x_max(self):
         result = compute_extract_coordinates_max(boxsize=self.CSS_mbin_reextract_mics_box,
                                                  upper_bound=self.mics_upper_bound)
-        return adjust_boxsize(result, self.force_eman)
+        return result
     
     @property
     def CSS_mbin_reextract_parts_y_min(self): 
         result = compute_extract_coordinates_min(boxsize=self.CSS_mbin_reextract_mics_box, 
                                                  lower_bound=self.mics_lower_bound)
-        return adjust_boxsize(result, self.force_eman)
+        return result
 
     @property
     def CSS_mbin_reextract_parts_y_max(self):
         result = compute_extract_coordinates_max(boxsize=self.CSS_mbin_reextract_mics_box,
                                                  upper_bound=self.mics_upper_bound)
-        return adjust_boxsize(result, self.force_eman)
+        return result
 
     def to_dict(self, parameters_of_interest):
         return {poi:getattr(self, poi) for poi in parameters_of_interest}
