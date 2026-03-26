@@ -107,7 +107,7 @@ class CSSParameters:
     @property
     def GTF_lbin_abinit3d_pmd(self): # todo
         # input percentage: Fixed size - factor of 1.1 or 1.2 - or  1pixel or 5 pixels - or user input
-        return GTF_lbin_abinit3d_pmd_increase_percentage * self.SS_comm_class2d_pmd
+        return self.GTF_lbin_abinit3d_pmd_increase_percentage * self.SS_comm_class2d_pmd
 
     ##### 070_CSS_Init_Refine3D #####
     @property
