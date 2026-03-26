@@ -51,7 +51,8 @@ analyses:
       - ["--json"]
       - ["--output-dir", "$OUTDIR"]
       - ["--volume", "/home/tmoriya/shared_for_all/data/jair/EMPIAR10673_GPCR/PostProcess/job115/postprocess.mrc"]
-      - ["--mask", "$BASEDIR/contour_cryoread/prot_mask_final.mrc"]
+      # - ["--mask", "$BASEDIR/contour_cryoread/prot_mask_final.mrc"]
+      - ["--mask", "2026-03-26_10-17-25/contour_cryoread/prot_mask_final.mrc"]
   - name: fresnel
     executable: /home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/dev/bin/python
     script:     /home/tmoriya/shared_for_all/apps/rln_external/ctf_analysis/boxsize_analysis.py
