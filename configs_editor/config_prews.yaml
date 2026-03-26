@@ -41,7 +41,7 @@ analyses:
     script    : /home/tmoriya/shared_for_all/apps/rln_external/negative_region/size_estimation.py
     args:
       - ["--json"]
-      - ["--mask", "$BASEDIR/contour_cryoread/prot_mask_final.mrc"]
+      - ["--volume", "$BASEDIR/contour_cryoread/prot_mask_final.mrc"]
   - name: negative_region_radius
     executable: /home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/dev/bin/python
     script    : /home/tmoriya/shared_for_all/apps/rln_external/negative_region/negative_estimation.py
