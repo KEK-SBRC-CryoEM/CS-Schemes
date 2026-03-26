@@ -57,8 +57,11 @@ class CSSParameters:
     ##### 030_GTF_Create_Stack #####
     @property
     def GTF_lbin_extract_mics_box(self):
-        # adjust boxsize   
-        fresnel  = adjust_boxsize(self.fresnel_boxsize, force_eman=True)
+        # convert real-space box to pixels
+        fresnel_boxpix = self.fresnel_boxsize/SS_comm_lbin_angpix
+
+        # adjust boxsize
+        fresnel  = adjust_boxsize(fresnel_boxpix, force_eman=True)
         negative = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True)
 
         # choose bigger box
@@ -109,8 +112,11 @@ class CSSParameters:
     ##### 070_CSS_Init_Refine3D #####
     @property
     def CSS_mbin_reextract_mics_box(self):
+        # convert real-space box to pixels
+        fresnel_boxpix = self.fresnel_boxsize/SS_comm_mbin_angpix
+        
         # adjust boxsize   
-        fresnel  = adjust_boxsize(self.fresnel_boxsize, force_eman=True)
+        fresnel  = adjust_boxsize(fresnel_boxpix, force_eman=True)
         negative = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True)
 
         # choose bigger box
