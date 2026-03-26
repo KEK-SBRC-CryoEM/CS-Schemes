@@ -40,7 +40,7 @@ class CSSParameters:
         boxsize = adjust_boxsize(self.particle_contour_radius*2, force_eman=True) # [pixel]
         
         # convert to A
-        particle_diameter = boxsize * self.particle_contour_pixelsize # [angstrom]
+        particle_diameter = boxsize * get_pixel_size(self.particle_contour_pixelsize) # [angstrom]
         
         return particle_diameter
     
@@ -50,7 +50,7 @@ class CSSParameters:
         boxsize = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True) # [pixel]
         
         # convert to A
-        particle_diameter = boxsize * self.negative_density_region_pixelsize # [angstrom]
+        particle_diameter = boxsize * get_pixel_size(self.negative_density_region_pixelsize) # [angstrom]
         
         return particle_diameter
 
@@ -230,4 +230,6 @@ def get_next_prime_decomposition():
     # implent after the core functionality is finalized
     pass
 
+def get_pixel_size(voxel_size):
+    return voxel_size[0] if isinstance(voxel_size, list) else voxel_size
 
