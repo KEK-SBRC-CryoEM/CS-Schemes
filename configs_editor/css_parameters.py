@@ -1,5 +1,5 @@
-import numpy as np 
-from dataclasses import dataclass, asdict, fields
+import numpy as np
+from dataclasses import dataclass, asdict, field, fields
 
 # example usage
 # params = CSSParameters(force_eman=True)
@@ -29,15 +29,19 @@ class CSSParameters:
     mics_lower_bound : int = 0
     
     ##### Options #####
-    force_eman : bool = True
-    force_prime: bool = True # not used yet
-    force_even : bool = True # not used yet
+    boxsize_eman_values : bool = True
+    # boxsize_optimal_FFT : bool = False # not used
+    # boxsize_prime: bool = True # not used
+    # boxsize_even : bool = True # not used
+
+    def __post_init__(self):
+        pass
 
     ##### Common 
     @property
     def SS_comm_class2d_pmd(self):
         # adjust boxsize
-        boxsize = adjust_boxsize(self.particle_contour_radius*2, force_eman=True) # [pixel]
+        boxsize = adjust_boxsize(self.particle_contour_radius*2, self.boxsize_eman_values) # [pixel]
         
         # convert to A
         particle_diameter = boxsize * get_pixel_size(self.particle_contour_pixelsize) # [angstrom]
@@ -47,7 +51,7 @@ class CSSParameters:
     @property
     def SS_comm_optimal_pmd(self):
         # adjust boxsize
-        boxsize = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True) # [pixel]
+        boxsize = adjust_boxsize(self.negative_density_region_radius*2) # [pixel]
         
         # convert to A
         particle_diameter = boxsize * get_pixel_size(self.negative_density_region_pixelsize) # [angstrom]
@@ -61,8 +65,8 @@ class CSSParameters:
         fresnel_boxpix = self.fresnel_boxsize/self.SS_comm_lbin_angpix
 
         # adjust boxsize
-        fresnel  = adjust_boxsize(fresnel_boxpix, force_eman=True)
-        negative = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True)
+        fresnel  = adjust_boxsize(fresnel_boxpix, self.boxsize_eman_values)
+        negative = adjust_boxsize(self.negative_density_region_radius*2, self.boxsize_eman_values)
 
         # choose bigger box
         return max(fresnel, negative)
@@ -70,14 +74,14 @@ class CSSParameters:
     @property
     def GTF_lbin_extract_mics_0o95box(self):
         result = self.GTF_lbin_extract_mics_box * 0.95
-        return adjust_boxsize(result, self.force_eman)
+        return adjust_boxsize(result, self.boxsize_eman_values)
 
     @property
     def GTF_lbin_extract_parts_box(self):
         result = compute_extract_parts_box(boxsize=self.GTF_lbin_extract_mics_box, 
                                            binned_pixelsize=self.SS_comm_lbin_angpix,
                                            micrograph_pixelsize=self.EM_mics_apix)
-        return adjust_boxsize(result, self.force_eman)
+        return adjust_boxsize(result, self.boxsize_eman_values)
 
     @property
     def GTF_lbin_extract_parts_x_min(self):
@@ -116,8 +120,8 @@ class CSSParameters:
         fresnel_boxpix = self.fresnel_boxsize/self.SS_comm_mbin_angpix
         
         # adjust boxsize   
-        fresnel  = adjust_boxsize(fresnel_boxpix, force_eman=True)
-        negative = adjust_boxsize(self.negative_density_region_radius*2, force_eman=True)
+        fresnel  = adjust_boxsize(fresnel_boxpix, self.boxsize_eman_values)
+        negative = adjust_boxsize(self.negative_density_region_radius*2, self.boxsize_eman_values)
 
         # choose bigger box
         return max(fresnel, negative)
@@ -125,14 +129,14 @@ class CSSParameters:
     @property
     def CSS_mbin_reextract_mics_0o95box(self):
         result = self.CSS_mbin_reextract_mics_box * 0.95
-        return adjust_boxsize(result, self.force_eman)
+        return adjust_boxsize(result, self.boxsize_eman_values)
 
     @property
     def CSS_mbin_reextract_parts_box(self):
         result = compute_extract_parts_box(boxsize=self.CSS_mbin_reextract_mics_box, 
                                            binned_pixelsize=self.SS_comm_mbin_angpix,
                                            micrograph_pixelsize=self.EM_mics_apix)
-        return adjust_boxsize(result, self.force_eman)
+        return adjust_boxsize(result, self.boxsize_eman_values)
 
     @property
     def CSS_mbin_reextract_parts_x_min(self):
@@ -167,28 +171,23 @@ class CSSParameters:
 
 ### css parameter calculation
 def compute_extract_coordinates_min(boxsize, lower_bound=0):
-    return lower_bound + (boxsize / 2)
+    return int(lower_bound + (boxsize // 2))
 
 def compute_extract_coordinates_max(boxsize, upper_bound):
-    return upper_bound - (boxsize / 2)
+    return int(upper_bound - (boxsize // 2))
 
 def compute_extract_parts_box(boxsize, binned_pixelsize, micrograph_pixelsize):
     return boxsize / (binned_pixelsize / micrograph_pixelsize)
 
-def adjust_boxsize(boxsize, force_eman=True):#, force_prime=True, force_even=True):
-    result = boxsize
-
-    if force_eman:
-        result = get_next_eman_boxsize(result)
-    # if force_even:
-    #     result = get_next_even_number(result)
-    # if force_prime:
-    #     result = get_next_prime_decomposition(result)
-
-    return result
+def adjust_boxsize(n, use_eman_values=False):
+    if use_eman_values:
+        return get_next_eman_boxsize(n)
+    # if use_xxx_values:
+    #   return xxx(n)
+    return n
 
 ### general
-def get_next_eman_boxsize(boxsize):
+def get_next_eman_boxsize(n):
     """
     Return the smallest element in the list that is ≥ than the input boxsize
     """
@@ -214,21 +213,13 @@ def get_next_eman_boxsize(boxsize):
     ]) # from: https://blake.bcm.edu/emanwiki/EMAN2/BoxSize
     
 
-    result = boxsize
+    result = n
 
     mask = (result <= boxsize_list)
     if sum(mask) > 0:
         result = boxsize_list[mask].min()
     
     return result
-
-def get_next_even_number():
-    # eman boxsizes are all even, so dont need this function right now
-    pass
-
-def get_next_prime_decomposition():
-    # implent after the core functionality is finalized
-    pass
 
 def get_pixel_size(voxel_size):
     return voxel_size[0] if isinstance(voxel_size, list) else voxel_size
