@@ -214,12 +214,12 @@ def run(config_filepath, basedir):
 
         # command to exec
         config["analyses"][name]["runtime"]["command"] = \
-                        main.make_command(env     = env_settings[script_name]["env"], 
-                                          script  = env_settings[script_name]["script"], 
-                                          args    = config["analyses"][name]["config"]["args"], 
-                                          analyses_data = config,
-                                          basedir = basedir,
-                                          outdir  = config["analyses"][name]["runtime"]["outdir"]
+                        make_command(env     = env_settings[script_name]["env"], 
+                                    script  = env_settings[script_name]["script"], 
+                                    args    = config["analyses"][name]["config"]["args"], 
+                                    analyses_data = config,
+                                    basedir = basedir,
+                                    outdir  = config["analyses"][name]["runtime"]["outdir"]
         )
 
         ## 3. Execution
