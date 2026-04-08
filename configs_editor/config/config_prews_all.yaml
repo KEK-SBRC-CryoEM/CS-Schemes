@@ -19,9 +19,9 @@ environment:
     boxsize_analysis:
       env    : python_cryoem_tools
       script : /home/tmoriya/shared_for_all/apps/rln_external/ctf_analysis/boxsize_analysis.py
-      
+
 analyses:
-  - name: contour_reference_map
+  - name: reference_map_contour
     script: cryoread_contour
     args:
       - ["--input_map_path", {from: input.user, attribute: reference_map}]
@@ -37,7 +37,7 @@ analyses:
     script: size_estimation
     args:
       - ["--json"]
-      - ["--volume", "$BASEDIR/contour_reference_map/prot_mask_final.mrc"]
+      - ["--volume", "$BASEDIR/reference_map_contour/prot_mask_final.mrc"]
 
   - name: negreg_size
     script: negative_estimation
@@ -45,7 +45,7 @@ analyses:
       - ["--json"]
       - ["--output-dir", "$OUTDIR"]
       - ["--volume",     {from: input.user, attribute: reference_map}]
-      - ["--mask",       "$BASEDIR/contour_cryoread/prot_mask_final.mrc"]
+      - ["--mask",       "$BASEDIR/reference_map_contour/prot_mask_final.mrc"]
 
   - name: fresnel_boxsize
     script: boxsize_analysis
