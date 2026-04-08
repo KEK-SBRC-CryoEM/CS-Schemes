@@ -190,7 +190,7 @@ def run_subprocess(command, output_directory=None, name=None):
         result = json.loads(result.stdout)
     except (AttributeError, TypeError, json.JSONDecodeError):
         # not json, return result as is
-        pass
+        result = result.stdout
     return result
 
 def run(config_filepath, basedir):
