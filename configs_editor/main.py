@@ -78,7 +78,7 @@ def load_environment_settings(filepath):
     
         settings["toolbox"][tool]["env"] = exec_path
 
-    return {"env": settings["toolbox"]}
+    return settings["toolbox"]
 
 def load_analyses_settings(filepath):
     # load file and get only the environment settings
