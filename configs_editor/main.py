@@ -13,6 +13,12 @@ from pathlib import Path
 
 from css_parameters import CSSParameters
 
+
+# todo: divide config file into "4"
+#       1. environment settings: path to scripts
+#       2. user inputs
+#       3. analyses invokation
+#       4. wiring of analysis outputs
 # todo: user can specify a directory that already exists
 #       in this case, failed analyses are moved to a bkup folder and are reran
 #       successfull analyses have their output from files appended to the dict:analysis_data
@@ -47,28 +53,69 @@ PARAMS_OF_INTEREST = [
 
 logger = logging.getLogger("ANALYSES PIPELINE")
 
-## preprocessing ##
-def get_output_single(analyses_data, analysis_name, attribute_name):
-    # todo: it doesnt work with dict of dicts, I believe a solution is not hard to implement but need many testing
-    try:
-        return json.loads(analyses_data[analysis_name]["runtime"]["output"].stdout)[attribute_name]
-    except AttributeError as e:
-        return "ERROR: VALUE NOT FOUND"
+## input YAML processing ##
+def load_environment_settings(filepath):
+    # load file and get only the environment settings
+    settings = utils.load_yaml(filepath)["environment"]
 
-def get_output(analyses_data, analysis_name, attribute_name):
+    # check for missing env and script files
+    env_notfound  = [(name, path)           for name, path in settings["env"].items()     if not Path(path).is_file()]
+    tool_notfound = [(name, path["script"]) for name, path in settings["toolbox"].items() if not Path(path["script"]).is_file()]
+
+    # write to log
+    for (name,path) in env_notfound+tool_notfound:
+        logger.warning(f"File not found!\t{name.upper()}:\t{path}")
+
+    # filter out missing files (commented: as we dont know which tool will be used, better raise an exception when tries to exec it)
+    # settings = {"env"    : {k:v for k,v in settings["env"].items()     if (k,v) not in env_notfound},
+    #             "toolbox": {k:v for k,v in settings["toolbox"].items() if (k,v["script"]) not in tool_notfound}
+    # }
+    
+    # link scripts to their executable
+    for tool in settings["toolbox"]:
+        exec_placeholder = settings["toolbox"][tool]["env"]
+        exec_path        = settings["env"][exec_placeholder]
+    
+        settings["toolbox"][tool]["env"] = exec_path
+
+    return {"env": settings["toolbox"]}
+
+def load_analyses_settings(filepath):
+    # load file and get only the environment settings
+    settings = utils.load_yaml(filepath)["analyses"]
+
+    # analysis name as key for easy access
+    settings = {a["name"]:{"config":a, "runtime":{}} for a in settings}
+
+    return {"analyses": settings}
+
+def load_user_inputs(filepath):
+    userfile = utils.load_yaml(filepath)["input"]
+
+    user        = {"user":{"reference_map": userfile["input_map_filepath"]}}
+    em_settings = {"em_settings": utils.load_yaml(userfile["em_settings_filepath"])["Settings"]}
+
+    return {"input": user|em_settings}
+
+## preprocessing ##
+def get_output(analyses_data, source, analysis_name, attribute_name):
     try:
-        data = json.loads(analyses_data[analysis_name]["runtime"]["output"].stdout)
+        if source=="analyses":
+            data = analyses_data[source][analysis_name]["runtime"]["output"]
+        else:
+            data = analyses_data[source][analysis_name]
         if isinstance(attribute_name, str):
             # parse key1.key2 so we can access attributes of dict of dict
             keys = attribute_name.split(".")
         else:
             keys = attribute_name
+
         value = data
         for k in keys:
             value = value[k]
         return value
 
-    except (AttributeError, KeyError, TypeError, json.JSONDecodeError):
+    except KeyError:
         logger.exception(f"ERROR: VALUE NOT FOUND FOR {analysis_name} {attribute_name}")
         return None
 
@@ -78,11 +125,12 @@ def resolve_value(value, analyses_data, basedir, outdir):
         value = value.replace("$OUTDIR", outdir).replace("$BASEDIR", basedir)
     # input comes from another analysis
     elif isinstance(value, dict):
-        value = get_output(analyses_data, value["from"], value["attribute"])
+        source, name = value["from"].split(".")
+        value = get_output(analyses_data, source, name, value["attribute"])
     return value
 
-def make_command(executable, script, args, analyses_data=None, basedir=None, outdir=None):
-    cmd = [executable, script]
+def make_command(env, script, args, analyses_data=None, basedir=None, outdir=None):
+    cmd = [env, script]
 
     for arg in args:
         # flag only
@@ -118,9 +166,10 @@ def compute_css_parameters(input_parameters, analyses_data, css_params_of_intere
     utils.handle_output(result, output_directory=output_directory, show=False)
 
 ## pipeline ##
-def run_subprocess(command, output_directory=None):
+def run_subprocess(command, output_directory=None, name=None):
+    # important attributes from subprocess: stdout, stderr, returncode
     result = subprocess.run(command, capture_output=True, text=True, encoding="utf-8")
-
+    
     if output_directory:
         with open(os.path.join(output_directory, "out.txt"), "w") as f:
             f.write(result.stdout)
@@ -129,54 +178,67 @@ def run_subprocess(command, output_directory=None):
             f.write(result.stderr)
             f.write(f"\nexit code: {result.returncode}\n")
     
+    try: # ensure it run successfully
+        result.check_returncode()
+    except subprocess.CalledProcessError:
+        logger.exception(f"Pipeline Crashed while running {name.upper()} with return code {result.returncode}!!")
+        logger.exception("+ Current analysis failed to run. Please, check its log file and the message below.")
+        logger.exception(f"{result.stderr}")
+        raise
+
+    try: # parse output and return result
+        result = json.loads(result.stdout)
+    except (AttributeError, TypeError, json.JSONDecodeError):
+        # not json, return result as is
+        pass
     return result
 
 def run(config_filepath, basedir):
     # 1. Load config file
-    config_yaml = utils.load_yaml(config_filepath)
-
+    # config_yaml = utils.load_yaml(config_filepath)
+    env_settings      = load_environment_settings(config_filepath)
+    analyses_settings = load_analyses_settings(config_filepath)
+    user_inputs       = load_user_inputs(config_filepath)
+    css_inputs        = utils.load_yaml(config_filepath)["css_inputs"]
+    
+    config = analyses_settings | user_inputs
+    
     # 2. Preprocessing
-    ## 2.1 convert to dict to easily access analysis by name
-    ### dict[name] -> dict["config"], dict["runtime"]
-    analyses = {a["name"]:{"config":a, "runtime":{}} for a in config_yaml["analyses"]}
-    logger.info("Configuration file contain these items:\n- " + "\n- ".join(analyses.keys()))
+    ## 2.1 runtime properties
+    for name in config["analyses"].keys():
+        # output directory path
+        config["analyses"][name]["runtime"]["outdir"] = os.path.join(basedir, name)
 
-    ## 2.2 runtime properties
-    for name in analyses.keys():
-    # output directory path
-        analyses[name]["runtime"]["outdir"] = os.path.join(basedir, name)
+        # get script name
+        script_name = config["analyses"][name]["config"]["script"]
 
         # command to exec
-        analyses[name]["runtime"]["command"] = make_command(analyses[name]["config"]["executable"], 
-                                                            analyses[name]["config"]["script"], 
-                                                            analyses[name]["config"]["args"], 
-                                                            analyses,
-                                                            basedir,
-                                                            analyses[name]["runtime"]["outdir"])
+        config["analyses"][name]["runtime"]["command"] = \
+                        main.make_command(env     = env_settings[script_name]["env"], 
+                                          script  = env_settings[script_name]["script"], 
+                                          args    = config["analyses"][name]["config"]["args"], 
+                                          analyses_data = config,
+                                          basedir = basedir,
+                                          outdir  = config["analyses"][name]["runtime"]["outdir"]
+        )
 
         ## 3. Execution
         logger.info(f"Running {name.upper()}...")
         # make output directory
-        Path(analyses[name]["runtime"]["outdir"]).mkdir(parents=True, exist_ok=True)
-        logger.info("+ Output Directory: " + analyses[name]["runtime"]["outdir"])
-        logger.info("+ Command: " + " ".join(analyses[name]["runtime"]["command"]))
+        Path(config["analyses"][name]["runtime"]["outdir"]).mkdir(parents=True, exist_ok=True)
+        logger.info("+ Output Directory: " + config["analyses"][name]["runtime"]["outdir"])
+        logger.info("+ Command: " + " ".join(config["analyses"][name]["runtime"]["command"]))
         
         # execute command
-        analyses[name]["runtime"]["output"] = run_subprocess(analyses[name]["runtime"]["command"], 
-                                                             analyses[name]["runtime"]["outdir"])
-        # important attributes from subprocess: stdout, stderr, returncode
-        logger.info(f"+ Return code: {analyses[name]['runtime']['output'].returncode}")
-        try:
-            assert int(analyses[name]['runtime']['output'].returncode)==0
-        except Exception:
-            logger.exception(f"Pipeline Crashed while running {name.upper()}!!".upper())
-            logger.exception("+ Current analysis failed to run. Please, check its log file.")
-            raise
-        logger.info(f"+ Output: {analyses[name]['runtime']['output'].stdout}")
+        config["analyses"][name]["runtime"]["output"] = run_subprocess(config["analyses"][name]["runtime"]["command"], 
+                                                                       config["analyses"][name]["runtime"]["outdir"],
+                                                                       name)
+
+        logger.info(f"+ Output: {config['analyses'][name]['runtime']['output']}")
         logger.info("Done!\n--------------------")
 
-    result = {"analyses_data" : analyses,
-              "parameters"    : config_yaml["parameters"]
+    result = {"analyses_data" : config["analyses"],
+              "parameters"    : css_inputs
     }
     return result
 
