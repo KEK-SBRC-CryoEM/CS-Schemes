@@ -13,16 +13,10 @@ from pathlib import Path
 
 from css_parameters import CSSParameters
 
-
-# todo: divide config file into "4"
-#       1. environment settings: path to scripts
-#       2. user inputs
-#       3. analyses invokation
-#       4. wiring of analysis outputs
+# todo: move PARAMS_OF_INTEREST to config file (css/analyses)
 # todo: user can specify a directory that already exists
 #       in this case, failed analyses are moved to a bkup folder and are reran
 #       successfull analyses have their output from files appended to the dict:analysis_data
-# todo: in the config.yaml and here, rename "from" to "analysis_name"
 
 PARAMS_OF_INTEREST = [
     #Common
