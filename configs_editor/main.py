@@ -90,10 +90,11 @@ def load_analyses_settings(filepath):
     return {"analyses": settings}
 
 def load_user_inputs(filepath):
-    userfile = utils.load_yaml(filepath)["input"]
+    userfile = utils.load_yaml(filepath)["user_inputs"]
 
-    user        = {"user":{"reference_map": userfile["input_map_filepath"]}}
+    user        = {"user":userfile}
     em_settings = {"em_settings": utils.load_yaml(userfile["em_settings_filepath"])["Settings"]}
+    # todo: add to config.yaml, list of settings_filepath which would be loaded like em_settings
 
     return {"input": user|em_settings}
 
@@ -254,19 +255,19 @@ if __name__ == "__main__":
 
     try:
         # prepare and run all analyses
-        analyses = run(config_filepath=args.config_file, basedir=basedir)
+        analyses_result = run(config_filepath=args.config_file, basedir=basedir)
 
         # save data for debugging
         if args.debug:
             with open(os.path.join(basedir, "pipeline_data.pkl"), "wb") as f:
-                pickle.dump(analyses, f) 
+                pickle.dump(analyses_result, f) 
 
         # load css-parameter mapping
         css_inputs = utils.load_yaml(args.config_file)["css_inputs"]
 
         # cs-schemes parameter computation
         compute_css_parameters(css_inputs,
-                               analyses,
+                               analyses_result,
                                PARAMS_OF_INTEREST,
                                basedir)
 
