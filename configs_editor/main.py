@@ -199,7 +199,6 @@ def run(config_filepath, basedir):
     env_settings      = load_environment_settings(config_filepath)
     analyses_settings = load_analyses_settings(config_filepath)
     user_inputs       = load_user_inputs(config_filepath)
-    css_inputs        = utils.load_yaml(config_filepath)["css_inputs"]
     
     config = analyses_settings | user_inputs
     
@@ -237,9 +236,7 @@ def run(config_filepath, basedir):
         logger.info(f"+ Output: {config['analyses'][name]['runtime']['output']}")
         logger.info("Done!\n--------------------")
 
-    result = {"analyses_data" : config["analyses"],
-              "parameters"    : css_inputs
-    }
+    result = {"analyses":config["analyses"]}
     return result
 
 if __name__ == "__main__":
@@ -264,9 +261,12 @@ if __name__ == "__main__":
             with open(os.path.join(basedir, "pipeline_data.pkl"), "wb") as f:
                 pickle.dump(analyses, f) 
 
+        # load css-parameter mapping
+        css_inputs = utils.load_yaml(args.config_file)["css_inputs"]
+
         # cs-schemes parameter computation
-        compute_css_parameters(analyses["parameters"],
-                               analyses["analyses_data"],
+        compute_css_parameters(css_inputs,
+                               analyses,
                                PARAMS_OF_INTEREST,
                                basedir)
 
