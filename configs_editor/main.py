@@ -13,37 +13,9 @@ from pathlib import Path
 
 from css_parameters import CSSParameters
 
-# todo: move PARAMS_OF_INTEREST to config file (css/analyses)
 # todo: user can specify a directory that already exists
 #       in this case, failed analyses are moved to a bkup folder and are reran
 #       successfull analyses have their output from files appended to the dict:analysis_data
-
-PARAMS_OF_INTEREST = [
-    #Common
-    "SS_comm_class2d_pmd",
-    "SS_comm_optimal_pmd",
-    
-    #030_GTF_Create_Stack
-    "GTF_lbin_extract_mics_box",
-    "GTF_lbin_extract_mics_0o95box",
-    "GTF_lbin_extract_parts_box",
-    "GTF_lbin_extract_parts_x_min",
-    "GTF_lbin_extract_parts_x_max",
-    "GTF_lbin_extract_parts_y_min",
-    "GTF_lbin_extract_parts_y_max",
-    
-    #050_GTF_AbInitReconst3D
-    "GTF_lbin_abinit3d_pmd",
-
-    #070_CSS_Init_Refine3D
-    "CSS_mbin_reextract_mics_box",
-    "CSS_mbin_reextract_mics_0o95box",
-    "CSS_mbin_reextract_parts_box",
-    "CSS_mbin_reextract_parts_x_min",
-    "CSS_mbin_reextract_parts_x_max",
-    "CSS_mbin_reextract_parts_y_min",
-    "CSS_mbin_reextract_parts_y_max",
-]
 
 logger = logging.getLogger("ANALYSES PIPELINE")
 
@@ -268,12 +240,12 @@ if __name__ == "__main__":
                 pickle.dump(analyses_result, f) 
 
         # load css-parameter mapping
-        css_inputs = utils.load_yaml(analyses_settings)["css_inputs"]
+        css_config = utils.load_yaml(analyses_settings)["css_config"]
 
         # cs-schemes parameter computation
-        compute_css_parameters(css_inputs,
+        compute_css_parameters(css_config["inputs"],
                                analyses_result,
-                               PARAMS_OF_INTEREST,
+                               css_config["params_to_compute"],
                                basedir)
 
     except Exception:
