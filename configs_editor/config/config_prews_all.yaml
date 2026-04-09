@@ -60,6 +60,12 @@ analyses:
 css_inputs:
   EM_mics_apix: {from: input.em_settings, attribute: EM_mics_apix}
 
+  SS_comm_lbin_angpix: {from: input.sp_settings, attribute: SS_comm_lbin_angpix}
+  SS_comm_mbin_angpix: {from: input.sp_settings, attribute: SS_comm_mbin_angpix}
+
+  GTF_lbin_abinit3d_pmd_increase_percentage: 1.2 # todo: get from file or compute
+  mics_upper_bound: 4090 # todo: get from file or compute
+
   particle_contour_radius:        {from: "analyses.reference_map_size", attribute: "radius"}
   particle_contour_pixelsize:     {from: "analyses.reference_map_size", attribute: "voxel_size"}
 
@@ -69,12 +75,6 @@ css_inputs:
   fresnel_boxsize:                   {from: "analyses.fresnel_boxsize",                attribute: "boxsize"}
 
 user_inputs:
-  SS_comm_lbin_angpix: 3.00
-  SS_comm_mbin_angpix: 0.9375
-
-  GTF_lbin_abinit3d_pmd_increase_percentage: 1.2
-
-  mics_upper_bound: 4090
-
-  reference_map_filepath: "/home/tmoriya/shared_for_all/data/jair/EMPIAR10673_GPCR/PostProcess/job115/postprocess.mrc"
-  em_settings_filepath:   "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_em_settings.yml"
+  reference_map_filepath:   "/home/tmoriya/shared_for_all/data/jair/EMPIAR10673_GPCR/PostProcess/job115/postprocess.mrc"
+  em_settings_filepath:     "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_em_settings_empiar10673_gpcr.yml"
+  sample_settings_filepath: "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_sample_settings_empiar10673_gpcr"
