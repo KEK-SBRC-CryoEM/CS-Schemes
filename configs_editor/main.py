@@ -238,8 +238,7 @@ def run(config_filepath, analyses_filepath, environment_filepath, basedir):
         logger.info(f"+ Output: {config['analyses'][name]['runtime']['output']}")
         logger.info("Done!\n--------------------")
 
-    result = {"analyses":config["analyses"]}
-    return result
+    return config
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
