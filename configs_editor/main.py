@@ -94,9 +94,10 @@ def load_user_inputs(filepath):
 
     user        = {"user":userfile}
     em_settings = {"em_settings": utils.load_yaml(userfile["em_settings_filepath"])["Settings"]}
+    sp_settings = {"sample_settings": utils.load_yaml(userfile["sample_settings_filepath"])["Settings"]}
     # todo: add to config.yaml, list of settings_filepath which would be loaded like em_settings
 
-    return {"input": user|em_settings}
+    return {"input": user|em_settings|sp_settings}
 
 ## preprocessing ##
 def get_output(analyses_data, source, analysis_name, attribute_name):
@@ -194,11 +195,11 @@ def run_subprocess(command, output_directory=None, name=None):
         result = result.stdout
     return result
 
-def run(config_filepath, basedir):
+def run(config_filepath, analyses_filepath, environment_filepath, basedir):
     # 1. Load config file
     # config_yaml = utils.load_yaml(config_filepath)
-    env_settings      = load_environment_settings(config_filepath)
-    analyses_settings = load_analyses_settings(config_filepath)
+    env_settings      = load_environment_settings(environment_filepath)
+    analyses_settings = load_analyses_settings(analyses_filepath)
     user_inputs       = load_user_inputs(config_filepath)
     
     config = analyses_settings | user_inputs
@@ -243,19 +244,30 @@ def run(config_filepath, basedir):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config_file", type=str, required=True, help="Path to the configuration file (yaml).")
+    # missing files below default to config_file if not provided
+    parser.add_argument("-e", "--env_settings", type=str, help="Path to the environment settings file (yaml).")
+    parser.add_argument("-a", "--analyses_settings", type=str, help="Path to the analyses settings file (yaml).")
+
     parser = utils.add_common_cli_arguments(parser) # adds --verbose, --json, --output-dir --debug
     args = parser.parse_args()
+
+    env_settings      = args.env_settings      or args.config_file
+    analyses_settings = args.analyses_settings or args.config_file
 
     # Directory creation
     basedir = utils.prepare_output_environment(args.output_dir or ".")
 
     # Logging
     utils.configure_logging(verbose=args.verbose, output_directory=basedir, capture_warnings=True)
-    logger.info(f"\n- Config file: {args.config_file} \n- Output directory: {basedir}  \n- Verbose: {args.verbose}")
+    logger.info(f"\n- Config file:\t{args.config_file} \n- Environment:\t{env_settings}  \n- Analyses:\t{analyses_settings}")
+    logger.info(f"\n- Output directory: {basedir}  \n- Verbose: {args.verbose}")
 
     try:
         # prepare and run all analyses
-        analyses_result = run(config_filepath=args.config_file, basedir=basedir)
+        analyses_result = run(config_filepath      = args.config_file, 
+                              analyses_filepath    = analyses_settings,
+                              environment_filepath = env_settings,
+                              basedir=basedir)
 
         # save data for debugging
         if args.debug:
@@ -263,7 +275,7 @@ if __name__ == "__main__":
                 pickle.dump(analyses_result, f) 
 
         # load css-parameter mapping
-        css_inputs = utils.load_yaml(args.config_file)["css_inputs"]
+        css_inputs = utils.load_yaml(analyses_settings)["css_inputs"]
 
         # cs-schemes parameter computation
         compute_css_parameters(css_inputs,
