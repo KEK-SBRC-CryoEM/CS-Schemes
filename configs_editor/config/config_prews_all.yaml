@@ -60,8 +60,8 @@ analyses:
 css_inputs:
   EM_mics_apix: {from: input.em_settings, attribute: EM_mics_apix}
 
-  SS_comm_lbin_angpix: {from: input.sp_settings, attribute: SS_comm_lbin_angpix}
-  SS_comm_mbin_angpix: {from: input.sp_settings, attribute: SS_comm_mbin_angpix}
+  SS_comm_lbin_angpix: {from: input.sample_settings, attribute: SS_comm_lbin_angpix}
+  SS_comm_mbin_angpix: {from: input.sample_settings, attribute: SS_comm_mbin_angpix}
 
   GTF_lbin_abinit3d_pmd_increase_percentage: 1.2 # todo: get from file or compute
   mics_upper_bound: 4090 # todo: get from file or compute
