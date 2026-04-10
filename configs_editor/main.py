@@ -210,7 +210,7 @@ def run(user_inputs, analyses_settings, env_settings, basedir):
 
         logger.info(f"+ Output: {config['analyses'][name]['runtime']['output']}")
         logger.info("Done!")
-        logger.info("--------------------")
+        logger.info("-"*40)
 
     return config
 
@@ -252,17 +252,17 @@ if __name__ == "__main__":
 
     if args.debug:
         logger.info("DEBUG MODE ON: saves pipeline_data.pkl after running the analyses pipeline.")
-        logger.info("--------------------")
+        logger.info("-"*40)
     logger.info(f"Output directory: {basedir}")
     logger.info(f"Verbose: {args.verbose}")
-    logger.info("--------------------")
+    logger.info("-"*40)
     for i, f in enumerate(args.config_filepath_list):
-        logger.info(f"Config file #{i}:\t{f}")
-    logger.info("--------------------")
+        logger.info(f"Config file #{i+1}: {f}")
+    logger.info("-"*40)
     logger.info("Reference MAP: "+settings["user_inputs"]["reference_map_filepath"])
     logger.info("CS-Schemes EM Settings: "+settings["user_inputs"]["em_settings_filepath"])
     logger.info("CS-Schemes Sample Settings: "+settings["user_inputs"]["sample_settings_filepath"])
-    logger.info("--------------------")
+    logger.info("-"*40)
 
     try:
         # prepare and run all analyses
