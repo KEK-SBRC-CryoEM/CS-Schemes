@@ -13,7 +13,20 @@ from pathlib import Path
 
 from css_parameters import CSSParameters
 
-# todo: user inputs from CLI
+### usage examples ###
+# 1) all settings in one config yaml file
+# python main.py -c config/all_settings_prews.yaml --verbose --debug
+#  
+# 2) settings split into multiple yaml files
+# python main.py -c config/user_input_empiar10673_gpcr.yaml config/environment_settings_prews.yaml config/analyses_settings.yaml --verbose --debug
+#
+# 3) user input direct from CLI + every other settings in one config yaml file
+# python main.py -c config/all_settings_prews.yaml -m "/home/tmoriya/shared_for_all/data/jair/EMPIAR10673_GPCR/PostProcess/job115/postprocess.mrc" -k "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_em_settings_empiar10673_gpcr.yml" -n  "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_sample_settings_empiar10673_gpcr.yml" --verbose --debug
+#
+# 4) user input direct from CLI + other settings split into multiple yaml files
+# python main.py  config/environment_settings_prews.yaml  config/analyses_settings.yaml -m "/home/tmoriya/shared_for_all/data/jair/EMPIAR10673_GPCR/PostProcess/job115/postprocess.mrc" -k "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_em_settings_empiar10673_gpcr.yml" -n  "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_sample_settings_empiar10673_gpcr.yml" --verbose --debug
+###
+
 # todo: user can specify a directory that already exists
 #       in this case, failed analyses are moved to a bkup folder and are reran
 #       successfull analyses have their output from files appended to the dict:analysis_data
@@ -203,12 +216,9 @@ def run(user_inputs, analyses_settings, env_settings, basedir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--config_file", type=str, help="Path to the configuration file (yaml).")
-    # missing files below default to config_file if not provided
-    parser.add_argument("-e", "--env_settings", type=str, help="Path to the environment settings file (yaml).")
-    parser.add_argument("-a", "--analyses_settings", type=str, help="Path to the analyses settings file (yaml).")
+    parser.add_argument("-c", "--config_filepath_list", nargs='+', required=True, help="Path to one or more configuration files (yaml).")
     # alternatively receive user inputs from CLI
-    parser.add_argument("-m",  "--reference_map",   type=str, help="Path to the reference map (.mrc).")
+    parser.add_argument("-m",  "--reference_map",   type=str, help="Path to the reference map (mrc).")
     parser.add_argument("-k",  "--em_settings",     type=str, help="Path to the CS-Schemes EM Settings files (yaml).")
     parser.add_argument("-n",  "--sample_settings", type=str, help="Path to the CS-Schemes Sample Settings files (yaml).")
 
@@ -222,11 +232,7 @@ if __name__ == "__main__":
     utils.configure_logging(verbose=args.verbose, output_directory=basedir, capture_warnings=True)
 
     # Input files handling
-    env_settings      = args.env_settings      or args.config_file
-    analyses_settings = args.analyses_settings or args.config_file
-
-    settings_path_list = [p for p in [args.config_file, env_settings, analyses_settings] if p]
-    settings = load_settings(settings_path_list)
+    settings = load_settings(args.config_filepath_list)
 
     # CLI handling
     if "user_inputs" not in settings.keys():
@@ -250,9 +256,8 @@ if __name__ == "__main__":
     logger.info(f"Output directory: {basedir}")
     logger.info(f"Verbose: {args.verbose}")
     logger.info("--------------------")
-    logger.info(f"Config file:\t{args.config_file}")
-    logger.info(f"Environment:\t{env_settings}")
-    logger.info(f"Analyses:\t{analyses_settings}")
+    for i, f in enumerate(args.config_filepath_list):
+        logger.info(f"Config file #{i}:\t{f}")
     logger.info("--------------------")
     logger.info("Reference MAP: "+settings["user_inputs"]["reference_map_filepath"])
     logger.info("CS-Schemes EM Settings: "+settings["user_inputs"]["em_settings_filepath"])
