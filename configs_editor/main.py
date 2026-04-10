@@ -225,7 +225,8 @@ if __name__ == "__main__":
     env_settings      = args.env_settings      or args.config_file
     analyses_settings = args.analyses_settings or args.config_file
 
-    settings = load_settings([args.config_file, env_settings, analyses_settings])
+    settings_path_list = [for p in [args.config_file, env_settings, analyses_settings] if p]
+    settings = load_settings(settings_path_list)
 
     # CLI handling
     if "user_inputs" not in settings.keys():
