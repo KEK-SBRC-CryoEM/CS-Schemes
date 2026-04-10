@@ -203,7 +203,7 @@ def run(user_inputs, analyses_settings, env_settings, basedir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--config_file", type=str, required=True, help="Path to the configuration file (yaml).")
+    parser.add_argument("-c", "--config_file", type=str, help="Path to the configuration file (yaml).")
     # missing files below default to config_file if not provided
     parser.add_argument("-e", "--env_settings", type=str, help="Path to the environment settings file (yaml).")
     parser.add_argument("-a", "--analyses_settings", type=str, help="Path to the analyses settings file (yaml).")
@@ -251,7 +251,7 @@ if __name__ == "__main__":
     logger.info("--------------------")
     logger.info(f"Config file:\t{args.config_file}")
     logger.info(f"Environment:\t{env_settings}")
-    logger.info(f"Analyses:\t{analyses_settings}\n")
+    logger.info(f"Analyses:\t{analyses_settings}")
     logger.info("--------------------")
     logger.info("Reference MAP: "+settings["user_inputs"]["reference_map_filepath"])
     logger.info("CS-Schemes EM Settings: "+settings["user_inputs"]["em_settings_filepath"])
