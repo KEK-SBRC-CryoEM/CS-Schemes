@@ -196,7 +196,8 @@ def run(user_inputs, analyses_settings, env_settings, basedir):
                                                                        name)
 
         logger.info(f"+ Output: {config['analyses'][name]['runtime']['output']}")
-        logger.info("Done!\n--------------------")
+        logger.info("Done!--------------------")
+        logger.info(" ")
 
     return config
 
@@ -243,19 +244,19 @@ if __name__ == "__main__":
 
 
     if args.debug:
-        logger.info(f"#### DEBUG MODE ####")
-        logger.info("DEBUG MODE: saves pipeline_data.pkl after running the analyses pipeline.")
+        logger.info("DEBUG MODE ON: saves pipeline_data.pkl after running the analyses pipeline.")
+        logger.info(" ")
     logger.info(f"Output directory: {basedir}")
-    logger.info(f"Verbose: {args.verbose}\n")
-
+    logger.info(f"Verbose: {args.verbose}")
+    logger.info(" ")
     logger.info(f"Config file:\t{args.config_file}")
     logger.info(f"Environment:\t{env_settings}")
     logger.info(f"Analyses:\t{analyses_settings}\n")
-
-    logger.info("Reference MAP:\t"+settings["user_inputs"]["reference_map_filepath"])
-    logger.info("CS-Schemes EM Settings:\t"+settings["user_inputs"]["em_settings_filepath"])
-    logger.info("CS-Schemes Sample Settings:\t"+settings["user_inputs"]["sample_settings_filepath"])
-       
+    logger.info(" ")
+    logger.info("Reference MAP: "+settings["user_inputs"]["reference_map_filepath"])
+    logger.info("CS-Schemes EM Settings: "+settings["user_inputs"]["em_settings_filepath"])
+    logger.info("CS-Schemes Sample Settings: "+settings["user_inputs"]["sample_settings_filepath"])
+    logger.info(" ")   
 
     try:
         # prepare and run all analyses
