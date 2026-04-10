@@ -13,6 +13,7 @@ from pathlib import Path
 
 from css_parameters import CSSParameters
 
+# todo: user inputs from CLI
 # todo: user can specify a directory that already exists
 #       in this case, failed analyses are moved to a bkup folder and are reran
 #       successfull analyses have their output from files appended to the dict:analysis_data
@@ -20,10 +21,14 @@ from css_parameters import CSSParameters
 logger = logging.getLogger("ANALYSES PIPELINE")
 
 ## input YAML processing ##
-def load_environment_settings(filepath):
-    # load file and get only the environment settings
-    settings = utils.load_yaml(filepath)["environment"]
+def load_settings(filepath_list):
+    settings = {}
+    for filepath in filepath_list:
+        settings = settings | utils.load_yaml(filepath)
 
+    return settings
+
+def process_environment_settings(settings):
     # check for missing env and script files
     env_notfound  = [(name, path)           for name, path in settings["env"].items()     if not Path(path).is_file()]
     tool_notfound = [(name, path["script"]) for name, path in settings["toolbox"].items() if not Path(path["script"]).is_file()]
@@ -46,18 +51,13 @@ def load_environment_settings(filepath):
 
     return settings["toolbox"]
 
-def load_analyses_settings(filepath):
-    # load file and get only the environment settings
-    settings = utils.load_yaml(filepath)["analyses"]
-
+def process_analyses_settings(settings):
     # analysis name as key for easy access
     settings = {a["name"]:{"config":a, "runtime":{}} for a in settings}
 
     return {"analyses": settings}
 
-def load_user_inputs(filepath):
-    userfile = utils.load_yaml(filepath)["user_inputs"]
-
+def process_user_inputs(userfile):
     user        = {"user":userfile}
     em_settings = {"em_settings": utils.load_yaml(userfile["em_settings_filepath"])["Settings"]}
     sp_settings = {"sample_settings": utils.load_yaml(userfile["sample_settings_filepath"])["Settings"]}
@@ -161,13 +161,7 @@ def run_subprocess(command, output_directory=None, name=None):
         result = result.stdout
     return result
 
-def run(config_filepath, analyses_filepath, environment_filepath, basedir):
-    # 1. Load config file
-    # config_yaml = utils.load_yaml(config_filepath)
-    env_settings      = load_environment_settings(environment_filepath)
-    analyses_settings = load_analyses_settings(analyses_filepath)
-    user_inputs       = load_user_inputs(config_filepath)
-    
+def run(user_inputs, analyses_settings, env_settings, basedir):
     config = analyses_settings | user_inputs
     
     # 2. Preprocessing
@@ -212,26 +206,62 @@ if __name__ == "__main__":
     # missing files below default to config_file if not provided
     parser.add_argument("-e", "--env_settings", type=str, help="Path to the environment settings file (yaml).")
     parser.add_argument("-a", "--analyses_settings", type=str, help="Path to the analyses settings file (yaml).")
+    # alternatively receive user inputs from CLI
+    parser.add_argument("-m",  "--reference_map",   type=str, help="Path to the reference map (.mrc).")
+    parser.add_argument("-k",  "--em_settings",     type=str, help="Path to the CS-Schemes EM Settings files (yaml).")
+    parser.add_argument("-n",  "--sample_settings", type=str, help="Path to the CS-Schemes Sample Settings files (yaml).")
 
     parser = utils.add_common_cli_arguments(parser) # adds --verbose, --json, --output-dir --debug
     args = parser.parse_args()
-
-    env_settings      = args.env_settings      or args.config_file
-    analyses_settings = args.analyses_settings or args.config_file
 
     # Directory creation
     basedir = utils.prepare_output_environment(args.output_dir or ".")
 
     # Logging
     utils.configure_logging(verbose=args.verbose, output_directory=basedir, capture_warnings=True)
-    logger.info(f"\n- Config file:\t{args.config_file} \n- Environment:\t{env_settings}  \n- Analyses:\t{analyses_settings}")
-    logger.info(f"\n- Output directory: {basedir}  \n- Verbose: {args.verbose}")
+
+    # Input files handling
+    env_settings      = args.env_settings      or args.config_file
+    analyses_settings = args.analyses_settings or args.config_file
+
+    settings = load_settings([args.config_file, env_settings, analyses_settings])
+
+    # CLI handling
+    if "user_inputs" not in settings.keys():
+        settings["user_inputs"] = {}
+    if args.reference_map:
+        settings["user_inputs"]["reference_map_filepath"]   = args.reference_map
+    if args.em_settings:
+        settings["user_inputs"]["em_settings_filepath"]     = args.em_settings
+    if args.sample_settings:
+        settings["user_inputs"]["sample_settings_filepath"] = args.sample_settings
+    
+    missing_settings = [ft for ft in ["user_inputs", "analyses", "environment"] if ft not in settings.keys()] # todo: possibly could check subsections
+    if missing_settings:
+        logger.exception("Check your inputs. The following settings are missing: "+" ".join(missing_settings))
+        raise Exception("Missing input settings. Expected 'user_inputs', 'analyses', 'environment' sections") 
+
+
+    if args.debug:
+        logger.info(f"#### DEBUG MODE ####")
+        logger.info("DEBUG MODE: saves pipeline_data.pkl after running the analyses pipeline.")
+    logger.info(f"Output directory: {basedir}")
+    logger.info(f"Verbose: {args.verbose}\n")
+
+    logger.info(f"Config file:\t{args.config_file}")
+    logger.info(f"Environment:\t{env_settings}")
+    logger.info(f"Analyses:\t{analyses_settings}\n")
+
+    logger.info("Reference MAP:\t"+settings["user_inputs"]["reference_map_filepath"])
+    logger.info("CS-Schemes EM Settings:\t"+settings["user_inputs"]["em_settings_filepath"])
+    logger.info("CS-Schemes Sample Settings:\t"+settings["user_inputs"]["sample_settings_filepath"])
+       
 
     try:
         # prepare and run all analyses
-        analyses_result = run(config_filepath      = args.config_file, 
-                              analyses_filepath    = analyses_settings,
-                              environment_filepath = env_settings,
+        analyses_result = run(user_inputs       = process_user_inputs(settings["user_inputs"]), 
+                              analyses_settings = process_analyses_settings(settings["analyses"]),
+                              env_settings      = process_environment_settings(settings["environment"]),
                               basedir=basedir)
 
         # save data for debugging
