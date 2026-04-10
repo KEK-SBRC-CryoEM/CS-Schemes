@@ -140,11 +140,13 @@ def compute_css_parameters(input_parameters, analyses_data, css_params_of_intere
     filtered_input = {k: v for k, v in input_dict.items() if k in CSSParameters.get_valid_fields()}
 
     # instantiate and run calculations
+    logger.info(f"Computing CS-Schemes parameters... ")
     params = CSSParameters(**filtered_input)
     result = {"Settings":params.to_dict(css_params_of_interest)}
 
     # save to a yaml file
     utils.handle_output(result, output_directory=output_directory, show=False)
+    logger.info(f"CS-Schemes parameters saved to {output_directory}")
 
 ## pipeline ##
 def run_subprocess(command, output_directory=None, name=None):
@@ -244,7 +246,7 @@ if __name__ == "__main__":
     if args.sample_settings:
         settings["user_inputs"]["sample_settings_filepath"] = args.sample_settings
     
-    missing_settings = [ft for ft in ["user_inputs", "analyses", "environment"] if ft not in settings.keys()] # todo: possibly could check subsections
+    missing_settings = [ft for ft in ["user_inputs", "analyses", "environment", "css_config"] if ft not in settings.keys()] # todo: possibly could check subsections
     if missing_settings:
         logger.exception("Check your inputs. The following settings are missing: "+" ".join(missing_settings))
         raise Exception("Missing input settings. Expected 'user_inputs', 'analyses', 'environment' sections") 
