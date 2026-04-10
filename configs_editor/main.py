@@ -276,13 +276,10 @@ if __name__ == "__main__":
             with open(os.path.join(basedir, "pipeline_data.pkl"), "wb") as f:
                 pickle.dump(analyses_result, f) 
 
-        # load css-parameter mapping
-        css_config = utils.load_yaml(analyses_settings)["css_config"]
-
         # cs-schemes parameter computation
-        compute_css_parameters(css_config["inputs"],
+        compute_css_parameters(settings["css_config"]["inputs"],
                                analyses_result,
-                               css_config["params_to_compute"],
+                               settings["css_config"]["params_to_compute"],
                                basedir)
 
     except Exception:
