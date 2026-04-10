@@ -225,7 +225,7 @@ if __name__ == "__main__":
     env_settings      = args.env_settings      or args.config_file
     analyses_settings = args.analyses_settings or args.config_file
 
-    settings_path_list = [for p in [args.config_file, env_settings, analyses_settings] if p]
+    settings_path_list = [p for p in [args.config_file, env_settings, analyses_settings] if p]
     settings = load_settings(settings_path_list)
 
     # CLI handling
