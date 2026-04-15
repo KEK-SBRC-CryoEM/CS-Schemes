@@ -60,5 +60,4 @@ css_config:
 
 user_inputs:
   reference_map_filepath:   "/home/tmoriya/shared_for_all/data/jair/EMPIAR10673_GPCR/PostProcess/job115/postprocess.mrc"
-  em_settings_filepath:     None
-  sample_settings_filepath: None
+
