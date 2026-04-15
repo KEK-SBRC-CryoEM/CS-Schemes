@@ -268,8 +268,8 @@ if __name__ == "__main__":
         logger.info(f"Config file #{i+1}: {f}")
     logger.info("-"*40)
     logger.info("Reference MAP: "+settings["user_inputs"]["reference_map_filepath"])
-    logger.info("CS-Schemes EM Settings: "+settings["user_inputs"]["em_settings_filepath"])
-    logger.info("CS-Schemes Sample Settings: "+settings["user_inputs"]["sample_settings_filepath"])
+    logger.info("CS-Schemes EM Settings: "+settings["user_inputs"].get("em_settings_filepath", None))
+    logger.info("CS-Schemes Sample Settings: "+settings["user_inputs"].get("sample_settings_filepath", None))
     logger.info("-"*40)
 
     try:
