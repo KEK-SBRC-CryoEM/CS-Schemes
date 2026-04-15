@@ -76,10 +76,10 @@ def process_user_inputs(userfile):
     sp_settings = {"sample_settings":None}
 
     if "em_settings_filepath" in userfile.keys():
-        em_settings["em_settings"] = utils.load_yaml(userfile["em_settings_filepath"])["Settings"]}
+        em_settings["em_settings"] = utils.load_yaml(userfile["em_settings_filepath"])["Settings"]
 
     if "sample_settings_filepath" in userfile.keys():
-        sp_settings["sample_settings"] = utils.load_yaml(userfile["sample_settings_filepath"])["Settings"]}
+        sp_settings["sample_settings"] = utils.load_yaml(userfile["sample_settings_filepath"])["Settings"]
     # todo: add to config.yaml, list of settings_filepath which would be loaded like em_settings
 
     return {"input": user|em_settings|sp_settings}
