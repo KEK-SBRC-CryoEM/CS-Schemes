@@ -60,5 +60,5 @@ css_config:
 
 user_inputs:
   reference_map_filepath:   "/home/tmoriya/shared_for_all/data/jair/EMPIAR10673_GPCR/PostProcess/job115/postprocess.mrc"
-  # em_settings_filepath:     "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_em_settings_empiar10673_gpcr.yml"
-  # sample_settings_filepath: "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_sample_settings_empiar10673_gpcr.yml"
+  em_settings_filepath:     None
+  sample_settings_filepath: None
