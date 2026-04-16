@@ -1,5 +1,6 @@
 import os
 import numpy as np
+from pathlib import Path
 from dataclasses import dataclass, asdict, field, fields
 
 # example usage
@@ -22,7 +23,7 @@ class CSSParameters:
     GTF_lbin_abinit3d_pmd_increase_percentage: float|None = None
 
     #### Inputs from external analyses/computation ####
-    # todo perhaps these should be injected intead of defined
+    # todo perhaps these should be injected intead of defined (as so we dont need these ugly |None)
     particle_contour_radius    : float|None = None
     particle_contour_pixelsize : float|None = None
 
@@ -35,7 +36,8 @@ class CSSParameters:
     mics_upper_bound : int|None = None # = micrograph size
     mics_lower_bound : int = 0
 
-    SS_comm_lbin_ref3d_name: str = ""
+    ref3d_path : str = ""
+    mask3d_path: str = ""
     
     ##### Options #####
     boxsize_eman_values : bool = True
@@ -45,7 +47,7 @@ class CSSParameters:
 
     ##### Common 
     @property
-    def SS_comm_lbin_ref3d_path(self):
+    def SS_comm_class2d_pmd(self):
         # adjust boxsize
         boxsize = adjust_boxsize(self.particle_contour_radius*2, self.boxsize_eman_values) # [pixel]
         
@@ -68,25 +70,23 @@ class CSSParameters:
     def SS_comm_lbin_ref3d_path(self):
         # to match style and probably how relion works
         #   analysis generate these files and then they are moved inside relion project / inputs
-        result = None
-        if self.SS_comm_lbin_ref3d_name:
-            result = os.path.join("Inputs", self.SS_comm_lbin_ref3d_name)
-        return result
-
+        # result = None
+        # if self.SS_comm_lbin_ref3d_name:
+        #     result = os.path.join("Inputs", self.SS_comm_lbin_ref3d_name)
+        # return result
+        return self.ref3d_path    
+    
     @property
     def SS_comm_lbin_mask3d_path(self):
-        # to match style and probably how relion works
-        #   analysis generate these files and then they are moved inside relion project / inputs
-        result = None
-        if self.SS_comm_lbin_mask3d_name:
-            result = os.path.join("Inputs", self.SS_comm_lbin_mask3d_name)
-        return result
+        return self.mask3d_path
     
-    # @property
-    # def  SS_comm_lbin_mask3d_name(self):
-    #     # to match style and probably how relion works
-    #     #   analysis generate these files and then they are moved inside relion project / inputs
-    #     pass
+    @property
+    def SS_comm_lbin_ref3d_name(self):
+        return Path(self.SS_comm_lbin_ref3d_path).name
+
+    @property
+    def SS_comm_lbin_mask3d_name(self):
+        return Path(self.SS_comm_lbin_mask3d_path).name
 
     ##### 030_GTF_Create_Stack #####
     @property
