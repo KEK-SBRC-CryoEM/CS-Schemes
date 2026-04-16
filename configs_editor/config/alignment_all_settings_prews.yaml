@@ -49,8 +49,8 @@ analyses:
 
 css_config:
   inputs:
-    SS_comm_lbin_ref3d_path:  {from: analyses.volume_alignment, attribute: volume}
-    SS_comm_lbin_mask3d_path: {from: analyses.volume_alignment, attribute: mask}
+    ref3d_path : {from: analyses.volume_alignment, attribute: volume}
+    mask3d_path: {from: analyses.volume_alignment, attribute: mask}
 
   params_to_compute:
     - SS_comm_lbin_ref3d_path
