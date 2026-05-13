@@ -144,7 +144,7 @@ def make_command(env, script, args, analyses_data=None, basedir=None, outdir=Non
 ## postprocessing ##
 def compute_css_parameters(input_parameters, analyses_data, css_params_of_interest, output_directory):
     # process inputs from the yaml
-    input_dict = {name:resolve_value(value, analyses_data, None, None) 
+    input_dict = {name:resolve_value(value, analyses_data, output_directory, "") 
                     for name, value in input_parameters.items()}
 
     # filter fields that CSSParameters does not expect
