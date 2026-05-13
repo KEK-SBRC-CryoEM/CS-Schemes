@@ -117,7 +117,7 @@ def resolve_value(value, analyses_data, basedir, outdir):
 
         if result is None:
             result = value.get("default", None)
-            logger.warning(f"VALUE NOT FOUND FOR {name} {value['attribute']}, SETTING DEFAULT VALUE {default}")
+            logger.warning(f"VALUE NOT FOUND FOR {name} {value['attribute']}, SETTING DEFAULT VALUE {result}")
 
     return result
 
