@@ -103,18 +103,23 @@ def get_output(analyses_data, source, analysis_name, attribute_name):
         return value
 
     except KeyError:
-        logger.exception(f"ERROR: VALUE NOT FOUND FOR {analysis_name} {attribute_name}")
+        # logger.exception(f"ERROR: VALUE NOT FOUND FOR {analysis_name} {attribute_name}")
         return None
 
 def resolve_value(value, analyses_data, basedir, outdir):
     # regular input; replaces directories
     if isinstance(value, str):
-        value = value.replace("$OUTDIR", outdir).replace("$BASEDIR", basedir)
+        result = value.replace("$OUTDIR", outdir).replace("$BASEDIR", basedir)
     # input comes from another analysis
     elif isinstance(value, dict):
         source, name = value["from"].split(".")
-        value = get_output(analyses_data, source, name, value["attribute"])
-    return value
+        result = get_output(analyses_data, source, name, value["attribute"])
+
+        if result is None:
+            result = value.get("default", None)
+            logger.warning(f"VALUE NOT FOUND FOR {name} {value['attribute']}, SETTING DEFAULT VALUE {default}")
+
+    return result
 
 def make_command(env, script, args, analyses_data=None, basedir=None, outdir=None):
     cmd = [env, script]
