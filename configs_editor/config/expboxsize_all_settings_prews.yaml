@@ -95,8 +95,8 @@ css_config:
     initial3d_particle_size_pix:        {from: "analyses.negreg_size", attribute: "sphere_negative.diameter"}
     initial3d_particle_size_angpix:     {from: "analyses.negreg_size", attribute: "sphere_negative.voxel_size"}
 
-    ctflimit_boxsize_pix:               {from: "analyses.ctflimit",    attribute: "sphere_negative.diameter"}
-    ctflimit_boxsize_angpix:            {from: "analyses.ctflimit",    attribute: "sphere_negative.voxel_size"}
+    ctflimit_boxsize_pix:               {from: "analyses.ctflimit",    attribute: "boxsize"}
+    ctflimit_boxsize_angpix:            {from: "analyses.ctflimit",    attribute: "pixel_size"}
 
   params_to_compute:
     # Common
