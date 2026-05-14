@@ -83,7 +83,7 @@ class CSSParameters:
 
     @property
     def SS_comm_lbin_angpix(self):
-        return self.EM_mics_apix / self.large_binning_factor
+        return self.large_binning_factor / self.EM_mics_apix
 
     @property
     def SS_comm_lbin_ref3d_path(self):
@@ -103,7 +103,7 @@ class CSSParameters:
 
     @property
     def SS_comm_mbin_angpix(self):
-        return self.EM_mics_apix * self.medium_binning_factor
+        return self.medium_binning_factor / self.EM_mics_apix
 
     ##### 030_GTF_Create_Stack #####
     @property
