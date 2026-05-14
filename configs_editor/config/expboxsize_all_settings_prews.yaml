@@ -140,6 +140,6 @@ user_inputs:
 
   defocus: -1.8
 
-  target_resolutiona: 3
+  target_resolution: 3
 
   mics_size: 3710
