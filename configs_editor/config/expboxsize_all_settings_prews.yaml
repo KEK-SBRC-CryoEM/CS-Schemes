@@ -124,12 +124,12 @@ css_config:
 
     # 070_CSS_Init_Refine3D
     - CSS_mbin_reextract_mics_box
-    - CSS_mbin_reextract_mics_0o95box
-    - CSS_mbin_reextract_parts_box
-    - CSS_mbin_reextract_parts_x_min
-    - CSS_mbin_reextract_parts_x_max
-    - CSS_mbin_reextract_parts_y_min
-    - CSS_mbin_reextract_parts_y_max
+    # - CSS_mbin_reextract_mics_0o95box
+    # - CSS_mbin_reextract_parts_box
+    # - CSS_mbin_reextract_parts_x_min
+    # - CSS_mbin_reextract_parts_x_max
+    # - CSS_mbin_reextract_parts_y_min
+    # - CSS_mbin_reextract_parts_y_max
 
 user_inputs:
   large_binning_factor : 4.00
