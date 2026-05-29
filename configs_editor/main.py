@@ -30,6 +30,10 @@ from css_parameters import CSSParameters
 # todo: user can specify a directory that already exists
 #       in this case, failed analyses are moved to a bkup folder and are reran
 #       successfull analyses have their output from files appended to the dict:analysis_data
+#
+# todo: move cs-schemes logic to another project 
+#
+# todo: need to add a list of modules to be loaded (for now, ask the user to load everything before running the script)
 
 logger = logging.getLogger("ANALYSES PIPELINE")
 
@@ -57,10 +61,11 @@ def process_environment_settings(settings):
     
     # link scripts to their executable
     for tool in settings["toolbox"]:
-        exec_placeholder = settings["toolbox"][tool]["env"]
-        exec_path        = settings["env"][exec_placeholder]
-    
-        settings["toolbox"][tool]["env"] = exec_path
+        if settings["toolbox"][tool].get("env"):
+            exec_placeholder = settings["toolbox"][tool]["env"]
+            exec_path        = settings["env"][exec_placeholder]
+        
+            settings["toolbox"][tool]["env"] = exec_path
 
     return settings["toolbox"]
 
@@ -122,7 +127,10 @@ def resolve_value(value, analyses_data, basedir, outdir):
     return result
 
 def make_command(env, script, args, analyses_data=None, basedir=None, outdir=None):
-    cmd = [env, script]
+    if env:
+        cmd = [env, script]
+    else: 
+        cmd = [script]
 
     for arg in args:
         # flag only
@@ -201,12 +209,12 @@ def run(user_inputs, analyses_settings, env_settings, basedir, debug=False):
 
         # command to exec
         config["analyses"][name]["runtime"]["command"] = \
-                        make_command(env     = env_settings[script_name]["env"], 
-                                    script  = env_settings[script_name]["script"], 
-                                    args    = config["analyses"][name]["config"]["args"], 
-                                    analyses_data = config,
-                                    basedir = basedir,
-                                    outdir  = config["analyses"][name]["runtime"]["outdir"]
+                        make_command(env     = env_settings[script_name].get("env"), 
+                                     script  = env_settings[script_name]["script"], 
+                                     args    = config["analyses"][name]["config"]["args"], 
+                                     analyses_data = config,
+                                     basedir = basedir,
+                                     outdir  = config["analyses"][name]["runtime"]["outdir"]
         )
 
         ## 3. Execution
