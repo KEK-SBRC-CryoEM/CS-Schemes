@@ -4,7 +4,10 @@ environment:
     python_cryoem_tools: /home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/dev/bin/python
 
   toolbox:
-    cryoread_contour: 
+    relion_image_handler:
+      script: relion_image_handler
+
+    deepmasc_contour: 
       env    : python_deepmasc
       script : /home/tmoriya/shared_for_all/apps/DeepMASC/contour.py
 
@@ -25,10 +28,26 @@ environment:
       script : /home/tmoriya/shared_for_all/apps/rln_external/ctf_analysis/boxsize_analysis.py
 
 analyses:
-  - name: reference_map_contour
-    script: cryoread_contour
+  - name: create_volume_lbin
+    script: relion_image_handler
     args:
-      - ["--input_map_path", {from: input.user, attribute: reference_map_filepath}]
+      - ["--i", {from: input.user, attribute: reference_map_filepath}]
+      # - ["--angpix", "0.5585"]
+      - ["--rescale_angpix", "2.234"]
+      # - ["--new_box", "64"]
+      - ["--o", "$OUTDIR/lbin.mrc"]
+
+  - name: create_volume_mbin
+    script: relion_image_handler
+    args:
+      - ["--i", {from: input.user, attribute: reference_map_filepath}]
+      - ["--rescale_angpix", "0.69254"]
+      - ["--o", "$OUTDIR/mbin.mrc"]
+
+  - name: create_mask_lbin # gmm mode
+    script: deepmasc_contour
+    args:
+      - ["--input_map_path", "$BASEDIR/create_volume_lbin/lbin.mrc"]
       - ["--output_folder",  "$OUTDIR"]
       - ["--gpu_id"        , "0,1"]
       - ["--num_components", "2"]
@@ -37,12 +56,31 @@ analyses:
       - ["--mask_diameter" , "95"]
       - ["--cutoff_prob"   , "0.3"]
 
-  - name: reference_map_size
+  - name: create_mask_mbin # cryoread mode
+    script: deepmasc_contour
+    args:
+      - ["--input_map_path", "$BASEDIR/create_volume_mbin/mbin.mrc"]
+      - ["--output_folder",  "$OUTDIR"] # --output-dir must be the absolute path for this to work
+      - ["--gpu_id"        , "0,1"]
+      - ["--num_components", "2"]
+      - ["--batch_size"    , "8"]
+      - ["--morph_radius"  , "3"]
+      - ["--mask_diameter" , "95"]
+      - ["--cutoff_prob"   , "0.3"]
+      - ["--refinement_mask"] 
+
+  - name: calc_mask_size_mbin
     script: size_estimation
     args:
       - ["--json"]
-      - ["--volume", "$BASEDIR/reference_map_contour/prot_mask_final.mrc"]
+      - ["--volume", "$BASEDIR/create_mask_lbin/prot_mask_final.mrc"]
 
+  - name: calc_mask_size_lbin
+    script: size_estimation
+    args:
+      - ["--json"]
+      - ["--volume", "$BASEDIR/create_mask_mbin/prot_mask_final.mrc"]
+# need to figure out dependencies here since we have three maps now...
   - name: negreg_size
     script: negative_estimation
     args:
@@ -58,7 +96,7 @@ analyses:
       - ["fresnel"]
       - ["--particle_diameter", {from: analyses.reference_map_size, attribute: radius}]
       - ["--voltage",           {from: input.em_settings, attribute: EM_kV}]
-      - ["--defocus",           {from: input.user, attribute: defocus, default: -1}]
+      - ["--defocus",           {from: input.user, attribute: defocus, default: 1}]
       - ["--resolution",        {from: input.user, attribute: target_resolution, default: 3}]
 
   # add ctf here 
@@ -124,22 +162,24 @@ css_config:
 
     # 070_CSS_Init_Refine3D
     - CSS_mbin_reextract_mics_box
-    # - CSS_mbin_reextract_mics_0o95box
-    # - CSS_mbin_reextract_parts_box
-    # - CSS_mbin_reextract_parts_x_min
-    # - CSS_mbin_reextract_parts_x_max
-    # - CSS_mbin_reextract_parts_y_min
-    # - CSS_mbin_reextract_parts_y_max
+    - CSS_mbin_reextract_mics_0o95box
+    - CSS_mbin_reextract_parts_box
+    - CSS_mbin_reextract_parts_x_min
+    - CSS_mbin_reextract_parts_x_max
+    - CSS_mbin_reextract_parts_y_min
+    - CSS_mbin_reextract_parts_y_max
 
 user_inputs:
+  # reference_map_filepath : "" # passed as cli argument -m
+
   large_binning_factor : 4.00
   medium_binning_factor: 1.24
 
   # padding_pixels    : 0
   # padding_angstrom  : 0.0
-  padding_percentage: 0.1
+  padding_percentage: 0.2
 
-  defocus: -1.8
+  defocus: 1.8 # positive for underfocus 
 
   target_resolution: 3
 
