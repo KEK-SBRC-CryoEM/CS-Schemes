@@ -187,7 +187,7 @@ def run_subprocess(command, output_directory=None, name=None):
         result = result.stdout
     return result
 
-def run(user_inputs, analyses_settings, env_settings, basedir):
+def run(user_inputs, analyses_settings, env_settings, basedir, debug=False):
     config = analyses_settings | user_inputs
     
     # 2. Preprocessing
@@ -225,6 +225,17 @@ def run(user_inputs, analyses_settings, env_settings, basedir):
         logger.info("Done!")
         logger.info("-"*40)
 
+        # save state data for debugging
+        if debug:
+            with open(os.path.join(basedir, "pipeline_data.pkl"), "wb") as file:
+                pickle.dump(config, file)
+
+        # save state data (future: this will be used to stop/continue the workflow)
+        utils.handle_output(config, 
+                            to_json=True, 
+                            filename=os.path.join(basedir, "pipeline_data.json"),
+                            show=False)
+
     return config
 
 if __name__ == "__main__":
@@ -260,8 +271,7 @@ if __name__ == "__main__":
     missing_settings = [ft for ft in ["user_inputs", "analyses", "environment", "css_config"] if ft not in settings.keys()] # todo: possibly could check subsections
     if missing_settings:
         logger.exception("Check your inputs. The following settings are missing: "+" ".join(missing_settings))
-        raise Exception("Missing input settings. Expected 'user_inputs', 'analyses', 'environment' sections") 
-
+        raise Exception("Missing input settings. Expected 'user_inputs', 'analyses', and 'environment' sections") 
 
     if args.debug:
         logger.info("DEBUG MODE ON: saves pipeline_data.pkl after running the analyses pipeline.")
@@ -282,12 +292,8 @@ if __name__ == "__main__":
         analyses_result = run(user_inputs       = process_user_inputs(settings["user_inputs"]), 
                               analyses_settings = process_analyses_settings(settings["analyses"]),
                               env_settings      = process_environment_settings(settings["environment"]),
-                              basedir=basedir)
-
-        # save data for debugging
-        if args.debug:
-            with open(os.path.join(basedir, "pipeline_data.pkl"), "wb") as f:
-                pickle.dump(analyses_result, f) 
+                              basedir=basedir,
+                              debug=args.debug)
 
         # cs-schemes parameter computation
         compute_css_parameters(settings["css_config"]["inputs"],

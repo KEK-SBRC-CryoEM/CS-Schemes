@@ -108,7 +108,7 @@ def prepare_output_environment(output_dir):
     return final_dir
 
 ### handling output ###
-def handle_output(result, to_json=False, output_directory=None, show=True):
+def handle_output(result, to_json=False, filename=None, show=True):
     """
     Print results to stdout (pretty or JSON) and optionally save to a file.
 
@@ -142,9 +142,8 @@ def handle_output(result, to_json=False, output_directory=None, show=True):
         print(output)
 
     # save to file
-    if output_directory:
-        filepath = os.path.join(output_directory, f"output.{ext}")
-        with open(filepath, "w") as file:
+    if filename:
+        with open(filename, "w") as file:
             file.write(output)
 
     return output
