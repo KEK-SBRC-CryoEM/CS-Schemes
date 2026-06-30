@@ -1,0 +1,8 @@
+user_inputs:
+    defocus: 1
+    target_resolution: 4
+    
+    em_settings:
+        EM_kV: 200
+        EM_mics_apix: 1.1
+        EM_Cs: 2.7

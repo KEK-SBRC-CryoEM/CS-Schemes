@@ -104,10 +104,10 @@ Example: `config.yaml`
 Each analysis is an external script you want to run.
 
 ```yaml
-analyses:
-  - name: contour_size
-    executable: /envs/dev/bin/python
-    script: /apps/contour.py
+workflow:
+  - name   : contour
+    env    : /envs/dev/bin/python
+    command: /apps/contour.py
     args:
       - ["--input_mask", "mask.mrc"]
 ```
@@ -117,7 +117,7 @@ analyses:
 
 ```yaml
 (...)
-- ["--particle_diameter", {from: "contour_size", attribute: "radius"}]
+- ["--particle_diameter", {from: "workflow.contour_size.output.radius"}]
 (...)
 ```
 
@@ -130,7 +130,7 @@ Arguments are defined as in the example below:
 args:
   - "--flag"              # flag only
   - ["--param", "value"]  # literal value
-  - ["--param", {from: "A", attribute: "attr"}] # get 'attr' from analysis 'A'
+  - ["--param", {from: "workflow.contour.output.attr"}] # get 'attr' from analysis 'contour'
 ```
 
 ---
@@ -141,7 +141,7 @@ Use analysis outputs to populate RELION parameters.
 
 ```yaml
 parameters:
-  GTF_lbin_extract_mics_box: {from: "fresnel", attribute: "boxsize"}
+  GTF_lbin_extract_mics_box: {from: "fresnel.output.boxsize"}
 ```
 
 ---

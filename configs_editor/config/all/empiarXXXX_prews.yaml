@@ -1,0 +1,121 @@
+user_inputs:
+    defocus: 1
+    target_resolution: 4
+    
+    em_settings:
+        EM_kV: 200
+        EM_mics_apix: 1.1
+        EM_Cs: 2.7
+
+workflow:
+  - name: create_volume_lbin
+    command: relion_image_handler
+    args:
+      - ["--i", {from: input.user.reference_map_filepath}]
+      # - ["--angpix", "0.5585"]
+      - ["--rescale_angpix", "2.234"]
+      # - ["--new_box", "64"]
+      - ["--o", "$OUTDIR/lbin.mrc"]
+
+  - name: create_volume_mbin
+    command: relion_image_handler
+    args:
+      - ["--i", {from: input.user.reference_map_filepath}]
+      - ["--rescale_angpix", "0.69254"]
+      - ["--o", "$OUTDIR/mbin.mrc"]
+
+  - name: create_mask_lbin # gmm mode
+    command: deepmasc_contour
+    args:
+      - ["--input_map_path", "$BASEDIR/create_volume_lbin/lbin.mrc"]
+      - ["--output_folder",  "$OUTDIR"]
+      - ["--gpu_id"        , "0,1"]
+      - ["--num_components", "2"]
+      - ["--batch_size"    , "8"]
+      - ["--morph_radius"  , "3"]
+      - ["--mask_diameter" , "95"]
+      - ["--cutoff_prob"   , "0.3"]
+
+  - name: create_mask_mbin # cryoread mode
+    command: deepmasc_contour
+    args:
+      - ["--input_map_path", "$BASEDIR/create_volume_mbin/mbin.mrc"]
+      - ["--output_folder",  "$OUTDIR"] # --output-dir must be the absolute path for this to work
+      - ["--gpu_id"        , "0,1"]
+      - ["--num_components", "2"]
+      - ["--batch_size"    , "8"]
+      - ["--morph_radius"  , "3"]
+      - ["--mask_diameter" , "95"]
+      - ["--cutoff_prob"   , "0.3"]
+      - ["--refinement_mask"] 
+
+  - name: calc_mask_size_mbin
+    command: size_estimation
+    args:
+      - ["--json"]
+      - ["--volume", "$BASEDIR/create_mask_mbin/prot_mask_final.mrc"]
+
+  - name: calc_mask_size_lbin
+    command: size_estimation
+    args:
+      - ["--json"]
+      - ["--volume", "$BASEDIR/create_mask_lbin/prot_mask_final.mrc"]
+
+  - name: calc_size_negative_density_region
+    command: negative_estimation
+    args:
+      - ["--json"]
+      - ["--output-dir", "$OUTDIR"]
+      - ["--volume",     "$BASEDIR/create_volume_mbin/mbin.mrc"]
+      - ["--mask",       "$BASEDIR/create_mask_mbin/prot_mask_final.mrc"]
+
+  - name: calc_fresnel_boxsize
+    command: boxsize_analysis
+    args:
+      - ["--json"]
+      - ["fresnel"]
+      - ["--particle_diameter", {from: workflow.calc_mask_size_mbin.output.diameter}]
+      - ["--voltage",           {from: input.em_settings.EM_kV}]
+      - ["--defocus",           {from: input.user.defocus, default: 1}]
+      - ["--resolution",        {from: input.user.target_resolution, default: 3}]
+
+  - name: calc_ctf_boxsize
+    command: boxsize_analysis
+    args:
+      - ["--json"]
+      - ["--output-dir", "$OUTDIR"]
+      - ["opt"]
+      - ["--pixel_size", {from: input.em_settings.EM_mics_apix}]
+      - ["--voltage",    {from: input.em_settings.EM_kV}]
+      - ["--defocus",    {from: input.user.defocus, default: 0}]
+      - ["--cs",         {from: input.em_settings.EM_Cs}]
+      - ["--save_plots"]        
+
+system:
+  env:
+    python_deepmasc    : /home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/DeepMASC/bin/python
+    python_cryoem_tools: /home/tmoriya/.pyenv/versions/anaconda3-2025.06-1/envs/dev/bin/python
+
+  toolbox:
+    relion_image_handler:
+      path: /apps/packages/relion-5.0/build/bin/relion_image_handler
+
+    deepmasc_contour: 
+      env : python_deepmasc
+      path: /home/tmoriya/shared_for_all/apps/DeepMASC/contour.py
+
+    size_estimation: 
+      env : python_cryoem_tools
+      path: /home/tmoriya/shared_for_all/apps/rln_external/negative_region/size_estimation.py
+    
+    negative_estimation: 
+      env : python_cryoem_tools
+      path: /home/tmoriya/shared_for_all/apps/rln_external/negative_region/negative_estimation.py
+
+    volume_alignment: 
+      env : python_cryoem_tools
+      path: /home/tmoriya/shared_for_all/apps/rln_external/negative_region/volume_alignment.py
+
+    boxsize_analysis:
+      env : python_cryoem_tools
+      path: /home/tmoriya/shared_for_all/apps/rln_external/ctf_analysis/boxsize_analysis.py

@@ -11,8 +11,6 @@ import pickle
 
 from pathlib import Path
 
-from css_parameters import CSSParameters
-
 ### usage examples ###
 # 1) all settings in one config yaml file
 # python main.py -c config/all_settings_prews.yaml --verbose --debug
@@ -27,15 +25,7 @@ from css_parameters import CSSParameters
 # python main.py  config/environment_settings_prews.yaml  config/analyses_settings.yaml -m "/home/tmoriya/shared_for_all/data/jair/EMPIAR10673_GPCR/PostProcess/job115/postprocess.mrc" -k "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_em_settings_empiar10673_gpcr.yml" -n  "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_sample_settings_empiar10673_gpcr.yml" --verbose --debug
 ###
 
-# todo: user can specify a directory that already exists
-#       in this case, failed analyses are moved to a bkup folder and are reran
-#       successfull analyses have their output from files appended to the dict:analysis_data
-#
-# todo: move cs-schemes logic to another project 
-#
-# todo: need to add a list of modules to be loaded (for now, ask the user to load everything before running the script)
-
-logger = logging.getLogger("ANALYSES PIPELINE")
+logger = logging.getLogger("ANALYSIS PIPELINE")
 
 ## input YAML processing ##
 def load_settings(filepath_list):
@@ -45,64 +35,60 @@ def load_settings(filepath_list):
 
     return settings
 
-def process_environment_settings(settings):
+def process_system_settings(settings):
     # check for missing env and script files
-    env_notfound  = [(name, path)           for name, path in settings["env"].items()     if not Path(path).is_file()]
-    tool_notfound = [(name, path["script"]) for name, path in settings["toolbox"].items() if not Path(path["script"]).is_file()]
+    env_notfound  = [(name, path)         for name, path in settings["env"].items()     if not Path(path).is_file()]
+    tool_notfound = [(name, path["path"]) for name, path in settings["toolbox"].items() if not Path(path["path"]).is_file()]
 
     # write to log
     for (name,path) in env_notfound+tool_notfound:
         logger.warning(f"File not found!\t{name.upper()}:\t{path}")
-
-    # filter out missing files (commented: as we dont know which tool will be used, better raise an exception when tries to exec it)
-    # settings = {"env"    : {k:v for k,v in settings["env"].items()     if (k,v) not in env_notfound},
-    #             "toolbox": {k:v for k,v in settings["toolbox"].items() if (k,v["script"]) not in tool_notfound}
-    # }
     
     # link scripts to their executable
     for tool in settings["toolbox"]:
-        if settings["toolbox"][tool].get("env"):
-            exec_placeholder = settings["toolbox"][tool]["env"]
-            exec_path        = settings["env"][exec_placeholder]
-        
+        exec_placeholder = settings["toolbox"][tool].get("env")
+        if exec_placeholder: # if there is env, replace name by its filepath
+            exec_path = settings["env"][exec_placeholder]
             settings["toolbox"][tool]["env"] = exec_path
 
     return settings["toolbox"]
 
-def process_analyses_settings(settings):
-    # analysis name as key for easy access
-    settings = {a["name"]:{"config":a, "runtime":{}} for a in settings}
+def process_workflow_settings(settings):
+    # from input file: workflow.{name, command,  command arg list}
+    # then we add workflow.{invocation, output_dir, output}
+    settings = {entry["name"]: {"command"   : entry["command"],
+                                "args"      : entry["args"],
+                                "invocation": None,
+                                "output_dir": None,
+                                "output"    : None,}
+                                                for entry in settings}
 
-    return {"analyses": settings}
+    return {"workflow": settings}
 
-def process_user_inputs(userfile):
-    user        = {"user":userfile}
-    em_settings = {"em_settings":None}
-    sp_settings = {"sample_settings":None}
+def process_user_inputs(settings):
+    user        = {"user":settings}
+    em_settings = {"em_settings":settings.get("em_settings", {})}
+    sp_settings = {"sample_settings":settings.get("sample_settings", {})}
 
-    if "em_settings_filepath" in userfile.keys():
-        em_settings["em_settings"] = utils.load_yaml(userfile["em_settings_filepath"])["Settings"]
+    if "em_settings_filepath" in settings.keys():
+        em_settings["em_settings"] |= utils.load_yaml(settings["em_settings_filepath"])["Settings"]
 
-    if "sample_settings_filepath" in userfile.keys():
-        sp_settings["sample_settings"] = utils.load_yaml(userfile["sample_settings_filepath"])["Settings"]
+    if "sample_settings_filepath" in settings.keys():
+        sp_settings["sample_settings"] |= utils.load_yaml(settings["sample_settings_filepath"])["Settings"]
     # todo: add to config.yaml, list of settings_filepath which would be loaded like em_settings
 
     return {"input": user|em_settings|sp_settings}
 
 ## preprocessing ##
-def get_output(analyses_data, source, analysis_name, attribute_name):
+def get_output(data_dict, attribute_path):
     try:
-        if source=="analyses":
-            data = analyses_data[source][analysis_name]["runtime"]["output"]
-        else:
-            data = analyses_data[source][analysis_name]
-        if isinstance(attribute_name, str):
+        if isinstance(attribute_path, str):
             # parse key1.key2 so we can access attributes of dict of dict
-            keys = attribute_name.split(".")
+            keys = attribute_path.split(".")
         else:
-            keys = attribute_name
+            keys = attribute_path
 
-        value = data
+        value = data_dict
         for k in keys:
             value = value[k]
         return value
@@ -111,26 +97,26 @@ def get_output(analyses_data, source, analysis_name, attribute_name):
         # logger.exception(f"ERROR: VALUE NOT FOUND FOR {analysis_name} {attribute_name}")
         return None
 
-def resolve_value(value, analyses_data, basedir, outdir):
+def resolve_value(value, data_dict, basedir, outdir):
     # regular input; replaces directories
     if isinstance(value, str):
         result = value.replace("$OUTDIR", outdir).replace("$BASEDIR", basedir)
     # input comes from another analysis
     elif isinstance(value, dict):
-        source, name = value["from"].split(".")
-        result = get_output(analyses_data, source, name, value["attribute"])
+        result = get_output(data_dict, attribute_path=value["from"].split(".")) 
 
         if result is None:
             result = value.get("default", None)
-            logger.warning(f"VALUE NOT FOUND FOR {name}.{value['attribute']}, DEFAULTING TO {result}")
+            logger.warning(f"VALUE NOT FOUND FOR {value["from"]}!, DEFAULTING TO {result}")
+            logger.warning(f"+ DEFAULTING TO {result}. THIS MAY CAUSE SOME COMMANDS TO FAIL!")
 
     return result
 
-def make_command(env, script, args, analyses_data=None, basedir=None, outdir=None):
+def make_command(env, cmd_path, args, workflow_data=None, basedir=None, outdir=None):
     if env:
-        cmd = [env, script]
+        cmd = [env, cmd_path]
     else: 
-        cmd = [script]
+        cmd = [cmd_path]
 
     for arg in args:
         # flag only
@@ -144,43 +130,26 @@ def make_command(env, script, args, analyses_data=None, basedir=None, outdir=Non
         elif isinstance(arg, list) and len(arg)>1:
             # example: arg = ["--test", 1.1]
             flag, value = arg
-            resolved = resolve_value(value, analyses_data, basedir, outdir)
+            resolved = resolve_value(value, workflow_data, basedir, outdir)
             cmd.extend([flag, str(resolved)])
         
     return cmd
 
-## postprocessing ##
-def compute_css_parameters(input_parameters, analyses_data, css_params_of_interest, output_directory):
-    # process inputs from the yaml
-    input_dict = {name:resolve_value(value, analyses_data, output_directory, "") 
-                    for name, value in input_parameters.items()}
-
-    # filter fields that CSSParameters does not expect
-    filtered_input = {k: v for k, v in input_dict.items() if k in CSSParameters.get_valid_fields()}
-
-    # instantiate and run calculations
-    logger.info(f"Computing CS-Schemes parameters... ")
-    params = CSSParameters(**filtered_input)
-    result = {"Settings":params.to_dict(css_params_of_interest)}
-
-    # save to a yaml file
-    utils.handle_output(result, output_directory=output_directory, show=False)
-    logger.info(f"CS-Schemes parameters saved to {output_directory}")
-
 ## pipeline ##
-def run_subprocess(command, output_directory=None, name=None):
-    # important attributes from subprocess: stdout, stderr, returncode
-    result = subprocess.run(command, capture_output=True, text=True, encoding="utf-8")
-    
-    if output_directory:
-        with open(os.path.join(output_directory, "out.txt"), "w") as f:
-            f.write(result.stdout)
+def run_subprocess(name, invocation, output_directory=None):
+    try: 
+        result = subprocess.run(invocation, capture_output=True, text=True, encoding="utf-8")
+        # note: important attributes from subprocess: stdout, stderr, returncode
+        
+        if output_directory:
+            with open(os.path.join(output_directory, "out.txt"), "w") as f:
+                f.write(result.stdout)
 
-        with open(os.path.join(output_directory, "run.log"), "w") as f:
-            f.write(result.stderr)
-            f.write(f"\nexit code: {result.returncode}\n")
+            with open(os.path.join(output_directory, "run.log"), "w") as f:
+                f.write(result.stderr)
+                f.write(f"\nexit code: {result.returncode}\n")
     
-    try: # ensure it run successfully
+        # ensure it run successfully
         result.check_returncode()
     except subprocess.CalledProcessError:
         logger.exception(f"Pipeline Crashed while running {name.upper()} with return code {result.returncode}!!")
@@ -195,56 +164,57 @@ def run_subprocess(command, output_directory=None, name=None):
         result = result.stdout
     return result
 
-def run(user_inputs, analyses_settings, env_settings, basedir, debug=False):
-    config = analyses_settings | user_inputs
-    
+def run(workflow_data, toolbox_settings, basedir, debug=False):
+    # 1. alias
+    wdata = workflow_data
+
     # 2. Preprocessing
     ## 2.1 runtime properties
-    for name in config["analyses"].keys():
+    for name in wdata["workflow"].keys(): # analysis name
         # output directory path
-        config["analyses"][name]["runtime"]["outdir"] = os.path.join(basedir, name)
+        wdata["workflow"][name]["output_dir"] = os.path.join(basedir, name)
 
         # get script name
-        script_name = config["analyses"][name]["config"]["script"]
+        cmd_name = wdata["workflow"][name]["command"]
 
         # command to exec
-        config["analyses"][name]["runtime"]["command"] = \
-                        make_command(env     = env_settings[script_name].get("env"), 
-                                     script  = env_settings[script_name]["script"], 
-                                     args    = config["analyses"][name]["config"]["args"], 
-                                     analyses_data = config,
-                                     basedir = basedir,
-                                     outdir  = config["analyses"][name]["runtime"]["outdir"]
+        wdata["workflow"][name]["invocation"] = \
+                        make_command(env      = toolbox_settings[cmd_name].get("env"), 
+                                     cmd_path = toolbox_settings[cmd_name]["path"], 
+                                     args     = wdata["workflow"][name]["args"], 
+                                     workflow_data = wdata,
+                                     basedir  = basedir,
+                                     outdir   = wdata["workflow"][name]["output_dir"]
         )
 
         ## 3. Execution
         logger.info(f"Running {name.upper()}...")
         # make output directory
-        Path(config["analyses"][name]["runtime"]["outdir"]).mkdir(parents=True, exist_ok=True)
-        logger.info("+ Output Directory: " + config["analyses"][name]["runtime"]["outdir"])
-        logger.info("+ Command: " + " ".join(config["analyses"][name]["runtime"]["command"]))
+        Path(wdata["workflow"][name]["output_dir"]).mkdir(parents=True, exist_ok=True)
+        logger.info("+ Output Directory  : " + wdata["workflow"][name]["output_dir"])
+        logger.info("+ Invocation Command: " + " ".join(wdata["workflow"][name]["invocation"]))
         
         # execute command
-        config["analyses"][name]["runtime"]["output"] = run_subprocess(config["analyses"][name]["runtime"]["command"], 
-                                                                       config["analyses"][name]["runtime"]["outdir"],
-                                                                       name)
+        wdata["workflow"][name]["output"] = run_subprocess(name,
+                                                           wdata["workflow"][name]["invocation"], 
+                                                           wdata["workflow"][name]["output_dir"],)
 
-        logger.info(f"+ Output: {config['analyses'][name]['runtime']['output']}")
+        logger.info(f"+ Output: {wdata['workflow'][name]['output']}")
         logger.info("Done!")
         logger.info("-"*40)
 
         # save state data for debugging
         if debug:
             with open(os.path.join(basedir, "pipeline_data.pkl"), "wb") as file:
-                pickle.dump(config, file)
+                pickle.dump(wdata, file)
 
         # save state data (future: this will be used to stop/continue the workflow)
-        utils.handle_output(config, 
+        utils.handle_output(wdata, 
                             to_json=True, 
                             filename=os.path.join(basedir, "pipeline_data.json"),
                             show=False)
 
-    return config
+    return wdata
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -276,13 +246,13 @@ if __name__ == "__main__":
     if args.sample_settings:
         settings["user_inputs"]["sample_settings_filepath"] = args.sample_settings
     
-    missing_settings = [ft for ft in ["user_inputs", "analyses", "environment", "css_config"] if ft not in settings.keys()] # todo: possibly could check subsections
+    missing_settings = [ft for ft in ["user_inputs", "workflow", "system"] if ft not in settings.keys()] # todo: possibly could check subsections
     if missing_settings:
         logger.exception("Check your inputs. The following settings are missing: "+" ".join(missing_settings))
-        raise Exception("Missing input settings. Expected 'user_inputs', 'analyses', and 'environment' sections") 
+        raise Exception("Missing input settings. Expected 'user_inputs', 'workflow', and 'system' sections") 
 
     if args.debug:
-        logger.info("DEBUG MODE ON: saves pipeline_data.pkl after running the analyses pipeline.")
+        logger.info("DEBUG MODE ON: saves pipeline_data.pkl after running the analysis pipeline.")
         logger.info("-"*40)
     logger.info(f"Output directory: {basedir}")
     logger.info(f"Verbose: {args.verbose}")
@@ -297,18 +267,12 @@ if __name__ == "__main__":
 
     try:
         # prepare and run all analyses
-        analyses_result = run(user_inputs       = process_user_inputs(settings["user_inputs"]), 
-                              analyses_settings = process_analyses_settings(settings["analyses"]),
-                              env_settings      = process_environment_settings(settings["environment"]),
+        workflow_result = run(#user_inputs       = process_user_inputs(settings["user_inputs"]), 
+                              #workflow_settings = process_workflow_settings(settings["workflow"]),
+                              workflow_data    = process_user_inputs(settings["user_inputs"]) | process_workflow_settings(settings["workflow"]),
+                              toolbox_settings = process_system_settings(settings["system"]),
                               basedir=basedir,
                               debug=args.debug)
-
-        # cs-schemes parameter computation
-        compute_css_parameters(settings["css_config"]["inputs"],
-                               analyses_result,
-                               settings["css_config"]["params_to_compute"],
-                               basedir)
-
     except Exception:
         logger.exception("Pipeline Crashed!!".upper())
         raise
