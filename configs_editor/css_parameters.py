@@ -3,6 +3,14 @@ import logging
 import numpy as np
 from pathlib import Path
 from dataclasses import dataclass, asdict, field, fields
+#
+from main import resolve_value
+import argparse
+import utils
+import yaml
+import json
+import pickle
+
 
 # example usage
 # params = CSSParameters(force_eman=True)
@@ -13,6 +21,7 @@ logger = logging.getLogger("CSSParameters")
 
 @dataclass
 class CSSParameters: 
+
     ##### Microscope related inputs #####
     # from config_em_settings.yaml
     EM_mics_apix: float|None = None
@@ -288,3 +297,47 @@ def get_next_eman_boxsize(n):
 def get_pixel_size(voxel_size):
     return voxel_size[0] if isinstance(voxel_size, list) else voxel_size
 
+
+def compute_css_parameters(input_mapping, workflow_data, css_params_of_interest, basedir=""):
+    # process inputs from the yaml
+    input_dict = {name:resolve_value(value, workflow_data, basedir, "") 
+                    for name, value in input_mapping.items()}
+
+    # filter fields that CSSParameters does not expect
+    filtered_input = {k: v for k, v in input_dict.items() if k in CSSParameters.get_valid_fields()}
+
+    # instantiate and run calculations
+    logger.info(f"Computing CS-Schemes parameters... ")
+    params = CSSParameters(**filtered_input)
+    result = {"Settings":params.to_dict(css_params_of_interest)}
+
+    return result
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-c", "--css_file", type=str, required=True, help="Path to CS-Schemes configuration files (yaml).")
+    parser.add_argument("-d", "--data_file",type=str, required=True, help="Path to the workflow data (pkl).")
+    parser = utils.add_common_cli_arguments(parser) # adds --verbose, --json, --output-dir --debug
+    args = parser.parse_args()
+
+    basedir = utils.prepare_output_environment(args.output_dir or ".")
+    
+    # Logging
+    utils.configure_logging(verbose=args.verbose, output_directory=basedir, capture_warnings=True)
+
+    # Load files
+    css_config = utils.load_yaml(args.css_file)["css_config"]
+
+    with open(args.data_file, 'rb') as file:
+        wdata = pickle.load(file)
+
+    # cs-schemes parameter computation
+    result = compute_css_parameters(input_mapping=css_config["inputs"],
+                                    css_params_of_interest=css_config["params_to_compute"],
+                                    workflow_data=wdata,
+                                    basedir=basedir)
+
+    # save to a yaml file
+    filename = os.path.join(basedir, "css_params.yaml")
+    utils.handle_output(result, filename=filename, show=True)
+    logger.info(f"CS-Schemes parameters saved to {filename}")
