@@ -1,0 +1,61 @@
+css_config:
+  inputs:
+    EM_mics_apix: {from: input.em_settings.EM_mics_apix}
+
+    mics_upper_bound: {from: input.user.mics_size} # todo: get/compute from micrograph or metadata
+
+    ref3d_path : {from: input.user.reference_map_filepath}
+    mask3d_path: "$BASEDIR/mask_generation_reference_map/prot_mask_final.mrc"
+
+    large_binning_factor : {from: input.user.large_binning_factor,  default: 4.00}
+    medium_binning_factor: {from: input.user.medium_binning_factor, default: 1.24}
+
+    padding_pixels    : {from: input.user.padding_pixels,     default: 0}
+    padding_angstrom  : {from: input.user.padding_angstrom,   default: 0}
+    padding_percentage: {from: input.user.padding_percentage, default: 0}
+
+    reference_particle_size_pix:        {from: workflow.calc_mask_size_lbin.output.diameter}
+    reference_particle_size_angpix:     {from: workflow.calc_mask_size_lbin.output.voxel_size}
+
+    initial3d_particle_size_pix:        {from: workflow.calc_size_negative_density_region.output.sphere_negative.diameter}
+    initial3d_particle_size_angpix:     {from: workflow.calc_size_negative_density_region.output.sphere_negative.voxel_size}
+
+    ctflimit_boxsize_pix:               {from: workflow.calc_ctf_boxsize.output.boxsize}
+    ctflimit_boxsize_angpix:            {from: workflow.calc_ctf_boxsize.output.pixel_size}
+
+  params_to_compute:
+    # Common
+    - SS_comm_lbin_ref3d_path
+    - SS_comm_lbin_ref3d_name
+    - SS_comm_lbin_mask3d_path
+    - SS_comm_lbin_mask3d_name
+    
+    - SS_comm_class2d_pmd
+    - SS_comm_optimal_pmd
+    - SS_comm_lbin_angpix
+    - SS_comm_lbin_ref3d_path
+    - SS_comm_lbin_ref3d_name
+    - SS_comm_lbin_mask3d_path
+    - SS_comm_lbin_mask3d_name
+    - SS_comm_mbin_angpix
+
+    # 030_GTF_Create_Stack
+    - GTF_lbin_extract_mics_box
+    - GTF_lbin_extract_mics_0o95box
+    - GTF_lbin_extract_parts_box
+    - GTF_lbin_extract_parts_x_min
+    - GTF_lbin_extract_parts_x_max
+    - GTF_lbin_extract_parts_y_min
+    - GTF_lbin_extract_parts_y_max
+
+    # 050_GTF_AbInitReconst3D
+    # - GTF_lbin_abinit3d_pmd
+
+    # 070_CSS_Init_Refine3D
+    # - CSS_mbin_reextract_mics_box
+    # - CSS_mbin_reextract_mics_0o95box
+    # - CSS_mbin_reextract_parts_box
+    # - CSS_mbin_reextract_parts_x_min
+    # - CSS_mbin_reextract_parts_x_max
+    # - CSS_mbin_reextract_parts_y_min
+    # - CSS_mbin_reextract_parts_y_max

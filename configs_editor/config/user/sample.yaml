@@ -1,7 +1,23 @@
 user_inputs:
-    defocus: 1
-    target_resolution: 4
+    ### reference map ###
+    # reference_map_filepath: inputs/emd_0407.map
     
+    ### microscope related ###
+    defocus: 1
+    target_resolution: 5
+
+    ### micrograph related ###
+    mics_size: 4090
+    
+    ### binning factor ###
+    large_binning_factor : 4.00
+    medium_binning_factor: 1.24
+
+    ### padding type ###
+    # padding_pixels    : 0
+    # padding_angstrom  : 0.0
+    padding_percentage: 0.2
+   
     em_settings:
         EM_kV: 200
         EM_mics_apix: 1.1

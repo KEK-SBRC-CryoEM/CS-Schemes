@@ -25,7 +25,7 @@ from pathlib import Path
 # python main.py  config/environment_settings_prews.yaml  config/analyses_settings.yaml -m "/home/tmoriya/shared_for_all/data/jair/EMPIAR10673_GPCR/PostProcess/job115/postprocess.mrc" -k "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_em_settings_empiar10673_gpcr.yml" -n  "/home/tmoriya/shared_for_all/data/jair/autoparam/CS-Schemes/configs/common/config_sample_settings_empiar10673_gpcr.yml" --verbose --debug
 ###
 
-logger = logging.getLogger("ANALYSIS PIPELINE")
+logger = logging.getLogger("PIPELINE")
 
 ## input YAML processing ##
 def load_settings(filepath_list):
@@ -58,8 +58,8 @@ def process_workflow_settings(settings):
     # then we add workflow.{invocation, output_dir, output}
     settings = {entry["name"]: {"command"   : entry["command"],
                                 "args"      : entry["args"],
-                                "invocation": None,
-                                "output_dir": None,
+                                "invocation": None, # derived from command and args
+                                "output_dir": None, # basedir + name
                                 "output"    : None,}
                                                 for entry in settings}
 
@@ -107,8 +107,12 @@ def resolve_value(value, data_dict, basedir, outdir):
 
         if result is None:
             result = value.get("default", None)
-            logger.warning(f"VALUE NOT FOUND FOR {value["from"]}!, DEFAULTING TO {result}")
-            logger.warning(f"+ DEFAULTING TO {result}. THIS MAY CAUSE SOME COMMANDS TO FAIL!")
+            logger.warning(f"VALUE NOT FOUND: {value['from']}!")
+            logger.warning(f"+ DEFAULTING TO {result}.")
+            if result is None: # the obtained default value is still None
+                logger.warning(f"+ THIS MAY CAUSE SOME COMMANDS TO FAIL!")
+    else: # todo: limit to numbers only
+        result = value
 
     return result
 
