@@ -94,7 +94,7 @@ def get_output(data_dict, attribute_path):
         return value
 
     except KeyError:
-        # logger.exception(f"ERROR: VALUE NOT FOUND FOR {analysis_name} {attribute_name}")
+        # logger.error(f"ERROR: VALUE NOT FOUND FOR {analysis_name} {attribute_name}")
         return None
 
 def resolve_value(value, data_dict, basedir, outdir):
@@ -129,13 +129,18 @@ def make_command(env, cmd_path, args, workflow_data=None, basedir=None, outdir=N
             cmd.extend([arg])
         elif isinstance(arg, list) and len(arg)==1:
             # example: arg = ["--test"]
-            cmd.extend(arg)
+            resolved = resolve_value(*arg, workflow_data, basedir, outdir)
+            cmd.extend([str(resolved)])
         # flag and value
         elif isinstance(arg, list) and len(arg)>1:
             # example: arg = ["--test", 1.1]
             flag, value = arg
             resolved = resolve_value(value, workflow_data, basedir, outdir)
             cmd.extend([flag, str(resolved)])
+        elif isinstance(arg, dict):
+            # example: arg = {from: workflow.process.output}
+            resolved = resolve_value(arg, workflow_data, basedir, outdir)
+            cmd.extend([str(resolved)])
         
     return cmd
 
@@ -156,9 +161,9 @@ def run_subprocess(name, invocation, output_directory=None):
         # ensure it run successfully
         result.check_returncode()
     except subprocess.CalledProcessError:
-        logger.exception(f"Pipeline Crashed while running {name.upper()} with return code {result.returncode}!!")
-        logger.exception("+ Current analysis failed to run. Please, check its log file and the message below.")
-        logger.exception(f"{result.stderr}")
+        logger.error(f"Pipeline Crashed while running {name.upper()} with return code {result.returncode}!!")
+        logger.error("+ Current analysis failed to run. Please, check its log file and the message below.")
+        # logger.error(f"{result.stderr}")
         raise
 
     try: # parse output and return result
@@ -252,7 +257,7 @@ if __name__ == "__main__":
     
     missing_settings = [ft for ft in ["user_inputs", "workflow", "system"] if ft not in settings.keys()] # todo: possibly could check subsections
     if missing_settings:
-        logger.exception("Check your inputs. The following settings are missing: "+" ".join(missing_settings))
+        logger.error("Check your inputs. The following settings are missing: "+" ".join(missing_settings))
         raise Exception("Missing input settings. Expected 'user_inputs', 'workflow', and 'system' sections") 
 
     if args.debug:
@@ -278,8 +283,8 @@ if __name__ == "__main__":
                               basedir=basedir,
                               debug=args.debug)
     except Exception:
-        logger.exception("Pipeline Crashed!!".upper())
-        raise
+        logger.error("Pipeline Crashed!!".upper())
+        # raise
 
 
     
