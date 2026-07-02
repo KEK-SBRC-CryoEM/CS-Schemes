@@ -21,7 +21,6 @@ logger = logging.getLogger("CSSParameters")
 
 @dataclass
 class CSSParameters: 
-
     ##### Microscope related inputs #####
     # from config_em_settings.yaml
     EM_mics_apix: float|None = None
@@ -68,6 +67,7 @@ class CSSParameters:
         # todo: complete the other validation
         # note: validation is informed via logging; it is NOT asserted
         self.validate_padding()
+
 
     ##### Common 
     @property
@@ -173,7 +173,18 @@ class CSSParameters:
     ##### 070_CSS_Init_Refine3D #####
     @property
     def CSS_mbin_reextract_mics_box(self):
-        return "Not Implemented"
+        # note: currently the same as GTF_lbin_extract_mics_box
+        # convert to angstrom
+        boxsize_A = self.ctflimit_boxsize_pix        * self.ctflimit_boxsize_angpix
+        psize_A   = self.initial3d_particle_size_pix * self.initial3d_particle_size_angpix
+
+        # get the biggest in pixel (comparison in angstrom)
+        if boxsize_A >= psize_A:
+            result = adjust_boxsize(self.ctflimit_boxsize_pix, self.use_eman_boxsizes)
+        else:
+            result = self.initial3d_particle_size_pix / 0.95
+
+        return result
         
     @property
     def CSS_mbin_reextract_mics_0o95box(self):
