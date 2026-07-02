@@ -3,7 +3,7 @@ user_inputs:
     # reference_map_filepath: inputs/emd_0407.map
     
     ### microscope related ###
-    defocus: 1
+    defocus: 1.8
     target_resolution: 5
 
     ### micrograph related ###

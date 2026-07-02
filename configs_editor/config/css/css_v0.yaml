@@ -24,20 +24,21 @@ css_config:
     ctflimit_boxsize_angpix:            {from: workflow.calc_ctf_boxsize.output.pixel_size}
 
   params_to_compute:
-    # Common
-    - SS_comm_lbin_ref3d_path
-    - SS_comm_lbin_ref3d_name
-    - SS_comm_lbin_mask3d_path
-    - SS_comm_lbin_mask3d_name
-    
+    # Common    
     - SS_comm_class2d_pmd
     - SS_comm_optimal_pmd
+
     - SS_comm_lbin_angpix
     - SS_comm_lbin_ref3d_path
     - SS_comm_lbin_ref3d_name
     - SS_comm_lbin_mask3d_path
     - SS_comm_lbin_mask3d_name
+    
     - SS_comm_mbin_angpix
+    - SS_comm_mbin_ref3d_path
+    - SS_comm_mbin_ref3d_name
+    - SS_comm_mbin_mask3d_path
+    - SS_comm_mbin_mask3d_name
 
     # 030_GTF_Create_Stack
     - GTF_lbin_extract_mics_box
