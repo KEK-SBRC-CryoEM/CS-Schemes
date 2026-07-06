@@ -98,11 +98,11 @@ def add_common_cli_arguments(parser):
     parser.add_argument("--debug", action="store_true", help="May generate extra log and data.")
     return parser
 
-def prepare_output_environment(output_dir):
+def prepare_output_environment(output_dir, add_timestamp_dir=True):
     if not output_dir:
         return None
 
-    final_dir = os.path.join(output_dir, gtf_get_timestamp(True))
+    final_dir = os.path.join(output_dir, gtf_get_timestamp(add_timestamp_dir))
     Path(final_dir).mkdir(parents=True, exist_ok=True)
 
     return final_dir

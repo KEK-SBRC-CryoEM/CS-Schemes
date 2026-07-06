@@ -2,20 +2,26 @@ css_config:
   inputs:
     EM_mics_apix: {from: input.em_settings.EM_mics_apix}
 
-    mics_upper_bound: {from: input.user.mics_size} # todo: get/compute from micrograph or metadata
+    micrograph_upper_bound_x: 3838 # {from: input.user.micrograph_number_rows} # todo: get/compute from micrograph or metadata
+    micrograph_upper_bound_y: 3710 # {from: input.user.micrograph_number_cols} # todo: get/compute from micrograph or metadata
 
-    ref3d_path : {from: input.user.reference_map_filepath}
-    mask3d_path: "$BASEDIR/mask_generation_reference_map/prot_mask_final.mrc"
-
+    ### binning related ###
+    large_binning_pixel_size   : {from: workflow.calc_pixel_size-lbin.output.angpix}
+    large_binning_ref3d_path   : "$BASEDIR/create_volume-lbin/lbin.mrc"
+    large_binning_mask3d_path  : "$BASEDIR/create_mask-lbin/prot_mask_final.mrc"
     large_binning_factor : {from: input.user.large_binning_factor,  default: 4.00}
+
+    medium_binning_pixel_size   : {from: workflow.calc_pixel_size-mbin.output.angpix}
+    medium_binning_ref3d_path: "$BASEDIR/create_volume-mbin/mbin.mrc"
+    medium_binning_mask3d_path  : "$BASEDIR/create_mask-mbin/prot_mask_final.mrc"
     medium_binning_factor: {from: input.user.medium_binning_factor, default: 1.24}
 
     padding_pixels    : {from: input.user.padding_pixels,     default: 0}
     padding_angstrom  : {from: input.user.padding_angstrom,   default: 0}
     padding_percentage: {from: input.user.padding_percentage, default: 0}
 
-    reference_particle_size_pix:        {from: workflow.calc_mask_size_lbin.output.diameter}
-    reference_particle_size_angpix:     {from: workflow.calc_mask_size_lbin.output.voxel_size}
+    reference_particle_size_pix:        {from: workflow.calc_mask_size-lbin.output.diameter}
+    reference_particle_size_angpix:     {from: workflow.calc_mask_size-lbin.output.voxel_size}
 
     initial3d_particle_size_pix:        {from: workflow.calc_size_negative_density_region.output.sphere_negative.diameter}
     initial3d_particle_size_angpix:     {from: workflow.calc_size_negative_density_region.output.sphere_negative.voxel_size}
@@ -53,10 +59,10 @@ css_config:
     # - GTF_lbin_abinit3d_pmd
 
     # 070_CSS_Init_Refine3D
-    # - CSS_mbin_reextract_mics_box
-    # - CSS_mbin_reextract_mics_0o95box
-    # - CSS_mbin_reextract_parts_box
-    # - CSS_mbin_reextract_parts_x_min
-    # - CSS_mbin_reextract_parts_x_max
-    # - CSS_mbin_reextract_parts_y_min
-    # - CSS_mbin_reextract_parts_y_max
+    - CSS_mbin_reextract_mics_box
+    - CSS_mbin_reextract_mics_0o95box
+    - CSS_mbin_reextract_parts_box
+    - CSS_mbin_reextract_parts_x_min
+    - CSS_mbin_reextract_parts_x_max
+    - CSS_mbin_reextract_parts_y_min
+    - CSS_mbin_reextract_parts_y_max

@@ -24,23 +24,26 @@ class CSSParameters:
     ##### Microscope related inputs #####
     # from config_em_settings.yaml
     EM_mics_apix: float|None = None
-    # EM_kV       : int  |None = None
-    # EM_Cs       : float|None = None
-
-    # defocus     : float|None = None
 
     # micrograph size
-    mics_upper_bound: int|None = None # = micrograph size
-    mics_lower_bound: int = 0
+    micrograph_upper_bound_x: int|None = None # number of rows
+    micrograph_upper_bound_y: int|None = None # number of cols
+    micrograph_lower_bound_x: int = 0 # start point of the micrograph
+    micrograph_lower_bound_y: int = 0 # start point of the micrograph
 
     ##### User provided inputs #####
-    # reference map and mask
-    ref3d_path : str = "Not Provided"
-    mask3d_path: str = "Not Provided"
-
     # binning factors
-    large_binning_factor : float = 1.0
-    medium_binning_factor: float = 1.0
+    medium_binning_factor    : float = 0.0
+    medium_binning_pixel_size: float = 0.0
+
+    large_binning_factor     : float = 0.0
+    large_binning_pixel_size : float = 0.0
+
+    # binned map and mask
+    large_binning_ref3d_path  : str = "Not Provided. Please set 'large_binning_ref3d_path' in the css config yaml."
+    large_binning_mask3d_path : str = "Not Provided. Please set 'large_binning_mask3d_path' in the css config yaml."
+    medium_binning_ref3d_path : str = "Not Provided. Please set 'medium_binning_ref3d_path' in the css config yaml."
+    medium_binning_mask3d_path: str = "Not Provided. Please set 'medium_binning_mask3d_path' in the css config yaml."
 
     # mask padding (only one should be provided)
     padding_pixels    : int   = 0
@@ -92,15 +95,15 @@ class CSSParameters:
 
     @property
     def SS_comm_lbin_angpix(self):
-        return self.EM_mics_apix * self.large_binning_factor
+        return self.large_binning_pixel_size # or self.EM_mics_apix * self.large_binning_factor
 
     @property
     def SS_comm_lbin_ref3d_path(self):
-        return self.ref3d_path    
+        return self.large_binning_ref3d_path
     
     @property
     def SS_comm_lbin_mask3d_path(self):
-        return self.mask3d_path
+        return self.large_binning_mask3d_path
     
     @property
     def SS_comm_lbin_ref3d_name(self):
@@ -112,7 +115,23 @@ class CSSParameters:
 
     @property
     def SS_comm_mbin_angpix(self):
-        return self.EM_mics_apix * self.medium_binning_factor
+        return self.medium_binning_pixel_size #or self.EM_mics_apix * self.medium_binning_factor
+
+    @property
+    def SS_comm_mbin_ref3d_path(self):
+        return self.medium_binning_ref3d_path
+    
+    @property
+    def SS_comm_mbin_mask3d_path(self):
+        return self.medium_binning_mask3d_path
+    
+    @property
+    def SS_comm_mbin_ref3d_name(self):
+        return Path(self.SS_comm_mbin_ref3d_path).name
+
+    @property
+    def SS_comm_mbin_mask3d_name(self):
+        return Path(self.SS_comm_mbin_mask3d_path).name
 
     ##### 030_GTF_Create_Stack #####
     @property
@@ -123,46 +142,55 @@ class CSSParameters:
 
         # get the biggest in pixel (comparison in angstrom)
         if boxsize_A >= psize_A:
-            result = adjust_boxsize(self.ctflimit_boxsize_pix, self.use_eman_boxsizes)
+            result = adjust_boxsize(boxsize_A, self.use_eman_boxsizes)
+            logger.info(f"GTF_lbin_extract_mics_box: value obtained from CTF Limit (={boxsize_A}) and EMAN adjustment (={result})")
         else:
             result = self.initial3d_particle_size_pix / 0.95
+            logger.info(f"GTF_lbin_extract_mics_box: value obtained from NDR Analysis {boxsize_B} / 0.95 ={result}")
 
         return result
 
     @property
     def GTF_lbin_extract_mics_0o95box(self):
         result = self.GTF_lbin_extract_mics_box * 0.95
-        return adjust_boxsize(result, self.use_eman_boxsizes)
+        return adjust_boxsize(result, even=True)
 
     @property
     def GTF_lbin_extract_parts_box(self):
         result = compute_extract_parts_box(boxsize=self.GTF_lbin_extract_mics_box, 
                                            binned_pixelsize=self.SS_comm_lbin_angpix,
                                            micrograph_pixelsize=self.EM_mics_apix)
-        return adjust_boxsize(result, self.use_eman_boxsizes)
+        adjusted = adjust_boxsize(result, self.use_eman_boxsizes)
+
+        logger.info("GTF_lbin_extract_parts_box: ")
+        logger.info("+ boxsize / (binned_pixelsize / micrograph_pixelsize)")
+        logger.info(f"+ {self.GTF_lbin_extract_mics_box} / ({self.SS_comm_lbin_angpix} / {self.EM_mics_apix}) = {result}")
+        logger.info(f"+ Adjuted as {adjusted}")
+
+        return adjusted
 
     @property
     def GTF_lbin_extract_parts_x_min(self):
         result = compute_extract_coordinates_min(boxsize=self.GTF_lbin_extract_mics_box, 
-                                                 lower_bound=self.mics_lower_bound)
+                                                 lower_bound=self.micrograph_lower_bound_x)
         return result
 
     @property
     def GTF_lbin_extract_parts_x_max(self):
         result = compute_extract_coordinates_max(boxsize=self.GTF_lbin_extract_mics_box,
-                                                 upper_bound=self.mics_upper_bound)
+                                                 upper_bound=self.micrograph_upper_bound_x)
         return result
 
     @property
     def GTF_lbin_extract_parts_y_min(self):
         result = compute_extract_coordinates_min(boxsize=self.GTF_lbin_extract_mics_box, 
-                                                 lower_bound=self.mics_lower_bound)
+                                                 lower_bound=self.micrograph_lower_bound_y)
         return result
 
     @property
     def GTF_lbin_extract_parts_y_max(self):
         result = compute_extract_coordinates_max(boxsize=self.GTF_lbin_extract_mics_box,
-                                                 upper_bound=self.mics_upper_bound)
+                                                 upper_bound=self.micrograph_upper_bound_y)
         return result
 
     ##### 050_GTF_AbInitReconst3D #####
@@ -180,16 +208,18 @@ class CSSParameters:
 
         # get the biggest in pixel (comparison in angstrom)
         if boxsize_A >= psize_A:
-            result = adjust_boxsize(self.ctflimit_boxsize_pix, self.use_eman_boxsizes)
+            result = adjust_boxsize(boxsize_A, self.use_eman_boxsizes)
+            logger.info(f"GTF_lbin_extract_mics_box: value obtained from CTF Limit (={boxsize_A}) and EMAN adjustment (={result})")
         else:
             result = self.initial3d_particle_size_pix / 0.95
+            logger.info(f"GTF_lbin_extract_mics_box: value obtained from NDR Analysis {boxsize_B} / 0.95 ={result}")
 
         return result
         
     @property
     def CSS_mbin_reextract_mics_0o95box(self):
         result = self.CSS_mbin_reextract_mics_box * 0.95
-        return adjust_boxsize(result, self.use_eman_boxsizes)
+        return adjust_boxsize(result, even=True)
 
     @property
     def CSS_mbin_reextract_parts_box(self):
@@ -201,25 +231,25 @@ class CSSParameters:
     @property
     def CSS_mbin_reextract_parts_x_min(self):
         result = compute_extract_coordinates_min(boxsize=self.CSS_mbin_reextract_mics_box, 
-                                                 lower_bound=self.mics_lower_bound)
+                                                 lower_bound=self.micrograph_lower_bound_x)
         return result
 
     @property
     def CSS_mbin_reextract_parts_x_max(self):
         result = compute_extract_coordinates_max(boxsize=self.CSS_mbin_reextract_mics_box,
-                                                 upper_bound=self.mics_upper_bound)
+                                                 upper_bound=self.micrograph_upper_bound_x)
         return result
     
     @property
     def CSS_mbin_reextract_parts_y_min(self): 
         result = compute_extract_coordinates_min(boxsize=self.CSS_mbin_reextract_mics_box, 
-                                                 lower_bound=self.mics_lower_bound)
+                                                 lower_bound=self.micrograph_lower_bound_y)
         return result
 
     @property
     def CSS_mbin_reextract_parts_y_max(self):
         result = compute_extract_coordinates_max(boxsize=self.CSS_mbin_reextract_mics_box,
-                                                 upper_bound=self.mics_upper_bound)
+                                                 upper_bound=self.micrograph_upper_bound_y)
         return result
 
     ### auxiliary methods ###
@@ -263,11 +293,11 @@ def compute_extract_coordinates_max(boxsize, upper_bound):
 def compute_extract_parts_box(boxsize, binned_pixelsize, micrograph_pixelsize):
     return boxsize / (binned_pixelsize / micrograph_pixelsize)
 
-def adjust_boxsize(n, use_eman_boxsizes=False):
+def adjust_boxsize(n, use_eman_boxsizes=False, even=False):
     if use_eman_boxsizes:
         return get_next_eman_boxsize(n)
-    # if use_xxx_values:
-    #   return xxx(n)
+    if even:
+        return int(2*np.ceil(n/2))
     return n
 
 ### general
@@ -347,6 +377,7 @@ if __name__ == "__main__":
                                     css_params_of_interest=css_config["params_to_compute"],
                                     workflow_data=wdata,
                                     basedir=basedir)
+    # except AttributeError:
 
     # save to a yaml file
     filename = os.path.join(basedir, "css_params.yaml")

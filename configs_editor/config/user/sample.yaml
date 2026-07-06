@@ -7,8 +7,9 @@ user_inputs:
     target_resolution: 5
 
     ### micrograph related ###
-    mics_size: 4090
-    
+    micrograph_upper_bound_x: 3838 # number of rows
+    micrograph_upper_bound_y: 3710 # number of cols
+
     ### binning factor ###
     large_binning_factor : 4.00
     medium_binning_factor: 1.24
@@ -20,5 +21,5 @@ user_inputs:
    
     em_settings:
         EM_kV: 200
-        EM_mics_apix: 1.1
+        EM_mics_apix: 0.5585
         EM_Cs: 2.7
