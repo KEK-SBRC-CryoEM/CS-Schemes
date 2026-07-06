@@ -10,7 +10,8 @@ import utils
 import yaml
 import json
 import pickle
-
+#
+from functools import cached_property
 
 # example usage
 # params = CSSParameters(force_eman=True)
@@ -73,7 +74,7 @@ class CSSParameters:
 
 
     ##### Common 
-    @property
+    @cached_property
     def SS_comm_class2d_pmd(self):
         # voxels
         result  = self.reference_particle_size_pix
@@ -88,53 +89,53 @@ class CSSParameters:
 
         return int(np.ceil(result))
     
-    @property
+    @cached_property
     def SS_comm_optimal_pmd(self):
         result = self.initial3d_particle_size_pix * self.initial3d_particle_size_angpix
         return int(np.ceil(result))
 
-    @property
+    @cached_property
     def SS_comm_lbin_angpix(self):
         return self.large_binning_pixel_size # or self.EM_mics_apix * self.large_binning_factor
 
-    @property
+    @cached_property
     def SS_comm_lbin_ref3d_path(self):
         return self.large_binning_ref3d_path
     
-    @property
+    @cached_property
     def SS_comm_lbin_mask3d_path(self):
         return self.large_binning_mask3d_path
     
-    @property
+    @cached_property
     def SS_comm_lbin_ref3d_name(self):
         return Path(self.SS_comm_lbin_ref3d_path).name
 
-    @property
+    @cached_property
     def SS_comm_lbin_mask3d_name(self):
         return Path(self.SS_comm_lbin_mask3d_path).name
 
-    @property
+    @cached_property
     def SS_comm_mbin_angpix(self):
         return self.medium_binning_pixel_size #or self.EM_mics_apix * self.medium_binning_factor
 
-    @property
+    @cached_property
     def SS_comm_mbin_ref3d_path(self):
         return self.medium_binning_ref3d_path
     
-    @property
+    @cached_property
     def SS_comm_mbin_mask3d_path(self):
         return self.medium_binning_mask3d_path
     
-    @property
+    @cached_property
     def SS_comm_mbin_ref3d_name(self):
         return Path(self.SS_comm_mbin_ref3d_path).name
 
-    @property
+    @cached_property
     def SS_comm_mbin_mask3d_name(self):
         return Path(self.SS_comm_mbin_mask3d_path).name
 
     ##### 030_GTF_Create_Stack #####
-    @property
+    @cached_property
     def GTF_lbin_extract_mics_box(self):
         # convert to angstrom
         boxsize_A = self.ctflimit_boxsize_pix        * self.ctflimit_boxsize_angpix
@@ -143,19 +144,21 @@ class CSSParameters:
         # get the biggest in pixel (comparison in angstrom)
         if boxsize_A >= psize_A:
             result = adjust_boxsize(boxsize_A, self.use_eman_boxsizes)
-            logger.info(f"GTF_lbin_extract_mics_box: value obtained from CTF Limit (={boxsize_A}) and EMAN adjustment (={result})")
+            logger.info(f"GTF_lbin_extract_mics_box:")
+            logger.info(f"+ value obtained from CTF Limit (={boxsize_A}) and EMAN adjustment (={result})")
         else:
             result = self.initial3d_particle_size_pix / 0.95
-            logger.info(f"GTF_lbin_extract_mics_box: value obtained from NDR Analysis {boxsize_B} / 0.95 ={result}")
+            logger.info(f"GTF_lbin_extract_mics_box:")
+            logger.info(f"+ value obtained from NDR Analysis {boxsize_B} / 0.95 ={result}")
 
         return result
 
-    @property
+    @cached_property
     def GTF_lbin_extract_mics_0o95box(self):
         result = self.GTF_lbin_extract_mics_box * 0.95
         return adjust_boxsize(result, even=True)
 
-    @property
+    @cached_property
     def GTF_lbin_extract_parts_box(self):
         result = compute_extract_parts_box(boxsize=self.GTF_lbin_extract_mics_box, 
                                            binned_pixelsize=self.SS_comm_lbin_angpix,
@@ -164,42 +167,42 @@ class CSSParameters:
 
         logger.info("GTF_lbin_extract_parts_box: ")
         logger.info("+ boxsize / (binned_pixelsize / micrograph_pixelsize)")
-        logger.info(f"+ {self.GTF_lbin_extract_mics_box} / ({self.SS_comm_lbin_angpix} / {self.EM_mics_apix}) = {result}")
-        logger.info(f"+ Adjuted as {adjusted}")
+        logger.info(f"+ := {self.GTF_lbin_extract_mics_box} / ({self.SS_comm_lbin_angpix} / {self.EM_mics_apix}) = {result}")
+        logger.info(f"+ Adjusted as {adjusted}")
 
         return adjusted
 
-    @property
+    @cached_property
     def GTF_lbin_extract_parts_x_min(self):
         result = compute_extract_coordinates_min(boxsize=self.GTF_lbin_extract_mics_box, 
                                                  lower_bound=self.micrograph_lower_bound_x)
         return result
 
-    @property
+    @cached_property
     def GTF_lbin_extract_parts_x_max(self):
         result = compute_extract_coordinates_max(boxsize=self.GTF_lbin_extract_mics_box,
                                                  upper_bound=self.micrograph_upper_bound_x)
         return result
 
-    @property
+    @cached_property
     def GTF_lbin_extract_parts_y_min(self):
         result = compute_extract_coordinates_min(boxsize=self.GTF_lbin_extract_mics_box, 
                                                  lower_bound=self.micrograph_lower_bound_y)
         return result
 
-    @property
+    @cached_property
     def GTF_lbin_extract_parts_y_max(self):
         result = compute_extract_coordinates_max(boxsize=self.GTF_lbin_extract_mics_box,
                                                  upper_bound=self.micrograph_upper_bound_y)
         return result
 
     ##### 050_GTF_AbInitReconst3D #####
-    @property
+    @cached_property
     def GTF_lbin_abinit3d_pmd(self):
         return "Not Implemented"
 
     ##### 070_CSS_Init_Refine3D #####
-    @property
+    @cached_property
     def CSS_mbin_reextract_mics_box(self):
         # note: currently the same as GTF_lbin_extract_mics_box
         # convert to angstrom
@@ -209,44 +212,53 @@ class CSSParameters:
         # get the biggest in pixel (comparison in angstrom)
         if boxsize_A >= psize_A:
             result = adjust_boxsize(boxsize_A, self.use_eman_boxsizes)
-            logger.info(f"GTF_lbin_extract_mics_box: value obtained from CTF Limit (={boxsize_A}) and EMAN adjustment (={result})")
+            logger.info(f"GTF_lbin_extract_mics_box:")
+            logger.info(f"+ value obtained from CTF Limit (={boxsize_A}) and EMAN adjustment (={result})")
         else:
             result = self.initial3d_particle_size_pix / 0.95
-            logger.info(f"GTF_lbin_extract_mics_box: value obtained from NDR Analysis {boxsize_B} / 0.95 ={result}")
+            logger.info(f"GTF_lbin_extract_mics_box:")
+            logger.info(f"+ value obtained from NDR Analysis {boxsize_B} / 0.95 ={result}")
 
         return result
         
-    @property
+    @cached_property
     def CSS_mbin_reextract_mics_0o95box(self):
         result = self.CSS_mbin_reextract_mics_box * 0.95
         return adjust_boxsize(result, even=True)
 
-    @property
+    @cached_property
     def CSS_mbin_reextract_parts_box(self):
         result = compute_extract_parts_box(boxsize=self.CSS_mbin_reextract_mics_box, 
                                            binned_pixelsize=self.SS_comm_mbin_angpix,
                                            micrograph_pixelsize=self.EM_mics_apix)
-        return adjust_boxsize(result, self.use_eman_boxsizes)
 
-    @property
+        adjusted = adjust_boxsize(result, self.use_eman_boxsizes)
+        logger.info("GTF_lbin_extract_parts_box: ")
+        logger.info("+ boxsize / (binned_pixelsize / micrograph_pixelsize)")
+        logger.info(f"+ := {self.CSS_mbin_reextract_mics_box} / ({self.SS_comm_mbin_angpix} / {self.EM_mics_apix}) = {result}")
+        logger.info(f"+ Adjusted as {adjusted}")
+
+        return adjusted
+
+    @cached_property
     def CSS_mbin_reextract_parts_x_min(self):
         result = compute_extract_coordinates_min(boxsize=self.CSS_mbin_reextract_mics_box, 
                                                  lower_bound=self.micrograph_lower_bound_x)
         return result
 
-    @property
+    @cached_property
     def CSS_mbin_reextract_parts_x_max(self):
         result = compute_extract_coordinates_max(boxsize=self.CSS_mbin_reextract_mics_box,
                                                  upper_bound=self.micrograph_upper_bound_x)
         return result
     
-    @property
+    @cached_property
     def CSS_mbin_reextract_parts_y_min(self): 
         result = compute_extract_coordinates_min(boxsize=self.CSS_mbin_reextract_mics_box, 
                                                  lower_bound=self.micrograph_lower_bound_y)
         return result
 
-    @property
+    @cached_property
     def CSS_mbin_reextract_parts_y_max(self):
         result = compute_extract_coordinates_max(boxsize=self.CSS_mbin_reextract_mics_box,
                                                  upper_bound=self.micrograph_upper_bound_y)
