@@ -29,3 +29,7 @@ system:
     boxsize_analysis:
       env : python_cryoem_tools
       path: /home/tmoriya/shared_for_all/apps/rln_external/ctf_analysis/boxsize_analysis.py
+
+    binning_parameters:
+      env: python_cryoem_tools
+      path: /home/tmoriya/shared_for_all/apps/rln_external/utils/calc_binning_parameters.py

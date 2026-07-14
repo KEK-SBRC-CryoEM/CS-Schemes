@@ -1,0 +1,155 @@
+css:
+  ##### Common #####
+  SS_comm_class2d_pmd:
+    methods:
+      - name: padding
+        args:
+          - particle_diameter : {from: workflow.calc_mask_size-lbin.output.diameter}
+          - pixel_size        : {from: workflow.calc_mask_size-lbin.output.voxel_size}
+          - padding_pixels    : {from: input.user.padding_pixels    , default: 0}
+          - padding_angstrom  : {from: input.user.padding_angstrom  , default: 0}
+          - padding_percentage: {from: input.user.padding_percentage, default: 0}
+  SS_comm_optimal_pmd: {from: SS_comm_class2d_pmd}
+    # methods: 
+    #   - name: compute_size_in_real_space
+    #     args:
+    #       - particle_diameter : {from: workflow.calc_size_negative_density_region.output.sphere_negative.diameter}
+    #       - pixel_size        : {from: workflow.calc_size_negative_density_region.output.sphere_negative.voxel_size}
+  ## lbin ##
+  SS_comm_lbin_angpix     : {from: workflow.calc_params-lbin.output.binned_pixel_size}
+  SS_comm_lbin_ref3d_path : "$BASEDIR/create_volume-lbin/lbin.mrc"
+  SS_comm_lbin_mask3d_path: "$BASEDIR/create_mask-lbin/prot_mask_final.mrc"
+  SS_comm_lbin_ref3d_name : 
+    methods: 
+      - name:  get_filename_from_path
+        args:
+          - path: {from: SS_comm_lbin_ref3d_path}
+  SS_comm_lbin_mask3d_name: 
+    methods:  
+      - name: get_filename_from_path
+        args:
+          - path: {from: SS_comm_lbin_mask3d_path}
+  ## mbin ##
+  SS_comm_mbin_angpix     : {from: workflow.calc_params-mbin.output.binned_pixel_size}
+  SS_comm_mbin_ref3d_path : "$BASEDIR/create_volume-mbin/mbin.mrc"
+  SS_comm_mbin_mask3d_path: "$BASEDIR/create_mask-mbin/prot_mask_final.mrc"
+  SS_comm_mbin_ref3d_name : 
+    methods: 
+      - name:  get_filename_from_path
+        args:
+          - path: {from: SS_comm_mbin_ref3d_path}
+  SS_comm_mbin_mask3d_name: 
+    methods: 
+      - name:  get_filename_from_path
+        args:
+          - path: {from: SS_comm_mbin_mask3d_path}
+  
+  ##### 030_GTF_Create_Stack #####
+  GTF_lbin_extract_mics_box    :
+    methods:  
+      - name:  compute_extract_mics_box
+        args:
+          - box_size_1  : {from: workflow.calc_ctf_boxsize.output.boxsize}
+          - pixel_size_1: {from: workflow.calc_ctf_boxsize.output.pixel_size}
+          # we may not provide the second box, so default to 0 if not found
+          - box_size_2  : {from: workflow.calc_size_negative_density_region.output.sphere_negative.diameter  , default: 0}
+          - pixel_size_2: {from: workflow.calc_size_negative_density_region.output.sphere_negative.voxel_size, default: 0}
+  GTF_lbin_extract_mics_0o95box:
+    methods:  
+      - name:  adjust_boxsize
+        args:
+          - box    : {from: GTF_lbin_extract_mics_box}
+          - scaling: 0.95
+          - even   : True
+  GTF_lbin_extract_parts_box   :
+    methods:  
+      - name:  compute_binned_box_size
+        args:
+          - boxsize       : {from: GTF_lbin_extract_mics_box}
+          - binning_factor: {from: input.user.large_binning_factor,  default: 4.00}
+      - name:  adjust_boxsize
+        args:
+          - box    : {from: self}
+          - even   : True
+  GTF_lbin_extract_parts_x_min :
+    methods:  
+      - name:  compute_extract_coordinates_min
+        args:
+          - boxsize    : {from: GTF_lbin_extract_mics_box}
+          - lower_bound: {from: input.user.micrograph_lower_bound_x, default: 0}
+  GTF_lbin_extract_parts_x_max :
+    methods:  
+      - name:  compute_extract_coordinates_max
+        args:
+          - boxsize    : {from: GTF_lbin_extract_mics_box}
+          - upper_bound: {from: input.user.micrograph_upper_bound_x, default: 0}
+  GTF_lbin_extract_parts_y_min :
+    methods:  
+      - name:  compute_extract_coordinates_min
+        args:
+          - boxsize    : {from: GTF_lbin_extract_mics_box}
+          - lower_bound: {from: input.user.micrograph_lower_bound_y, default: 0}
+  GTF_lbin_extract_parts_y_max :
+    methods:  
+      - name:  compute_extract_coordinates_max
+        args:
+          - boxsize    : {from: GTF_lbin_extract_mics_box}
+          - upper_bound: {from: input.user.micrograph_upper_bound_y, default: 0}
+
+  ##### 050_GTF_AbInitReconst3D #####
+  GTF_lbin_abinit3d_pmd: "Not Implemented"
+
+  ##### 070_CSS_Init_Refine3D #####
+  CSS_mbin_reextract_mics_box    :
+    methods:  
+      - name:  compute_extract_mics_box
+        args:
+          - box_size_1  : {from: workflow.calc_ctf_boxsize.output.boxsize}
+          - pixel_size_1: {from: workflow.calc_ctf_boxsize.output.pixel_size}
+          # we may not provide the second box, so default to 0 if not found
+          - box_size_2  : {from: workflow.calc_size_negative_density_region.output.sphere_negative.diameter  , default: 0}
+          - pixel_size_2: {from: workflow.calc_size_negative_density_region.output.sphere_negative.voxel_size, default: 0}
+  CSS_mbin_reextract_mics_0o95box:
+    methods:  
+      - name:  adjust_boxsize
+        args:
+          - box    : {from: CSS_mbin_reextract_mics_box}
+          - scaling: 0.95
+          - even   : True
+  CSS_mbin_reextract_parts_box   :
+    methods:  
+      - name:  compute_binned_box_size
+        args:
+          - boxsize       : {from: CSS_mbin_reextract_mics_box}
+          - binning_factor: {from: input.user.medium_binning_factor,  default: 1.24}
+      - name:  adjust_boxsize
+        args:
+          - box    : {from: self}
+          - even   : True
+  CSS_mbin_reextract_parts_x_min :
+    methods:  
+      - name:  compute_extract_coordinates_min
+        args:
+          - boxsize: {from: CSS_mbin_reextract_mics_box}
+          - lower_bound: {from: input.user.micrograph_lower_bound_x, default: 0}
+  CSS_mbin_reextract_parts_x_max :
+    methods:  
+      - name:  compute_extract_coordinates_max
+        args:
+          - boxsize    : {from: CSS_mbin_reextract_mics_box}
+          - upper_bound: {from: input.user.micrograph_upper_bound_x, default: 0}
+  CSS_mbin_reextract_parts_y_min :
+    methods:  
+      - name:  compute_extract_coordinates_min
+        args:
+          - boxsize: {from: CSS_mbin_reextract_mics_box}
+          - lower_bound: {from: input.user.micrograph_lower_bound_y, default: 0}
+  CSS_mbin_reextract_parts_y_max :
+    methods:  
+      - name:  compute_extract_coordinates_max
+        args:
+          - boxsize: {from: CSS_mbin_reextract_mics_box}
+          - upper_bound: {from: input.user.micrograph_upper_bound_y, default: 0}
+
+
+

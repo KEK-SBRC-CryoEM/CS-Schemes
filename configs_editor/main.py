@@ -8,6 +8,7 @@ import subprocess
 import utils
 import json
 import pickle
+import postprocessing_rules
 
 from pathlib import Path
 
@@ -56,12 +57,22 @@ def process_system_settings(settings):
 def process_workflow_settings(settings):
     # from input file: workflow.{name, command,  command arg list}
     # then we add workflow.{invocation, output_dir, output}
-    settings = {entry["name"]: {"command"   : entry["command"],
-                                "args"      : entry["args"],
-                                "invocation": None, # derived from command and args
-                                "output_dir": None, # basedir + name
-                                "output"    : None,}
+    settings = {entry["name"]: {"command"       : entry["command"],
+                                "args"          : entry["args"],
+                                "postprocessing": entry.get("postprocessing", None),
+                                "invocation"    : None, # derived from command and args
+                                "output_dir"    : None, # basedir + name
+                                "output"        : None,
+                                # "output_original": a copy of the original output if any postprocessing rule was applied
+                                }
                                                 for entry in settings}
+
+    # postprocessing: convert args from a list of dicts to a single dict
+    # for entry in settings.values():
+    #     for rule in entry["postprocessing"] or []:
+    #         args = rule.get("args", None)
+    #         if args:
+    #             rule["args"] = {k: v for d in args for k, v in d.items()}
 
     return {"workflow": settings}
 
@@ -79,69 +90,87 @@ def process_user_inputs(settings):
 
     return {"input": user|em_settings|sp_settings}
 
+def process_css_settings(settings):
+    1
+
 ## preprocessing ##
-def get_output(data_dict, attribute_path):
+def get_nested_value(path, data_dict):
     try:
-        if isinstance(attribute_path, str):
-            # parse key1.key2 so we can access attributes of dict of dict
-            keys = attribute_path.split(".")
-        else:
-            keys = attribute_path
-
-        value = data_dict
+        keys = path.split(".")
+        # descend
+        next_ = data_dict
         for k in keys:
-            value = value[k]
-        return value
+            next_ = next_[k]
+        return next_
 
-    except KeyError:
-        # logger.error(f"ERROR: VALUE NOT FOUND FOR {analysis_name} {attribute_name}")
+    except (KeyError, TypeError):
         return None
 
-def resolve_value(value, data_dict, basedir, outdir):
+def substitute_placeholders(text, context):
+    for pattern, value in context.items():
+        text = text.replace(pattern, value)
+    return text
+
+def resolve_value(value, data_dict, str_context):
     # regular input; replaces directories
     if isinstance(value, str):
-        result = value.replace("$OUTDIR", outdir).replace("$BASEDIR", basedir)
-    # input comes from another analysis
+        result  = substitute_placeholders(value, str_context)
+    # input comes from an analysis
     elif isinstance(value, dict):
-        result = get_output(data_dict, attribute_path=value["from"].split(".")) 
+        result = get_nested_value(value["from"], data_dict)
 
+        # result not available, use default
         if result is None:
             result = value.get("default", None)
             logger.warning(f"VALUE NOT FOUND: {value['from']}!")
             logger.warning(f"+ DEFAULTING TO {result}.")
-            if result is None: # the obtained default value is still None
-                logger.warning(f"+ THIS MAY CAUSE SOME COMMANDS TO FAIL!")
-    else: # todo: limit to numbers only
-        result = value
 
+            # the obtained default value is still None
+            if result is None: 
+                logger.warning(f"+ THIS MAY CAUSE SOME COMMANDS TO FAIL!")
+    # other datatype (eg numbers)
+    else: 
+        result = value
+    
     return result
 
-def make_command(env, cmd_path, args, workflow_data=None, basedir=None, outdir=None):
-    if env:
-        cmd = [env, cmd_path]
-    else: 
-        cmd = [cmd_path]
-
+def parse_callable_arglist(args, workflow_data, str_context):
+    result = {}
     for arg in args:
-        # flag only
-        if isinstance(arg, str):
-            # example: arg = "--test"
-            cmd.extend([arg])
-        elif isinstance(arg, list) and len(arg)==1:
-            # example: arg = ["--test"]
-            resolved = resolve_value(*arg, workflow_data, basedir, outdir)
-            cmd.extend([str(resolved)])
-        # flag and value
-        elif isinstance(arg, list) and len(arg)>1:
-            # example: arg = ["--test", 1.1]
-            flag, value = arg
-            resolved = resolve_value(value, workflow_data, basedir, outdir)
-            cmd.extend([flag, str(resolved)])
-        elif isinstance(arg, dict):
-            # example: arg = {from: workflow.process.output}
-            resolved = resolve_value(arg, workflow_data, basedir, outdir)
-            cmd.extend([str(resolved)])
+        # each arg is always {name:value}
+        key, value = next(iter(arg.items()))
+        resolved = resolve_value(value, workflow_data, str_context)
+        result[key] = resolved
+            
+    return result
+
+def parse_subprocess_arglist(args, workflow_data, str_context):
+    result = []
+    for arg in args:
+        # each arg is 1) flag:str or 2) {flag,value}:dict or 3) {value}:dict
+        ## 1) str : return the flag as is
+        ## 2) dict: return flag, resolved value
+        ## 3) dict: return resolved value
+        if isinstance(arg, dict):
+            key, value = next(iter(arg.items()))
+            # flag and value
+            if key.startswith("-"):
+                resolved = resolve_value(value, workflow_data, str_context)
+                value    = [key, str(resolved)]
+            # value only (dict)
+            else:
+                resolved = resolve_value(arg, workflow_data)
+                value    = [str(resolved)]
+        # default value
+        else:
+            value = [str(arg)]
         
+        result.extend(value)
+    return result
+
+def make_command(env, cmd_path, args):
+    cmd = [env, cmd_path] if env else [cmd_path]
+    cmd.extend(args)
     return cmd
 
 ## pipeline ##
@@ -174,56 +203,124 @@ def run_subprocess(name, invocation, output_directory=None):
     return result
 
 def run(workflow_data, toolbox_settings, basedir, debug=False):
-    # 1. alias
-    wdata = workflow_data
+    # For each entry in the workflow
+    for name, entry in workflow_data["workflow"].items():
+        # 1. Prepare environment
+        logger.info(f"{name.upper()}")
 
-    # 2. Preprocessing
-    ## 2.1 runtime properties
-    for name in wdata["workflow"].keys(): # analysis name
-        # output directory path
-        wdata["workflow"][name]["output_dir"] = os.path.join(basedir, name)
+        ## 1.1 output directory path
+        entry["output_dir"] = os.path.join(basedir, name)
+        Path(entry["output_dir"]).mkdir(parents=True, exist_ok=True)
+        logger.info("+ Output Directory  : " + entry["output_dir"])
 
-        # get script name
-        cmd_name = wdata["workflow"][name]["command"]
+        ## 1.2 prepare context
+        ctx = {"$OUTDIR": entry["output_dir"], "$BASEDIR":basedir}
 
-        # command to exec
-        wdata["workflow"][name]["invocation"] = \
-                        make_command(env      = toolbox_settings[cmd_name].get("env"), 
-                                     cmd_path = toolbox_settings[cmd_name]["path"], 
-                                     args     = wdata["workflow"][name]["args"], 
-                                     workflow_data = wdata,
-                                     basedir  = basedir,
-                                     outdir   = wdata["workflow"][name]["output_dir"]
-        )
+        # 2. Subprocess
+        ## 2.1 resolve args
+        resolved_args = parse_subprocess_arglist(args=entry["args"], 
+                                                 workflow_data=workflow_data, 
+                                                 str_context=ctx)                                      
 
-        ## 3. Execution
-        logger.info(f"Running {name.upper()}...")
-        # make output directory
-        Path(wdata["workflow"][name]["output_dir"]).mkdir(parents=True, exist_ok=True)
-        logger.info("+ Output Directory  : " + wdata["workflow"][name]["output_dir"])
-        logger.info("+ Invocation Command: " + " ".join(wdata["workflow"][name]["invocation"]))
+        ## 2.2 get script name
+        cmd_name = entry["command"]
         
-        # execute command
-        wdata["workflow"][name]["output"] = run_subprocess(name,
-                                                           wdata["workflow"][name]["invocation"], 
-                                                           wdata["workflow"][name]["output_dir"],)
+        ## 2.3 prepare invocation
+        entry["invocation"] = make_command(env      = toolbox_settings[cmd_name].get("env"), 
+                                           cmd_path = toolbox_settings[cmd_name]["path"], 
+                                           args     = resolved_args)
+        logger.info("+ Invocation Command: " + " ".join(entry["invocation"]))
 
-        logger.info(f"+ Output: {wdata['workflow'][name]['output']}")
+        ## 2.4 run
+        logger.info(f"Running...")
+        entry["output"] = run_subprocess(name, entry["invocation"], entry["output_dir"])
+        logger.info(f"+ Output: {entry['output']}")
+
+        # 3. Postprocessing rules
+        if entry["postprocessing"]:
+            logger.info(f"Postprocessing...")
+            entry["output_original"] = entry["output"]
+            logger.info(f"+ Moving original  output to: 'workflow.{name}.output_original'")
+            logger.info(f"+ Saving processed output to: 'workflow.{name}.output'")
+            
+            for rule in entry["postprocessing"]:
+                logger.info(f"+ Applying '{rule['method']}' to '{rule['target']}'")
+                ## 3.1 get callable
+                method = getattr(postprocessing_rules, rule["method"])
+
+                ## 3.2 solve syntax sugar for self.target
+                target_temp = {"self": {"target":entry['output'][rule['target']]}}
+
+                ## 3.3 parse arguments
+                resolved_args = parse_callable_arglist(args=rule["args"], 
+                                                    workflow_data=workflow_data|target_temp, 
+                                                    str_context=ctx) 
+            
+                ## 3.4 call
+                entry["output"][rule['target']] = method(**resolved_args)
+                logger.info(f"+ := {entry['output'][rule['target']]}")
+
         logger.info("Done!")
-        logger.info("-"*40)
+        logger.info("-"*40)        
 
         # save state data for debugging
         if debug:
             with open(os.path.join(basedir, "pipeline_data.pkl"), "wb") as file:
-                pickle.dump(wdata, file)
+                pickle.dump(workflow_data, file)
 
         # save state data (future: this will be used to stop/continue the workflow)
-        utils.handle_output(wdata, 
+        utils.handle_output(workflow_data, 
                             to_json=True, 
                             filename=os.path.join(basedir, "pipeline_data.json"),
                             show=False)
 
-    return wdata
+    return workflow_data
+
+def css_run(css_settings, workflow_data, basedir, debug=False):
+    css_result = {}
+    ctx = {"$BASEDIR": basedir}
+    for name, content in css_settings.items():
+        logger.info(f"{name.upper()}")
+
+        # run a callable to get the result
+        if isinstance(content, dict) and content.get("methods", None):
+            for entry in content["methods"]:
+                logger.info(f"+ Calling '{entry['name']}...'")
+
+                ## 3.1 get callable
+                method = getattr(postprocessing_rules, entry['name'])
+
+                ## 3.3 parse arguments
+                css_ctx = css_result|{"self":css_result.get(name, None)}
+
+                resolved_args = parse_callable_arglist(args=entry["args"], 
+                                                        workflow_data=workflow_data|css_ctx, 
+                                                        str_context=ctx)
+
+                ## 3.4 call
+                css_result[name] = method(**resolved_args)
+        # lookup
+        elif isinstance(content, dict) or isinstance(content, str):
+            css_result[name] = resolve_value(content, workflow_data|css_result, ctx)
+        # value itself
+        else:
+            css_result[name] = content
+
+        # show output
+        logger.info(f"\t\t := {css_result[name]}")
+
+        # save state data for debugging
+        if debug:
+            with open(os.path.join(basedir, "css_data.pkl"), "wb") as file:
+                pickle.dump(css_result, file)
+
+        # final output
+        utils.handle_output(css_result, 
+                            to_json=False, 
+                            filename=os.path.join(basedir, "csschemes_sample.yaml"),
+                            show=False)
+
+    return css_result
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -276,15 +373,19 @@ if __name__ == "__main__":
 
     try:
         # prepare and run all analyses
-        workflow_result = run(#user_inputs       = process_user_inputs(settings["user_inputs"]), 
-                              #workflow_settings = process_workflow_settings(settings["workflow"]),
-                              workflow_data    = process_user_inputs(settings["user_inputs"]) | process_workflow_settings(settings["workflow"]),
+        workflow_result = run(workflow_data    = process_user_inputs(settings["user_inputs"]) | process_workflow_settings(settings["workflow"]),
                               toolbox_settings = process_system_settings(settings["system"]),
-                              basedir=basedir,
-                              debug=args.debug)
+                              basedir          = basedir,
+                              debug            = args.debug)
+
+        # evaluate the cs-schemes parameters
+        workflow_result = css_run(settings.get("css", {}), 
+                                  workflow_data = workflow_result, 
+                                  basedir       = basedir,
+                                  debug         = args.debug)
     except Exception:
-        logger.error("Pipeline Crashed!!".upper())
-        # raise
+        # logger.error("Pipeline Crashed!!".upper())
+        logger.exception("Pipeline Crashed!!".upper())
 
 
     
