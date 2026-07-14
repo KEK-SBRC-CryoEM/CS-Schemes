@@ -277,6 +277,8 @@ def run(workflow_data, toolbox_settings, basedir, debug=False):
     return workflow_data
 
 def css_run(css_settings, workflow_data, basedir, debug=False):
+    logger.info("CS-Schemes:".upper())
+    logger.info("+ Preparing to extrat parameters")
     css_result = {}
     ctx = {"$BASEDIR": basedir}
     for name, content in css_settings.items():
